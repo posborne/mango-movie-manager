@@ -1,0 +1,8 @@
+**************************************************************
+* MANGO PROJECT CHANGE LOG
+**************************************************************
+
+2008-10-7 : Version 0.0 (PMO)
+--------------------------------------------------------------
+Created the project structure and added those structure files
+to the subversion repository.
