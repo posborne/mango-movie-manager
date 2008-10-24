@@ -91,3 +91,19 @@ CREATE TABLE saved_searches (
 -- FDs:
 --   {label} -> {query}
 -- (In BCNF.)
+
+CREATE TABLE lists (
+	label		CHAR(30) NOT NULL,
+	movie_id	INT NOT NULL,
+	order_id	INT NOT NULL,
+	FOREIGN KEY (movie_id) REFERENCES movie(id),
+	PRIMARY KEY (label, movie_id, order_id)
+);
+-- FDs: (none)
+
+CREATE TABLE sets (
+	label 		CHAR(30) NOT NULL,
+	movie_id 	INT NOT NULL,
+	PRIMARY KEY (label, movie_id)
+);
+-- FDs: (none)
