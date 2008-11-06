@@ -1,16 +1,39 @@
--- Mango Database Schema
+-- Mango Database Schema (H2 Compatible)
 
-CREATE DOMAIN MOVIE_MEDIUM CHAR(10)
+CREATE DOMAIN MOVIE_MEDIUM AS CHAR(10)
 	CHECK (VALUE IN ('DVD', 'VHS', 'BRAY', 'HD-DVD', 'DIGITAL', 'VCD') );
 
 -- We allow for TV ratings as well
-CREATE DOMAIN MOVIE_RATING CHAR(5)
+CREATE DOMAIN MOVIE_RATING AS CHAR(5)
 	CHECK (VALUE IN ('G', 'PG', 'PG-13', 'NC-17', 'R', 'NR', 'RP', 'TVPG', 
 					 'TVY7', 'TVY7FV', 'TVG', 'TV14', 'TVMA') );
 
 -- 10 Digit numbers
-CREATE DOMAIN PHONE_NUMBER INT(10)
+CREATE DOMAIN PHONE_NUMBER AS INT(10)
 	CHECK (VALUE > 999999999 AND VALUE < 10000000000);
+
+
+CREATE TABLE person (
+  id      INT NOT NULL,
+  name    CHAR(50) NOT NULL,
+  address   CHAR(256),
+  phone_num PHONE_NUMBER,
+  email   CHAR(70),
+  PRIMARY KEY(id)
+);
+-- FDs:
+--   id -> {all}
+-- (In BCNF.)
+
+CREATE TABLE actor (
+  id        INT NOT NULL,
+  first_name    CHAR(50) NOT NULL,
+  last_name   CHAR(50) NOT NULL,
+  PRIMARY KEY(id)
+);
+-- FDs:
+--   id -> {all}
+-- (In BCNF.)
 
 CREATE TABLE movie (
 	id					INT NOT NULL,
@@ -38,28 +61,6 @@ CREATE TABLE movie (
 -- (In BCNF.  Note that {title, director} and {title, year} are not specified
 --   as FDs in order to allow for NULL values in cases where that information
 --   does not apply.  One example would be for home videos.)
-
-CREATE TABLE person (
-	id			INT NOT NULL,
-	name		CHAR(50) NOT NULL,
-	address		CHAR(256),
-	phone_num	PHONE_NUMBER,
-	email		CHAR(70),
-	PRIMARY KEY(id)
-);
--- FDs:
---   id -> {all}
--- (In BCNF.)
-
-CREATE TABLE actor (
-	id				INT NOT NULL,
-	first_name		CHAR(50) NOT NULL,
-	last_name		CHAR(50) NOT NULL,
-	PRIMARY KEY(id)
-);
--- FDs:
---   id -> {all}
--- (In BCNF.)
 
 CREATE TABLE acting_roles (
 	movie_id		INT NOT NULL,
