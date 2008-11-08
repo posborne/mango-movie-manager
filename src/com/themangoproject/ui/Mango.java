@@ -26,17 +26,80 @@ public class Mango extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mainMenuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        editMenu = new javax.swing.JMenu();
+        viewMenu = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        mainSplitPane = new javax.swing.JSplitPane();
+        leftSplitPane = new javax.swing.JSplitPane();
+        navigatorPanel1 = new com.themangoproject.ui.NavigatorPanel();
+        itemInfoPanel1 = new com.themangoproject.ui.ItemInfoPanel();
+        viewPanel1 = new com.themangoproject.ui.ViewPanel();
+        bottomBar1 = new com.themangoproject.ui.BottomBar();
+        mainMenuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        editMenu = new javax.swing.JMenu();
+        viewMenu = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Mango Movie Manager");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        fileMenu.setText("File");
+        mainMenuBar.add(fileMenu);
+
+        editMenu.setText("Edit");
+        mainMenuBar.add(editMenu);
+
+        viewMenu.setText("View");
+        mainMenuBar.add(viewMenu);
+
+        jMenu1.setText("Help");
+        mainMenuBar.add(jMenu1);
+
+        setJMenuBar(mainMenuBar);
+
+        mainSplitPane.setDividerLocation(280);
+        mainSplitPane.setDividerSize(3);
+
+        leftSplitPane.setDividerLocation(600);
+        leftSplitPane.setDividerSize(3);
+        leftSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        leftSplitPane.setTopComponent(navigatorPanel1);
+        leftSplitPane.setRightComponent(itemInfoPanel1);
+
+        mainSplitPane.setLeftComponent(leftSplitPane);
+        mainSplitPane.setRightComponent(viewPanel1);
+
+        fileMenu.setText("File");
+        mainMenuBar.add(fileMenu);
+
+        editMenu.setText("Edit");
+        mainMenuBar.add(editMenu);
+
+        viewMenu.setText("View");
+        mainMenuBar.add(viewMenu);
+
+        jMenu1.setText("Help");
+        mainMenuBar.add(jMenu1);
+
+        setJMenuBar(mainMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+            .addComponent(bottomBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainSplitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bottomBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -54,6 +117,17 @@ public class Mango extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.themangoproject.ui.BottomBar bottomBar1;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenu fileMenu;
+    private com.themangoproject.ui.ItemInfoPanel itemInfoPanel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JSplitPane leftSplitPane;
+    private javax.swing.JMenuBar mainMenuBar;
+    private javax.swing.JSplitPane mainSplitPane;
+    private com.themangoproject.ui.NavigatorPanel navigatorPanel1;
+    private javax.swing.JMenu viewMenu;
+    private com.themangoproject.ui.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
 
 }
