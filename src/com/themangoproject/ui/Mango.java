@@ -7,6 +7,8 @@
 package com.themangoproject.ui;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -139,6 +141,24 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     * @param args the command line arguments
     */
     public static void main(String args[]) {
+        try {
+            UIManager.setLookAndFeel(
+                UIManager.getSystemLookAndFeelClassName());
+        }
+        // Just use the default ugly Look and Feel then
+        catch (UnsupportedLookAndFeelException e) {
+        // handle exception
+        }
+        catch (ClassNotFoundException e) {
+        // handle exception
+        }
+        catch (InstantiationException e) {
+        // handle exception
+        }
+        catch (IllegalAccessException e) {
+        // handle exception
+        }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Mango().setVisible(true);
