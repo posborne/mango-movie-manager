@@ -66,6 +66,9 @@
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
       <Color id="Default Cursor"/>
     </Property>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[655, 500]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="mainMenuBar1"/>
@@ -85,15 +88,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="mainSplitPane" alignment="0" pref="840" max="32767" attributes="0"/>
-          <Component id="bottomBar1" alignment="0" pref="840" max="32767" attributes="0"/>
+          <Component id="mainSplitPane" alignment="0" pref="750" max="32767" attributes="0"/>
+          <Component id="bottomBar1" alignment="0" pref="750" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="mainSplitPane" min="-2" pref="670" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="mainSplitPane" pref="600" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="bottomBar1" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -102,7 +105,7 @@
   <SubComponents>
     <Container class="javax.swing.JSplitPane" name="mainSplitPane">
       <Properties>
-        <Property name="dividerLocation" type="int" value="280"/>
+        <Property name="dividerLocation" type="int" value="220"/>
         <Property name="dividerSize" type="int" value="3"/>
       </Properties>
 
@@ -110,7 +113,7 @@
       <SubComponents>
         <Container class="javax.swing.JSplitPane" name="leftSplitPane">
           <Properties>
-            <Property name="dividerLocation" type="int" value="600"/>
+            <Property name="dividerLocation" type="int" value="400"/>
             <Property name="dividerSize" type="int" value="3"/>
             <Property name="orientation" type="int" value="0"/>
           </Properties>
@@ -139,6 +142,14 @@
           </SubComponents>
         </Container>
         <Component class="com.themangoproject.ui.ViewPanel" name="viewPanel1">
+          <Properties>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
               <JSplitPaneConstraints position="right"/>
