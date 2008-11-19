@@ -34,6 +34,7 @@ public class Mango extends javax.swing.JFrame {
         leftSplitPane = new javax.swing.JSplitPane();
         navigatorPanel1 = new com.themangoproject.ui.NavigatorPanel();
         itemInfoPanel1 = new com.themangoproject.ui.ItemInfoPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         viewPanel1 = new com.themangoproject.ui.ViewPanel();
         bottomBar1 = new com.themangoproject.ui.BottomBar();
         mainMenuBar1 = new javax.swing.JMenuBar();
@@ -63,9 +64,9 @@ public class Mango extends javax.swing.JFrame {
 
         mainSplitPane.setLeftComponent(leftSplitPane);
 
-        viewPanel1.setMinimumSize(new java.awt.Dimension(0, 0));
-        viewPanel1.setPreferredSize(new java.awt.Dimension(0, 0));
-        mainSplitPane.setRightComponent(viewPanel1);
+        jScrollPane1.setViewportView(viewPanel1);
+
+        mainSplitPane.setRightComponent(jScrollPane1);
 
         fileMenu1.setText("File");
 
@@ -180,6 +181,7 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane leftSplitPane;
     private javax.swing.JMenuBar mainMenuBar1;
