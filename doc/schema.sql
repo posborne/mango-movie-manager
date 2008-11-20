@@ -14,7 +14,7 @@ CREATE DOMAIN PHONE_NUMBER AS INT(10)
 
 
 CREATE TABLE person (
-  id      INT NOT NULL,
+  id      INT NOT NULL AUTO_INCREMENT,
   name    CHAR(50) NOT NULL,
   address   CHAR(256),
   phone_num PHONE_NUMBER,
@@ -26,7 +26,7 @@ CREATE TABLE person (
 -- (In BCNF.)
 
 CREATE TABLE actor (
-  id        INT NOT NULL,
+  id        INT NOT NULL AUTO_INCREMENT,
   first_name    CHAR(50) NOT NULL,
   last_name   CHAR(50) NOT NULL,
   PRIMARY KEY(id)
@@ -36,7 +36,7 @@ CREATE TABLE actor (
 -- (In BCNF.)
 
 CREATE TABLE movie (
-	id					INT NOT NULL,
+	id					INT NOT NULL AUTO_INCREMENT,
 	director			CHAR(50) NOT NULL,
 	title				CHAR(256) NOT NULL,
 	rating				MOVIE_RATING NOT NULL DEFAULT 'NR',
