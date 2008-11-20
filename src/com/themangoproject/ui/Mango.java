@@ -33,6 +33,7 @@ public class Mango extends javax.swing.JFrame {
         mainSplitPane = new javax.swing.JSplitPane();
         leftSplitPane = new javax.swing.JSplitPane();
         navigatorPanel1 = new com.themangoproject.ui.NavigatorPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         itemInfoPanel1 = new com.themangoproject.ui.ItemInfoPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         viewPanel1 = new com.themangoproject.ui.ViewPanel();
@@ -60,13 +61,18 @@ public class Mango extends javax.swing.JFrame {
         leftSplitPane.setDividerSize(3);
         leftSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setTopComponent(navigatorPanel1);
-        leftSplitPane.setRightComponent(itemInfoPanel1);
+
+        jScrollPane2.setViewportView(itemInfoPanel1);
+
+        leftSplitPane.setRightComponent(jScrollPane2);
 
         mainSplitPane.setLeftComponent(leftSplitPane);
 
         jScrollPane1.setViewportView(viewPanel1);
 
         mainSplitPane.setRightComponent(jScrollPane1);
+
+        this.bottomBar1.setParent(this);
 
         fileMenu1.setText("File");
 
@@ -134,6 +140,7 @@ private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jMenuItem4ActionPerformed
 
 private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    // Add a new movie
     JFrame addFrame = new MovieAddEditFrame();
     addFrame.setVisible(true);
 }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -141,6 +148,21 @@ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
 }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+public void toggleInfoPanel() {
+    this.infoPaneOn = !this.infoPaneOn;
+    if (!this.infoPaneOn) // If we are going to hid the infopane
+        // Record the divider location
+        this.dividerLoc = this.leftSplitPane.getDividerLocation();
+    // Show or hide the infopane
+    this.jScrollPane2.setVisible(this.infoPaneOn);
+    // Set divider location
+    this.leftSplitPane.setDividerLocation(this.dividerLoc);  
+}
+
+public void newMovie() {
+    new MovieAddEditFrame().setVisible(true);
+}
 
     /**
     * @param args the command line arguments
@@ -182,6 +204,7 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane leftSplitPane;
     private javax.swing.JMenuBar mainMenuBar1;
@@ -190,5 +213,6 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenu viewMenu1;
     private com.themangoproject.ui.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
-
+    private boolean infoPaneOn = true;
+    private int dividerLoc;
 }

@@ -3,3 +3,6 @@ Todo
 Icons for buttons and tree folders
 Save window size
 keep item info panel from auto resizing.  I want it to be a square
+
+
+Should the popups be allowed to have one instance (singleton)?

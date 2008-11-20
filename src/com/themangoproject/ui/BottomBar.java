@@ -35,14 +35,19 @@ public class BottomBar extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
-        jButton1.setText("B1");
+        jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("B3");
+        jButton2.setText("Info");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("B2");
 
@@ -83,9 +88,16 @@ public class BottomBar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-// TODO add your handling code here:
+    this.parent.newMovie();
 }//GEN-LAST:event_jButton1ActionPerformed
 
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    this.parent.toggleInfoPanel();
+}//GEN-LAST:event_jButton2ActionPerformed
+
+public void setParent(Mango parent) {
+    this.parent = parent;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -95,5 +107,5 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-
+    private Mango parent;
 }

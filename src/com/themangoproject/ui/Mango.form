@@ -132,13 +132,19 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.themangoproject.ui.ItemInfoPanel" name="itemInfoPanel1">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="right"/>
                 </Constraint>
               </Constraints>
-            </Component>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="com.themangoproject.ui.ItemInfoPanel" name="itemInfoPanel1">
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -157,6 +163,9 @@
       </SubComponents>
     </Container>
     <Component class="com.themangoproject.ui.BottomBar" name="bottomBar1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="this.bottomBar1.setParent(this);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
