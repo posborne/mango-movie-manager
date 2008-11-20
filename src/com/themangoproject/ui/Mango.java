@@ -151,9 +151,13 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
 public void toggleInfoPanel() {
     this.infoPaneOn = !this.infoPaneOn;
-    if (!this.infoPaneOn) // If we are going to hid the infopane
+    if (!this.infoPaneOn) {// If we are going to hid the infopane
         // Record the divider location
         this.dividerLoc = this.leftSplitPane.getDividerLocation();
+        this.leftSplitPane.setDividerSize(0);
+    } else {
+        this.leftSplitPane.setDividerSize(3);
+    }
     // Show or hide the infopane
     this.jScrollPane2.setVisible(this.infoPaneOn);
     // Set divider location
