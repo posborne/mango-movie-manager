@@ -6,6 +6,7 @@
 
 package com.themangoproject.ui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -52,6 +53,7 @@ public class Mango extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mango Movie Manager");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(new ImageIcon("images/magnify.png").getImage());
         setMinimumSize(new java.awt.Dimension(655, 500));
 
         mainSplitPane.setDividerLocation(220);
@@ -219,4 +221,5 @@ public void newMovie() {
     // End of variables declaration//GEN-END:variables
     private boolean infoPaneOn = true;
     private int dividerLoc;
+    
 }
