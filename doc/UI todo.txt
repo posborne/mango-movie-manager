@@ -6,3 +6,7 @@ keep item info panel from auto resizing.  I want it to be a square
 
 
 Should the popups be allowed to have one instance (singleton)?
+-- No just make them modal or amodal whatever one it is
+
+Add component below, we need to be able to keep track of the order of all the
+components.
