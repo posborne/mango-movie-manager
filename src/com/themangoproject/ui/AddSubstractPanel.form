@@ -18,7 +18,7 @@
     <Property name="verticalGap" type="int" value="1"/>
   </Layout>
   <SubComponents>
-    <Component class="com.themangoproject.ui.AddSubtractDropDownPanel" name="addSubtractDropDownPanel1">
+    <Component class="com.themangoproject.ui.AddSubtractInnerPanel" name="addSubtractDropDownPanel1">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="this.addSubtractDropDownPanel1.disableMinusButton();"/>
       </AuxValues>

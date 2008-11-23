@@ -12,10 +12,10 @@ import java.util.ArrayList;
  *
  * @author  kronning
  */
-public class AddSubstractDaddyPanel extends javax.swing.JPanel {
+public class AddSubstractPanel extends javax.swing.JPanel {
 
     /** Creates new form AddSubstractDaddyPanel */
-    public AddSubstractDaddyPanel() {
+    public AddSubstractPanel() {
         initComponents();
         //this.orderTracker.add(this.addSubtractDropDownPanel1);
     }
@@ -29,7 +29,7 @@ public class AddSubstractDaddyPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        addSubtractDropDownPanel1 = new com.themangoproject.ui.AddSubtractDropDownPanel();
+        addSubtractDropDownPanel1 = new com.themangoproject.ui.AddSubtractInnerPanel();
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 1, 1));
 
@@ -39,19 +39,19 @@ public class AddSubstractDaddyPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.themangoproject.ui.AddSubtractDropDownPanel addSubtractDropDownPanel1;
+    private com.themangoproject.ui.AddSubtractInnerPanel addSubtractDropDownPanel1;
     // End of variables declaration//GEN-END:variables
     
     //private ArrayList<AddSubtractDropDownPanel> orderTracker = new ArrayList<AddSubtractDropDownPanel>();
     
     public void addAddSubPanel() {
-        this.add(new AddSubtractDropDownPanel());
+        this.add(new AddSubtractInnerPanel());
         if (this.getComponentCount() == 2)
-            ((AddSubtractDropDownPanel)this.getComponent(0)).enableMinusButton();
+            ((AddSubtractInnerPanel)this.getComponent(0)).enableMinusButton();
         else if (this.getComponentCount() == 10) {
             for (int i = 0; i < 10; i++) {
                 // disable all + buttons
-                ((AddSubtractDropDownPanel)
+                ((AddSubtractInnerPanel)
                         this.getComponent(i)).disablePlusButton();
             }
         } 
@@ -60,18 +60,18 @@ public class AddSubstractDaddyPanel extends javax.swing.JPanel {
         this.repaint();
         }
     
-    public void removeAddSubPanel(AddSubtractDropDownPanel a) {
+    public void removeAddSubPanel(AddSubtractInnerPanel a) {
         this.remove(a);
         if (this.getComponentCount() == 9) {
             for (int i = 0; i < 9; i++) {
                 // disable all + buttons
-                ((AddSubtractDropDownPanel)
+                ((AddSubtractInnerPanel)
                         this.getComponent(i)).enablePlusButton();
             }            
         }
         else if (this.getComponentCount() == 1) {
             // Disable the one - button
-            ((AddSubtractDropDownPanel)
+            ((AddSubtractInnerPanel)
                     this.getComponent(0)).disableMinusButton();        
         }
 //System.out.println(this.getComponentCount());        

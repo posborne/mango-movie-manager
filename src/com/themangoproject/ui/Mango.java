@@ -53,7 +53,6 @@ public class Mango extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mango Movie Manager");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setIconImage(new ImageIcon("images/magnify.png").getImage());
         setMinimumSize(new java.awt.Dimension(655, 500));
 
         mainSplitPane.setDividerLocation(220);
@@ -74,6 +73,7 @@ public class Mango extends javax.swing.JFrame {
 
         mainSplitPane.setRightComponent(jScrollPane1);
 
+        // try to remove this later
         this.bottomBar1.setParent(this);
 
         fileMenu1.setText("File");
@@ -143,8 +143,8 @@ private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
 private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
     // Add a new movie
-    JFrame addFrame = new MovieAddEditFrame();
-    addFrame.setVisible(true);
+    MovieAddEditDialog addDialog = new MovieAddEditDialog(this, true);
+    addDialog.setVisible(true);
 }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -153,12 +153,14 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
 public void toggleInfoPanel() {
     this.infoPaneOn = !this.infoPaneOn;
-    if (!this.infoPaneOn) {// If we are going to hid the infopane
+    if (!this.infoPaneOn) {// If we are going to hide the infopane
         // Record the divider location
         this.dividerLoc = this.leftSplitPane.getDividerLocation();
         this.leftSplitPane.setDividerSize(0);
+        this.bottomBar1.setInfoIcon(0);
     } else {
         this.leftSplitPane.setDividerSize(3);
+        this.bottomBar1.setInfoIcon(1);  // make better later
     }
     // Show or hide the infopane
     this.jScrollPane2.setVisible(this.infoPaneOn);
@@ -167,7 +169,7 @@ public void toggleInfoPanel() {
 }
 
 public void newMovie() {
-    new MovieAddEditFrame().setVisible(true);
+    new MovieAddEditDialog(this, true).setVisible(true);
 }
 
     /**
@@ -194,7 +196,9 @@ public void newMovie() {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Mango().setVisible(true);
+                Mango m = new Mango();
+                m.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/mango.png")).getImage());
+                m.setVisible(true);
             }
         });
     }

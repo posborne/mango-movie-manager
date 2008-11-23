@@ -1,21 +1,20 @@
 /*
- * SavedSearchFrame.java
+ * SavedSearchDialog.java
  *
- * Created on November 8, 2008, 4:44 PM
+ * Created on November 23, 2008, 2:06 AM
  */
 
 package com.themangoproject.ui;
 
-import java.awt.Dimension;
-
 /**
  *
- * @author  Paul Osborne, Kyle Ronning
+ * @author  kronning
  */
-public class SavedSearchFrame extends javax.swing.JFrame {
+public class SavedSearchDialog extends javax.swing.JDialog {
 
-    /** Creates new form SavedSearchFrame */
-    public SavedSearchFrame() {
+    /** Creates new form SavedSearchDialog */
+    public SavedSearchDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -30,25 +29,22 @@ public class SavedSearchFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         addSubstractDaddyPanel1 = new com.themangoproject.ui.AddSubstractPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Saved Search:");
-        setResizable(false);
 
         jLabel1.setText("Name");
 
-        jButton1.setText("Cancel");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Attribute");
+
+        jLabel3.setText("Constraint");
+
+        jLabel4.setText("Value");
 
         jButton2.setText("Done");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -57,16 +53,18 @@ public class SavedSearchFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Attribute");
-
-        jLabel3.setText("Constraint");
-
-        jLabel4.setText("Value");
+        jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 488, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -91,6 +89,7 @@ public class SavedSearchFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 604, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
@@ -114,11 +113,11 @@ public class SavedSearchFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    this.dispose();
+this.dispose();
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    this.dispose();
+this.dispose();
 }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -127,7 +126,13 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SavedSearchFrame().setVisible(true);
+                SavedSearchDialog dialog = new SavedSearchDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -142,5 +147,5 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-    
+
 }

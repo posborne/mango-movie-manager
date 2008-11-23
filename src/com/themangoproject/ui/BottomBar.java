@@ -10,8 +10,7 @@ package com.themangoproject.ui;
 
 /**
  *
- * @author  osbpau
- */
+ * @author  Kyle Ronning, Paul Osborne */
 public class BottomBar extends javax.swing.JPanel {
 
     /** Creates new form BottomBar */
@@ -42,7 +41,8 @@ public class BottomBar extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Info");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/arrow_down.png"))); // NOI18N
+        jButton2.setToolTipText("Show/Hide Movie Info");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -69,7 +69,7 @@ public class BottomBar extends javax.swing.JPanel {
                 .addComponent(jButton2)
                 .addGap(200, 200, 200)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5))
@@ -89,14 +89,25 @@ public class BottomBar extends javax.swing.JPanel {
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     this.parent.newMovie();
+    //((Mango)this.getParent()).newMovie();
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     this.parent.toggleInfoPanel();
+    //((Mango)this.getParent().getParent().getParent().set.toggleInfoPanel();
 }//GEN-LAST:event_jButton2ActionPerformed
 
 public void setParent(Mango parent) {
     this.parent = parent;
+}
+
+public void setInfoIcon(int i) {
+    if (i == 0)
+        this.jButton2.setIcon(new javax.swing.ImageIcon(getClass().
+                getResource("/com/themangoproject/ui/images/arrow_up.png")));
+    else if (i == 1)
+        this.jButton2.setIcon(new javax.swing.ImageIcon(getClass().
+                getResource("/com/themangoproject/ui/images/arrow_down.png")));
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
