@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.themangoproject.model;
 
 import java.sql.Connection;
@@ -14,8 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author osbpau
+ * Test the H2Util class methods.
+ * @author Paul Osborne
  */
 public class H2UtilTest {
 
@@ -43,10 +38,9 @@ public class H2UtilTest {
      */
     @Test
     public void testGetConnection() {
-        System.out.println("getConnection");
         H2Util instance = H2Util.getInstance();
-        Connection expResult = null;
         Connection result = instance.getConnection();
+        assertNotNull(result);
     }
 
 }
