@@ -1,18 +1,19 @@
 -- Mango Database Schema (H2 Compatible)
-
+DROP DOMAIN IF EXISTS MOVIE_MEDIUM;
 CREATE DOMAIN MOVIE_MEDIUM AS CHAR(10)
 	CHECK (VALUE IN ('DVD', 'VHS', 'BRAY', 'HD-DVD', 'DIGITAL', 'VCD') );
 
 -- We allow for TV ratings as well
+DROP DOMAIN IF EXISTS MOVIE_RATING;
 CREATE DOMAIN MOVIE_RATING AS CHAR(5)
 	CHECK (VALUE IN ('G', 'PG', 'PG-13', 'NC-17', 'R', 'NR', 'RP', 'TVPG', 
-					 'TVY7', 'TVY7FV', 'TVG', 'TV14', 'TVMA') );
+			 'TVY7', 'TVY7FV', 'TVG', 'TV14', 'TVMA') );
 
 -- 10 Digit numbers
-CREATE DOMAIN PHONE_NUMBER AS INT(10)
-	CHECK (VALUE > 999999999 AND VALUE < 10000000000);
+DROP DOMAIN IF EXISTS PHONE_NUMBER;
+CREATE DOMAIN PHONE_NUMBER AS VARCHAR(25);
 
-
+DROP TABLE IF EXISTS person;
 CREATE TABLE person (
   id      INT NOT NULL AUTO_INCREMENT,
   name    CHAR(50) NOT NULL,
@@ -25,6 +26,7 @@ CREATE TABLE person (
 --   id -> {all}
 -- (In BCNF.)
 
+DROP TABLE IF EXISTS actor;
 CREATE TABLE actor (
   id        INT NOT NULL AUTO_INCREMENT,
   first_name    CHAR(50) NOT NULL,
@@ -35,6 +37,7 @@ CREATE TABLE actor (
 --   id -> {all}
 -- (In BCNF.)
 
+DROP TABLE IF EXISTS movie;
 CREATE TABLE movie (
 	id					INT NOT NULL AUTO_INCREMENT,
 	director			CHAR(50) NOT NULL,
@@ -62,6 +65,7 @@ CREATE TABLE movie (
 --   as FDs in order to allow for NULL values in cases where that information
 --   does not apply.  One example would be for home videos.)
 
+DROP TABLE IF EXISTS acting_roles;
 CREATE TABLE acting_roles (
 	movie_id		INT NOT NULL,
 	actor_id		INT NOT NULL,
@@ -75,6 +79,7 @@ CREATE TABLE acting_roles (
 --   {movie_id, actor_id} -> {role, character}
 -- (In BCNF.)
 
+DROP TABLE IF EXISTS genre;
 CREATE TABLE genre (
 	name			CHAR(50) NOT NULL,
 	movie_id		INT NOT NULL,
@@ -84,6 +89,7 @@ CREATE TABLE genre (
 -- FDs: (none)
 -- (In BCNF.)
 
+DROP TABLE IF EXISTS saved_searches;
 CREATE TABLE saved_searches (
 	label		CHAR(30) NOT NULL,
  	query		TEXT NOT NULL,
@@ -93,6 +99,7 @@ CREATE TABLE saved_searches (
 --   {label} -> {query}
 -- (In BCNF.)
 
+DROP TABLE IF EXISTS lists;
 CREATE TABLE lists (
 	label		CHAR(30) NOT NULL,
 	movie_id	INT NOT NULL,
@@ -102,6 +109,7 @@ CREATE TABLE lists (
 );
 -- FDs: (none)
 
+DROP TABLE IF EXISTS sets;
 CREATE TABLE sets (
 	label 		CHAR(30) NOT NULL,
 	movie_id 	INT NOT NULL,
