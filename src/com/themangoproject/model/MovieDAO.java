@@ -7,9 +7,9 @@ public interface MovieDAO {
 
     public List<Movie> getAllMovies ();
 
-    public void updateMovie (Movie movie);
+    public Movie updateMovie (Movie movie);
 
-    public void addMovie (Movie movie);
+    public Movie addMovie (Movie movie);
 
     public void deleteMovie (Movie movie);
 

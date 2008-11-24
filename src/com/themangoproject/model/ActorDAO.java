@@ -9,7 +9,7 @@ public interface ActorDAO {
 
     public List<Role> getRolesForActor (Actor actor);
 
-    public void addActor (Actor actor);
+    public DBActor addActor (Actor actor);
 
     public void updateActor (Actor actor);
 

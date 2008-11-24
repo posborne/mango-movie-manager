@@ -9,11 +9,11 @@ public class H2MovieDAO implements MovieDAO {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void updateMovie(Movie movie) {
+    public Movie updateMovie(Movie movie) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void addMovie(Movie movie) {
+    public Movie addMovie(Movie movie) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -13,7 +13,7 @@ public class H2ActorDAO implements ActorDAO {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void addActor(Actor actor) {
+    public DBActor addActor(Actor actor) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
