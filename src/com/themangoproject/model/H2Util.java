@@ -1,6 +1,8 @@
 package com.themangoproject.model;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,15 +17,27 @@ public class H2Util {
         
     }
     
-    private H2Util getInstance() {
+    public static H2Util getInstance() {
         if (instance == null) {
             instance = new H2Util();
         }
         return instance;
     }
     
+    private Connection connectToDb() throws SQLException {
+        String url = "jdbc:h2:~/mango.db";
+        return DriverManager.getConnection(url);
+    }
+    
     public Connection getConnection() {
-        return null;
+        if (conn == null) {
+            try {
+                conn = connectToDb();
+            } catch (SQLException ex) {
+               System.err.println("Could not connect to H2 DB: " + ex);
+            }
+        }
+        return conn;
     }
     
 }
