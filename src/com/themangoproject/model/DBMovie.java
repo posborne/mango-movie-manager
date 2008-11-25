@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DBMovie implements Movie {
 
-    private int id, runtime, mangoRating, year;
+    private Integer id, runtime, mangoRating, year;
     private String director, title, rating, ASIN, customDescription;
     private boolean changed;
     private Date purchaseDate;
@@ -117,7 +117,12 @@ public class DBMovie implements Movie {
      * @return the mango rating of this movie
      */
     public int getMangoRating() {
-        return this.mangoRating;
+    	if (mangoRating != null) {
+			return this.mangoRating;
+		} else {
+			//TODO: load info from Controller			
+			return this.mangoRating;
+		}
     }
 
     /** 
@@ -126,7 +131,7 @@ public class DBMovie implements Movie {
      * @return all the actors in this movie
      */
     public List<Actor> getActors() {
-    	// TODO: Request Actors from DAO
+    	// TODO: Request Actors from Controller
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -212,7 +217,6 @@ public class DBMovie implements Movie {
      * 
      * @param ASIN the ASIN to set for this movie
      */
-    //TODO: Do we need this?
     public void setASIN(String ASIN) {
     	this.ASIN = ASIN;
     	this.changed = true;
@@ -234,7 +238,6 @@ public class DBMovie implements Movie {
      * 
      * @param purchaseDate the date this movie was purchased
      */
-    //TODO: Do we need this?
     public void setPurchaseDate(Date purchaseDate){
     	this.purchaseDate = purchaseDate;
     	changed = true;
@@ -256,7 +259,6 @@ public class DBMovie implements Movie {
      * 
      * @param customDescription the new custom description of this movie
      */
-    //TODO: Do we need this?
     public void setCustomDescription(String customDescription){
     	this.customDescription = customDescription;
     	this.changed = true;
