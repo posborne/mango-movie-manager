@@ -6,8 +6,10 @@ import java.util.List;
 
 public class DBMovie implements Movie {
 
-    private int id, runTime, mangoRating;
-    private String director, title, rating;
+    private int id, runtime, mangoRating, year;
+    private String director, title, rating, ASIN, customDescription;
+    private boolean changed;
+    private Date purchaseDate;
 
     public int getId () {
         return 0;
@@ -20,6 +22,7 @@ public class DBMovie implements Movie {
      */
     public void setDirector(String director) {
         this.director = director;
+        this.changed = true;
         // TODO: Add change handling here
     }
 
@@ -39,6 +42,7 @@ public class DBMovie implements Movie {
      */
     public void setTitle(String title) {
         this.title = title;
+        this.changed = true;
         // TODO: Add change handling here
     }
 
@@ -58,6 +62,7 @@ public class DBMovie implements Movie {
      */
     public void setRating(String rating) {
         this.rating = rating;
+        this.changed = true;
         //TODO: Add change handling here
     }
 
@@ -73,8 +78,9 @@ public class DBMovie implements Movie {
      * 
      * @param length the new run-time of the movie
      */
-    public void setRunTime(int runTime) {
-        this.runTime = runTime;
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+        this.changed = true;
         // TODO: Add change handling here.
     }
 
@@ -83,8 +89,8 @@ public class DBMovie implements Movie {
      * 
      * @return the run-time of the movie
      */
-    public int getRunTime() {
-        return this.runTime;
+    public int getRuntime() {
+        return this.runtime;
     }
 
     /**
@@ -92,10 +98,13 @@ public class DBMovie implements Movie {
      * is roughly the same as 0-5 stars).
      * 
      * @param mangoRating the new mango rating, an int between 0-10
+     * @throws IllegalArgumentException if the mango rating is not an integer between
+     * 0 and 10
      */
-    public void setMangoRating(int mangoRating) {
+    public void setMangoRating(int mangoRating) throws IllegalArgumentException {
         if(mangoRating <= 10 && mangoRating >= 0){
         	this.mangoRating = mangoRating;
+        	this.changed = true;
         } else {
         	throw new IllegalArgumentException("Mango rating must be between 0 and 10");
         }
@@ -129,6 +138,7 @@ public class DBMovie implements Movie {
      */
     public void addActor(Actor actor) {
     	// TODO: Should this be a role instead of an actor?
+    	this.changed = true;
         throw new UnsupportedOperationException("Not suppor ted yet.");
     }
 
@@ -139,6 +149,7 @@ public class DBMovie implements Movie {
      */
     public void removeActor(Actor actor) {
     	// TODO: Should this be a role?
+    	this.changed = true;
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -150,27 +161,106 @@ public class DBMovie implements Movie {
      * loaded from the database.
      */
     public boolean hasChanged() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return changed;
     }
 
-    public int getRuntime() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+//    /**
+//     * This will return the 
+//     * 
+//     */
+//    public int getRuntime() {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
 
+    /** 
+     * This will return the year the movie was released
+     * 
+     * @return the year the movie was released.
+     */
     public int getYear() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    	return this.year;
+    }
+    
+    
+    /**
+     * This will set the year the movie was released
+     * 
+     * @param year the year the movie was released
+     * @throws IllegalArgumentException if the year is not a valid year i.e.
+     * if it is not an int between 1890 and 9999
+     */
+    public void setYear(int year) throws IllegalArgumentException {
+    	if(year < 10000 && year > 1890){
+    		this.year = year;
+    		this.changed = true;
+    	} else {
+    		throw new IllegalArgumentException("Not a valid year;");
+    	}
     }
 
+    /**
+     * This will return the ASIN (Amazon System? Indentification Number)
+     * 
+     * @return the ASIN of this movie
+     */
     public String getASIN() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.ASIN;
+    }
+    
+    /**
+     * This will change the ASIN for this movie
+     * 
+     * @param ASIN the ASIN to set for this movie
+     */
+    //TODO: Do we need this?
+    public void setASIN(String ASIN) {
+    	this.ASIN = ASIN;
+    	this.changed = true;
+    	//TODO: Add change handling here    	
     }
 
+    /** 
+     * This will return the date this movie was purchased.
+     * 
+     * @return Date the date this movie was purchased
+     * 
+     */
     public Date getPurchaseDate() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.purchaseDate;
+    }
+    
+    /**
+     * This will set the purchase date of this movie
+     * 
+     * @param purchaseDate the date this movie was purchased
+     */
+    //TODO: Do we need this?
+    public void setPurchaseDate(Date purchaseDate){
+    	this.purchaseDate = purchaseDate;
+    	changed = true;
+    	//TODO: Change handling here
     }
 
+    /**
+     * This will return the custom description of this movie as described
+     * by the owner
+     * 
+     * @return CustomDescription is the custom description of this movie 
+     */
     public String getCustomDescription() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.customDescription;
+    }
+    
+    /**
+     * This will set the custom description of this movie
+     * 
+     * @param customDescription the new custom description of this movie
+     */
+    //TODO: Do we need this?
+    public void setCustomDescription(String customDescription){
+    	this.customDescription = customDescription;
+    	this.changed = true;
+    	//TODO: Change handling here
     }
 
     public String getType() {
