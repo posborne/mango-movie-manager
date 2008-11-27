@@ -8,8 +8,11 @@ package com.themangoproject.ui;
 
 
 /**
- *
+ * AddSubtractInnerPanel is a panel that to collect search criteria for 
+ * Saved Searches.
+ * 
  * @author  Kyle Ronning
+ * @version 1.0
  */
 public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
@@ -75,12 +78,17 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox1, jComboBox2, jTextField1});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton3});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,22 +97,23 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox1, jComboBox2, jTextField1});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton3});
+
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     // Add Button
+    // Adds a panel like itself to the AddSubtractPanel.
     ((AddSubstractPanel)this.getParent()).addAddSubPanel();
-    //this.getParent().add(new AddSubtractDropDownPanel());
-    //this.getParent().validate();
-    //System.out.println(this.getParent().toString());
-    
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     // Subtract Button
-    //System.out.println(this.getParent());
+    // Removes this panel from the AddSubtractPanel.
     ((AddSubstractPanel)this.getParent()).removeAddSubPanel(this);
-    //this.getParent().validate();
 }//GEN-LAST:event_jButton3ActionPerformed
 
 
@@ -117,19 +126,30 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-    
+    /**
+     * Disable the plus button in this panel.
+     */
     public void disablePlusButton() {
         this.jButton1.setEnabled(false);
     }
     
+    /**
+     * Enable the plus button in this panel.
+     */
     public void enablePlusButton() {
         this.jButton1.setEnabled(true);
     }
     
+    /**
+     * Disable the minus button in this panel.
+     */
     public void disableMinusButton() {
         this.jButton3.setEnabled(false);
     }
     
+    /**
+     * Enable the minus button in this panel.
+     */
     public void enableMinusButton() {
         this.jButton3.setEnabled(true);
     }

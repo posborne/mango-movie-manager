@@ -9,8 +9,12 @@ package com.themangoproject.ui;
 
 
 /**
- *
- * @author  Kyle Ronning, Paul Osborne */
+ * The BottomBar is the panel along the bottom of the program that has action
+ * buttons and a status label in the middle of the panel.
+ * 
+ * @author  Kyle Ronning, Paul Osborne 
+ * @version 1.0
+ */
 public class BottomBar extends javax.swing.JPanel {
 
     /** Creates new form BottomBar */
@@ -51,11 +55,17 @@ public class BottomBar extends javax.swing.JPanel {
 
         jButton3.setText("B2");
 
-        jLabel1.setText("Status, Status, Status?");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("# Movies / # Actors");
 
         jButton4.setText("B4");
 
-        jButton5.setText("B5");
+        jButton5.setText("UI");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -67,13 +77,18 @@ public class BottomBar extends javax.swing.JPanel {
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addGap(200, 200, 200)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton4, jButton5});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -85,22 +100,36 @@ public class BottomBar extends javax.swing.JPanel {
                 .addComponent(jButton5)
                 .addComponent(jButton4))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton4, jButton5});
+
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    this.parent.newMovie();
-    //((Mango)this.getParent()).newMovie();
+    // Create a new movie dialog
+    new MovieAddEditDialog(
+            (Mango)this.getTopLevelAncestor(), true).setVisible(true);
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    this.parent.toggleInfoPanel();
-    //((Mango)this.getParent().getParent().getParent().set.toggleInfoPanel();
+    // Hide or show the InfoPanel
+    ((Mango)this.getTopLevelAncestor()).toggleInfoPanel();
 }//GEN-LAST:event_jButton2ActionPerformed
 
-public void setParent(Mango parent) {
-    this.parent = parent;
-}
+private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    // Create a new upload thumbnail dialog
+    new UploadThumbnailDialog(
+            (Mango)this.getTopLevelAncestor(), true).setVisible(true);
+}//GEN-LAST:event_jButton5ActionPerformed
 
+/**
+ * Set the icon to the appropriate arrow.  Up arrow if the InfoPanel is hidden.
+ * Down arrow if the InfoPanel is showing.
+ * 
+ * @param i The icon to display.
+ */
 public void setInfoIcon(int i) {
     if (i == 0)
         this.jButton2.setIcon(new javax.swing.ImageIcon(getClass().
@@ -118,5 +147,5 @@ public void setInfoIcon(int i) {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-    private Mango parent;
+
 }

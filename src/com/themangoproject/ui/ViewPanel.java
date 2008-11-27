@@ -9,8 +9,12 @@ package com.themangoproject.ui;
 import java.awt.Color;
 
 /**
- *
- * @author  osbpau
+ * ViewPanel is the main panel of the Mango program.  There are action buttons
+ * that allow the user to change the main panel view from thumbnail to list 
+ * view, search text within the main panel and launch an advanced search option.  
+ * 
+ * @author  Kyle Ronning, Paul Osborne
+ * @version 1.0
  */
 public class ViewPanel extends javax.swing.JPanel {
 
@@ -39,6 +43,7 @@ public class ViewPanel extends javax.swing.JPanel {
 
         jTextField1.setForeground(new java.awt.Color(140, 140, 140));
         jTextField1.setText("Search");
+        jTextField1.setMargin(new java.awt.Insets(2, 4, 2, 2));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -96,12 +101,17 @@ public class ViewPanel extends javax.swing.JPanel {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton4});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -109,6 +119,10 @@ public class ViewPanel extends javax.swing.JPanel {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton4});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton3});
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -149,24 +163,25 @@ private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_jTextField1ActionPerformed
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//    SavedSearchFrame ssf = new SavedSearchFrame();
-//    ssf.setVisible(true);
+    // Searches for the given string of text within the table
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+    // Sets the text color to black and empty text
     this.jTextField1.setForeground(new Color(0, 0, 0));
     this.jTextField1.setText("");
 }//GEN-LAST:event_jTextField1FocusGained
 
 private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+    // Sets the text to read "Search" in gray color
     this.jTextField1.setForeground(new Color(140, 140, 140));
     this.jTextField1.setText("Search");
 }//GEN-LAST:event_jTextField1FocusLost
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    //SavedSearchDialog ssd = new SavedSearchDialog(this, true);
-    SavedSearchFrame ssf = new SavedSearchFrame();
-    ssf.setVisible(true);
+    // Displays SavedSearchDialog
+    SavedSearchDialog ssd = new SavedSearchDialog((Mango)this.getTopLevelAncestor(), true);
+    ssd.setVisible(true);
 }//GEN-LAST:event_jButton4ActionPerformed
 
 

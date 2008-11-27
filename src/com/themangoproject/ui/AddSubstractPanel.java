@@ -9,8 +9,10 @@ package com.themangoproject.ui;
 import java.util.ArrayList;
 
 /**
- *
- * @author  kronning
+ * AddSubstractPanel is a panel to collect AddSubtractInnerPanels.
+ * 
+ * @author  Kyle Ronning
+ * @version 1.0
  */
 public class AddSubstractPanel extends javax.swing.JPanel {
 
@@ -42,8 +44,9 @@ public class AddSubstractPanel extends javax.swing.JPanel {
     private com.themangoproject.ui.AddSubtractInnerPanel addSubtractDropDownPanel1;
     // End of variables declaration//GEN-END:variables
     
-    //private ArrayList<AddSubtractDropDownPanel> orderTracker = new ArrayList<AddSubtractDropDownPanel>();
-    
+    /**
+     * Adds an AddSubtractInnerPanel to this panel.
+     */
     public void addAddSubPanel() {
         this.add(new AddSubtractInnerPanel());
         if (this.getComponentCount() == 2)
@@ -54,12 +57,15 @@ public class AddSubstractPanel extends javax.swing.JPanel {
                 ((AddSubtractInnerPanel)
                         this.getComponent(i)).disablePlusButton();
             }
-        } 
-//System.out.println(this.getComponentCount());        
+        }        
         this.validate();
         this.repaint();
-        }
+    }
     
+    /**
+     * Removes an AddSubtractInnerPanel from this panel.
+     * @param a The AddSubtractInnerPanel to remove from this panel.
+     */
     public void removeAddSubPanel(AddSubtractInnerPanel a) {
         this.remove(a);
         if (this.getComponentCount() == 9) {
@@ -73,11 +79,9 @@ public class AddSubstractPanel extends javax.swing.JPanel {
             // Disable the one - button
             ((AddSubtractInnerPanel)
                     this.getComponent(0)).disableMinusButton();        
-        }
-//System.out.println(this.getComponentCount());        
+        }        
         this.validate();
         this.repaint();
     }
-    
-      
+         
 }

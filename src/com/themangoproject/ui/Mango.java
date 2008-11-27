@@ -6,14 +6,14 @@
 
 package com.themangoproject.ui;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
- * @author  osbpau
+ * Mango is the main class for the Mango Movie Manager program.
+ * 
+ * @author  Kyle Ronning, Paul Osborne
+ * @version 1.0
  */
 public class Mango extends javax.swing.JFrame {
 
@@ -59,8 +59,9 @@ public class Mango extends javax.swing.JFrame {
         mainSplitPane.setDividerSize(3);
 
         leftSplitPane.setDividerLocation(400);
-        leftSplitPane.setDividerSize(3);
+        leftSplitPane.setDividerSize(0);
         leftSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        leftSplitPane.setResizeWeight(1.0);
         leftSplitPane.setTopComponent(navigatorPanel1);
 
         jScrollPane2.setViewportView(itemInfoPanel1);
@@ -72,9 +73,6 @@ public class Mango extends javax.swing.JFrame {
         jScrollPane1.setViewportView(viewPanel1);
 
         mainSplitPane.setRightComponent(jScrollPane1);
-
-        // try to remove this later
-        this.bottomBar1.setParent(this);
 
         fileMenu1.setText("File");
 
@@ -143,14 +141,17 @@ private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
 private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
     // Add a new movie
-    MovieAddEditDialog addDialog = new MovieAddEditDialog(this, true);
-    addDialog.setVisible(true);
+    new MovieAddEditDialog(this, true).setVisible(true);
 }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
 }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+/**
+ * Toggle the InfoPanel from hidden to showing and vice versa.  Called when a 
+ * button is pressed.
+ */
 public void toggleInfoPanel() {
     this.infoPaneOn = !this.infoPaneOn;
     if (!this.infoPaneOn) {// If we are going to hide the infopane
@@ -162,17 +163,16 @@ public void toggleInfoPanel() {
         this.leftSplitPane.setDividerSize(3);
         this.bottomBar1.setInfoIcon(1);  // make better later
     }
-    // Show or hide the infopane
-    this.jScrollPane2.setVisible(this.infoPaneOn);
     // Set divider location
     this.leftSplitPane.setDividerLocation(this.dividerLoc);  
-}
-
-public void newMovie() {
-    new MovieAddEditDialog(this, true).setVisible(true);
+    // Show or hide the infopane
+    this.jScrollPane2.setVisible(this.infoPaneOn);
 }
 
     /**
+     * Launches the main program.  Sets the look and feel tot he system look
+     * and feel.
+     * 
     * @param args the command line arguments
     */
     public static void main(String args[]) {
@@ -197,7 +197,8 @@ public void newMovie() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Mango m = new Mango();
-                m.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/mango.png")).getImage());
+                m.setIconImage(new javax.swing.ImageIcon(getClass().
+                        getResource("/com/themangoproject/ui/images/mango.png")).getImage());
                 m.setVisible(true);
             }
         });
@@ -223,6 +224,8 @@ public void newMovie() {
     private javax.swing.JMenu viewMenu1;
     private com.themangoproject.ui.ViewPanel viewPanel1;
     // End of variables declaration//GEN-END:variables
+
+    // My field variables
     private boolean infoPaneOn = true;
     private int dividerLoc;
     
