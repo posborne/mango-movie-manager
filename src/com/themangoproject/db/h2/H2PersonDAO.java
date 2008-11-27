@@ -1,14 +1,8 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.*;
+import java.util.*;
 
 /**
  * Data Access Object for people stored in the H2 database.
@@ -147,8 +141,7 @@ public class H2PersonDAO implements PersonDAO {
     }
 
     /**
-     * 
-     * @return
+     * @return A list of all persons in the H2 database.
      */
     public List<Person> getAllPersons() {
         ArrayList<Person> persons = new ArrayList<Person>();
@@ -157,10 +150,16 @@ public class H2PersonDAO implements PersonDAO {
             ResultSet results = allPersonsPS.getResultSet();
             while (results.next()) {
                 DBPerson person = new DBPerson();
-                // TODO: implement me
+                person.setId(results.getInt("id"));
+                person.setName(results.getString("name"));
+                person.setAddress(results.getString("address"));
+                person.setEmail(results.getString("email"));
+                person.setPhoneNumber(results.getString("phone_number"));
+                persons.add(person);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(H2PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+            // TODO: decide what needs to be done here
+            ex.printStackTrace(System.err);
         }
         return persons;
     }

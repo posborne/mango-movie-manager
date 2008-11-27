@@ -20,6 +20,10 @@ public class DBPerson implements Person {
         this.phoneNumber = null;
     }
 
+    void setId(int id) {
+        this.id = id;
+    }
+
     void setName(String name) {
         this.name = name;
     }
