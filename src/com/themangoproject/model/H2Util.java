@@ -1,8 +1,6 @@
 package com.themangoproject.model;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Set of utility operations on the H2 database.  The H2Util class is a singleton
@@ -18,7 +16,7 @@ public class H2Util {
     private static H2Util instance;
     /** Connection to H2 database */
     private Connection conn;
-    
+
     /**
      * Private constructor for the singleton.  Initializes the state of the
      * utility class.
@@ -31,7 +29,7 @@ public class H2Util {
         }
         this.conn = null;
     }
-    
+
     /**
      * @return An instance of the H2Utility class for use.
      */
@@ -41,9 +39,9 @@ public class H2Util {
         }
         return instance;
     }
-    
+
     /**
-     * @return
+     * @return A connection to the H2 database.
      * @throws java.sql.SQLException in the case that there is an error creating
      * a connection to the database.
      */
@@ -51,7 +49,7 @@ public class H2Util {
         String url = "jdbc:h2:~/mango.db";
         return DriverManager.getConnection(url);
     }
-    
+
     /**
      * Return a connection to the database.  The class is set up such that only
      * one connection to the database will be established.
@@ -60,16 +58,18 @@ public class H2Util {
      */
     public Connection getConnection() {
         try {
-            if (conn == null || conn.isClosed()) {
-                conn = connectToDb();   
-            }
+            return connectToDb(); // this is no longer a singleton
         } catch (SQLException ex) {
-           System.err.println("There was an error creating a database connection");
+            System.err.println("There was an error creating a database connection");
         }
         return conn;
     }
-    
-    public static String singleQuotedCSV(String ... values) {
+
+    /**
+     * @param values The values that should be quoted and comma separated.
+     * @return A set of comma-separated quoted values from the inputs.
+     */
+    public static String singleQuotedCSV(String... values) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < values.length; i++) {
             sb.append("'" + values[i] + "'");
@@ -79,5 +79,4 @@ public class H2Util {
         }
         return sb.toString();
     }
-    
 }
