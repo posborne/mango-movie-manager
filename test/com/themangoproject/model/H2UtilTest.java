@@ -1,5 +1,6 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.H2Util;
 import java.sql.Connection;
 import org.junit.After;
 import org.junit.AfterClass;
