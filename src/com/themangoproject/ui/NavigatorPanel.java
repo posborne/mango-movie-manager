@@ -29,6 +29,8 @@ public class NavigatorPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         navigatorTree = new javax.swing.JTree();
 
+        navigatorTree.setModel(new BaseTreeModel());
+        navigatorTree.setRootVisible(false);
         jScrollPane1.setViewportView(navigatorTree);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
