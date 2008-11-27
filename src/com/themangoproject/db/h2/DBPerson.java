@@ -7,6 +7,34 @@ import java.util.List;
 public class DBPerson implements Person {
 
     private int id;
+    private String name;
+    private String address;
+    private String email;
+    private String phoneNumber;
+    
+    public DBPerson() {
+        this.id = -1;
+        this.name = null;
+        this.address = null;
+        this.email = null;
+        this.phoneNumber = null;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    void setAddress(String address) {
+        this.address = address;
+    }
+
+    void setEmail(String email) {
+        this.email = email;
+    }
+
+    void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public int getId () {
         return 0;
