@@ -1,4 +1,6 @@
-package com.themangoproject.model;
+package com.themangoproject.db.h2;
+
+import com.themangoproject.model.*;
 
 
 public class H2DAOFactory implements DAOFactory {

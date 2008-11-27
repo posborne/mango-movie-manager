@@ -1,4 +1,4 @@
-package com.themangoproject.model;
+package com.themangoproject.db.h2;
 
 import java.sql.*;
 

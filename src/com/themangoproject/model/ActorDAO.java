@@ -1,5 +1,6 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.DBActor;
 import java.util.List;
 
 

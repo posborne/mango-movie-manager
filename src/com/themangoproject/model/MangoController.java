@@ -1,5 +1,8 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.H2MovieDAO;
+import com.themangoproject.db.h2.H2ActorDAO;
+import com.themangoproject.db.h2.H2PersonDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class MangoController {
     private ActorDAO actorDAO;
     
     private MangoController() {
-        personDAO = new H2PersonDAO();
+        personDAO = H2PersonDAO.getInstance();
         movieDAO = new H2MovieDAO();
         actorDAO = new H2ActorDAO();
     }

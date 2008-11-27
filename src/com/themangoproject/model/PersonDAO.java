@@ -1,11 +1,16 @@
 package com.themangoproject.model;
 
+import java.util.List;
+
 public interface PersonDAO {
 
-    public void addPerson(String name, String address, long phoneNumber, String email);
+    public void addPerson(Person person) throws PersonExistsException;
 
     public void updatePerson(Person person);
 
-    public void Unnamed();
+    public void populatePerson(Person person);
+
+    public List<Person> getAllPersons();
+
 }
 
