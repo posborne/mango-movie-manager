@@ -6,11 +6,11 @@ import com.themangoproject.model.*;
 public class H2DAOFactory implements DAOFactory {
 
     public PersonDAO getPersonDAO() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return H2PersonDAO.getInstance();
     }
 
     public ActorDAO getActorDAO() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return H2ActorDAO.getInstance();
     }
 
     public MovieDAO getMovieDAO() {

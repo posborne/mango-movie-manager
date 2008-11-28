@@ -19,8 +19,8 @@ public class MangoController {
     
     private MangoController() {
         personDAO = H2PersonDAO.getInstance();
-        movieDAO = new H2MovieDAO();
-        actorDAO = new H2ActorDAO();
+        movieDAO = H2MovieDAO.getInstance();
+        actorDAO = H2ActorDAO.getInstance();
     }
     
     public static final MangoController getInstance() {

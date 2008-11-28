@@ -6,7 +6,6 @@ import com.themangoproject.model.*;
 public class DBRole implements Role {
 
     private int actorId;
-
     private int movieId;
 
     public Actor getActor() {
@@ -23,6 +22,14 @@ public class DBRole implements Role {
 
     public Movie getMovie() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    void setActorId(int id) {
+        this.actorId = id;
+    }
+
+    void setMovieId(int id) {
+        this.movieId = id;
     }
 
 }

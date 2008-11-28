@@ -12,6 +12,10 @@ public class DBActor implements Actor {
     private List<Movie> movies;
     private List<Role> roles;
 
+    public DBActor() {
+        this(-1, null, null, null, null);
+    }
+
     public DBActor(int id) {
         this(id, null, null, null, null);
     }
@@ -58,6 +62,10 @@ public class DBActor implements Actor {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    void setId(int id) {
+        this.id = id;
     }
 
 }
