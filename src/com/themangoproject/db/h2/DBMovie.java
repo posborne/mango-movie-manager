@@ -282,5 +282,17 @@ public class DBMovie implements Movie {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public String getCondition() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    int getOwnerId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    int getBorrowerId() {
+        throw new UnsupportedOperationException();
+    }
+
 }
 
