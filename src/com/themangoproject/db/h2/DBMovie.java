@@ -1,9 +1,13 @@
-package com.themangoproject.model;
+package com.themangoproject.db.h2;
 
 import java.util.Date;
 import java.util.List;
 
-import com.themangoproject.db.h2.H2DAOFactory;
+import com.themangoproject.model.Actor;
+import com.themangoproject.model.DAOFactory;
+import com.themangoproject.model.Movie;
+import com.themangoproject.model.MovieDAO;
+import com.themangoproject.model.Person;
 
 /**
  * This is a concrete implementation of the movie interface. This is
