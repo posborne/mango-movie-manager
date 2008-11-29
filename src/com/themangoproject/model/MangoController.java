@@ -30,12 +30,12 @@ public class MangoController {
         return instance;
     }
     
-    public Movie addMovie(Movie movie) {
-        return movieDAO.addMovie(movie);
+    public void addMovie(Movie movie) {
+        movieDAO.addMovie(movie);
     }
     
-    public Actor addActor(Actor actor) {
-        return actorDAO.addActor(actor);
+    public void addActor(Actor actor) {
+        actorDAO.addActor(actor);
     }
     
     public Role addRole(Role role) {

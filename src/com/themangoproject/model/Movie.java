@@ -18,6 +18,8 @@ public interface Movie {
 
     public String getASIN ();
 
+    public String getCondition();
+
     public Date getPurchaseDate ();
 
     public String getCustomDescription ();

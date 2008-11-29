@@ -7,11 +7,19 @@ public interface Person {
 
     public String getName ();
 
+    public void setName(String name);
+
     public String getAddress ();
+
+    public void setAddress(String address);
 
     public String getPhoneNumber ();
 
+    public void setPhoneNumber(String phoneNumber);
+
     public String getEmail ();
+
+    public void setEmail(String email);
 
     public List<Movie> getOwnedMovies ();
 
