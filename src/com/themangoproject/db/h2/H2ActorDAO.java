@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The <code>H2ActorDAO</code> is an <code>ActorDAO</code> that provides
- * methods for communicating with the H2 database system, specifically with
- * regards to queries and updates that affect the <code>Actor</code> business
- * object.
+ * The <code>H2ActorDAO</code> is an <code>ActorDAO</code> that provides methods
+ * for communicating with the H2 database system, specifically with regards to
+ * queries and updates that affect the <code>Actor</code> business object.
  * 
  * The DAO is a singleton and obtains and manages its own database connection.
  * 
@@ -31,7 +30,7 @@ public class H2ActorDAO implements ActorDAO {
 
 	/** Retrieve all roles for an actor */
 	private PreparedStatement rolesForActorPS;
-	private static final String rolesForActorQuery = "SELECT title, role, character"
+	private static final String rolesForActorQuery = "SELECT movie_id, role, character"
 			+ " FROM movie, acting_roles"
 			+ " WHERE movie_id=? AND actor_id=?";
 
@@ -45,7 +44,7 @@ public class H2ActorDAO implements ActorDAO {
 	private static final String updateActorQuery = "UPDATE actor"
 			+ " SET first_name=?, last_name=?" + " WHERE id=?";
 
-	/** Retrive an actors information */
+	/** Retrieve an actors information */
 	private PreparedStatement populatePersonPS;
 	private static final String populatePersonQuery = "SELECT first_name, last_name"
 			+ " FROM actor" + " WHERE id=?";
@@ -121,11 +120,14 @@ public class H2ActorDAO implements ActorDAO {
 
 		ArrayList<Role> roles = new ArrayList<Role>();
 		try {
+			rolesForActorPS.setInt(0, actor.getId());
 			ResultSet results = rolesForActorPS.executeQuery();
 			while (results.next()) {
 				DBRole role = new DBRole();
-				// role.setActorId(id);
-				// TODO: finish this
+				role.setMovieId(results.getInt("movie_id"));
+				role.setCharacter(results.getString("character"));
+				role.setRole(results.getString("role"));
+				roles.add(role);
 			}
 		} catch (SQLException ex) {
 			// TODO: decide what to do here
@@ -145,6 +147,30 @@ public class H2ActorDAO implements ActorDAO {
 			addActorPS.setString(0, actor.getFirstName());
 			addActorPS.setString(1, actor.getLastName());
 			addActorPS.execute();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Update the Actor with the data in the database, populating the object
+	 * contents with the new database contents.
+	 * 
+	 * @param actor
+	 *            The actor that should be updated from the db.
+	 */
+	public void populatePerson(Actor a) {
+		if (!(a instanceof DBActor)) {
+			throw new ClassCastException();
+		}
+		DBActor actor = (DBActor) a;
+
+		try {
+			populatePersonPS.setInt(0, actor.getId());
+			ResultSet results = populatePersonPS.executeQuery();
+			results.next(); // move to first
+			actor.setFirstName(results.getString("first_name"));
+			actor.setLastName(results.getString("last_name"));
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
