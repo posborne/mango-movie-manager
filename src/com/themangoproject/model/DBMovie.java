@@ -3,6 +3,8 @@ package com.themangoproject.model;
 import java.util.Date;
 import java.util.List;
 
+import com.themangoproject.db.h2.H2DAOFactory;
+
 /**
  * This is a concrete implementation of the movie interface. This is
  * an implementation that has knowledge about some limited database
@@ -19,10 +21,13 @@ public class DBMovie implements Movie {
             type, condition;
     private Date purchaseDate;
     private Person owner, borrower;
-    private MangoController controller;
+//    private MangoController controller;
+    private MovieDAO movieDAO;
 
     public DBMovie() {
-        controller = MangoController.getInstance();
+//        controller = MangoController.getInstance();
+        DAOFactory fact = new H2DAOFactory();
+        movieDAO = fact.getMovieDAO();
     }
 
     /**
@@ -32,7 +37,7 @@ public class DBMovie implements Movie {
      */
     public int getId() {
         if (id == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return id;
     }
@@ -55,7 +60,7 @@ public class DBMovie implements Movie {
      */
     public String getDirector() {
         if (director == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.director;
     }
@@ -78,7 +83,7 @@ public class DBMovie implements Movie {
      */
     public String getTitle() {
         if (title == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.title;
     }
@@ -102,7 +107,7 @@ public class DBMovie implements Movie {
      */
     public String getRating() {
         if (rating == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.rating;
     }
@@ -125,7 +130,7 @@ public class DBMovie implements Movie {
      */
     public int getRuntime() {
         if (runtime == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.runtime;
     }
@@ -158,7 +163,7 @@ public class DBMovie implements Movie {
      */
     public int getMangoRating() {
         if (mangoRating == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.mangoRating;
     }
@@ -223,7 +228,7 @@ public class DBMovie implements Movie {
      */
     public int getYear() {
         if (this.year == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.year;
     }
@@ -253,7 +258,7 @@ public class DBMovie implements Movie {
      */
     public String getASIN() {
         if (this.ASIN == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.ASIN;
     }
@@ -277,7 +282,7 @@ public class DBMovie implements Movie {
      */
     public Date getPurchaseDate() {
         if (this.purchaseDate == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.purchaseDate;
     }
@@ -302,7 +307,7 @@ public class DBMovie implements Movie {
      */
     public String getCustomDescription() {
         if (this.customDescription == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.customDescription;
     }
@@ -326,7 +331,7 @@ public class DBMovie implements Movie {
      */
     public String getType() {
         if (this.type == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.type;
     }
@@ -350,7 +355,7 @@ public class DBMovie implements Movie {
     public Person getOwner() {
         // TODO: Should we store Owner or look it up?
         if (this.owner == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.owner;
     }
@@ -374,7 +379,7 @@ public class DBMovie implements Movie {
      */
     public Person getBorrower() {
         if (this.borrower == null) {
-            controller.getMovieInfo(this);
+            movieDAO.getMovieInfo(this);
         }
         return this.borrower;
     }
@@ -396,7 +401,7 @@ public class DBMovie implements Movie {
      * @return the list of genres this movie is a part of.
      */
     public List<String> getGenres() {
-        return controller.getGenresForMovie(this);
+        return movieDAO.getGenresForMovie(this);
     }
 
     /**
@@ -406,7 +411,7 @@ public class DBMovie implements Movie {
      *            the genre to be added
      */
     public void addGenre(String genre) {
-        controller.addGenreToMovie(this, genre);
+        movieDAO.addGenreToMovie(this, genre);
     }
 
     /**
@@ -416,7 +421,7 @@ public class DBMovie implements Movie {
      *            the genre to be removed from this movie.
      */
     public void removeGenre(String genre) {
-        controller.removeGenreFromMovie(this, genre);
+        movieDAO.removeGenreFromMovie(this, genre);
     }
 
     /** 
@@ -429,7 +434,7 @@ public class DBMovie implements Movie {
     @Override
     public String getCondition() {
         //TODO: null handling
-        return null;
+        return this.condition;
     }
     
     /**
@@ -439,6 +444,16 @@ public class DBMovie implements Movie {
      */
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public int getOwnerId() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public int getBorrowerId() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }

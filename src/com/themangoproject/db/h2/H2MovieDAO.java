@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+import com.themangoproject.model.DBMovie;
 
 import java.util.List;
 import java.sql.*;
@@ -274,7 +275,7 @@ public class H2MovieDAO implements MovieDAO {
     // I also need this one.  It's pretty self explanatory
     @Override
     public void addGenreToMovie(
-            com.themangoproject.db.h2.DBMovie movie, String genre) {
+            com.themangoproject.model.DBMovie movie, String genre) {
         // TODO Auto-generated method stub
         
     }

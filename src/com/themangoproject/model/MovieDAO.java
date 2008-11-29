@@ -2,7 +2,6 @@ package com.themangoproject.model;
 
 import java.util.List;
 
-import com.themangoproject.db.h2.DBMovie;
 
 
 public interface MovieDAO {
