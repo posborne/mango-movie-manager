@@ -6,7 +6,7 @@
 
 package com.themangoproject.ui;
 
-import java.util.ArrayList;
+import javax.swing.Box;
 
 /**
  * AddSubstractPanel is a panel to collect AddSubtractInnerPanels.
@@ -19,7 +19,9 @@ public class AddSubstractPanel extends javax.swing.JPanel {
     /** Creates new form AddSubstractDaddyPanel */
     public AddSubstractPanel() {
         initComponents();
-        //this.orderTracker.add(this.addSubtractDropDownPanel1);
+        // Add a glue component to take up extra space so the panels that
+        // are added aren't stretched.
+        this.jPanel1.add(Box.createVerticalGlue(), 1);
     }
 
     /** This method is called from within the constructor to
@@ -31,33 +33,57 @@ public class AddSubstractPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         addSubtractInnerPanel1 = new com.themangoproject.ui.AddSubtractInnerPanel();
 
-        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
-        add(addSubtractInnerPanel1);
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
+
+        // Disable the minus button
+        this.addSubtractInnerPanel1.disableMinusButton();
+        jPanel1.add(addSubtractInnerPanel1);
+
+        jScrollPane1.setViewportView(jPanel1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.themangoproject.ui.AddSubtractInnerPanel addSubtractInnerPanel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     
     /**
      * Adds an AddSubtractInnerPanel to this panel.
      */
     public void addAddSubPanel() {
-        this.add(new AddSubtractInnerPanel());
-        if (this.getComponentCount() == 2)
-            ((AddSubtractInnerPanel)this.getComponent(0)).enableMinusButton();
-        else if (this.getComponentCount() == 10) {
-            for (int i = 0; i < 10; i++) {
+        this.jPanel1.add(new AddSubtractInnerPanel(), 
+                this.jPanel1.getComponentCount() - 1);
+        if (this.jPanel1.getComponentCount() == 3)
+            ((AddSubtractInnerPanel)this.jPanel1.getComponent(0)).enableMinusButton();
+        //else if (this.getComponentCount() == 10) {
+        //    for (int i = 0; i < 10; i++) {
                 // disable all + buttons
-                ((AddSubtractInnerPanel)
-                        this.getComponent(i)).disablePlusButton();
-            }
-        }        
-        this.validate();
-        this.repaint();
+        //        ((AddSubtractInnerPanel)
+        //                this.getComponent(i)).disablePlusButton();
+        //    }
+        //}        
+        this.jPanel1.revalidate();
+        this.jPanel1.repaint();
     }
     
     /**
@@ -65,21 +91,21 @@ public class AddSubstractPanel extends javax.swing.JPanel {
      * @param a The AddSubtractInnerPanel to remove from this panel.
      */
     public void removeAddSubPanel(AddSubtractInnerPanel a) {
-        this.remove(a);
-        if (this.getComponentCount() == 9) {
-            for (int i = 0; i < 9; i++) {
+        this.jPanel1.remove(a);
+        //if (this.getComponentCount() == 9) {
+        //    for (int i = 0; i < 9; i++) {
                 // disable all + buttons
-                ((AddSubtractInnerPanel)
-                        this.getComponent(i)).enablePlusButton();
-            }            
-        }
-        else if (this.getComponentCount() == 1) {
+        //        ((AddSubtractInnerPanel)
+        //                this.getComponent(i)).enablePlusButton();
+        //    }            
+        //}
+        if (this.jPanel1.getComponentCount() == 2) {
             // Disable the one - button
             ((AddSubtractInnerPanel)
-                    this.getComponent(0)).disableMinusButton();        
+                    this.jPanel1.getComponent(0)).disableMinusButton();        
         }        
-        this.validate();
-        this.repaint();
+        this.jPanel1.revalidate();
+        this.jPanel1.repaint();
     }
          
 }

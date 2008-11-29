@@ -39,7 +39,7 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
         jButton2.setText("jButton2");
 
-        setPreferredSize(new java.awt.Dimension(442, 22));
+        setPreferredSize(new java.awt.Dimension(442, 25));
 
         jComboBox1.setEditable(true);
         jComboBox1.setMaximumRowCount(5);
@@ -102,14 +102,16 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     // Add Button
-    // Adds a panel like itself to the AddSubtractPanel.
-    ((AddSubstractPanel)this.getParent()).addAddSubPanel();
+    // Adds a panel like itself to the parent JPanel
+    ((AddSubstractPanel)
+            (this.getParent().getParent().getParent().getParent())).addAddSubPanel();
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     // Subtract Button
-    // Removes this panel from the AddSubtractPanel.
-    ((AddSubstractPanel)this.getParent()).removeAddSubPanel(this);
+    // Removes this panel from the parent JPanel.
+    ((AddSubstractPanel)
+            (this.getParent().getParent().getParent().getParent())).removeAddSubPanel(this);
 }//GEN-LAST:event_jButton3ActionPerformed
 
 
@@ -122,19 +124,19 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * Disable the plus button in this panel.
-     */
-    public void disablePlusButton() {
-        this.jButton1.setEnabled(false);
-    }
-    
-    /**
-     * Enable the plus button in this panel.
-     */
-    public void enablePlusButton() {
-        this.jButton1.setEnabled(true);
-    }
+//    /**
+//     * Disable the plus button in this panel.
+//     */
+//    public void disablePlusButton() {
+//        this.jButton1.setEnabled(false);
+//    }
+//    
+//    /**
+//     * Enable the plus button in this panel.
+//     */
+//    public void enablePlusButton() {
+//        this.jButton1.setEnabled(true);
+//    }
     
     /**
      * Disable the minus button in this panel.
