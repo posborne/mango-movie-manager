@@ -1,4 +1,4 @@
-package com.themangoproject.model;
+package com.themangoproject.db.h2;
 
 import com.themangoproject.db.h2.H2Util;
 import java.sql.Connection;

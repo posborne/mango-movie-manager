@@ -3,10 +3,12 @@
  * and open the template in the editor.
  */
 
-package com.themangoproject.model;
+package com.themangoproject.db.h2;
 
 import com.themangoproject.db.h2.DBPerson;
 import com.themangoproject.db.h2.H2PersonDAO;
+import com.themangoproject.model.Person;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
