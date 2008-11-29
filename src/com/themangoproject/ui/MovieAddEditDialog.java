@@ -6,6 +6,8 @@
 
 package com.themangoproject.ui;
 
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author  kronning
@@ -74,6 +76,11 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         setResizable(false);
 
         jButton3.setText("Get Information Via Amazon");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -356,6 +363,11 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         });
 
         jButton4.setText("Close");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -391,17 +403,34 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-this.dispose();
+    // Cancel Button
+    this.dispose();
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-this.dispose();
+    // Save button -- Use the controller
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-// TODO add your handling code here:
+    JFileChooser jfc = new JFileChooser();
+    int i = jfc.showOpenDialog(this);
+    if (i == JFileChooser.APPROVE_OPTION)
+        System.out.println("OK");
+    else
+        System.out.println("Cancel");
     // Add code to add thumbnail image to this movie
 }//GEN-LAST:event_jButton5ActionPerformed
+
+private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+// TODO add your handling code here:
+    // Add code to request information from amazon
+}//GEN-LAST:event_jButton3ActionPerformed
+
+private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    // Close Button
+    // Warn about saving
+    this.dispose();
+}//GEN-LAST:event_jButton4ActionPerformed
 
     /**
     * @param args the command line arguments
