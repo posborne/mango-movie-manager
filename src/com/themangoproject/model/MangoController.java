@@ -113,4 +113,16 @@ public class MangoController {
 
     }
 
+    /**
+     * This will retrieve all the information about this person from 
+     * the database.
+     * 
+     * @param person the person to get data on.
+     */
+    public void getPersonInfo(DBPerson person) {
+        // TODO
+        // this.personDAO.getPersonInfo(person);
+        
+    }
+
 }
