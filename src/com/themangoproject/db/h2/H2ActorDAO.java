@@ -49,6 +49,10 @@ public class H2ActorDAO implements ActorDAO {
 	private static final String populatePersonQuery = "SELECT first_name, last_name"
 			+ " FROM actor" + " WHERE id=?";
 
+	/** Delete an actor from the database */
+	private PreparedStatement deleteActorPS;
+	private static final String deleteActorQuery = "DELETE FROM person WHERE id=?";
+
 	/**
 	 * The DAOs private constructor prepares the various, frequently used
 	 * queries as Prepared Statements and otherwise initializes the state of the
@@ -64,6 +68,7 @@ public class H2ActorDAO implements ActorDAO {
 			updateActorPS = conn.prepareStatement(updateActorQuery);
 			populatePersonPS = conn
 					.prepareStatement(populatePersonQuery);
+			deleteActorPS = conn.prepareStatement(deleteActorQuery);
 		} catch (SQLException ex) {
 			// TODO; decide what to do here
 			ex.printStackTrace();
@@ -159,7 +164,7 @@ public class H2ActorDAO implements ActorDAO {
 	 * @param actor
 	 *            The actor that should be updated from the db.
 	 */
-	public void populatePerson(Actor a) {
+	public void populateActor(Actor a) {
 		if (!(a instanceof DBActor)) {
 			throw new ClassCastException();
 		}
@@ -196,6 +201,29 @@ public class H2ActorDAO implements ActorDAO {
 			updateActorPS.setString(0, actor.getFirstName());
 			updateActorPS.setString(1, actor.getLastName());
 			updateActorPS.setInt(3, actor.getId());
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Delete the specified person from the database.
+	 * 
+	 * @param a
+	 *            The actor to delete from the database.
+	 * @throws ClassCastException
+	 *             if the actor is not a DBActor.
+	 */
+	public void deleteActor(Actor a) {
+		if (!(a instanceof DBActor)) {
+			throw new ClassCastException();
+		}
+		DBActor actor = (DBActor) a;
+
+		try {
+			deleteActorPS.setInt(0, actor.getId());
+			deleteActorPS.executeUpdate();
+			deleteActorPS.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

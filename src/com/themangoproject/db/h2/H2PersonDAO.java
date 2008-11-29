@@ -94,7 +94,7 @@ public class H2PersonDAO implements PersonDAO {
 			addPersonPS.setString(3, person.getPhoneNumber());
 
 			// execute the statement
-			addPersonPS.execute();
+			addPersonPS.executeUpdate();
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
 			ex.printStackTrace(System.err);
@@ -102,6 +102,8 @@ public class H2PersonDAO implements PersonDAO {
 	}
 
 	/**
+	 * Update the state of the database for the person with the state of the
+	 * object.
 	 * 
 	 * @param person
 	 *            The person that should be updated.
@@ -120,7 +122,7 @@ public class H2PersonDAO implements PersonDAO {
 			updatePersonPS.setString(2, person.getEmail());
 			updatePersonPS.setString(3, person.getPhoneNumber());
 			updatePersonPS.setInt(4, person.getId()); // execute the statement
-			updatePersonPS.execute();
+			updatePersonPS.executeUpdate();
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
 			ex.printStackTrace(System.err);
@@ -142,6 +144,13 @@ public class H2PersonDAO implements PersonDAO {
 		DBPerson person = (DBPerson) p;
 		try {
 			populatePersonPS.setInt(0, person.getId());
+			ResultSet rs = populatePersonPS.executeQuery();
+			rs.next();
+			person.setName(rs.getString("name"));
+			person.setAddress(rs.getString("address"));
+			person.setEmail(rs.getString("email"));
+			person.setPhoneNumber(rs.getString("phone_number"));
+			rs.close();
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
 			ex.printStackTrace(System.err);
