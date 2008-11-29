@@ -58,7 +58,7 @@ public class ViewPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/magnify.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/search.png"))); // NOI18N
         jButton1.setToolTipText("Search");
         jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -67,16 +67,16 @@ public class ViewPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/thumbnail.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/thumbnailview.png"))); // NOI18N
         jButton2.setToolTipText("Thumbnail View");
-        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.setBorder(null);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/table.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/tableview.png"))); // NOI18N
         jButton3.setToolTipText("List View");
-        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.setBorder(null);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/magnify_plus.png"))); // NOI18N
-        jButton4.setToolTipText("Advanced Search");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/advancedsearch.png"))); // NOI18N
+        jButton4.setToolTipText("Create Saved Search");
         jButton4.setBorder(null);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,7 +159,7 @@ public class ViewPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-// TODO add your handling code here:
+  // Searches for the given string of text within the table
 }//GEN-LAST:event_jTextField1ActionPerformed
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -167,20 +167,29 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-    // Sets the text color to black and empty text
-    this.jTextField1.setForeground(new Color(0, 0, 0));
-    this.jTextField1.setText("");
+    // If text was previously added to the text field nothing happens.  If
+    // The text is gray colored it will say "Search" and will be replaced
+    // with black text and an empty string
+    if (this.jTextField1.getForeground().equals(new Color(140, 140, 140))) {
+        this.jTextField1.setForeground(new Color(0, 0, 0));
+        this.jTextField1.setText("");
+    }
 }//GEN-LAST:event_jTextField1FocusGained
 
 private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-    // Sets the text to read "Search" in gray color
-    this.jTextField1.setForeground(new Color(140, 140, 140));
-    this.jTextField1.setText("Search");
+    // Sets the text to read "Search" in gray color when focus is lost if 
+    // the text field contains no text
+    if (this.jTextField1.getText().equals("")) {
+        this.jTextField1.setForeground(new Color(140, 140, 140));
+        this.jTextField1.setText("Search");
+    }
 }//GEN-LAST:event_jTextField1FocusLost
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     // Displays SavedSearchDialog
-    SavedSearchDialog ssd = new SavedSearchDialog((Mango)this.getTopLevelAncestor(), true);
+    SavedSearchDialog ssd = 
+            new SavedSearchDialog((Mango)this.getTopLevelAncestor(), true);
+    ssd.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
     ssd.setVisible(true);
 }//GEN-LAST:event_jButton4ActionPerformed
 

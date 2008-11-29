@@ -7,8 +7,10 @@
 package com.themangoproject.ui;
 
 /**
- *
- * @author  osbpau
+ * ItemInfoPanel is a panel that displays an image.
+ * 
+ * @author  Kyle Ronning, Paul Osborne
+ * @version 1.0
  */
 public class ItemInfoPanel extends javax.swing.JPanel {
 
@@ -29,7 +31,7 @@ public class ItemInfoPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/mango.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png"))); // NOI18N
         jLabel1.setAlignmentX(0.5F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -49,4 +51,13 @@ public class ItemInfoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Set the image in the panel to correspond to the image for the selected
+     * movie.
+     * 
+     */
+    public void setThumbnailImage() {
+        //TODO: Implement this method - Add parameter
+        //this.jLabel1.setIcon(icon);
+    }
 }

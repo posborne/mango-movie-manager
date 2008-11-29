@@ -88,7 +88,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/themangoproject/ui/images/magnify.png"/>
+              <Image iconType="3" name="/com/themangoproject/ui/images/search.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Search"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -102,35 +102,31 @@
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/themangoproject/ui/images/thumbnail.png"/>
+              <Image iconType="3" name="/com/themangoproject/ui/images/thumbnailview.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Thumbnail View"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
-                <BevelBorder/>
-              </Border>
+              <Border info="null"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/themangoproject/ui/images/table.png"/>
+              <Image iconType="3" name="/com/themangoproject/ui/images/tableview.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="List View"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
-                <BevelBorder/>
-              </Border>
+              <Border info="null"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/themangoproject/ui/images/magnify_plus.png"/>
+              <Image iconType="3" name="/com/themangoproject/ui/images/advancedsearch.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Advanced Search"/>
+            <Property name="toolTipText" type="java.lang.String" value="Create Saved Search"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>

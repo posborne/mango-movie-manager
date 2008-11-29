@@ -31,17 +31,15 @@ public class AddSubstractPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        addSubtractDropDownPanel1 = new com.themangoproject.ui.AddSubtractInnerPanel();
+        addSubtractInnerPanel1 = new com.themangoproject.ui.AddSubtractInnerPanel();
 
-        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 1, 1));
-
-        this.addSubtractDropDownPanel1.disableMinusButton();
-        add(addSubtractDropDownPanel1);
+        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
+        add(addSubtractInnerPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.themangoproject.ui.AddSubtractInnerPanel addSubtractDropDownPanel1;
+    private com.themangoproject.ui.AddSubtractInnerPanel addSubtractInnerPanel1;
     // End of variables declaration//GEN-END:variables
     
     /**
