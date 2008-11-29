@@ -1,5 +1,7 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.DBMovie;
+import com.themangoproject.db.h2.DBPerson;
 import com.themangoproject.db.h2.H2MovieDAO;
 import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;

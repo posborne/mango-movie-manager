@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -259,5 +260,30 @@ public class H2MovieDAO implements MovieDAO {
 		}
 		return actors;
 	}
+
+	
+	// Paul, I need this method.  It will take a Movie get the
+    // most recent info from the DB and then update all the fields
+    // in the movie passed
+    @Override
+    public void getMovieInfo(Movie movie) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    // I also need this one.  It's pretty self explanatory
+    @Override
+    public void addGenreToMovie(
+            com.themangoproject.db.h2.DBMovie movie, String genre) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    // This one too.
+    @Override
+    public void removeGenreFromMovie(Movie movie, String genre) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }
