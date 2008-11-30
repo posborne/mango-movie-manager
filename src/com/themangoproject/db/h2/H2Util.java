@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import java.sql.*;
+import java.util.Scanner;
 
 import com.themangoproject.db.DBSchema;
 
@@ -84,6 +85,7 @@ public class H2Util {
 			// Drop everything if exists (in right order)
 			stat.executeUpdate(DBSchema.dropSetsTable);
 			stat.executeUpdate(DBSchema.dropGenreTable);
+			stat.executeUpdate(DBSchema.dropSavedSearchesTable);
 			stat.executeUpdate(DBSchema.dropActingRolesTable);
 			stat.executeUpdate(DBSchema.dropListsTable);
 			stat.executeUpdate(DBSchema.dropActorTable);
@@ -98,8 +100,8 @@ public class H2Util {
 			stat.executeUpdate(DBSchema.createMovieRatingDomain);
 			stat.executeUpdate(DBSchema.createPhoneNumberDomain);
 			stat.executeUpdate(DBSchema.createActorTable);
-			stat.executeUpdate(DBSchema.createMovieTable);
 			stat.executeUpdate(DBSchema.createPersonTable);
+			stat.executeUpdate(DBSchema.createMovieTable);
 			stat.executeUpdate(DBSchema.createActingRolesTable);
 			stat.executeUpdate(DBSchema.createListsTable);
 			stat.executeUpdate(DBSchema.createSetsTable);
@@ -133,5 +135,14 @@ public class H2Util {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("This utility will clear and reset schema on DB");
+		System.out.print("DB Name: ");
+		String dbName = scan.nextLine();
+		H2Util.getInstance().initializeSchemaOnDb(dbName);
+		System.out.println("Complete! Cowabunga Dude!");
 	}
 }

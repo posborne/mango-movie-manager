@@ -53,7 +53,7 @@ public class DBSchema {
 		"	purchase_date		DATE," +
 		"	custom_description	TEXT," +
 		"	condition			CHAR(100)," +
-		"	type				MOVIE_MEDIUM, -- DVD, VHS, ..." +
+		"	type				MOVIE_MEDIUM," +
 		"	mango_rating		INT," +
 		"	owner_id			INT," +
 		"	borrower_id			INT," +
@@ -93,6 +93,9 @@ public class DBSchema {
 	
 	public static final String dropSetsTable =
 		"DROP TABLE IF EXISTS sets";
+	
+	public static final String dropSavedSearchesTable =
+		"DROP TABLE IF EXISTS saved_searches";
 	
 	public static final String dropListsTable =
 		"DROP TABLE IF EXISTS lists";
