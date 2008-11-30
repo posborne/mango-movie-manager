@@ -40,8 +40,7 @@ public class H2MovieDAO implements MovieDAO {
 	private static final String updateMoviesQuery = "UPDATE movie"
 			+ " SET director=?, title=?, rating=?, runtime=?, year=?, asin=?,"
 			+ " purchase_date=?, custom_description=?, condition=?, type=?,"
-			+ " mango_rating=?, owner_id=?, borrower_id=?"
-			+ " WHERE id=?";
+			+ " mango_rating=?, owner_id=?, borrower_id=?" + " WHERE id=?";
 
 	/** Delete movie with specified id from the database */
 	private PreparedStatement deleteMoviePS;
@@ -56,8 +55,19 @@ public class H2MovieDAO implements MovieDAO {
 	/** Retrieve all actors for a movie */
 	private PreparedStatement actorsForMoviePS;
 	private static final String actorsForMovieQuery = "SELECT actor_id"
-			+ " FROM movie, acting_roles"
-			+ " WHERE movie_id=id AND id=?";
+			+ " FROM movie, acting_roles" + " WHERE movie_id=id AND id=?";
+
+	private PreparedStatement populateMoviePS;
+	private static final String populateMovieQuery = "SELECT * FROM movie"
+			+ " WHERE id=?";
+
+	private PreparedStatement addGenreToMoviePS;
+	private static final String addGenreToMovieQuery = "INSERT INTO genres (movie_id, name)"
+			+ " VALUES (?, ?)";
+
+	private PreparedStatement removeGenreFromMoviePS;
+	private static final String removeGenreFromMovieQuery = "DELETE FROM movie"
+			+ " WHERE movie_id=? AND genre=?";
 
 	/**
 	 * The private singleton constructor for the DAO initializes the different
@@ -68,12 +78,15 @@ public class H2MovieDAO implements MovieDAO {
 		try {
 			allMoviesPS = conn.prepareStatement(allMoviesQuery);
 			updateMoviePS = conn.prepareStatement(updateMoviesQuery);
-			addMoviePS = conn.prepareStatement(addMovieQuery);
+			addMoviePS = conn.prepareStatement(addMovieQuery,
+					Statement.RETURN_GENERATED_KEYS);
 			deleteMoviePS = conn.prepareStatement(deleteMovieQuery);
-			genresForMoviePS = conn
-					.prepareStatement(genresForMovieQuery);
-			actorsForMoviePS = conn
-					.prepareStatement(actorsForMovieQuery);
+			genresForMoviePS = conn.prepareStatement(genresForMovieQuery);
+			actorsForMoviePS = conn.prepareStatement(actorsForMovieQuery);
+			populateMoviePS = conn.prepareStatement(populateMovieQuery);
+			addGenreToMoviePS = conn.prepareStatement(addGenreToMovieQuery);
+			removeGenreFromMoviePS = conn
+					.prepareStatement(removeGenreFromMovieQuery);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -261,29 +274,99 @@ public class H2MovieDAO implements MovieDAO {
 		return actors;
 	}
 
-	
-	// Paul, I need this method.  It will take a Movie get the
-    // most recent info from the DB and then update all the fields
-    // in the movie passed
-    @Override
-    public void getMovieInfo(Movie movie) {
-        // TODO Auto-generated method stub
-        
-    }
+	/**
+	 * Query a DBMovie and update all its fields so that the state of the object
+	 * matches the state of the database.
+	 * 
+	 * @param m
+	 *            The movie which should be updated.
+	 */
+	public void getMovieInfo(Movie m) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
 
-    // I also need this one.  It's pretty self explanatory
-    @Override
-    public void addGenreToMovie(
-            com.themangoproject.db.h2.DBMovie movie, String genre) {
-        // TODO Auto-generated method stub
-        
-    }
+		try {
+			populateMoviePS.setInt(1, movie.getId());
+			ResultSet rs = populateMoviePS.executeQuery();
+			while (rs.next()) {
+				movie.setASIN(rs.getString("asin"));
+				movie.setCondition(rs.getString("condition"));
 
-    // This one too.
-    @Override
-    public void removeGenreFromMovie(Movie movie, String genre) {
-        // TODO Auto-generated method stub
-        
-    }
+				// set the borrower
+				DBPerson newPerson = new DBPerson();
+				newPerson.setId(rs.getInt("borrower_id"));
+				movie.setBorrower(newPerson);
+				movie.setCustomDescription(rs.getString("custom_description"));
+				movie.setDirector(rs.getString("director"));
+				movie.setMangoRating(rs.getInt("mango_rating"));
+
+				// set the owner
+				DBPerson newOwner = new DBPerson();
+				newOwner.setId(rs.getInt("owner_id"));
+				movie.setOwner(newOwner);
+				movie.setPurchaseDate(rs.getDate("purchase_date"));
+				movie.setRuntime(rs.getInt("runtime"));
+				movie.setTitle(rs.getString("title"));
+				movie.setType(rs.getString("type"));
+				movie.setYear(rs.getInt("year"));
+				rs.close();
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Add the specified genre to the movie if it does not exist.
+	 * 
+	 * @param m
+	 *            The movie to which the genre should be added.
+	 * @param genre
+	 *            The genre that should be added to the movie.
+	 * 
+	 * @throws GenreExistsException
+	 *             if the genre specified already exists for the specified movie
+	 */
+	public void addGenreToMovie(Movie m, String genre) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
+
+		try {
+			addGenreToMoviePS.setInt(1, movie.getId());
+			addGenreToMoviePS.setString(2, genre);
+			addGenreToMoviePS.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Remove the specified genre from the specified movie.
+	 * 
+	 * @param m
+	 *            The movie from which the genre should be removed
+	 * @param genre
+	 *            The name of the genre that should be removed from the movie.
+	 * 
+	 * @throws GenreExistsException
+	 *             if the genre specified already exists for the specified movie
+	 */
+	public void removeGenreFromMovie(Movie m, String genre) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
+
+		try {
+			removeGenreFromMoviePS.setInt(1, movie.getId());
+			removeGenreFromMoviePS.setString(2, genre);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 
 }
