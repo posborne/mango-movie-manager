@@ -62,7 +62,7 @@ public class Mango extends javax.swing.JFrame {
         mainSplitPane.setDividerSize(3);
 
         leftSplitPane.setDividerLocation(400);
-        leftSplitPane.setDividerSize(0);
+        leftSplitPane.setDividerSize(3);
         leftSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setResizeWeight(1.0);
         leftSplitPane.setTopComponent(navigatorPanel1);
