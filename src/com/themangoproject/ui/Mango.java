@@ -235,7 +235,7 @@ public void toggleInfoPanel() {
             public void run() {
                 Mango m = new Mango();
                 m.setIconImage(new javax.swing.ImageIcon(getClass().
-                        getResource("/com/themangoproject/ui/images/mango.png")).getImage());
+                        getResource("/com/themangoproject/ui/images/mangoicon.png")).getImage());
                 m.setVisible(true);
             }
         });
