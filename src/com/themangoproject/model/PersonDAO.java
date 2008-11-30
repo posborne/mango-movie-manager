@@ -13,6 +13,9 @@ public interface PersonDAO {
     // TODO: Paul I also need this method.  I will pass a person and I need it
     // to return a list of all the movies that person owns.
     public List<Movie> getOwnedMovies(Person person);
+    public List<Movie> getBorrowedMovies(DBPerson person);
+    public void returnMovie(Person person, Movie movie);
+    public void borrowMovie(Person person, Movie movie);
 
 }
 

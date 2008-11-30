@@ -124,31 +124,39 @@ public class DBPerson implements Person {
         return personDAO.getOwnedMovies(this);
     }
 
-    /* (non-Javadoc)
-     * @see com.themangoproject.model.Person#getBorrowedMovies()
+    /**
+     * This will return all of the movies this person is currently borrowing.
+     * 
+     * @return a list of all the movies this person is borrowing.
      */
-    public List getBorrowedMovies() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Movie> getBorrowedMovies() {
+        return this.personDAO.getBorrowedMovies(this);
     }
 
-    /* (non-Javadoc)
-     * @see com.themangoproject.model.Person#returnMovie(com.themangoproject.model.Movie)
+    /**
+     * This will return a movie that this person is currently borrowing
+     * 
+     * @param movie The movie this person is returning.
      */
     public void returnMovie(Movie movie) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.personDAO.returnMovie(this, movie);
     }
 
-    /* (non-Javadoc)
-     * @see com.themangoproject.model.Person#borrowMovie(com.themangoproject.model.Movie)
+    /**
+     * This will borrow a movie for this person
+     * 
+     * @param movie The movie this person is borrowing.
      */
     public void borrowMovie(Movie movie) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.personDAO.borrowMovie(this, movie);
     }
 
-    /* (non-Javadoc)
-     * @see com.themangoproject.model.Person#toStirng()
+    /**
+     * This is the standard toString method.  Returns a string
+     * representation of this person
      */
     public String toStirng() {
+        // TODO: What do we want this to do?
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

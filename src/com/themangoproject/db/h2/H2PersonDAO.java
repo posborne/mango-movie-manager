@@ -191,4 +191,33 @@ public class H2PersonDAO implements PersonDAO {
         // TODO Auto-generated method stub
         return null;
     }
+
+    
+    // TODO: Paul I also need this method.  I will pass a person and I need it
+    // to return a list of all the movies that person is borrowing.
+    @Override
+    public List<Movie> getBorrowedMovies(DBPerson person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    // TODO: Paul I need this one as well.  I will pass a movie, and a person.
+    // What is happening is that the person passed is currently borrowing
+    // the movie passed and is now returning it.  If the person is not actually
+    // borrowing that movie it should throw some sort of exception.
+    @Override
+    public void returnMovie(Person person, Movie movie) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    // TODO: What can I say Paul, I am a demanding guy.  In this case I am 
+    // passing a person and a movie.  The person passed is borrowing the 
+    // movie passed.  If that movie is already being borrowed by someone
+    // else, this should probably throw some sort of exception.
+    @Override
+    public void borrowMovie(Person person, Movie movie) {
+        // TODO Auto-generated method stub
+        
+    }
 }
