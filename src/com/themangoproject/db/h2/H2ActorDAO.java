@@ -27,13 +27,13 @@ public class H2ActorDAO implements ActorDAO {
 	/** Prepared statement for retrieving ids of all actors */
 	private PreparedStatement allActorsPS;
 	/** Retrieve ids and names of all actors */
-	private static final String allActorsQuery = "SELECT (id, first_name, last_name) FROM actor";
+	private static final String allActorsQuery = "SELECT id, first_name, last_name"
+			+ " FROM actor";
 
 	/** Retrieve all roles for an actor */
 	private PreparedStatement rolesForActorPS;
 	private static final String rolesForActorQuery = "SELECT movie_id, role, character"
-			+ " FROM movie, acting_roles"
-			+ " WHERE movie_id=? AND actor_id=?";
+			+ " FROM movie, acting_roles" + " WHERE movie_id=? AND actor_id=?";
 
 	/** Add an actor to the database (no roles) */
 	private PreparedStatement addActorPS;
@@ -67,8 +67,7 @@ public class H2ActorDAO implements ActorDAO {
 			rolesForActorPS = conn.prepareStatement(rolesForActorQuery);
 			addActorPS = conn.prepareStatement(addActorQuery);
 			updateActorPS = conn.prepareStatement(updateActorQuery);
-			populatePersonPS = conn
-					.prepareStatement(populatePersonQuery);
+			populatePersonPS = conn.prepareStatement(populatePersonQuery);
 			deleteActorPS = conn.prepareStatement(deleteActorQuery);
 		} catch (SQLException ex) {
 			// TODO; decide what to do here
@@ -150,8 +149,8 @@ public class H2ActorDAO implements ActorDAO {
 	 */
 	public void addActor(Actor actor) {
 		try {
-			addActorPS.setString(0, actor.getFirstName());
-			addActorPS.setString(1, actor.getLastName());
+			addActorPS.setString(1, actor.getFirstName());
+			addActorPS.setString(2, actor.getLastName());
 			addActorPS.execute();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -230,12 +229,12 @@ public class H2ActorDAO implements ActorDAO {
 		}
 	}
 
-	//TODO: Paul I need you to implement this method.  It should 
+	// TODO: Paul I need you to implement this method. It should
 	// return all of the movies the actor passed was a part of.
-    @Override
-    public List<Movie> getMoviesForActor(Actor actor) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public List<Movie> getMoviesForActor(Actor actor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
