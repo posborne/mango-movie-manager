@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+
 import java.sql.*;
 import java.util.*;
 
@@ -182,4 +183,12 @@ public class H2PersonDAO implements PersonDAO {
 		}
 		return persons;
 	}
+
+	// TODO: Paul I also need this method.  I will pass a person and I need it
+    // to return a list of all the movies that person owns.
+    @Override
+    public List<Movie> getOwnedMovies(Person person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
