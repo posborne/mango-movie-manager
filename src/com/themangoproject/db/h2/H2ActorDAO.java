@@ -60,7 +60,7 @@ public class H2ActorDAO implements ActorDAO {
 	 * data access object.
 	 */
 	private H2ActorDAO() {
-		conn = H2Util.getInstance().getConnection();
+		conn = H2Util.getInstance().getConnection("mangotest");
 		try {
 			allActorsPS = conn.prepareStatement(allActorsQuery);
 			updateActorPS = conn.prepareStatement(updateActorQuery);
@@ -221,7 +221,7 @@ public class H2ActorDAO implements ActorDAO {
 		DBActor actor = (DBActor) a;
 
 		try {
-			deleteActorPS.setInt(0, actor.getId());
+			deleteActorPS.setInt(1, actor.getId());
 			deleteActorPS.executeUpdate();
 			deleteActorPS.close();
 		} catch (SQLException ex) {

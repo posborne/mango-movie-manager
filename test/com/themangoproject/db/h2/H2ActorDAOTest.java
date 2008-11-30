@@ -1,9 +1,7 @@
 package com.themangoproject.db.h2;
 
 import static org.junit.Assert.*;
-
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
