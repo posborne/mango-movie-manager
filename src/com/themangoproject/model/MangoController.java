@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This is the controller.  A class that has a number of methods useful
+ * for all sorts of classes to have access too.
  * 
  * @author Paul Osborne, Zachary Varberg
  */
@@ -25,6 +27,11 @@ public class MangoController {
         actorDAO = H2ActorDAO.getInstance();
     }
 
+    /**
+     * This will return the only instance of this controller.
+     * 
+     * @return the instance of this controller.
+     */
     public static final MangoController getInstance() {
         if (instance == null) {
             instance = new MangoController();
@@ -32,99 +39,69 @@ public class MangoController {
         return instance;
     }
 
+    /**
+     * This will add a movie and save it.
+     * 
+     * @param movie the movie to be added
+     */
     public void addMovie(Movie movie) {
         movieDAO.addMovie(movie);
     }
 
+    /**
+     * This will add an actor and save it.
+     * 
+     * @param actor the actor to be added
+     */
     public void addActor(Actor actor) {
         actorDAO.addActor(actor);
     }
 
-    public Role addRole(Role role) {
-        // TODO: implement
-        return null;
-    }
-
-    public List<Movie> getMoviesForActor(Actor actor) {
-        List<Role> roles = actorDAO.getRolesForActor(actor);
-        ArrayList<Movie> movies = new ArrayList<Movie>();
-        for (Role role : roles) {
-            movies.add(role.getMovie());
-        }
-        return movies;
-    }
-
-    public List<Role> getRolesForActor(Actor actor) {
-        return actorDAO.getRolesForActor(actor);
-    }
-
+    /**
+     * This will save the changes made to this actor
+     * 
+     * @param actor the actor that has changed and needs to be
+     * updated
+     */
     public void updateActor(Actor actor) {
         actorDAO.addActor(actor);
     }
-
+    
     /**
-     * This method will take as an argument a movie. It will then get
-     * all the information about the movie and update the movie. It
-     * will return nothing because it will just update the movie
-     * passed to it.
+     * This will save the changes made to this movie
      * 
-     * @param movie
-     *            the movie to find information for.
+     * @param movie the movie that has changed and needs to be
+     * updated
      */
-    public void getMovieInfo(DBMovie movie) {
-        // TODO Auto-generated method stub
-
+    public void updateMovie(Movie movie){
+        this.movieDAO.updateMovie(movie);
     }
-
+    
     /**
-     * This will return the list of genres the movie passed to it are
-     * a part of.
+     * This will return a list of all the people
      * 
-     * @param movie
-     *            the movie to get the genres for.
+     * @return a list of all the people
      */
-    public List<String> getGenresForMovie(DBMovie movie) {
-        return this.movieDAO.getGenresForMovie(movie);
+    public List<Person> getAllPersons(){
+        return this.personDAO.getAllPersons();
     }
-
+    
     /**
-     * This will add the genre given to the movie given.
+     * This will return a list of all the actors
      * 
-     * @param movie
-     *            the movie to add the genre
-     * @param genre
-     *            the genre to be added
+     * @return a list of all the actors
      */
-    public void addGenreToMovie(DBMovie movie, String genre) {
-        // TODO:
-        // this.movieDAO.addGenreToMovie(movie, genre);
-
+    public List<Actor> getAllActors(){
+        return this.actorDAO.getAllActors();
     }
-
+    
     /**
-     * This will remove the specified genre from the movie specified
+     * This will return a list of all the movies
      * 
-     * @param movie
-     *            the movie to remove the genre from
-     * @param genre
-     *            the genre to be removed
+     * @return a list of all the movies
      */
-    public void removeGenreFromMovie(DBMovie movie, String genre) {
-        // TODO
-        // this.movieDAO.removeGenreFromMovie(movie, genre);
-
-    }
-
-    /**
-     * This will retrieve all the information about this person from 
-     * the database.
-     * 
-     * @param person the person to get data on.
-     */
-    public void getPersonInfo(DBPerson person) {
-        // TODO
-        // this.personDAO.getPersonInfo(person);
-        
+    public List<Movie> getAllMovies(){
+        return this.movieDAO.getAllMovies();
     }
 
 }
