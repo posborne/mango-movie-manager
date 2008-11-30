@@ -2,6 +2,8 @@ package com.themangoproject.db.h2;
 
 import java.sql.*;
 
+import com.themangoproject.db.DBSchema;
+
 /**
  * Set of utility operations on the H2 database. The H2Util class is a singleton
  * and provides a single instance through the getInstance() method. The utility
@@ -67,6 +69,44 @@ public class H2Util {
 					.println("There was an error creating a database connection");
 		}
 		return conn;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param dbName
+	 *            The name of the database that should be initialized.
+	 */
+	public void initializeSchemaOnDb(String dbName) {
+		Connection conn = getConnection(dbName);
+		try {
+			Statement stat = conn.createStatement();
+			// Drop everything if exists (in right order)
+			stat.executeUpdate(DBSchema.dropSetsTable);
+			stat.executeUpdate(DBSchema.dropGenreTable);
+			stat.executeUpdate(DBSchema.dropActingRolesTable);
+			stat.executeUpdate(DBSchema.dropListsTable);
+			stat.executeUpdate(DBSchema.dropActorTable);
+			stat.executeUpdate(DBSchema.dropMovieTable);
+			stat.executeUpdate(DBSchema.dropPersonTable);
+			stat.executeUpdate(DBSchema.dropPhoneNumberDomain);
+			stat.executeUpdate(DBSchema.dropMovieMediumDomain);
+			stat.executeUpdate(DBSchema.dropMovieRatingDomain);
+			
+			// Create everything (in right order)
+			stat.executeUpdate(DBSchema.createMovieMediumDomain);
+			stat.executeUpdate(DBSchema.createMovieRatingDomain);
+			stat.executeUpdate(DBSchema.createPhoneNumberDomain);
+			stat.executeUpdate(DBSchema.createActorTable);
+			stat.executeUpdate(DBSchema.createMovieTable);
+			stat.executeUpdate(DBSchema.createPersonTable);
+			stat.executeUpdate(DBSchema.createActingRolesTable);
+			stat.executeUpdate(DBSchema.createListsTable);
+			stat.executeUpdate(DBSchema.createSetsTable);
+			stat.executeUpdate(DBSchema.createSavedSearchesTable);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
