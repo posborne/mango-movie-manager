@@ -3,7 +3,16 @@ package com.themangoproject.db.h2;
 import com.themangoproject.model.*;
 import java.util.List;
 
-
+/**
+ * This is a concrete implementation of the Person interface. This is
+ * a DataBase person so it has limited knowledge of some DB ideas.
+ * This class is meant to represent a person and contains information
+ * important to a person such as name address, email, phone number,
+ * etc.
+ * 
+ * @author Zachary Varberg
+ * 
+ */
 public class DBPerson implements Person {
 
     private int id;
@@ -12,7 +21,7 @@ public class DBPerson implements Person {
     private String email;
     private String phoneNumber;
     private PersonDAO personDAO;
-    
+
     public DBPerson() {
         this.id = -1;
         this.name = null;
@@ -26,7 +35,8 @@ public class DBPerson implements Person {
     /**
      * This will set the database ID of this person.
      * 
-     * @param id the id of this person
+     * @param id
+     *            the id of this person
      */
     void setId(int id) {
         this.id = id;
@@ -34,17 +44,19 @@ public class DBPerson implements Person {
 
     /**
      * This will set the name of this person
-     *      
-     * @param name the name of this person
+     * 
+     * @param name
+     *            the name of this person
      */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** 
+    /**
      * This will set the address of this person
      * 
-     * @param address the address of this person 
+     * @param address
+     *            the address of this person
      */
     public void setAddress(String address) {
         this.address = address;
@@ -53,20 +65,22 @@ public class DBPerson implements Person {
     /**
      * This will set the Email address of this person
      * 
-     * @param email the email address of this person
+     * @param email
+     *            the email address of this person
      */
     public void setEmail(String email) {
-        //TODO: input validation
+        // TODO: input validation
         this.email = email;
     }
 
     /**
      * This will set the phone number of this person
      * 
-     * @param phoneNumber the phoneNumber of this person
+     * @param phoneNumber
+     *            the phoneNumber of this person
      */
     public void setPhoneNumber(String phoneNumber) {
-        //TODO: input validation
+        // TODO: input validation
         this.phoneNumber = phoneNumber;
     }
 
@@ -75,7 +89,7 @@ public class DBPerson implements Person {
      * 
      * @return the database ID of this person.
      */
-    public int getId () {
+    public int getId() {
         return this.id;
     }
 
@@ -125,7 +139,8 @@ public class DBPerson implements Person {
     }
 
     /**
-     * This will return all of the movies this person is currently borrowing.
+     * This will return all of the movies this person is currently
+     * borrowing.
      * 
      * @return a list of all the movies this person is borrowing.
      */
@@ -134,9 +149,11 @@ public class DBPerson implements Person {
     }
 
     /**
-     * This will return a movie that this person is currently borrowing
+     * This will return a movie that this person is currently
+     * borrowing
      * 
-     * @param movie The movie this person is returning.
+     * @param movie
+     *            The movie this person is returning.
      */
     public void returnMovie(Movie movie) {
         this.personDAO.returnMovie(this, movie);
@@ -145,15 +162,18 @@ public class DBPerson implements Person {
     /**
      * This will borrow a movie for this person
      * 
-     * @param movie The movie this person is borrowing.
+     * @param movie
+     *            The movie this person is borrowing.
      */
     public void borrowMovie(Movie movie) {
         this.personDAO.borrowMovie(this, movie);
     }
 
     /**
-     * This is the standard toString method.  Returns a string
+     * This is the standard toString method. Returns a string
      * representation of this person
+     * 
+     * @return A string representation of this person.
      */
     public String toStirng() {
         // TODO: What do we want this to do?
@@ -161,4 +181,3 @@ public class DBPerson implements Person {
     }
 
 }
-
