@@ -237,4 +237,12 @@ public class H2ActorDAO implements ActorDAO {
 		return null;
 	}
 
+    // TODO: Paul I have some more work for you.  I don't know
+    // if this is the best way to handle it, but it was the best
+    // I could think of right now.
+    public Actor getActorFromId(int actorID) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

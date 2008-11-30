@@ -13,6 +13,6 @@ public interface MovieDAO {
     public void getMovieInfo(Movie movie);
     public void removeGenreFromMovie(Movie movie, String genre);
     public void addGenreToMovie(Movie movie, String genre);
-
+    public Movie getMovieFromId(int movieID);
 }
 
