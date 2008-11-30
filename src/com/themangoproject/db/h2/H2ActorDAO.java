@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -228,5 +229,13 @@ public class H2ActorDAO implements ActorDAO {
 			ex.printStackTrace();
 		}
 	}
+
+	//TODO: Paul I need you to implement this method.  It should 
+	// return all of the movies the actor passed was a part of.
+    @Override
+    public List<Movie> getMoviesForActor(Actor actor) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

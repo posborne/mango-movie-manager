@@ -9,27 +9,23 @@ public class DBActor implements Actor {
     private int id;
     private String firstName;
     private String lastName;
-    private List<Movie> movies;
-    private List<Role> roles;
-
+    private ActorDAO actorDAO;
+    
     public DBActor() {
-        this(-1, null, null, null, null);
+        this(-1, null, null);
     }
 
     public DBActor(int id) {
-        this(id, null, null, null, null);
+        this(id, null, null);
     }
     
+
     public DBActor(int id, String firstName, String lastName) {
-        this(id, firstName, lastName, null, null);
-    }
-    
-    public DBActor(int id, String firstName, String lastName, List<Movie> movies, List<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.movies = movies;
-        this.roles = roles;
+        H2DAOFactory fact = new H2DAOFactory();
+        this.actorDAO = fact.getActorDAO();
     }
     
     
@@ -38,22 +34,19 @@ public class DBActor implements Actor {
     }
 
     public List<Movie> getMovies() {
-        if (movies == null) {
-            movies = MangoController.getInstance().getMoviesForActor(this);
-        }
-        return movies;
-    }
+        return actorDAO.getMoviesForActor(this);
+   }
 
     public List<Role> getRoles() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.actorDAO.getRolesForActor(this);
     }
 
     public String getFirstName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.firstName;
     }
 
     public String getLastName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.lastName;
     }
 
     public void setFirstName(String firstName) {
