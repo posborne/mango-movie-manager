@@ -5,6 +5,7 @@ import com.themangoproject.model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * The <code>H2ActorDAO</code> is an <code>ActorDAO</code> that provides methods
@@ -98,6 +99,8 @@ public class H2ActorDAO implements ActorDAO {
 				actor.setId(results.getInt("id"));
 				actor.setFirstName(results.getString("first_name"));
 				actor.setLastName(results.getString("last_name"));
+				System.out.println("Adding: " + actor.getFirstName() + " "
+						+ actor.getLastName());
 				actors.add(actor);
 			}
 		} catch (SQLException ex) {
@@ -237,12 +240,12 @@ public class H2ActorDAO implements ActorDAO {
 		return null;
 	}
 
-    // TODO: Paul I have some more work for you.  I don't know
-    // if this is the best way to handle it, but it was the best
-    // I could think of right now.
-    public Actor getActorFromId(int actorID) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	// TODO: Paul I have some more work for you. I don't know
+	// if this is the best way to handle it, but it was the best
+	// I could think of right now.
+	public Actor getActorFromId(int actorID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

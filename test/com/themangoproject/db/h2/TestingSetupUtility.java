@@ -78,7 +78,7 @@ public class TestingSetupUtility {
 		"('Die Hard Series', 2)";
 	
 	public static void executeInserts() {
-		Connection conn = H2Util.getInstance().getConnection("mangotesting");
+		Connection conn = H2Util.getInstance().getConnection("mango");
 		Statement stat;
 		try {
 			System.out.println(conn.getMetaData().getURL());
