@@ -202,9 +202,10 @@ public class H2ActorDAO implements ActorDAO {
 		DBActor actor = (DBActor) a;
 
 		try {
-			updateActorPS.setString(0, actor.getFirstName());
-			updateActorPS.setString(1, actor.getLastName());
+			updateActorPS.setString(1, actor.getFirstName());
+			updateActorPS.setString(2, actor.getLastName());
 			updateActorPS.setInt(3, actor.getId());
+			updateActorPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -219,6 +220,8 @@ public class H2ActorDAO implements ActorDAO {
 	 *             if the actor is not a DBActor.
 	 */
 	public void deleteActor(Actor a) {
+		// TODO: if an actor is removed, we must remove from other tables where
+		// this actor is referenced... Everything must go
 		if (!(a instanceof DBActor)) {
 			throw new ClassCastException();
 		}
