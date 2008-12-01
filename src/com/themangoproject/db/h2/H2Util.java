@@ -94,7 +94,7 @@ public class H2Util {
 			stat.executeUpdate(DBSchema.dropPhoneNumberDomain);
 			stat.executeUpdate(DBSchema.dropMovieMediumDomain);
 			stat.executeUpdate(DBSchema.dropMovieRatingDomain);
-			
+
 			// Create everything (in right order)
 			stat.executeUpdate(DBSchema.createMovieMediumDomain);
 			stat.executeUpdate(DBSchema.createMovieRatingDomain);
@@ -102,6 +102,7 @@ public class H2Util {
 			stat.executeUpdate(DBSchema.createActorTable);
 			stat.executeUpdate(DBSchema.createPersonTable);
 			stat.executeUpdate(DBSchema.createMovieTable);
+			stat.executeUpdate(DBSchema.createGenreTable);
 			stat.executeUpdate(DBSchema.createActingRolesTable);
 			stat.executeUpdate(DBSchema.createListsTable);
 			stat.executeUpdate(DBSchema.createSetsTable);
@@ -136,7 +137,14 @@ public class H2Util {
 		}
 		return sb.toString();
 	}
-	
+
+	/**
+	 * Mini application for resetting the schema on a database to the newest
+	 * state. This will remove all data in the database.
+	 * 
+	 * @param args
+	 *            Command line arguments (not used).
+	 */
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("This utility will clear and reset schema on DB");

@@ -3,6 +3,7 @@ package com.themangoproject.db.h2;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class TestingSetupUtility {
 
@@ -77,8 +78,8 @@ public class TestingSetupUtility {
 		"VALUES ('Die Hard Series', 1)," +
 		"('Die Hard Series', 2)";
 	
-	public static void executeInserts() {
-		Connection conn = H2Util.getInstance().getConnection("mango");
+	public static void executeInserts(String dbName) {
+		Connection conn = H2Util.getInstance().getConnection(dbName);
 		Statement stat;
 		try {
 			System.out.println(conn.getMetaData().getURL());
@@ -109,6 +110,9 @@ public class TestingSetupUtility {
 	}
 	
 	public static void main(String[] args) {
-		executeInserts();
+		Scanner scan = new Scanner(System.in);
+		System.out.print("DB: ");
+		String dbName = scan.nextLine();
+		executeInserts(dbName);
 	}
 }

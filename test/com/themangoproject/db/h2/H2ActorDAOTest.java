@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.ActorDAO;
-import com.themangoproject.model.DAOFactory;
 
 public class H2ActorDAOTest {
 
@@ -20,6 +19,7 @@ public class H2ActorDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
+		H2Util.getInstance().initializeSchemaOnDb("mangotesting");
 	}
 
 	@Test
@@ -28,23 +28,18 @@ public class H2ActorDAOTest {
 
 	@Test
 	public void testGetAllActors() {
-		TestingSetupUtility.executeInserts();
+		TestingSetupUtility.executeInserts("mangotesting");
 		ActorDAO dao = H2ActorDAO.getInstance();
-
-		String correctActors[] = { "Willis, Bruce", "Bonnie, Bedalia",
+		String correctActors[] = { "Willis, Bruce", "Bedalia, Bonnie",
 				"Gleason, Paul", "Irons, Jeremy", "Jackson, Samuel L.",
-				"Green, Graham" };
-		
+				"Greene, Graham" };
 		ArrayList<String> formattedNames = new ArrayList<String>();
-
 		List<Actor> actors = dao.getAllActors();
 		for (Actor a : actors) {
 			formattedNames.add(a.getLastName() + ", " + a.getFirstName());
 		}
-		
 		System.out.println("Length: " + formattedNames.size() + " : " + formattedNames);
 		for (int i = 0; i < correctActors.length; i++) {
-			System.out.println(correctActors[i]);
 			assertTrue(formattedNames.contains(correctActors[i]));
 		}
 	}

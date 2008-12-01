@@ -61,7 +61,8 @@ public class H2ActorDAO implements ActorDAO {
 	 * data access object.
 	 */
 	private H2ActorDAO() {
-		conn = H2Util.getInstance().getConnection("mangotest");
+		// TODO: this is temporary
+		conn = H2Util.getInstance().getConnection("mangotesting");
 		try {
 			allActorsPS = conn.prepareStatement(allActorsQuery);
 			updateActorPS = conn.prepareStatement(updateActorQuery);

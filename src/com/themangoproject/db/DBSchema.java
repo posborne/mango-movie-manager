@@ -41,6 +41,13 @@ public class DBSchema {
 		"PRIMARY KEY(id)," +
 		"UNIQUE(first_name, last_name) )";
 
+	public static final String createGenreTable =
+		"CREATE TABLE genre (" +
+		"	name			CHAR(50) NOT NULL," +
+		"	movie_id		INT NOT NULL," +
+		"	FOREIGN KEY(movie_id) REFERENCES movie(id)," +
+		"	PRIMARY KEY(name, movie_id) )";
+	
 	public static final String createMovieTable =
 		"CREATE TABLE movie (" + 
 		"	id					INT NOT NULL AUTO_INCREMENT," +
