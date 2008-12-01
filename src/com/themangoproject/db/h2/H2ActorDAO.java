@@ -34,7 +34,7 @@ public class H2ActorDAO implements ActorDAO {
 	/** Retrieve all roles for an actor */
 	private PreparedStatement rolesForActorPS;
 	private static final String rolesForActorQuery = "SELECT movie_id, role, character"
-			+ " FROM movie, acting_roles" + " WHERE movie_id=? AND actor_id=?";
+			+ " FROM movie, acting_roles" + " WHERE actor_id=?";
 
 	/** Add an actor to the database (no roles) */
 	private PreparedStatement addActorPS;
@@ -47,13 +47,18 @@ public class H2ActorDAO implements ActorDAO {
 			+ " SET first_name=?, last_name=?" + " WHERE id=?";
 
 	/** Retrieve an actors information */
-	private PreparedStatement populatePersonPS;
-	private static final String populatePersonQuery = "SELECT first_name, last_name"
+	private PreparedStatement populateActorPS;
+	private static final String populateActorQuery = "SELECT first_name, last_name"
 			+ " FROM actor" + " WHERE id=?";
 
 	/** Delete an actor from the database */
 	private PreparedStatement deleteActorPS;
-	private static final String deleteActorQuery = "DELETE FROM person WHERE id=?";
+	private static final String deleteActorQuery = "DELETE FROM actor WHERE id=?";
+
+	/** Delete acting roles with a give actor */
+	private PreparedStatement deleteActingRolesWithActorPS;
+	private static final String deleteActingRolesWithActorQuery = "DELETE FROM acting_roles"
+			+ " WHERE actor_id=?";
 
 	/**
 	 * The DAOs private constructor prepares the various, frequently used
@@ -69,8 +74,10 @@ public class H2ActorDAO implements ActorDAO {
 			rolesForActorPS = conn.prepareStatement(rolesForActorQuery);
 			addActorPS = conn.prepareStatement(addActorQuery);
 			updateActorPS = conn.prepareStatement(updateActorQuery);
-			populatePersonPS = conn.prepareStatement(populatePersonQuery);
+			populateActorPS = conn.prepareStatement(populateActorQuery);
 			deleteActorPS = conn.prepareStatement(deleteActorQuery);
+			deleteActingRolesWithActorPS = conn
+					.prepareStatement(deleteActingRolesWithActorQuery);
 		} catch (SQLException ex) {
 			// TODO; decide what to do here
 			ex.printStackTrace();
@@ -100,8 +107,6 @@ public class H2ActorDAO implements ActorDAO {
 				actor.setId(results.getInt("id"));
 				actor.setFirstName(results.getString("first_name"));
 				actor.setLastName(results.getString("last_name"));
-				System.out.println("Adding: " + actor.getFirstName() + " "
-						+ actor.getLastName());
 				actors.add(actor);
 			}
 		} catch (SQLException ex) {
@@ -129,7 +134,7 @@ public class H2ActorDAO implements ActorDAO {
 
 		ArrayList<Role> roles = new ArrayList<Role>();
 		try {
-			rolesForActorPS.setInt(0, actor.getId());
+			rolesForActorPS.setInt(1, actor.getId());
 			ResultSet results = rolesForActorPS.executeQuery();
 			while (results.next()) {
 				DBRole role = new DBRole();
@@ -175,8 +180,8 @@ public class H2ActorDAO implements ActorDAO {
 		DBActor actor = (DBActor) a;
 
 		try {
-			populatePersonPS.setInt(0, actor.getId());
-			ResultSet results = populatePersonPS.executeQuery();
+			populateActorPS.setInt(1, actor.getId());
+			ResultSet results = populateActorPS.executeQuery();
 			results.next(); // move to first
 			actor.setFirstName(results.getString("first_name"));
 			actor.setLastName(results.getString("last_name"));
@@ -212,16 +217,21 @@ public class H2ActorDAO implements ActorDAO {
 	}
 
 	/**
-	 * Delete the specified person from the database.
+	 * Delete the specified person from the database if there are no relations
+	 * in which the actor participates. If there are, throw an exception noting
+	 * that such is the case.
 	 * 
 	 * @param a
 	 *            The actor to delete from the database.
+	 * @throws ActorExistsInOtherRelationsException
+	 *             if the actor cannot be removed as a result of the actor
+	 *             existing in other relations (referential integrity constraint
+	 *             violation)
 	 * @throws ClassCastException
 	 *             if the actor is not a DBActor.
 	 */
-	public void deleteActor(Actor a) {
-		// TODO: if an actor is removed, we must remove from other tables where
-		// this actor is referenced... Everything must go
+	public void deleteActor(Actor a)
+			throws ActorExistsInOtherRelationsException {
 		if (!(a instanceof DBActor)) {
 			throw new ClassCastException();
 		}
@@ -232,6 +242,35 @@ public class H2ActorDAO implements ActorDAO {
 			deleteActorPS.executeUpdate();
 			deleteActorPS.close();
 		} catch (SQLException ex) {
+			if (ex.getErrorCode() == 23003) {
+				// Referential Integrity Constraint
+				throw new ActorExistsInOtherRelationsException();
+			}
+			System.out.println("Error Code: " + ex.getErrorCode());
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * TODO: javadoc me
+	 */
+	public void forceDeleteActor(Actor a) {
+		if (!(a instanceof DBActor)) {
+			throw new ClassCastException();
+		}
+		DBActor actor = (DBActor) a;
+
+		try {
+			// we need to use transactions here
+			conn.setAutoCommit(false);
+			deleteActingRolesWithActorPS.setInt(1, actor.getId());
+			deleteActorPS.setInt(1, actor.getId());
+			deleteActingRolesWithActorPS.executeUpdate();
+			deleteActorPS.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
+		} catch (Exception ex) {
+			// TODO: handle this somehow
 			ex.printStackTrace();
 		}
 	}

@@ -132,7 +132,7 @@ public class DBRole implements Role {
      */
     @Override
     public void setRole(String roleName) {
-        this.role = role;
+        this.role = roleName;
     }
 
 }
