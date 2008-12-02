@@ -28,8 +28,10 @@ public class DBRole implements Role {
      * @return the actor that is a part of this Role.
      */
     public Actor getActor() {
-        //TODO: fix me!
-        return H2ActorDAO.getInstance().getActorFromId(this.actorID);
+        DBActor a = new DBActor();
+        a.setId(this.actorID);
+        H2ActorDAO.getInstance().populateActor(a);
+        return a;
     }
     
     /**
