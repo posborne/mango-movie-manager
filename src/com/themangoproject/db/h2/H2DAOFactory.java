@@ -14,7 +14,7 @@ public class H2DAOFactory implements DAOFactory {
     }
 
     public MovieDAO getMovieDAO() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return H2MovieDAO.getInstance();
     }
 
 }

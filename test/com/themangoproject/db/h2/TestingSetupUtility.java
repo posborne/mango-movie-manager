@@ -78,11 +78,10 @@ public class TestingSetupUtility {
 		"VALUES ('Die Hard Series', 1)," +
 		"('Die Hard Series', 2)";
 	
-	public static void executeInserts(String dbName) {
-		Connection conn = H2Util.getInstance().getConnection(dbName);
+	public static void executeInserts() {
+		Connection conn = H2Util.getInstance().getConnection();
 		Statement stat;
 		try {
-			System.out.println(conn.getMetaData().getURL());
 			stat = conn.createStatement();
 			
 			// Clear Everything
@@ -111,8 +110,9 @@ public class TestingSetupUtility {
 	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		System.out.print("DB: ");
+		System.out.print("DB Location: ");
 		String dbName = scan.nextLine();
-		executeInserts(dbName);
+		H2Util.getInstance().setDatabaseLocation(dbName);
+		executeInserts();
 	}
 }

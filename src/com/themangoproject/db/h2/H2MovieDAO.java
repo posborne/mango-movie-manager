@@ -32,9 +32,10 @@ public class H2MovieDAO implements MovieDAO {
 
     /** Add a movie to the database */
     private PreparedStatement addMoviePS;
-    private static final String addMovieQuery = "INSERT INTO movie (director, title, rating, runtime, year, asin,"
+    private static final String addMovieQuery = 
+    	"INSERT INTO movie (director, title, rating, runtime, year, asin,"
             + " purchase_date, custom_description, condition, type, mango_rating"
-            + " owner_id, borrower_id"
+            + " owner_id, borrower_id)"
             + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /** Update a movie an existing movie in the database */

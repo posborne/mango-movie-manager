@@ -1,11 +1,9 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * The <code>H2ActorDAO</code> is an <code>ActorDAO</code> that provides methods
@@ -60,6 +58,10 @@ public class H2ActorDAO implements ActorDAO {
 	private static final String deleteActingRolesWithActorQuery = "DELETE FROM acting_roles"
 			+ " WHERE actor_id=?";
 
+	private PreparedStatement moviesForActorPS;
+	private static final String moviesForActorQuery = 
+		"SELECT movie_id FROM acting_roles WHERE actor_id=?";
+
 	/**
 	 * The DAOs private constructor prepares the various, frequently used
 	 * queries as Prepared Statements and otherwise initializes the state of the
@@ -67,7 +69,7 @@ public class H2ActorDAO implements ActorDAO {
 	 */
 	private H2ActorDAO() {
 		// TODO: this is temporary
-		conn = H2Util.getInstance().getConnection("mangotesting");
+		conn = H2Util.getInstance().getConnection();
 		try {
 			allActorsPS = conn.prepareStatement(allActorsQuery);
 			updateActorPS = conn.prepareStatement(updateActorQuery);
@@ -78,6 +80,7 @@ public class H2ActorDAO implements ActorDAO {
 			deleteActorPS = conn.prepareStatement(deleteActorQuery);
 			deleteActingRolesWithActorPS = conn
 					.prepareStatement(deleteActingRolesWithActorQuery);
+			moviesForActorPS = conn.prepareStatement(moviesForActorQuery);
 		} catch (SQLException ex) {
 			// TODO; decide what to do here
 			ex.printStackTrace();
@@ -275,20 +278,32 @@ public class H2ActorDAO implements ActorDAO {
 		}
 	}
 
-	// TODO: Paul I need you to implement this method. It should
-	// return all of the movies the actor passed was a part of.
-	@Override
-	public List<Movie> getMoviesForActor(Actor actor) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * Retrieve a list of all the movies an actor has performed in.
+	 * 
+	 * @return A list of all the movies that the specified actor has acting
+	 *         roles in.
+	 */
+	public List<Movie> getMoviesForActor(Actor a) {
+		if (!(a instanceof DBActor)) {
+			throw new ClassCastException();
+		}
+		DBActor actor = (DBActor) a;
 
-	// TODO: Paul I have some more work for you. I don't know
-	// if this is the best way to handle it, but it was the best
-	// I could think of right now.
-	public Actor getActorFromId(int actorID) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Movie> movies = new ArrayList<Movie>();
+		try {
+			moviesForActorPS.setInt(1, actor.getId());
+			ResultSet rs = moviesForActorPS.executeQuery();
+			while (rs.next()) {
+				DBMovie m = new DBMovie();
+				m.setId(rs.getInt("movie_id"));
+				movies.add(m);
+			}
+			rs.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return movies;
 	}
-
+	
 }

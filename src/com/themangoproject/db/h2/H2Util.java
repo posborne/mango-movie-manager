@@ -17,6 +17,10 @@ public class H2Util {
 
 	/** Singleton instance of the H2Util class */
 	private static H2Util instance;
+
+	/** Store the location of the database */
+	private String databaseLocation = "~/mango.db";
+
 	/** Connection to H2 database */
 	private Connection conn;
 
@@ -44,6 +48,18 @@ public class H2Util {
 	}
 
 	/**
+	 * Set the location of the database.
+	 * 
+	 * @param dbLocation
+	 *            The location of the database that should be used. This can
+	 *            either be an absolute path (C:\mango.db) or a relative path
+	 *            (~/testing.db OR ./mangotesting.db).
+	 */
+	public void setDatabaseLocation(String dbLocation) {
+		this.databaseLocation = dbLocation;
+	}
+
+	/**
 	 * @param dbName
 	 *            The name of the database to connect to.
 	 * @return A connection to the H2 database.
@@ -51,8 +67,8 @@ public class H2Util {
 	 *             in the case that there is an error creating a connection to
 	 *             the database.
 	 */
-	private Connection connectToDb(String dbName) throws SQLException {
-		String url = "jdbc:h2:~/" + dbName + ".db";
+	private Connection connectToDb() throws SQLException {
+		String url = "jdbc:h2:" + databaseLocation;
 		return DriverManager.getConnection(url);
 	}
 
@@ -62,9 +78,9 @@ public class H2Util {
 	 * 
 	 * @return A connection to the database.
 	 */
-	public Connection getConnection(String dbName) {
+	public Connection getConnection() {
 		try {
-			return connectToDb(dbName); // this is no longer a singleton
+			return connectToDb(); // this is no longer a singleton
 		} catch (SQLException ex) {
 			System.err
 					.println("There was an error creating a database connection");
@@ -78,8 +94,8 @@ public class H2Util {
 	 * @param dbName
 	 *            The name of the database that should be initialized.
 	 */
-	public void initializeSchemaOnDb(String dbName) {
-		Connection conn = getConnection(dbName);
+	public void initializeSchemaOnDb() {
+		Connection conn = getConnection();
 		try {
 			Statement stat = conn.createStatement();
 			// Drop everything if exists (in right order)
@@ -113,16 +129,6 @@ public class H2Util {
 	}
 
 	/**
-	 * Return a connection to the database. The class is set up such that only
-	 * one connection to the database will be established.
-	 * 
-	 * @return A connection to the database.
-	 */
-	public Connection getConnection() {
-		return getConnection("mango");
-	}
-
-	/**
 	 * @param values
 	 *            The values that should be quoted and comma separated.
 	 * @return A set of comma-separated quoted values from the inputs.
@@ -148,9 +154,10 @@ public class H2Util {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("This utility will clear and reset schema on DB");
-		System.out.print("DB Name: ");
+		System.out.print("DB Location: ");
 		String dbName = scan.nextLine();
-		H2Util.getInstance().initializeSchemaOnDb(dbName);
+		H2Util.getInstance().setDatabaseLocation(dbName);
+		H2Util.getInstance().initializeSchemaOnDb();
 		System.out.println("Complete! Cowabunga Dude!");
 	}
 }
