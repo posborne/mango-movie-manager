@@ -159,7 +159,7 @@ public class DBPerson implements Person {
      *            The movie this person is returning.
      */
     public void returnMovie(Movie movie) {
-        this.personDAO.returnMovie(this, movie);
+        this.personDAO.returnMovie(movie);
     }
 
     /**

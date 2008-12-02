@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.themangoproject.db.h2.DBPerson;
+import com.themangoproject.model.Movie;
 import com.themangoproject.model.Person;
 import com.themangoproject.model.PersonExistsException;
 
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author osbpau
+ * @author Paul Osborne
  */
 public class H2PersonDAOTest {
 
@@ -100,12 +101,34 @@ public class H2PersonDAOTest {
 
     @Test
     public void testGetOwnedMovies() {
-    	fail("Not Implemented");
+    	TestingSetupUtility.executeInserts();
+    	
+    	DBPerson paul = new DBPerson();
+    	paul.setId(1);
+    	H2PersonDAO.getInstance().populatePerson(paul);
+    	List<Movie> paulsMovies = H2PersonDAO.getInstance().getOwnedMovies(paul);
+    	ArrayList<String>  movieStrings = new ArrayList<String>();
+    	for (Movie m : paulsMovies) {
+    		movieStrings.add(m.getTitle());
+    	}
+    	
+    	assertTrue(movieStrings.contains("Die Hard"));
+    	assertTrue(movieStrings.contains("Die Hard: With a Vengeance"));
     }
 
     @Test
     public void testPopulatePerson() {
-    	fail("Not Implemented");
+    	TestingSetupUtility.executeInserts();
+    	
+    	// Paul is id 1
+    	DBPerson paul = new DBPerson();
+    	paul.setId(1);
+    	
+    	H2PersonDAO.getInstance().populatePerson(paul);
+    	assertTrue(paul.getName().equals("Paul Osborne"));
+    	assertTrue(paul.getAddress().equals("3001 Hampshire Ave N"));
+    	assertTrue(paul.getEmail().equals("osbpau@bethel.edu"));
+    	assertTrue(paul.getPhoneNumber().equals("7637970688"));
     }
 
     @Test
