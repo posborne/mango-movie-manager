@@ -2,18 +2,33 @@ package com.themangoproject.db.h2;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import com.themangoproject.model.Movie;
 
 public class H2MovieDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
+		H2Util.getInstance().setDatabaseLocation("~/mangotesting.db");
 	}
 
 	@Test
 	public void testGetAllMovies() {
-		fail("Not yet implemented"); // TODO
+		TestingSetupUtility.executeInserts();
+		List<Movie> movies = H2MovieDAO.getInstance().getAllMovies();
+		ArrayList<String> titles = new ArrayList<String>();
+		for (Movie m : movies) {
+			H2MovieDAO.getInstance().getMovieInfo(m);
+			titles.add(m.getTitle());
+		}
+
+		assertTrue(titles.contains("Die Hard"));
+		assertTrue(titles.contains("Die Hard: With a Vengeance"));
 	}
 
 	@Test
