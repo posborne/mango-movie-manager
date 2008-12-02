@@ -6,6 +6,8 @@
 
 package com.themangoproject.ui;
 
+import javax.swing.DefaultComboBoxModel;
+
 
 /**
  * AddSubtractInnerPanel is a panel that to collect search criteria for 
@@ -30,16 +32,13 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        jButton2.setText("jButton2");
-
-        setPreferredSize(new java.awt.Dimension(442, 25));
+        setPreferredSize(new java.awt.Dimension(442, 35));
 
         jComboBox1.setEditable(true);
         jComboBox1.setMaximumRowCount(5);
@@ -117,7 +116,6 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
@@ -151,4 +149,13 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     public void enableMinusButton() {
         this.jButton3.setEnabled(true);
     }
+    
+    /**
+     * Sets models for the two JComboBoxes
+     */
+    public void setComboBoxModels(DefaultComboBoxModel m1, DefaultComboBoxModel m2) {
+        //this.jComboBox1.setModel(m1);
+        //this.jComboBox2.setModel(m2);
+    }
+    
 }
