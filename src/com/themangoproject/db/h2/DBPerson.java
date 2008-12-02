@@ -21,6 +21,7 @@ public class DBPerson implements Person {
     private String email;
     private String phoneNumber;
     private PersonDAO personDAO;
+    private DBPersonState state;
 
     public DBPerson() {
         this.id = -1;
@@ -30,6 +31,7 @@ public class DBPerson implements Person {
         this.phoneNumber = null;
         H2DAOFactory fact = new H2DAOFactory();
         personDAO = fact.getPersonDAO();
+        this.state = new NotfilledPersonState();
     }
 
     /**
@@ -90,7 +92,7 @@ public class DBPerson implements Person {
      * @return the database ID of this person.
      */
     public int getId() {
-        return this.id;
+        return this.state.getId();
     }
 
     /**
@@ -99,7 +101,8 @@ public class DBPerson implements Person {
      * @return the name of this person
      */
     public String getName() {
-        return this.name;
+        return this.state.getName();
+        
     }
 
     /**
@@ -108,7 +111,7 @@ public class DBPerson implements Person {
      * @return this persons address
      */
     public String getAddress() {
-        return this.address;
+        return this.state.getAddress();
     }
 
     /**
@@ -117,7 +120,7 @@ public class DBPerson implements Person {
      * @return this persons phone number
      */
     public String getPhoneNumber() {
-        return this.phoneNumber;
+        return this.state.getPhoneNumber();
     }
 
     /**
@@ -126,7 +129,7 @@ public class DBPerson implements Person {
      * @return this persons email
      */
     public String getEmail() {
-        return this.email;
+        return this.state.getEmail();
     }
 
     /**
@@ -178,6 +181,74 @@ public class DBPerson implements Person {
     public String toStirng() {
         // TODO: What do we want this to do?
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    private class UpdatedPersonState implements DBPersonState {
+
+        @Override
+        public String getAddress() {
+            return DBPerson.this.address;
+        }
+
+        @Override
+        public String getEmail() {
+            return DBPerson.this.email;
+        }
+
+        @Override
+        public int getId() {
+            return DBPerson.this.id;
+        }
+
+        @Override
+        public String getName() {
+            return DBPerson.this.name;
+        }
+
+        @Override
+        public String getPhoneNumber() {
+            return DBPerson.this.phoneNumber;
+        }
+        
+    }
+    
+    private class NotfilledPersonState implements DBPersonState {
+
+        @Override
+        public String getAddress() {
+            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.state = new UpdatedPersonState();
+            return DBPerson.this.address;
+        }
+
+        @Override
+        public String getEmail() {
+            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.state = new UpdatedPersonState();
+            return DBPerson.this.email;
+        }
+
+        @Override
+        public int getId() {
+            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.state = new UpdatedPersonState();
+            return DBPerson.this.id;
+        }
+
+        @Override
+        public String getName() {
+            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.state = new UpdatedPersonState();
+            return DBPerson.this.name;
+        }
+
+        @Override
+        public String getPhoneNumber() {
+            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.state = new UpdatedPersonState();
+            return DBPerson.this.phoneNumber;
+        }
+        
     }
 
 }

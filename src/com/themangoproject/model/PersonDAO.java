@@ -16,6 +16,7 @@ public interface PersonDAO {
     public List<Movie> getBorrowedMovies(DBPerson person);
     public void returnMovie(Person person, Movie movie);
     public void borrowMovie(Person person, Movie movie);
+    public void getPersonInfo(Person person);
 
 }
 

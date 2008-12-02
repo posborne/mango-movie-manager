@@ -221,4 +221,11 @@ public class H2PersonDAO implements PersonDAO {
         // TODO Auto-generated method stub
         return null;
     }
+
+    //TODO: And another Paul.
+    @Override
+    public void getPersonInfo(Person person) {
+        // TODO Auto-generated method stub
+        
+    }
 }
