@@ -24,26 +24,27 @@ public class DBMovie implements Movie {
     private String director, title, rating, ASIN, customDescription,
             type, condition;
     private Date purchaseDate;
-    private Person owner, borrower;
-//    private MangoController controller;
+    private int ownerId, borrowerId;
+    // private MangoController controller;
     private MovieDAO movieDAO;
+    private DBMovieState state;
 
     public DBMovie() {
-//        controller = MangoController.getInstance();
+        // controller = MangoController.getInstance();
         DAOFactory fact = new H2DAOFactory();
         movieDAO = fact.getMovieDAO();
+        state = new NotfullMovieState();
     }
-
+    
+        
+    
     /**
      * This will return the Database unique ID of this movie
      * 
      * @return the DB ID of this movie
      */
     public int getId() {
-        if (id == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return id;
+        return state.getId();
     }
 
     /**
@@ -54,7 +55,6 @@ public class DBMovie implements Movie {
      */
     public void setDirector(String director) {
         this.director = director;
-        // TODO: Add change handling here
     }
 
     /**
@@ -63,10 +63,7 @@ public class DBMovie implements Movie {
      * @return the director of this movie
      */
     public String getDirector() {
-        if (director == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.director;
+        return this.state.getDirector();
     }
 
     /**
@@ -77,43 +74,35 @@ public class DBMovie implements Movie {
      */
     public void setTitle(String title) {
         this.title = title;
-        // TODO: Add change handling here
     }
 
     /**
-     * This will return
+     * This will return the title of this movie
      * 
      * @return the title of the movie
      */
     public String getTitle() {
-        if (title == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.title;
+        return this.state.getTitle();
     }
 
     /**
-     * This will change the rating of the movie (e.g. G, PG, PG-13, R,
-     * etc, etc).
+     * This will change the rating of the movie (e.g. G, PG,
+     * PG-13, R, etc, etc).
      * 
      * @param rating
-     *            the new rating of the movie (e.g. G, PG, PG-13, R,
-     *            etc, etc).
+     *            the new rating of the movie (e.g. G, PG, PG-13,
+     *            R, etc, etc).
      */
     public void setRating(String rating) {
         this.rating = rating;
-        // TODO: Add change handling here
     }
 
     /**
-     * This will return the rating of the movie (e.g. G, PG, PG-13, R,
-     * etc, etc).
+     * This will return the rating of the movie (e.g. G, PG,
+     * PG-13, R, etc, etc).
      */
     public String getRating() {
-        if (rating == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.rating;
+        return this.state.getRating();
     }
 
     /**
@@ -124,7 +113,6 @@ public class DBMovie implements Movie {
      */
     public void setRuntime(int runtime) {
         this.runtime = runtime;
-        // TODO: Add change handling here.
     }
 
     /**
@@ -133,10 +121,7 @@ public class DBMovie implements Movie {
      * @return the run-time of the movie
      */
     public int getRuntime() {
-        if (runtime == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.runtime;
+        return this.state.getRuntime();
     }
 
     /**
@@ -146,8 +131,8 @@ public class DBMovie implements Movie {
      * @param mangoRating
      *            the new mango rating, an int between 0-10
      * @throws IllegalArgumentException
-     *             if the mango rating is not an integer between 0 and
-     *             10
+     *             if the mango rating is not an integer between 0
+     *             and 10
      */
     public void setMangoRating(int mangoRating)
             throws IllegalArgumentException {
@@ -157,7 +142,6 @@ public class DBMovie implements Movie {
             throw new IllegalArgumentException(
                     "Mango rating must be between 0 and 10");
         }
-        // TODO: Add change handling here
     }
 
     /**
@@ -166,20 +150,17 @@ public class DBMovie implements Movie {
      * @return the mango rating of this movie
      */
     public int getMangoRating() {
-        if (mangoRating == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.mangoRating;
+        return this.state.getMangoRating();
     }
 
     /**
-     * This will return all the actors who were a part of this movie
+     * This will return all the actors who were a part of this
+     * movie
      * 
      * @return all the actors in this movie
      */
     public List<Actor> getActors() {
-        // TODO: Request Actors from Controller
-        throw new UnsupportedOperationException("Not supported yet.");
+        return movieDAO.getActorsForMovie(this);
     }
 
     /**
@@ -190,40 +171,22 @@ public class DBMovie implements Movie {
      */
     public void addActor(Actor actor) {
         // TODO: Should this be a role instead of an actor?
-        throw new UnsupportedOperationException("Not suppor ted yet.");
+        throw new UnsupportedOperationException(
+                "Not suppor ted yet.");
     }
 
     /**
-     * This will remove the association of an actor with this movie
+     * This will remove the association of an actor with this
+     * movie
      * 
      * @param actor
      *            the actor to be removed
      */
     public void removeActor(Actor actor) {
         // TODO: Should this be a role?
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException(
+                "Not supported yet.");
     }
-
-    // /**
-    // * True if information has changed since loaded from the
-    // database
-    // * false otherwise.
-    // *
-    // * @return true if there has been a change in the information
-    // since it was
-    // * loaded from the database.
-    // */
-    // public boolean hasChanged() {
-    // return changed;
-    // }
-    //
-    // /**
-    // * This will return the
-    // *
-    // */
-    // public int getRuntime() {
-    // throw new UnsupportedOperationException("Not supported yet.");
-    // }
 
     /**
      * This will return the year the movie was released
@@ -231,10 +194,7 @@ public class DBMovie implements Movie {
      * @return the year the movie was released.
      */
     public int getYear() {
-        if (this.year == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.year;
+        return this.state.getYear();
     }
 
     /**
@@ -243,14 +203,15 @@ public class DBMovie implements Movie {
      * @param year
      *            the year the movie was released
      * @throws IllegalArgumentException
-     *             if the year is not a valid year i.e. if it is not
-     *             an int between 1890 and 9999
+     *             if the year is not a valid year i.e. if it is
+     *             not an int between 1890 and 9999
      */
     public void setYear(int year) throws IllegalArgumentException {
         if (year < 10000 && year > 1890) {
-            this.year = year;
+            DBMovie.this.year = year;
         } else {
-            throw new IllegalArgumentException("Not a valid year;");
+            throw new IllegalArgumentException(
+                    "Not a valid year;");
         }
     }
 
@@ -261,10 +222,7 @@ public class DBMovie implements Movie {
      * @return the ASIN of this movie
      */
     public String getASIN() {
-        if (this.ASIN == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.ASIN;
+        return this.state.getASIN();
     }
 
     /**
@@ -275,7 +233,6 @@ public class DBMovie implements Movie {
      */
     public void setASIN(String ASIN) {
         this.ASIN = ASIN;
-        // TODO: Add change handling here
     }
 
     /**
@@ -285,10 +242,7 @@ public class DBMovie implements Movie {
      * 
      */
     public Date getPurchaseDate() {
-        if (this.purchaseDate == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.purchaseDate;
+        return this.state.getPurchaseDate();
     }
 
     /**
@@ -299,7 +253,6 @@ public class DBMovie implements Movie {
      */
     public void setPurchaseDate(Date purchaseDate) {
         this.purchaseDate = purchaseDate;
-        // TODO: Change handling here
     }
 
     /**
@@ -310,10 +263,7 @@ public class DBMovie implements Movie {
      *         movie
      */
     public String getCustomDescription() {
-        if (this.customDescription == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.customDescription;
+        return this.state.getCustomDescription();
     }
 
     /**
@@ -324,20 +274,16 @@ public class DBMovie implements Movie {
      */
     public void setCustomDescription(String customDescription) {
         this.customDescription = customDescription;
-        // TODO: Change handling here
     }
 
     /**
-     * This will return the type of movie (i.e. VHS, DVD, BRAY, HDVD,
-     * etc)
+     * This will return the type of movie (i.e. VHS, DVD, BRAY,
+     * HDVD, etc)
      * 
      * @return the type of this movie
      */
     public String getType() {
-        if (this.type == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.type;
+        return this.state.getType();
     }
 
     /**
@@ -357,11 +303,7 @@ public class DBMovie implements Movie {
      * @return the owner of this movie
      */
     public Person getOwner() {
-        // TODO: Should we store Owner or look it up?
-        if (this.owner == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.owner;
+        return this.state.getOwner();
     }
 
     /**
@@ -371,41 +313,42 @@ public class DBMovie implements Movie {
      *            the owner of this movie
      */
     public void setOwner(Person owner) {
-        this.owner = owner;
+        //TODO: Correct way to do this?
+        this.ownerId = ((DBPerson)owner).getId();
     }
 
     /**
-     * This will return the borrower of this movie (i.e. the person
-     * currently in possession of the movie).
+     * This will return the borrower of this movie (i.e. the
+     * person currently in possession of the movie).
      * 
-     * @return the person who is borrowing this movie (the owner if it
-     *         isn't being borrowed.
+     * @return the person who is borrowing this movie (the owner
+     *         if it isn't being borrowed.
      */
+    //TODO: is that statement in the return correct?
     public Person getBorrower() {
-        if (this.borrower == null) {
-            movieDAO.getMovieInfo(this);
-        }
-        return this.borrower;
+        return this.state.getBorrower();
     }
 
     /**
-     * This will set the current borrower (or possessor) of the movie.
+     * This will set the current borrower (or possessor) of the
+     * movie.
      * 
      * @param borrower
      *            the borrower of the movie
      */
     public void setBorrower(Person borrower) {
-        this.borrower = borrower;
+        //TODO: Correct way to do this?
+        DBMovie.this.borrowerId = ((DBPerson)borrower).getId();
     }
 
     /**
-     * This will return a list of all of the genres that this movie
-     * fits into.
+     * This will return a list of all of the genres that this
+     * movie fits into.
      * 
      * @return the list of genres this movie is a part of.
      */
     public List<String> getGenres() {
-        return movieDAO.getGenresForMovie(this);
+        return DBMovie.this.movieDAO.getGenresForMovie(this);
     }
 
     /**
@@ -415,7 +358,7 @@ public class DBMovie implements Movie {
      *            the genre to be added
      */
     public void addGenre(String genre) {
-        movieDAO.addGenreToMovie(this, genre);
+        this.movieDAO.addGenreToMovie(this, genre);
     }
 
     /**
@@ -425,39 +368,415 @@ public class DBMovie implements Movie {
      *            the genre to be removed from this movie.
      */
     public void removeGenre(String genre) {
-        movieDAO.removeGenreFromMovie(this, genre);
+        this.movieDAO.removeGenreFromMovie(this, genre);
     }
 
-    /** 
-     * This will return the condition this movie is in (e.g. "It's got a 
-     * large scratch, and the case is broken")
+    /**
+     * This will return the condition this movie is in (e.g. "It's
+     * got a large scratch, and the case is broken")
      * 
      * @return the condition of the movie.
      * 
      */
     @Override
     public String getCondition() {
-        //TODO: null handling
-        return this.condition;
+        return this.state.getCondition();
     }
-    
+
     /**
      * This will change the condition of the movie
      * 
-     * @param condition the new condition of the movie
+     * @param condition
+     *            the new condition of the movie
      */
     public void setCondition(String condition) {
         this.condition = condition;
     }
 
+    /**
+     * This will return the ID of the owner of this movie
+     * 
+     * @return the id of the owner of this movie
+     */
     public int getOwnerId() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.state.getOwnerId();
     }
 
+    /**
+     * This will return the ID of the borrower of this movie
+     * 
+     * @return the id of the borrower of this movie
+     */
     public int getBorrowerId() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.state.getBorrowerId();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    private class UpdatedMovieState implements DBMovieState {
+        /**
+         * This will return the Database unique ID of this movie
+         * 
+         * @return the DB ID of this movie
+         */
+        public int getId() {
+            return id;
+        }
+
+
+        /**
+         * This will return the director of the movie
+         * 
+         * @return the director of this movie
+         */
+        public String getDirector() {
+            return director;
+        }
+
+        /**
+         * This will return
+         * 
+         * @return the title of the movie
+         */
+        public String getTitle() {
+            return title;
+        }
+
+        /**
+         * This will return the rating of the movie (e.g. G, PG,
+         * PG-13, R, etc, etc).
+         */
+        public String getRating() {
+            return rating;
+        }
+
+        /**
+         * This will return the run-time of the movie
+         * 
+         * @return the run-time of the movie
+         */
+        public int getRuntime() {
+            return runtime;
+        }
+
+        /**
+         * This will return the mango rating of this movie
+         * 
+         * @return the mango rating of this movie
+         */
+        public int getMangoRating() {
+            return mangoRating;
+        }
+
+        /**
+         * This will return the year the movie was released
+         * 
+         * @return the year the movie was released.
+         */
+        public int getYear() {
+            return DBMovie.this.year;
+        }
+
+        /**
+         * This will return the ASIN (Amazon System? Indentification
+         * Number)
+         * 
+         * @return the ASIN of this movie
+         */
+        public String getASIN() {
+            return DBMovie.this.ASIN;
+        }
+
+        /**
+         * This will return the date this movie was purchased.
+         * 
+         * @return Date the date this movie was purchased
+         * 
+         */
+        public Date getPurchaseDate() {
+            return DBMovie.this.purchaseDate;
+        }
+
+        /**
+         * This will return the custom description of this movie as
+         * described by the owner
+         * 
+         * @return CustomDescription is the custom description of this
+         *         movie
+         */
+        public String getCustomDescription() {
+            return DBMovie.this.customDescription;
+        }
+
+        /**
+         * This will return the type of movie (i.e. VHS, DVD, BRAY,
+         * HDVD, etc)
+         * 
+         * @return the type of this movie
+         */
+        public String getType() {
+            return DBMovie.this.type;
+        }
+
+        /**
+         * This will return the Owner of this movie
+         * 
+         * @return the owner of this movie
+         */
+        public Person getOwner() {
+            return H2PersonDAO.getInstance().getPersonFromId(DBMovie.this.ownerId);
+        }
+        
+        /**
+         * This will return the borrower of this movie (i.e. the
+         * person currently in possession of the movie).
+         * 
+         * @return the person who is borrowing this movie (the owner
+         *         if it isn't being borrowed.
+         */
+        //TODO: is that statement in the return correct?
+        public Person getBorrower() {
+            return H2PersonDAO.getInstance().getPersonFromId(DBMovie.this.borrowerId);
+        }
+
+        /**
+         * This will return the condition this movie is in (e.g. "It's
+         * got a large scratch, and the case is broken")
+         * 
+         * @return the condition of the movie.
+         * 
+         */
+        @Override
+        public String getCondition() {
+            return DBMovie.this.condition;
+        }
+
+        /**
+         * This will return the ID of the owner of this movie
+         * 
+         * @return the id of the owner of this movie
+         */
+        public int getOwnerId() {
+            return DBMovie.this.ownerId;
+        }
+
+        /**
+         * This will return the ID of the borrower of this movie
+         * 
+         * @return the id of the borrower of this movie
+         */
+        public int getBorrowerId() {
+            return DBMovie.this.borrowerId;
+        }
+    }
+    
+    private class NotfullMovieState implements DBMovieState {
+        /**
+         * This will return the Database unique ID of this movie
+         * 
+         * @return the DB ID of this movie
+         */
+        public int getId() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.id;
+        }
+
+        /**
+         * This will return the director of the movie
+         * 
+         * @return the director of this movie
+         */
+        public String getDirector() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return director;
+        }
+
+        /**
+         * This will return
+         * 
+         * @return the title of the movie
+         */
+        public String getTitle() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return title;
+        }
+
+        /**
+         * This will return the rating of the movie (e.g. G, PG,
+         * PG-13, R, etc, etc).
+         */
+        public String getRating() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return rating;
+        }
+
+        /**
+         * This will return the run-time of the movie
+         * 
+         * @return the run-time of the movie
+         */
+        public int getRuntime() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return runtime;
+        }
+
+        /**
+         * This will return the mango rating of this movie
+         * 
+         * @return the mango rating of this movie
+         */
+        public int getMangoRating() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return mangoRating;
+        }
+
+        /**
+         * This will return the year the movie was released
+         * 
+         * @return the year the movie was released.
+         */
+        public int getYear() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.year;
+        }
+
+        /**
+         * This will return the ASIN (Amazon System? Indentification
+         * Number)
+         * 
+         * @return the ASIN of this movie
+         */
+        public String getASIN() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.ASIN;
+        }
+
+        /**
+         * This will return the date this movie was purchased.
+         * 
+         * @return Date the date this movie was purchased
+         * 
+         */
+        public Date getPurchaseDate() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.purchaseDate;
+        }
+
+        /**
+         * This will return the custom description of this movie as
+         * described by the owner
+         * 
+         * @return CustomDescription is the custom description of this
+         *         movie
+         */
+        public String getCustomDescription() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.customDescription;
+        }
+
+        /**
+         * This will return the type of movie (i.e. VHS, DVD, BRAY,
+         * HDVD, etc)
+         * 
+         * @return the type of this movie
+         */
+        public String getType() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.type;
+        }
+
+        /**
+         * This will return the Owner of this movie
+         * 
+         * @return the owner of this movie
+         */
+        public Person getOwner() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return H2PersonDAO.getInstance().getPersonFromId(DBMovie.this.ownerId);
+        }
+
+        /**
+         * This will return the borrower of this movie (i.e. the
+         * person currently in possession of the movie).
+         * 
+         * @return the person who is borrowing this movie (the owner
+         *         if it isn't being borrowed.
+         */
+        //TODO: is that statement in the return correct?
+        public Person getBorrower() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return H2PersonDAO.getInstance().getPersonFromId(DBMovie.this.borrowerId);
+        }
+
+        /**
+         * This will return a list of all of the genres that this
+         * movie fits into.
+         * 
+         * @return the list of genres this movie is a part of.
+         */
+        public List<String> getGenres() {
+            return DBMovie.this.movieDAO.getGenresForMovie(DBMovie.this);
+        }
+
+        /**
+         * This will return the condition this movie is in (e.g. "It's
+         * got a large scratch, and the case is broken")
+         * 
+         * @return the condition of the movie.
+         * 
+         */
+        @Override
+        public String getCondition() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.condition;
+        }
+
+
+        /**
+         * This will return the ID of the owner of this movie
+         * 
+         * @return the id of the owner of this movie
+         */
+        public int getOwnerId() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.ownerId;
+        }
+
+        /**
+         * This will return the ID of the borrower of this movie
+         * 
+         * @return the id of the borrower of this movie
+         */
+        public int getBorrowerId() {
+            DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+            DBMovie.this.state = new UpdatedMovieState();
+            return DBMovie.this.borrowerId;
+        }
     }
 
 }
