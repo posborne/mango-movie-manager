@@ -82,17 +82,12 @@ public class H2PersonDAO implements PersonDAO {
 		}
 
 		DBPerson person = (DBPerson) p;
-		if (person.getId() == -1) {
-			// TODO: this might be changed to Integer
-			throw new PersonExistsException();
-		}
-
 		try {
 			// Prepare the statement parameters
-			addPersonPS.setString(0, person.getName());
-			addPersonPS.setString(1, person.getAddress());
-			addPersonPS.setString(2, person.getEmail());
-			addPersonPS.setString(3, person.getPhoneNumber());
+			addPersonPS.setString(1, person.getName());
+			addPersonPS.setString(2, person.getAddress());
+			addPersonPS.setString(3, person.getEmail());
+			addPersonPS.setString(4, person.getPhoneNumber());
 
 			// execute the statement
 			addPersonPS.executeUpdate();
@@ -118,11 +113,11 @@ public class H2PersonDAO implements PersonDAO {
 		DBPerson person = (DBPerson) p;
 		try {
 			// Prepare the statement parameters
-			updatePersonPS.setString(0, person.getName());
-			updatePersonPS.setString(1, person.getAddress());
-			updatePersonPS.setString(2, person.getEmail());
-			updatePersonPS.setString(3, person.getPhoneNumber());
-			updatePersonPS.setInt(4, person.getId()); // execute the statement
+			updatePersonPS.setString(1, person.getName());
+			updatePersonPS.setString(2, person.getAddress());
+			updatePersonPS.setString(3, person.getEmail());
+			updatePersonPS.setString(4, person.getPhoneNumber());
+			updatePersonPS.setInt(5, person.getId()); // execute the statement
 			updatePersonPS.executeUpdate();
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
@@ -144,13 +139,13 @@ public class H2PersonDAO implements PersonDAO {
 		}
 		DBPerson person = (DBPerson) p;
 		try {
-			populatePersonPS.setInt(0, person.getId());
+			populatePersonPS.setInt(1, person.getId());
 			ResultSet rs = populatePersonPS.executeQuery();
 			rs.next();
 			person.setName(rs.getString("name"));
 			person.setAddress(rs.getString("address"));
 			person.setEmail(rs.getString("email"));
-			person.setPhoneNumber(rs.getString("phone_number"));
+			person.setPhoneNumber(rs.getString("phone_num"));
 			rs.close();
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
@@ -174,7 +169,7 @@ public class H2PersonDAO implements PersonDAO {
 				person.setEmail(results.getString("email"));
 				person
 						.setPhoneNumber(results
-								.getString("phone_number"));
+								.getString("phone_num"));
 				persons.add(person);
 			}
 		} catch (SQLException ex) {

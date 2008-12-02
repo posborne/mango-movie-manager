@@ -5,14 +5,14 @@
 
 package com.themangoproject.db.h2;
 
-import com.themangoproject.db.h2.DBPerson;
-import com.themangoproject.db.h2.H2PersonDAO;
-import com.themangoproject.model.Person;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import com.themangoproject.db.h2.DBPerson;
+import com.themangoproject.model.Person;
+import com.themangoproject.model.PersonExistsException;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -25,20 +25,12 @@ public class H2PersonDAOTest {
     public H2PersonDAOTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     @Before
     public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+    	// Get everything primed and ready to roll
+    	H2Util.getInstance().setDatabaseLocation("~/mangotesting.db");
+    	H2Util.getInstance().initializeSchemaOnDb();
+    	TestingSetupUtility.executeInserts();
     }
 
     /**
@@ -46,9 +38,27 @@ public class H2PersonDAOTest {
      */
     @Test
     public void testAddPerson() {
-        Person person = new DBPerson();
-        //H2PersonDAO instance = new H2PersonDAO();
-        //instance.addPerson("bob", "3001 Hello Lane, St. Paul, MN 55112", Long.valueOf("9528187258"), "paul@posborne.net");
+    	TestingSetupUtility.executeInserts();
+    	
+    	DBPerson p = new DBPerson();
+    	p.setName("Bob Billy McTest");
+    	p.setEmail("bob@junit.org");
+    	p.setAddress("123 Screw you lane");
+    	p.setPhoneNumber("952.883.3918");
+    	
+    	try {
+    		H2PersonDAO.getInstance().addPerson(p);
+    	} catch (PersonExistsException pee) {
+    		fail("Why was this thrown?");
+    	}
+    	
+    	List<Person> people = H2PersonDAO.getInstance().getAllPersons();
+    	ArrayList<String> names = new ArrayList<String>();
+    	for (Person person : people) {
+    		names.add(person.getName());
+    	}
+    	
+    	assertTrue(names.contains("Bob Billy McTest"));
     }
 
     /**
@@ -56,24 +66,51 @@ public class H2PersonDAOTest {
      */
     @Test
     public void testUpdatePerson() {
-        System.out.println("updatePerson");
-        Person person = null;
-        //H2PersonDAO instance = new H2PersonDAO();
-        //instance.updatePerson(person);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        TestingSetupUtility.executeInserts();
+        
+        DBPerson p = new DBPerson();
+        p.setId(1); // Paul is person 1
+        H2PersonDAO.getInstance().populatePerson(p);
+        p.setName("Some name that is not Paul");
+        H2PersonDAO.getInstance().updatePerson(p);
+        
+        List<Person> people = H2PersonDAO.getInstance().getAllPersons();
+        ArrayList<String> names = new ArrayList<String>();
+        for (Person person : people) {
+        	names.add(person.getName());
+        }
+        
+        assertTrue(names.contains("Some name that is not Paul"));
     }
 
-    /**
-     * Test of Unnamed method, of class H2PersonDAO.
-     */
     @Test
-    public void testUnnamed() {
-        System.out.println("Unnamed");
-//        H2PersonDAO instance = new H2PersonDAO();
-//        instance.Unnamed();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testBorrowMovie() {
+    	fail("Not Implemented");
+    }
+
+    @Test  
+    public void testGetAllPersons() {
+    	fail("Not Implemented");
+    }
+
+    @Test
+    public void testGetBorrowedMovies() {
+    	fail("Not Implemented");
+    }
+
+    @Test
+    public void testGetOwnedMovies() {
+    	fail("Not Implemented");
+    }
+
+    @Test
+    public void testPopulatePerson() {
+    	fail("Not Implemented");
+    }
+
+    @Test
+    public void testReturnMovie() {
+    	fail("Not Implemented");
     }
 
 }
