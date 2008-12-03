@@ -514,8 +514,9 @@ public class DBMovie implements Movie {
 		 * @return the owner of this movie
 		 */
 		public Person getOwner() {
-			return H2PersonDAO.getInstance().getPersonFromId(
-					DBMovie.this.ownerId);
+			DBPerson owner = new DBPerson();
+			owner.setId(DBMovie.this.ownerId);
+			return owner;
 		}
 
 		/**
@@ -527,8 +528,9 @@ public class DBMovie implements Movie {
 		 */
 		// TODO: is that statement in the return correct?
 		public Person getBorrower() {
-			return H2PersonDAO.getInstance().getPersonFromId(
-					DBMovie.this.borrowerId);
+			DBPerson borrower = new DBPerson();
+			borrower.setId(DBMovie.this.borrowerId);
+			return borrower;
 		}
 
 		/**
@@ -693,8 +695,9 @@ public class DBMovie implements Movie {
 		public Person getOwner() {
 			DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
 			DBMovie.this.state = new UpdatedMovieState();
-			return H2PersonDAO.getInstance().getPersonFromId(
-					DBMovie.this.ownerId);
+			DBPerson owner = new DBPerson();
+			owner.setId(DBMovie.this.ownerId);
+			return owner;
 		}
 
 		/**
@@ -708,8 +711,9 @@ public class DBMovie implements Movie {
 		public Person getBorrower() {
 			DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
 			DBMovie.this.state = new UpdatedMovieState();
-			return H2PersonDAO.getInstance().getPersonFromId(
-					DBMovie.this.borrowerId);
+			DBPerson borrower = new DBPerson();
+			borrower.setId(DBMovie.this.borrowerId);
+			return borrower;
 		}
 
 		/**
