@@ -230,8 +230,10 @@ public class DBPerson implements Person {
 
         @Override
         public int getId() {
-            DBPerson.this.personDAO.populatePerson(DBPerson.this);
-            DBPerson.this.state = new UpdatedPersonState();
+        	// TODO: Zach, this behavior is causing stack overflows
+        	// because you must have the id to get anything, so this
+        	// ends up on itself.  I am changing it to this for now
+        	// -PMO
             return DBPerson.this.id;
         }
 
