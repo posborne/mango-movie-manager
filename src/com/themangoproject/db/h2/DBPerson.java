@@ -216,35 +216,35 @@ public class DBPerson implements Person {
 
         @Override
         public String getAddress() {
-            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.personDAO.populatePerson(DBPerson.this);
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.address;
         }
 
         @Override
         public String getEmail() {
-            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.personDAO.populatePerson(DBPerson.this);
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.email;
         }
 
         @Override
         public int getId() {
-            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.personDAO.populatePerson(DBPerson.this);
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.id;
         }
 
         @Override
         public String getName() {
-            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.personDAO.populatePerson(DBPerson.this);
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.name;
         }
 
         @Override
         public String getPhoneNumber() {
-            DBPerson.this.personDAO.getPersonInfo(DBPerson.this);
+            DBPerson.this.personDAO.populatePerson(DBPerson.this);
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.phoneNumber;
         }
