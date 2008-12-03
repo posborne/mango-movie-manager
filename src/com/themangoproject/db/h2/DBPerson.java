@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+
 import java.util.List;
 
 /**
@@ -216,14 +217,24 @@ public class DBPerson implements Person {
 
         @Override
         public String getAddress() {
-            DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            try {
+				DBPerson.this.personDAO.populatePerson(DBPerson.this);
+			} catch (PersonNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.address;
         }
 
         @Override
         public String getEmail() {
-            DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            try {
+				DBPerson.this.personDAO.populatePerson(DBPerson.this);
+			} catch (PersonNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.email;
         }
@@ -239,14 +250,24 @@ public class DBPerson implements Person {
 
         @Override
         public String getName() {
-            DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            try {
+				DBPerson.this.personDAO.populatePerson(DBPerson.this);
+			} catch (PersonNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.name;
         }
 
         @Override
         public String getPhoneNumber() {
-            DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            try {
+				DBPerson.this.personDAO.populatePerson(DBPerson.this);
+			} catch (PersonNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.phoneNumber;
         }
