@@ -16,37 +16,42 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <Component id="jButton1" linkSize="11" min="-2" pref="39" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton1" linkSize="7" min="-2" pref="39" max="-2" attributes="0"/>
+              <Component id="jButton2" linkSize="11" min="-2" pref="39" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton3" linkSize="7" min="-2" pref="39" max="-2" attributes="0"/>
+              <Component id="jButton3" linkSize="11" min="-2" pref="38" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton5" linkSize="6" min="-2" pref="39" max="-2" attributes="0"/>
+              <Component id="jButton4" linkSize="11" min="-2" pref="38" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton2" linkSize="7" min="-2" pref="41" max="-2" attributes="0"/>
+              <Component id="jButton5" linkSize="11" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" pref="279" max="32767" attributes="0"/>
+              <Component id="jLabel1" pref="306" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton6" linkSize="7" min="-2" pref="39" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton4" linkSize="6" min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="jButton6" linkSize="11" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jButton3" linkSize="2" alignment="0" max="32767" attributes="1"/>
-          <Component id="jButton5" linkSize="4" alignment="0" max="32767" attributes="1"/>
-          <Component id="jButton4" linkSize="4" alignment="0" max="32767" attributes="1"/>
-          <Component id="jButton6" alignment="0" max="32767" attributes="1"/>
-          <Component id="jButton2" linkSize="2" alignment="0" max="32767" attributes="1"/>
-          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jButton1" alignment="0" max="32767" attributes="1"/>
+          <Component id="jButton1" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="jButton2" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="jButton3" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="jButton4" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="jButton5" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="jButton6" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="jLabel1" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="# Movies / # Actors"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -61,9 +66,9 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/themangoproject/ui/images/arrow_down.png"/>
+          <Image iconType="3" name="/com/themangoproject/ui/images/movieedit.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Show/Hide Movie Info"/>
+        <Property name="toolTipText" type="java.lang.String" value="Edit Selected Movie"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -72,34 +77,31 @@
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/themangoproject/ui/images/movieedit.png"/>
+          <Image iconType="3" name="/com/themangoproject/ui/images/setlistadd.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Edit Selected Movie"/>
+        <Property name="toolTipText" type="java.lang.String" value="Create Set/List"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="# Movies / # Actors"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/themangoproject/ui/images/list.png"/>
+          <Image iconType="3" name="/com/themangoproject/ui/images/advancedsearch.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Create List"/>
+        <Property name="toolTipText" type="java.lang.String" value="Create Saved Search"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/themangoproject/ui/images/uploadimage.png"/>
+          <Image iconType="3" name="/com/themangoproject/ui/images/arrow_down.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Upload Thumbnail Image"/>
+        <Property name="toolTipText" type="java.lang.String" value="Show/Hide Info Panel"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
@@ -108,9 +110,9 @@
     <Component class="javax.swing.JButton" name="jButton6">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/themangoproject/ui/images/set.png"/>
+          <Image iconType="3" name="/com/themangoproject/ui/images/picture_add.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Create Set"/>
+        <Property name="toolTipText" type="java.lang.String" value="Upload Thumbnail Image"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>

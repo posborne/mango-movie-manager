@@ -53,11 +53,12 @@ public class ItemInfoPanel extends javax.swing.JPanel {
 
     /**
      * Set the image in the panel to correspond to the image for the selected
-     * movie.
+     * movie in the table.
      * 
      */
     public void setThumbnailImage() {
         //TODO: Implement this method - Add parameter
+        // Is called when a different row is selected.
         //this.jLabel1.setIcon(icon);
     }
 }
