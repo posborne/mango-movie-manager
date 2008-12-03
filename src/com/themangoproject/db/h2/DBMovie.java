@@ -571,8 +571,10 @@ public class DBMovie implements Movie {
 		 * @return the DB ID of this movie
 		 */
 		public int getId() {
-			DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
-			DBMovie.this.state = new UpdatedMovieState();
+//			DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+//			DBMovie.this.state = new UpdatedMovieState();
+			// TODO: the above creates StackOverflowErrors... this
+			// temporarily solves the problem
 			return DBMovie.this.id;
 		}
 
