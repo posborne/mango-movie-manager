@@ -135,21 +135,21 @@ public class H2MovieDAO implements MovieDAO {
 		DBMovie movie = (DBMovie) m;
 
 		try {
-			updateMoviePS.setString(0, movie.getDirector());
-			updateMoviePS.setString(1, movie.getTitle());
-			updateMoviePS.setString(2, movie.getRating());
-			updateMoviePS.setInt(3, movie.getRuntime());
-			updateMoviePS.setInt(4, movie.getYear());
-			updateMoviePS.setString(5, movie.getASIN());
+			updateMoviePS.setString(1, movie.getDirector());
+			updateMoviePS.setString(2, movie.getTitle());
+			updateMoviePS.setString(3, movie.getRating());
+			updateMoviePS.setInt(4, movie.getRuntime());
+			updateMoviePS.setInt(5, movie.getYear());
+			updateMoviePS.setString(6, movie.getASIN());
 			// TODO: why does this need casting?
-			updateMoviePS.setDate(6, (Date) movie.getPurchaseDate());
-			updateMoviePS.setString(7, movie.getCustomDescription());
-			updateMoviePS.setString(8, movie.getCondition());
-			updateMoviePS.setString(9, movie.getType());
-			updateMoviePS.setInt(10, movie.getMangoRating());
-			updateMoviePS.setInt(11, movie.getOwnerId());
-			updateMoviePS.setInt(12, movie.getBorrowerId());
-			updateMoviePS.setInt(13, movie.getId());
+			updateMoviePS.setDate(7, (Date) movie.getPurchaseDate());
+			updateMoviePS.setString(8, movie.getCustomDescription());
+			updateMoviePS.setString(9, movie.getCondition());
+			updateMoviePS.setString(10, movie.getType());
+			updateMoviePS.setInt(11, movie.getMangoRating());
+			updateMoviePS.setInt(12, movie.getOwnerId());
+			updateMoviePS.setInt(13, movie.getBorrowerId());
+			updateMoviePS.setInt(14, movie.getId());
 
 			// Do it!
 			updateMoviePS.execute();
@@ -306,8 +306,8 @@ public class H2MovieDAO implements MovieDAO {
 				movie.setTitle(rs.getString("title"));
 				movie.setType(rs.getString("type"));
 				movie.setYear(rs.getInt("year"));
-				rs.close();
 			}
+			rs.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

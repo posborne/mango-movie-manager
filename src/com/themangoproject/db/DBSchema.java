@@ -53,7 +53,7 @@ public class DBSchema {
 		"	id					INT NOT NULL AUTO_INCREMENT," +
 		"	director			CHAR(50) NOT NULL," +
 		"	title				CHAR(256) NOT NULL," +
-		"	rating				MOVIE_RATING NOT NULL DEFAULT 'NR'," +
+		"	rating				MOVIE_RATING DEFAULT 'NR'," +
 		"	runtime				INT," +
 		"	year				YEAR(4)," +
 		"	asin				CHAR(50) DEFAULT NULL," +

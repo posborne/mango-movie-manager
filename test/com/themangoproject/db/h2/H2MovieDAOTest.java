@@ -5,12 +5,14 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.themangoproject.model.Movie;
 
-public class H2MovieDAOTest {
+public class H2MovieDAOTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {

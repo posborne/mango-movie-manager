@@ -2,6 +2,9 @@ package com.themangoproject.db.h2;
 
 import com.themangoproject.db.h2.H2Util;
 import java.sql.Connection;
+
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,7 +16,7 @@ import static org.junit.Assert.*;
  * Test the H2Util class methods.
  * @author Paul Osborne
  */
-public class H2UtilTest {
+public class H2UtilTest extends TestCase {
 
     public H2UtilTest() {
     }

@@ -39,7 +39,7 @@ public class TestingSetupUtility {
 	
 	private static final String movieInserts = 
 		"INSERT INTO movie (id, director, title, rating, runtime, year, asin, purchase_date, custom_description, condition, type, mango_rating, owner_id, borrower_id)" +
-		" VALUES (1, 'John McTiernan', 'Die Hard', 'R', 131, 1988, 'B000O77SRC', '2003-12-23', 'Yippe Ki Yay', 'Good', 'DVD', 4, 1, 3)," + 
+		" VALUES (1, 'John McTiernan', 'Die Hard', 'R', 131, 1988, 'B000O77SRC', '2003-12-23', 'Yippe Ki Yay', 'Good', 'DVD', 4, 1, NULL)," + 
 		"(2, 'John McTiernan', 'Die Hard: With a Vengeance', 'R', 131, 1995, 'B000O78KW4', '2005-10-18', 'This one is pretty fun to watch', 'Poor', 'DVD', 5, 1, 2)";
 	
 	private static final String actorInserts =

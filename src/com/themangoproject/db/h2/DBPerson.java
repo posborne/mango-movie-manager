@@ -53,6 +53,9 @@ public class DBPerson implements Person {
      */
     public void setName(String name) {
         this.name = name;
+        if (this.state instanceof NotfilledPersonState) {
+        	this.state = new UpdatedPersonState();
+        }
     }
 
     /**
@@ -63,6 +66,9 @@ public class DBPerson implements Person {
      */
     public void setAddress(String address) {
         this.address = address;
+        if (this.state instanceof NotfilledPersonState) {
+        	this.state = new UpdatedPersonState();
+        }
     }
 
     /**
@@ -74,6 +80,9 @@ public class DBPerson implements Person {
     public void setEmail(String email) {
         // TODO: input validation
         this.email = email;
+        if (this.state instanceof NotfilledPersonState) {
+        	this.state = new UpdatedPersonState();
+        }
     }
 
     /**
@@ -85,6 +94,9 @@ public class DBPerson implements Person {
     public void setPhoneNumber(String phoneNumber) {
         // TODO: input validation
         this.phoneNumber = phoneNumber;
+        if (this.state instanceof NotfilledPersonState) {
+        	this.state = new UpdatedPersonState();
+        }
     }
 
     /**

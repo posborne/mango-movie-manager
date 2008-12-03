@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class H2PersonDAO implements PersonDAO {
 
-	/** Singleton instancce of the H2PersonDAO */
+	/** Singleton instance of the H2PersonDAO */
 	private static H2PersonDAO instance;
 
 	/** Database connection that the DAO will use */
@@ -27,8 +27,7 @@ public class H2PersonDAO implements PersonDAO {
 	/** Prepared statement for updating a person */
 	private PreparedStatement updatePersonPS;
 	private static final String updatePersonStatement = "UPDATE person"
-			+ " SET name=?, address=?, email=?, phone_num=?"
-			+ " WHERE id=?";
+			+ " SET name=?, address=?, email=?, phone_num=?" + " WHERE id=?";
 
 	/** Prepared statement for getting a person's information */
 	private PreparedStatement populatePersonPS;
@@ -39,6 +38,22 @@ public class H2PersonDAO implements PersonDAO {
 	private PreparedStatement allPersonsPS;
 	private static final String allPersonsStatement = "SELECT id, name, address, email, phone_num FROM person";
 
+	/** Prepared statement for returning a movie */
+	private PreparedStatement returnMovieForPersonPS;
+	private static final String returnMovieForPersonQuery = "UPDATE movie SET borrower_id=NULL WHERE id=?";
+
+	/** Prepared statement for borrowing a movie to a person */
+	private PreparedStatement borrowMovieToPersonPS;
+	private static final String borrowMovieToPersonQuery = "UPDATE movie SET borrower_id=? WHERE id=?";
+
+	/** Prepared statement for obtaining the movies owned by a person */
+	private PreparedStatement ownedMoviesForPersonPS;
+	private static final String ownedMoviesForPersonQuery = "SELECT id FROM movie WHERE owner_id=?";
+
+	/** Prepared statement for obtaining the movies being borrowed by a person */
+	private PreparedStatement borrowedMoviesForPersonPS;
+	private static final String borrowedMoviesForPersonQuery = "SELECT id FROM movie WHERE borrower_id=?";
+
 	/**
 	 * The private construction for the DAO gets everything ready to go,
 	 * prepares statements and makes sure everything with the state of the
@@ -48,15 +63,17 @@ public class H2PersonDAO implements PersonDAO {
 		conn = H2Util.getInstance().getConnection();
 		try {
 			addPersonPS = conn.prepareStatement(addPersonStatement);
-			updatePersonPS = conn
-					.prepareStatement(updatePersonStatement);
-			populatePersonPS = conn
-					.prepareStatement(populatePersonStatement);
+			updatePersonPS = conn.prepareStatement(updatePersonStatement);
+			populatePersonPS = conn.prepareStatement(populatePersonStatement);
 			allPersonsPS = conn.prepareStatement(allPersonsStatement);
-			borrowedMoviesForPersonPS = conn.prepareStatement(borrowedMoviesForPersonQuery);
-			ownedMoviesForPersonPS = conn.prepareStatement(ownedMoviesForPersonQuery);
-			returnMovieForPersonPS = conn.prepareStatement(returnMovieForPersonQuery);
-			borrowMovieToPersonPS = conn.prepareStatement(borrowMovieToPersonQuery);
+			borrowedMoviesForPersonPS = conn
+					.prepareStatement(borrowedMoviesForPersonQuery);
+			ownedMoviesForPersonPS = conn
+					.prepareStatement(ownedMoviesForPersonQuery);
+			returnMovieForPersonPS = conn
+					.prepareStatement(returnMovieForPersonQuery);
+			borrowMovieToPersonPS = conn
+					.prepareStatement(borrowMovieToPersonQuery);
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
 			ex.printStackTrace(System.err);
@@ -135,8 +152,9 @@ public class H2PersonDAO implements PersonDAO {
 	 * 
 	 * @param p
 	 *            The person whose field values should be updated.
+	 * @throws PersonNotFoundException 
 	 */
-	public void populatePerson(Person p) {
+	public void populatePerson(Person p) throws PersonNotFoundException {
 		// Check to make sure we have a DBPerson
 		if (!(p instanceof DBPerson)) {
 			throw new ClassCastException();
@@ -145,15 +163,18 @@ public class H2PersonDAO implements PersonDAO {
 		try {
 			populatePersonPS.setInt(1, person.getId());
 			ResultSet rs = populatePersonPS.executeQuery();
-			rs.next();
-			person.setName(rs.getString("name"));
-			person.setAddress(rs.getString("address"));
-			person.setEmail(rs.getString("email"));
-			person.setPhoneNumber(rs.getString("phone_num"));
+			if (rs.next()) {
+				person.setName(rs.getString("name"));
+				person.setAddress(rs.getString("address"));
+				person.setEmail(rs.getString("email"));
+				person.setPhoneNumber(rs.getString("phone_num"));
+			} else {
+				throw new PersonNotFoundException();
+			}
 			rs.close();
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
-			ex.printStackTrace(System.err);
+			ex.printStackTrace();
 		}
 	}
 
@@ -171,9 +192,7 @@ public class H2PersonDAO implements PersonDAO {
 				person.setName(results.getString("name"));
 				person.setAddress(results.getString("address"));
 				person.setEmail(results.getString("email"));
-				person
-						.setPhoneNumber(results
-								.getString("phone_num"));
+				person.setPhoneNumber(results.getString("phone_num"));
 				persons.add(person);
 			}
 		} catch (SQLException ex) {
@@ -183,121 +202,106 @@ public class H2PersonDAO implements PersonDAO {
 		return persons;
 	}
 
-	private PreparedStatement ownedMoviesForPersonPS;
-	private static final String ownedMoviesForPersonQuery =
-		"SELECT id FROM movie WHERE owner_id=?";
-	
-	// TODO: Paul I also need this method.  I will pass a person and I need it
-    // to return a list of all the movies that person owns.
-    public List<Movie> getOwnedMovies(Person p) {
-        if (!(p instanceof DBPerson)) {
-        	throw new ClassCastException();
-        }
-        DBPerson person = (DBPerson) p;
-        ArrayList<Movie> movies = new ArrayList<Movie>();
-        
-        try {
-        	ownedMoviesForPersonPS.setInt(1, person.getId());
-        	ResultSet rs = ownedMoviesForPersonPS.executeQuery();
-        	while (rs.next()) {
-        		DBMovie m = new DBMovie();
-        		m.setId(rs.getInt("id"));
-        		movies.add(m);
-        	}
-        } catch (SQLException ex) {
-        	ex.printStackTrace();
+	/**
+	 * Retrieve a list of movies that a person owns.
+	 * 
+	 * @param p
+	 *            Lookup movies for this person.
+	 * @return a list of movies that the person owns.
+	 */
+	public List<Movie> getOwnedMovies(Person p) {
+		if (!(p instanceof DBPerson)) {
+			throw new ClassCastException();
+		}
+		DBPerson person = (DBPerson) p;
+		ArrayList<Movie> movies = new ArrayList<Movie>();
+
+		try {
+			ownedMoviesForPersonPS.setInt(1, person.getId());
+			ResultSet rs = ownedMoviesForPersonPS.executeQuery();
+			while (rs.next()) {
+				DBMovie m = new DBMovie();
+				m.setId(rs.getInt("id"));
+				movies.add(m);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 			// TODO: handle exception
 		}
-        return movies;
-    }
+		return movies;
+	}
 
-    
-    private PreparedStatement borrowedMoviesForPersonPS;
-    private static final String borrowedMoviesForPersonQuery =
-    	"SELECT id FROM movie WHERE borrower_id=?";
-    
-    // TODO: Paul I also need this method.  I will pass a person and I need it
-    // to return a list of all the movies that person is borrowing.
-    @Override
-    public List<Movie> getBorrowedMovies(Person p) {
-        if (!(p instanceof DBPerson)) {
-        	throw new ClassCastException();
-        }
-        DBPerson person = (DBPerson) p;
-        ArrayList<Movie> movies = new ArrayList<Movie>();
-        
-        try {
-        	borrowedMoviesForPersonPS.setInt(1, person.getId());
-        	ResultSet rs = borrowedMoviesForPersonPS.executeQuery();
-        	while (rs.next()) {
-        		DBMovie m = new DBMovie();
-        		m.setId(rs.getInt("id"));
-        		movies.add(m);
-        	}
-        } catch (SQLException ex) {
+	/**
+	 * Retrieve a list of movies that a person is currently borrowing.
+	 * 
+	 * @param p
+	 *            The person of interst
+	 * @return a list of movies that a person is borrowing.
+	 */
+	public List<Movie> getBorrowedMovies(Person p) {
+		if (!(p instanceof DBPerson)) {
+			throw new ClassCastException();
+		}
+		DBPerson person = (DBPerson) p;
+		ArrayList<Movie> movies = new ArrayList<Movie>();
+
+		try {
+			borrowedMoviesForPersonPS.setInt(1, person.getId());
+			ResultSet rs = borrowedMoviesForPersonPS.executeQuery();
+			while (rs.next()) {
+				DBMovie m = new DBMovie();
+				m.setId(rs.getInt("id"));
+				movies.add(m);
+			}
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-        return movies;
-    }
+		return movies;
+	}
 
-    private PreparedStatement returnMovieForPersonPS;
-    private static final String returnMovieForPersonQuery =
-    	 "UPDATE movie SET borrower_id=NULL WHERE id=?";
-    
-    // TODO: Paul I need this one as well.  I will pass a movie, and a person.
-    // What is happening is that the person passed is currently borrowing
-    // the movie passed and is now returning it.  If the person is not actually
-    // borrowing that movie it should throw some sort of exception.
-    @Override
-    public void returnMovie(Movie m) {
-        if (!(m instanceof DBMovie)) {
-        	throw new ClassCastException();
-        }
-        DBMovie movie = (DBMovie) m;
-        
-        try {
-        	returnMovieForPersonPS.setInt(1, movie.getId());
-        	returnMovieForPersonPS.executeUpdate();
-        } catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        
-    }
+	/**
+	 * Return the specified movie (set it as not being borrowed).
+	 * 
+	 * @param m
+	 *            The movie that should be returned.
+	 */
+	public void returnMovie(Movie m) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
 
-    private PreparedStatement borrowMovieToPersonPS;
-    private static final String borrowMovieToPersonQuery =
-    	"UPDATE movie SET borrower_id=? WHERE id=?";
-    
-    // TODO: What can I say Paul, I am a demanding guy.  In this case I am 
-    // passing a person and a movie.  The person passed is borrowing the 
-    // movie passed.  If that movie is already being borrowed by someone
-    // else, this should probably throw some sort of exception.
-    @Override
-    public void borrowMovie(Person p, Movie m) {
-        if (!(p instanceof DBPerson) || !(m instanceof DBMovie)) {
-        	throw new ClassCastException();
-        }
-        DBPerson person = (DBPerson) p;
-        DBMovie movie = (DBMovie) m;
-        
-        try {
-        	borrowedMoviesForPersonPS.setInt(1, person.getId());
-        	borrowedMoviesForPersonPS.setInt(2, movie.getId());
-        } catch (SQLException ex) {
+		try {
+			returnMovieForPersonPS.setInt(1, movie.getId());
+			returnMovieForPersonPS.executeUpdate();
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-    }
-    
-    //TODO: Another one for you Paul!
-    public Person getPersonFromId(int Id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    //TODO: And another Paul.
-    @Override
-    public void getPersonInfo(Person person) {
-        // TODO Auto-generated method stub
-        
-    }
+	}
+
+	/**
+	 * Mark a person as being the one borrowing a movie. In order to return a
+	 * movie, <code>returnMovie()</code>.
+	 * 
+	 * @param p
+	 *            The person that will now be borrowing the movie.
+	 * @param m
+	 *            The movie that is being borrowed.
+	 */
+	public void borrowMovie(Person p, Movie m) {
+		if (!(p instanceof DBPerson) || !(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBPerson person = (DBPerson) p;
+		DBMovie movie = (DBMovie) m;
+
+		try {
+			borrowMovieToPersonPS.setInt(1, person.getId());
+			borrowMovieToPersonPS.setInt(2, movie.getId());
+			borrowMovieToPersonPS.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 }
