@@ -7,6 +7,8 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.naming.ldap.PagedResultsControl;
+
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
  * for communicating with the H2 database system, specifically with regards to
@@ -69,6 +71,22 @@ public class H2MovieDAO implements MovieDAO {
 	private static final String removeGenreFromMovieQuery = "DELETE FROM genre"
 			+ " WHERE movie_id=? AND name=?";
 
+	/** Remove tuples with reference to movie from genre table */
+	private PreparedStatement removeMovieFromGenreTablePS;
+	private static final String removeMovieFromGenreTableQuery = "DELETE FROM genre WHERE movie_id=?";
+
+	/** Remove tuples with reference to movie from lists table */
+	private PreparedStatement removeMovieFromListsPS;
+	private static final String removeMovieFromListsQuery = "DELETE FROM lists WHERE movie_id=?";
+
+	/** Remove tuples with reference to movie from sets table */
+	private PreparedStatement removeMovieFromSetsPS;
+	private static final String removeMovieFromSetsQuery = "DELETE FROM sets WHERE movie_id=?";
+
+	/** Remove tuples with reference to movie from acting_roles table */
+	private PreparedStatement removeMovieFromActingRolesPS;
+	private static final String removeMovieFromActingRolesQuery = "DELETE FROM acting_roles WHERE movie_id=?";
+
 	/**
 	 * The private singleton constructor for the DAO initializes the different
 	 * prepared statements that will be used by the class.
@@ -78,8 +96,7 @@ public class H2MovieDAO implements MovieDAO {
 		try {
 			allMoviesPS = conn.prepareStatement(allMoviesQuery);
 			updateMoviePS = conn.prepareStatement(updateMoviesQuery);
-			addMoviePS = conn.prepareStatement(addMovieQuery,
-					Statement.RETURN_GENERATED_KEYS);
+			addMoviePS = conn.prepareStatement(addMovieQuery);
 			deleteMoviePS = conn.prepareStatement(deleteMovieQuery);
 			genresForMoviePS = conn.prepareStatement(genresForMovieQuery);
 			actorsForMoviePS = conn.prepareStatement(actorsForMovieQuery);
@@ -87,6 +104,14 @@ public class H2MovieDAO implements MovieDAO {
 			addGenreToMoviePS = conn.prepareStatement(addGenreToMovieQuery);
 			removeGenreFromMoviePS = conn
 					.prepareStatement(removeGenreFromMovieQuery);
+			removeMovieFromActingRolesPS = conn
+					.prepareStatement(removeMovieFromActingRolesQuery);
+			removeMovieFromGenreTablePS = conn
+					.prepareStatement(removeMovieFromGenreTableQuery);
+			removeMovieFromListsPS = conn
+					.prepareStatement(removeMovieFromListsQuery);
+			removeMovieFromSetsPS = conn
+					.prepareStatement(removeMovieFromSetsQuery);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -148,13 +173,13 @@ public class H2MovieDAO implements MovieDAO {
 			updateMoviePS.setString(9, movie.getCondition());
 			updateMoviePS.setString(10, movie.getType());
 			updateMoviePS.setInt(11, movie.getMangoRating());
-			
+
 			if (movie.getOwnerId() != -1) {
 				updateMoviePS.setInt(12, movie.getOwnerId());
 			} else {
 				updateMoviePS.setNull(12, Types.INTEGER);
 			}
-			
+
 			if (movie.getBorrowerId() != -1) {
 				updateMoviePS.setInt(13, movie.getBorrowerId());
 			} else {
@@ -172,26 +197,29 @@ public class H2MovieDAO implements MovieDAO {
 	/**
 	 * Add the specified movie to the database.
 	 */
-	public void addMovie(String title, String director, String rating, int runtime, int year, String asin, Date purchaseDate, String customDescription, String condition, String type, int mangoRating) {
+	public void addMovie(String title, String director, String rating,
+			int runtime, int year, String asin, Date purchaseDate,
+			String customDescription, String condition, String type,
+			int mangoRating) {
 
 		try {
 			addMoviePS.setString(1, director);
 			addMoviePS.setString(2, title);
 			addMoviePS.setString(3, rating);
-			
+
 			if (runtime == -1) {
 				addMoviePS.setInt(4, runtime);
 			} else {
 				addMoviePS.setNull(4, Types.INTEGER);
 			}
-			
+
 			if (year == -1) {
 				addMoviePS.setInt(5, year);
 			} else {
 				addMoviePS.setNull(5, Types.INTEGER);
 			}
 			addMoviePS.setString(6, asin);
-			addMoviePS.setDate(7, (java.sql.Date)purchaseDate);
+			addMoviePS.setDate(7, (java.sql.Date) purchaseDate);
 			addMoviePS.setString(8, customDescription);
 			addMoviePS.setString(9, condition);
 			addMoviePS.setString(10, type);
@@ -200,7 +228,7 @@ public class H2MovieDAO implements MovieDAO {
 			addMoviePS.setNull(13, Types.INTEGER);
 
 			// Do it!
-			addMoviePS.execute();
+			addMoviePS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -213,15 +241,60 @@ public class H2MovieDAO implements MovieDAO {
 	 *            The movie that should be deleted from the database.
 	 * @throws ClassCastException
 	 *             if the movie specified is not a DBMovie
+	 * @throws MovieDeleteConflict
+	 *             if the movie cannot be deleted because there are references
+	 *             to the move in other tables. To override this,
+	 *             forceDeleteMovie must be called instead.
 	 */
-	public void deleteMovie(Movie m) {
+	public void deleteMovie(Movie m) throws MovieDeleteConflict {
 		if (!(m instanceof DBMovie)) {
 			throw new ClassCastException();
 		}
 		DBMovie movie = (DBMovie) m;
 		try {
-			deleteMoviePS.setInt(0, movie.getId());
+			deleteMoviePS.setInt(1, movie.getId());
 			deleteMoviePS.execute();
+		} catch (SQLException ex) {
+			throw new MovieDeleteConflict();
+		}
+	}
+
+	/**
+	 * Forcibly delete a movie from the database, removing any tuples in other
+	 * relations which contains references to the movie. This involves removing
+	 * from sets, lists, and genre relations.
+	 * 
+	 * @param m
+	 *            The movie that should be removed from the database, along with
+	 *            all associated data entries involving the movie.
+	 */
+	public void forceDeleteMovie(Movie m) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
+
+		try {
+			// We want to submit statements as transaction
+			conn.setAutoCommit(false);
+
+			// prepare the statements
+			removeMovieFromActingRolesPS.setInt(1, movie.getId());
+			removeMovieFromGenreTablePS.setInt(1, movie.getId());
+			removeMovieFromListsPS.setInt(1, movie.getId());
+			removeMovieFromSetsPS.setInt(1, movie.getId());
+			deleteMoviePS.setInt(1, movie.getId());
+
+			// execute the updates
+			removeMovieFromActingRolesPS.executeUpdate();
+			removeMovieFromGenreTablePS.executeUpdate();
+			removeMovieFromListsPS.executeUpdate();
+			removeMovieFromSetsPS.executeUpdate();
+			deleteMoviePS.executeUpdate();
+
+			// commit the transaction
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -244,7 +317,7 @@ public class H2MovieDAO implements MovieDAO {
 		DBMovie movie = (DBMovie) m;
 
 		try {
-			genresForMoviePS.setInt(0, movie.getId());
+			genresForMoviePS.setInt(1, movie.getId());
 			ResultSet results = genresForMoviePS.executeQuery();
 			while (results.next()) {
 				String genre = results.getString("name");
@@ -273,7 +346,7 @@ public class H2MovieDAO implements MovieDAO {
 		DBMovie movie = (DBMovie) m;
 
 		try {
-			actorsForMoviePS.setInt(0, movie.getId());
+			actorsForMoviePS.setInt(1, movie.getId());
 			ResultSet results = actorsForMoviePS.executeQuery();
 			while (results.next()) {
 				DBActor actor = new DBActor();
@@ -329,13 +402,18 @@ public class H2MovieDAO implements MovieDAO {
 					newOwner.setId(ownerId);
 					movie.setOwner(newOwner);
 				}
-		
+
 				movie.setPurchaseDate(rs.getDate("purchase_date"));
 				movie.setRuntime(rs.getInt("runtime"));
 				movie.setTitle(rs.getString("title"));
 				movie.setType(rs.getString("type"));
-				movie.setYear(rs.getInt("year"));
-		}
+				
+				int year = rs.getInt("year");
+				if (year == 0) {
+					year = -1;
+				}
+				movie.setYear(year);
+			}
 			rs.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();

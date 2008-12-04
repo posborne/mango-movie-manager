@@ -210,7 +210,7 @@ public class DBMovie implements Movie {
 	 *             between 1890 and 9999
 	 */
 	public void setYear(int year) throws IllegalArgumentException {
-		if (year < 10000 && year > 1890) {
+		if ((year < 10000 && year > 1890) || year == -1) {
 			DBMovie.this.year = year;
 		} else {
 			throw new IllegalArgumentException("Not a valid year;");
