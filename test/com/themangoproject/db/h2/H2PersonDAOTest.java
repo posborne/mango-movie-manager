@@ -182,6 +182,7 @@ public class H2PersonDAOTest extends TestCase {
 
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
+		dieHard.getTitle();
 		H2PersonDAO.getInstance().returnMovie(dieHard);
 		H2MovieDAO.getInstance().getMovieInfo(dieHard);
 		assertTrue(dieHard.getBorrower() == null);
