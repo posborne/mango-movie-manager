@@ -1,7 +1,5 @@
 package com.themangoproject.db.h2;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -64,6 +64,7 @@ public class DBSchema {
 		"	mango_rating		INT," +
 		"	owner_id			INT," +
 		"	borrower_id			INT," +
+		"   cover_art			BLOB," +
 		"	FOREIGN KEY (owner_id) REFERENCES person(id)," +
 		"	FOREIGN KEY (borrower_id) REFERENCES person(id)," +
 		"	PRIMARY KEY(id) )";
