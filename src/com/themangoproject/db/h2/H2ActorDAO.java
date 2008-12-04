@@ -1,6 +1,7 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -305,5 +306,12 @@ public class H2ActorDAO implements ActorDAO {
 		}
 		return movies;
 	}
+
+	// TODO: PAUL make this happen NOW!
+    @Override
+    public void populateRole(Role role) {
+        // TODO Auto-generated method stub
+        
+    }
 	
 }

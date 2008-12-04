@@ -14,12 +14,17 @@ import com.themangoproject.model.*;
  */
 public class DBRole implements Role {
 
-    private int id, movieID, actorID;
+    private int id, movieID = -1, actorID = -1;
     private String character, role;
+    private DBRoleState state;
+    private ActorDAO actorDAO; 
+    
 
 
     public DBRole(){
-
+        H2DAOFactory fact = new H2DAOFactory();
+        this.actorDAO = fact.getActorDAO();
+        this.state = new NotfilledRoleState();
     }
     
     /**
@@ -95,7 +100,7 @@ public class DBRole implements Role {
      * @return the character played by the actor in this role
      */
     public String getCharacter() {
-        return this.character;
+        return this.state.getCharacter();
     }
 
     /**
@@ -105,7 +110,7 @@ public class DBRole implements Role {
      * @return the role of this role.
      */
     public String getRole() {
-        return this.role;
+        return this.state.getRole();
     }
 
     /**
@@ -136,5 +141,42 @@ public class DBRole implements Role {
     public void setRole(String roleName) {
         this.role = roleName;
     }
+    
+    private class NotfilledRoleState implements DBRoleState {
 
+        @Override
+        public String getCharacter() {
+            if (id != -1) {
+                DBRole.this.actorDAO.populateRole(DBRole.this);
+                DBRole.this.state = new UpdatedRoleState();
+            }
+            return DBRole.this.character;
+        }
+
+        @Override
+        public String getRole() {
+            if (id != -1) {
+                DBRole.this.actorDAO.populateRole(DBRole.this);
+                DBRole.this.state = new UpdatedRoleState();
+            }
+            return DBRole.this.role;
+        }
+        
+        
+    }
+    
+    private class UpdatedRoleState implements DBRoleState {
+
+        @Override
+        public String getCharacter() {
+            return DBRole.this.character;
+        }
+
+        @Override
+        public String getRole() {
+            return DBRole.this.role;
+        }
+        
+        
+    }
 }

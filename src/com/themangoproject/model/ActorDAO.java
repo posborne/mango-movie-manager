@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.themangoproject.db.h2.ActorExistsInOtherRelationsException;
 import com.themangoproject.db.h2.DBActor;
+import com.themangoproject.db.h2.DBRole;
 
 
 public interface ActorDAO {
@@ -16,5 +17,6 @@ public interface ActorDAO {
     public void deleteActor (Actor actor) throws ActorExistsInOtherRelationsException;
     public void populateActor (Actor actor);
     public List<Movie> getMoviesForActor(Actor actor);
+    public void populateRole(Role role);
 }
 

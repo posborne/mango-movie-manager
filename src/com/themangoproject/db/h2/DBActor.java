@@ -18,6 +18,7 @@ public class DBActor implements Actor {
     private String firstName;
     private String lastName;
     private ActorDAO actorDAO;
+    private DBActorState state;
 
     public DBActor() {
         this(-1, null, null);
@@ -32,6 +33,7 @@ public class DBActor implements Actor {
         this.firstName = firstName;
         this.lastName = lastName;
         H2DAOFactory fact = new H2DAOFactory();
+        this.state = new NotfilledActorState();
         this.actorDAO = fact.getActorDAO();
     }
 
@@ -73,7 +75,7 @@ public class DBActor implements Actor {
      * @return the first name of this actor
      */
     public String getFirstName() {
-        return this.firstName;
+        return this.state.getFirstName();
     }
 
     /**
@@ -82,7 +84,7 @@ public class DBActor implements Actor {
      * @return the last name of this actor
      */
     public String getLastName() {
-        return this.lastName;
+        return this.state.getLastName();
     }
 
     /**
@@ -113,6 +115,42 @@ public class DBActor implements Actor {
      */
     void setId(int id) {
         this.id = id;
+    }
+
+    private class NotfilledActorState implements DBActorState {
+
+        @Override
+        public String getFirstName() {
+            if (id != -1) {
+                DBActor.this.actorDAO.populateActor(DBActor.this);
+                DBActor.this.state = new UpdatedActorState();
+            }
+            return DBActor.this.firstName;
+        }
+
+        @Override
+        public String getLastName() {
+            if (id != -1) {
+                DBActor.this.actorDAO.populateActor(DBActor.this);
+                DBActor.this.state = new UpdatedActorState();
+            }
+            return DBActor.this.lastName;
+        }
+
+    }
+
+    private class UpdatedActorState implements DBActorState {
+
+        @Override
+        public String getFirstName() {
+            return DBActor.this.firstName;
+        }
+
+        @Override
+        public String getLastName() {
+            return DBActor.this.lastName;
+        }
+
     }
 
 }
