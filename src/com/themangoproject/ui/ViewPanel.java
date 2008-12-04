@@ -7,6 +7,9 @@
 package com.themangoproject.ui;
 
 import java.awt.Color;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  * ViewPanel is the main panel of the Mango program.  There are action buttons
@@ -16,7 +19,7 @@ import java.awt.Color;
  * @author  Kyle Ronning, Paul Osborne
  * @version 1.0
  */
-public class ViewPanel extends javax.swing.JPanel {
+public class ViewPanel extends javax.swing.JPanel implements TableModelListener {
 
     /** Creates new form ViewPanel */
     public ViewPanel() {
@@ -144,6 +147,9 @@ private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
 
 private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
     // Searches for the given string of text within the table
+    
+    // Set row sorter of TableRowSorter 
+    
 }//GEN-LAST:event_jTextField1KeyReleased
 
 
@@ -155,4 +161,19 @@ private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
+    public void setTabelModel(TableModel model) {
+        this.jTable1.setModel(model);
+    }
+
+    public void tableChanged(TableModelEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+        
+//        int row = e.getFirstRow();
+//        int column = e.getColumn();
+//        TableModel model = (TableModel)e.getSource();
+//        String columnName = model.getColumnName(column);
+//        Object data = model.getValueAt(row, column);
+    }
+    
+    
 }
