@@ -29,13 +29,25 @@ public class H2MovieDAOTest extends TestCase {
 			titles.add(m.getTitle());
 		}
 
+		System.out.println(titles);
 		assertTrue(titles.contains("Die Hard"));
 		assertTrue(titles.contains("Die Hard: With a Vengeance"));
 	}
 
 	@Test
 	public void testUpdateMovie() {
-		fail("Not yet implemented"); // TODO
+		TestingSetupUtility.executeInserts();
+		DBMovie dieHard = new DBMovie();
+		dieHard.setId(1);
+		dieHard.getTitle();
+		dieHard.setTitle("Dead");
+		H2MovieDAO.getInstance().updateMovie(dieHard);
+		
+		DBMovie dead = new DBMovie();
+		dead.setId(1);
+		H2MovieDAO.getInstance().getMovieInfo(dead);
+		System.out.println(dead.getTitle());
+		assertEquals(dead.getTitle(), "Dead");
 	}
 
 	@Test

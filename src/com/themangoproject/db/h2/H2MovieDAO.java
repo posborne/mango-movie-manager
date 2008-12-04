@@ -111,6 +111,7 @@ public class H2MovieDAO implements MovieDAO {
 			while (results.next()) {
 				DBMovie movie = new DBMovie();
 				movie.setId(results.getInt("id"));
+				movies.add(movie);
 			}
 			results.close();
 		} catch (SQLException ex) {
@@ -141,18 +142,27 @@ public class H2MovieDAO implements MovieDAO {
 			updateMoviePS.setInt(4, movie.getRuntime());
 			updateMoviePS.setInt(5, movie.getYear());
 			updateMoviePS.setString(6, movie.getASIN());
-			// TODO: why does this need casting?
 			updateMoviePS.setDate(7, (Date) movie.getPurchaseDate());
 			updateMoviePS.setString(8, movie.getCustomDescription());
 			updateMoviePS.setString(9, movie.getCondition());
 			updateMoviePS.setString(10, movie.getType());
 			updateMoviePS.setInt(11, movie.getMangoRating());
-			updateMoviePS.setInt(12, movie.getOwnerId());
-			updateMoviePS.setInt(13, movie.getBorrowerId());
+			
+			if (movie.getOwnerId() != -1) {
+				updateMoviePS.setInt(12, movie.getOwnerId());
+			} else {
+				updateMoviePS.setNull(12, Types.INTEGER);
+			}
+			
+			if (movie.getBorrowerId() != -1) {
+				updateMoviePS.setInt(13, movie.getBorrowerId());
+			} else {
+				updateMoviePS.setNull(13, Types.INTEGER);
+			}
 			updateMoviePS.setInt(14, movie.getId());
 
 			// Do it!
-			updateMoviePS.execute();
+			updateMoviePS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -174,7 +184,6 @@ public class H2MovieDAO implements MovieDAO {
 			addMoviePS.setInt(4, movie.getYear());
 			addMoviePS.setString(5, movie.getASIN());
 			addMoviePS.setDate(6, (Date) movie.getPurchaseDate());
-			// TODO: why does this need casting?
 			addMoviePS.setString(7, movie.getCustomDescription());
 			addMoviePS.setString(8, movie.getCondition());
 			addMoviePS.setString(9, movie.getType());
@@ -290,23 +299,35 @@ public class H2MovieDAO implements MovieDAO {
 				movie.setCondition(rs.getString("condition"));
 
 				// set the borrower
-				DBPerson newPerson = new DBPerson();
-				newPerson.setId(rs.getInt("borrower_id"));
-				movie.setBorrower(newPerson);
+				int borrowerId = rs.getInt("borrower_id");
+				if (borrowerId <= 0) {
+					movie.setBorrower(null);
+				} else {
+					DBPerson newPerson = new DBPerson();
+					newPerson.setId(borrowerId);
+					movie.setBorrower(newPerson);
+				}
+
 				movie.setCustomDescription(rs.getString("custom_description"));
 				movie.setDirector(rs.getString("director"));
 				movie.setMangoRating(rs.getInt("mango_rating"));
 
 				// set the owner
-				DBPerson newOwner = new DBPerson();
-				newOwner.setId(rs.getInt("owner_id"));
-				movie.setOwner(newOwner);
+				int ownerId = rs.getInt("owner_id");
+				if (ownerId <= 0) {
+					movie.setOwner(null);
+				} else {
+					DBPerson newOwner = new DBPerson();
+					newOwner.setId(ownerId);
+					movie.setOwner(newOwner);
+				}
+		
 				movie.setPurchaseDate(rs.getDate("purchase_date"));
 				movie.setRuntime(rs.getInt("runtime"));
 				movie.setTitle(rs.getString("title"));
 				movie.setType(rs.getString("type"));
 				movie.setYear(rs.getInt("year"));
-			}
+		}
 			rs.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
