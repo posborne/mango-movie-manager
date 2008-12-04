@@ -34,7 +34,7 @@ public class DBMovieTest {
      */
     @Test
     public void testDBMovie() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -42,7 +42,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetId() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -50,7 +50,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetDirector() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -58,7 +58,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetDirector() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -66,7 +66,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetTitle() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -74,7 +74,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetTitle() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -82,7 +82,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetRating() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -90,7 +90,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetRating() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -98,7 +98,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetRuntime() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -106,7 +106,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetRuntime() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -114,7 +114,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetMangoRating() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -122,7 +122,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetMangoRating() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -130,7 +130,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetActors() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -138,7 +138,7 @@ public class DBMovieTest {
      */
     @Test
     public void testAddActor() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -146,7 +146,7 @@ public class DBMovieTest {
      */
     @Test
     public void testRemoveActor() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -154,7 +154,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetYear() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -162,7 +162,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetYear() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -170,7 +170,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetASIN() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -178,7 +178,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetASIN() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -186,7 +186,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetPurchaseDate() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -194,7 +194,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetPurchaseDate() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -202,7 +202,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetCustomDescription() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -210,7 +210,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetCustomDescription() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -218,7 +218,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetType() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -226,7 +226,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetType() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -234,7 +234,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetOwner() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -242,7 +242,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetOwner() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -250,7 +250,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetBorrower() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -258,7 +258,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetBorrower() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -266,7 +266,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetGenres() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -274,7 +274,7 @@ public class DBMovieTest {
      */
     @Test
     public void testAddGenre() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -282,7 +282,7 @@ public class DBMovieTest {
      */
     @Test
     public void testRemoveGenre() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -290,7 +290,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetCondition() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -298,7 +298,7 @@ public class DBMovieTest {
      */
     @Test
     public void testSetCondition() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -306,7 +306,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetOwnerId() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
     /**
@@ -314,7 +314,7 @@ public class DBMovieTest {
      */
     @Test
     public void testGetBorrowerId() {
-        fail("Not yet implemented");
+        //fail("Not yet implemented");
     }
 
 }

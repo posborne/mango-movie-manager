@@ -392,6 +392,7 @@ public class H2MovieDAO implements MovieDAO {
 				movie.setCustomDescription(rs.getString("custom_description"));
 				movie.setDirector(rs.getString("director"));
 				movie.setMangoRating(rs.getInt("mango_rating"));
+				movie.setRating(rs.getString("rating"));
 
 				// set the owner
 				int ownerId = rs.getInt("owner_id");
@@ -466,6 +467,7 @@ public class H2MovieDAO implements MovieDAO {
 		try {
 			removeGenreFromMoviePS.setInt(1, movie.getId());
 			removeGenreFromMoviePS.setString(2, genre);
+			removeGenreFromMoviePS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

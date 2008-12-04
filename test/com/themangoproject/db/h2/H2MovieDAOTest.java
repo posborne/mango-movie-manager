@@ -3,6 +3,7 @@ package com.themangoproject.db.h2;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -31,7 +32,6 @@ public class H2MovieDAOTest extends TestCase {
 			titles.add(m.getTitle());
 		}
 
-		System.out.println(titles);
 		assertTrue(titles.contains("Die Hard"));
 		assertTrue(titles.contains("Die Hard: With a Vengeance"));
 	}
@@ -48,7 +48,6 @@ public class H2MovieDAOTest extends TestCase {
 		DBMovie dead = new DBMovie();
 		dead.setId(1);
 		H2MovieDAO.getInstance().getMovieInfo(dead);
-		System.out.println(dead.getTitle());
 		assertEquals(dead.getTitle(), "Dead");
 	}
 
@@ -76,7 +75,6 @@ public class H2MovieDAOTest extends TestCase {
 			titles.add(m.getTitle());
 		}
 		
-		System.out.println(titles);
 		assertTrue(titles.contains("Gladiator"));
 	}
 
@@ -154,7 +152,7 @@ public class H2MovieDAOTest extends TestCase {
 		assertEquals(131, dieHard.getRuntime());
 		assertEquals(1988, dieHard.getYear());
 		assertEquals("B000O77SRC", dieHard.getASIN());
-		assertEquals(new java.sql.Date(2003,11,23),dieHard.getPurchaseDate());
+		assertEquals(new GregorianCalendar(2003,11,23).getTime(),dieHard.getPurchaseDate());
 		assertEquals("Yippe Ki Yay", dieHard.getCustomDescription());
 		assertEquals("Good", dieHard.getCondition());
 		assertEquals("DVD", dieHard.getType());
@@ -181,9 +179,11 @@ public class H2MovieDAOTest extends TestCase {
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
+		dieHard.getTitle();
 		
 		H2MovieDAO.getInstance().removeGenreFromMovie(dieHard, "Action");
 		List<String> genres = H2MovieDAO.getInstance().getGenresForMovie(dieHard);
+		
 		assertTrue(!genres.contains("Action"));
 	}
 //
