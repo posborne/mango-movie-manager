@@ -312,18 +312,18 @@ public class DBMovie implements Movie {
 	 *            the owner of this movie
 	 */
 	public void setOwner(Person owner) {
-		// TODO: Correct way to do this?
-		this.ownerId = ((DBPerson) owner).getId();
+	    if(owner == null)
+	        this.ownerId = -1;
+	    else
+	        this.ownerId = ((DBPerson) owner).getId();
 	}
 
 	/**
 	 * This will return the borrower of this movie (i.e. the person currently in
 	 * possession of the movie).
 	 * 
-	 * @return the person who is borrowing this movie (the owner if it isn't
-	 *         being borrowed.
+	 * @return the person who is borrowing this movie
 	 */
-	// TODO: is that statement in the return correct?
 	public Person getBorrower() {
 		return this.state.getBorrower();
 	}
@@ -335,8 +335,10 @@ public class DBMovie implements Movie {
 	 *            the borrower of the movie
 	 */
 	public void setBorrower(Person borrower) {
-		// TODO: Correct way to do this?
-		DBMovie.this.borrowerId = ((DBPerson) borrower).getId();
+	    if(borrower == null)
+	        this.borrowerId = -1;
+	    else
+	        this.borrowerId = ((DBPerson) borrower).getId();
 	}
 
 	/**
