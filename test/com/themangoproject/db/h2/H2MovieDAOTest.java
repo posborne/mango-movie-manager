@@ -52,7 +52,21 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testAddMovie() {
-		fail("Not yet implemented"); // TODO
+		TestingSetupUtility.executeInserts();
+		
+		DBMovie newMovie = new DBMovie();
+		newMovie.setDirector("Ridley Scott");
+		newMovie.setTitle("Gladiator");
+		newMovie.setType("DVD");
+		newMovie.setASIN("B00009ZYBY");
+		newMovie.setCondition("Pretty Decent");
+		newMovie.setRuntime(155);
+		
+		H2MovieDAO.getInstance().addMovie(
+				"Gladiator", "Ridley Scott", "R", 155, 
+				2000, null, new java.sql.Date(2002, 20, 12), null, 
+				null, "DVD", 5);
+		
 	}
 
 	@Test

@@ -2,6 +2,7 @@ package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
 
+import java.util.Date;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,9 +32,9 @@ public class H2MovieDAO implements MovieDAO {
 	/** Add a movie to the database */
 	private PreparedStatement addMoviePS;
 	private static final String addMovieQuery = "INSERT INTO movie "
-			+ "(id, director, title, rating, runtime, year, asin, purchase_date, "
+			+ "(director, title, rating, runtime, year, asin, purchase_date, "
 			+ "custom_description, condition, type, mango_rating, owner_id, borrower_id)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	/** Update a movie an existing movie in the database */
 	private PreparedStatement updateMoviePS;
@@ -142,7 +143,7 @@ public class H2MovieDAO implements MovieDAO {
 			updateMoviePS.setInt(4, movie.getRuntime());
 			updateMoviePS.setInt(5, movie.getYear());
 			updateMoviePS.setString(6, movie.getASIN());
-			updateMoviePS.setDate(7, (Date) movie.getPurchaseDate());
+			updateMoviePS.setDate(7, (java.sql.Date) movie.getPurchaseDate());
 			updateMoviePS.setString(8, movie.getCustomDescription());
 			updateMoviePS.setString(9, movie.getCondition());
 			updateMoviePS.setString(10, movie.getType());
@@ -170,26 +171,33 @@ public class H2MovieDAO implements MovieDAO {
 
 	/**
 	 * Add the specified movie to the database.
-	 * 
-	 * @param movie
-	 *            The movie to add to the database.
 	 */
-	public void addMovie(Movie movie) {
+	public void addMovie(String title, String director, String rating, int runtime, int year, String asin, Date purchaseDate, String customDescription, String condition, String type, int mangoRating) {
 
 		try {
-			addMoviePS.setString(0, movie.getDirector());
-			addMoviePS.setString(1, movie.getTitle());
-			addMoviePS.setString(2, movie.getRating());
-			addMoviePS.setInt(3, movie.getRuntime());
-			addMoviePS.setInt(4, movie.getYear());
-			addMoviePS.setString(5, movie.getASIN());
-			addMoviePS.setDate(6, (Date) movie.getPurchaseDate());
-			addMoviePS.setString(7, movie.getCustomDescription());
-			addMoviePS.setString(8, movie.getCondition());
-			addMoviePS.setString(9, movie.getType());
-			addMoviePS.setInt(10, movie.getMangoRating());
-			addMoviePS.setNull(11, Types.INTEGER);
+			addMoviePS.setString(1, director);
+			addMoviePS.setString(2, title);
+			addMoviePS.setString(3, rating);
+			
+			if (runtime == -1) {
+				addMoviePS.setInt(4, runtime);
+			} else {
+				addMoviePS.setNull(4, Types.INTEGER);
+			}
+			
+			if (year == -1) {
+				addMoviePS.setInt(5, year);
+			} else {
+				addMoviePS.setNull(5, Types.INTEGER);
+			}
+			addMoviePS.setString(6, asin);
+			addMoviePS.setDate(7, (java.sql.Date)purchaseDate);
+			addMoviePS.setString(8, customDescription);
+			addMoviePS.setString(9, condition);
+			addMoviePS.setString(10, type);
+			addMoviePS.setInt(11, mangoRating);
 			addMoviePS.setNull(12, Types.INTEGER);
+			addMoviePS.setNull(13, Types.INTEGER);
 
 			// Do it!
 			addMoviePS.execute();

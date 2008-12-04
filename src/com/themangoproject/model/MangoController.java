@@ -45,7 +45,7 @@ public class MangoController {
      * @param movie the movie to be added
      */
     public void addMovie(Movie movie) {
-        movieDAO.addMovie(movie);
+        movieDAO.addMovie(null, null, null, -1, -1, null, null, null, null, null, 3);
     }
 
     /**
