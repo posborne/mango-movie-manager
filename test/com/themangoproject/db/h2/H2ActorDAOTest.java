@@ -77,7 +77,6 @@ public class H2ActorDAOTest extends TestCase {
 				"movie: 2, role: Lead Character, character: John McClane",
 		};
 		
-		System.out.println(resultantRolesText);
 		for (int i = 0; i < rolesTextList.length; i++) {
 			assertTrue(resultantRolesText.contains(rolesTextList[i]));
 		}
@@ -126,6 +125,7 @@ public class H2ActorDAOTest extends TestCase {
 		// We know that Bruce Willis is id 1
 		DBActor bruce = new DBActor();
 		bruce.setId(1);
+		bruce.getFirstName();
 		bruce.setFirstName("Not Bruce");
 		bruce.setLastName("Not Willis");
 		
@@ -133,6 +133,7 @@ public class H2ActorDAOTest extends TestCase {
 		dao.updateActor(bruce);
 		
 		List<String> actorNames = getActorListString(dao.getAllActors());
+		System.out.println(actorNames);
 		assertTrue(actorNames.contains("Not Willis, Not Bruce"));
 	}
 
