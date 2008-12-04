@@ -8,6 +8,7 @@ import com.themangoproject.model.DAOFactory;
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.MovieDAO;
 import com.themangoproject.model.Person;
+import com.themangoproject.model.PersonNotFoundException;
 
 /**
  * This is a concrete implementation of the movie interface. This is an
@@ -24,7 +25,7 @@ public class DBMovie implements Movie {
 	private String director, title, rating, ASIN, customDescription, type,
 			condition;
 	private Date purchaseDate;
-	private int ownerId, borrowerId;
+	private int ownerId = -1, borrowerId = -1;
 	// private MangoController controller;
 	private MovieDAO movieDAO;
 	private DBMovieState state;
@@ -516,6 +517,11 @@ public class DBMovie implements Movie {
 		public Person getOwner() {
 			DBPerson owner = new DBPerson();
 			owner.setId(DBMovie.this.ownerId);
+			try {
+                H2PersonDAO.getInstance().populatePerson(owner);
+            } catch (PersonNotFoundException e){
+                return null;
+            }
 			return owner;
 		}
 
@@ -523,14 +529,18 @@ public class DBMovie implements Movie {
 		 * This will return the borrower of this movie (i.e. the person
 		 * currently in possession of the movie).
 		 * 
-		 * @return the person who is borrowing this movie (the owner if it isn't
-		 *         being borrowed.
+		 * @return the person who is borrowing this movie
 		 */
 		// TODO: is that statement in the return correct?
 		public Person getBorrower() {
-			DBPerson borrower = new DBPerson();
-			borrower.setId(DBMovie.this.borrowerId);
-			return borrower;
+		    DBPerson borrower = new DBPerson();
+		    borrower.setId(DBMovie.this.borrowerId);
+		    try {
+		        H2PersonDAO.getInstance().populatePerson(borrower);
+		    } catch (PersonNotFoundException e){
+		        return null;
+		    }
+		    return borrower;
 		}
 
 		/**
