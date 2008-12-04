@@ -7,6 +7,9 @@
 package com.themangoproject.ui;
 
 import java.awt.Color;
+import java.awt.print.PrinterException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -123,7 +126,12 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    // Searches for the given string of text within the table
+        try {
+            // Searches for the given string of text within the table
+            this.jTable1.print();
+        } catch (PrinterException ex) {
+            Logger.getLogger(ViewPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
