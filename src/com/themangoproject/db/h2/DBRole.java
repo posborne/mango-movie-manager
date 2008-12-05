@@ -147,7 +147,12 @@ public class DBRole implements Role {
         @Override
         public String getCharacter() {
             if (id != -1) {
-                DBRole.this.actorDAO.populateRole(DBRole.this);
+                try {
+					DBRole.this.actorDAO.populateRole(DBRole.this);
+				} catch (RoleNotFoundException e) {
+					DBRole.this.role = null;
+					DBRole.this.character = null;
+				}
                 DBRole.this.state = new UpdatedRoleState();
             }
             return DBRole.this.character;
@@ -156,7 +161,12 @@ public class DBRole implements Role {
         @Override
         public String getRole() {
             if (id != -1) {
-                DBRole.this.actorDAO.populateRole(DBRole.this);
+            	try {
+					DBRole.this.actorDAO.populateRole(DBRole.this);
+				} catch (RoleNotFoundException e) {
+					DBRole.this.role = null;
+					DBRole.this.character = null;
+				}
                 DBRole.this.state = new UpdatedRoleState();
             }
             return DBRole.this.role;

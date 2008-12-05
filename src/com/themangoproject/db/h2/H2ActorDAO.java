@@ -59,10 +59,15 @@ public class H2ActorDAO implements ActorDAO {
 	private static final String deleteActingRolesWithActorQuery = "DELETE FROM acting_roles"
 			+ " WHERE actor_id=?";
 
+	/** Query for the movies an actor has been in */
 	private PreparedStatement moviesForActorPS;
-	private static final String moviesForActorQuery = 
-		"SELECT movie_id FROM acting_roles WHERE actor_id=?";
+	private static final String moviesForActorQuery = "SELECT movie_id FROM acting_roles WHERE actor_id=?";
 
+	/** Populate a role from the database based on the actor and movie ids */
+	private PreparedStatement populateRolePS;
+	private static final String populateRoleQuery = "SELECT character, role FROM acting_roles WHERE movie_id=? AND actor_id=?";
+
+	
 	/**
 	 * The DAOs private constructor prepares the various, frequently used
 	 * queries as Prepared Statements and otherwise initializes the state of the
@@ -82,6 +87,7 @@ public class H2ActorDAO implements ActorDAO {
 			deleteActingRolesWithActorPS = conn
 					.prepareStatement(deleteActingRolesWithActorQuery);
 			moviesForActorPS = conn.prepareStatement(moviesForActorQuery);
+			populateRolePS = conn.prepareStatement(populateRoleQuery);
 		} catch (SQLException ex) {
 			// TODO; decide what to do here
 			ex.printStackTrace();
@@ -307,11 +313,38 @@ public class H2ActorDAO implements ActorDAO {
 		return movies;
 	}
 
-	// TODO: PAUL make this happen NOW!
-    @Override
-    public void populateRole(Role role) {
-        // TODO Auto-generated method stub
-        
-    }
-	
+	/**
+	 * Populate the specified role. The role must be a DBRole and the actor and
+	 * movie ids must be set.
+	 * 
+	 * @param role
+	 *            The role which we would like to populate.
+	 * @throws RoleNotFoundException
+	 *             if the role actor and movie combination cannot be found in
+	 *             the database.
+	 * @throws ClassCastException
+	 *             if the the role is not a DBRole.
+	 */
+	public void populateRole(Role role) throws RoleNotFoundException {
+		if (!(role instanceof DBRole)) {
+			throw new ClassCastException();
+		}
+		DBRole r = (DBRole) role;
+
+		try {
+			populateRolePS.setInt(1, r.getActorId());
+			populateRolePS.setInt(2, r.getMovieId());
+			ResultSet rs = populateRolePS.executeQuery();
+
+			if (rs.first()) {
+				r.setCharacter(rs.getString("character"));
+				r.setRole(rs.getString("role"));
+			} else {
+				throw new RoleNotFoundException();
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
 }
