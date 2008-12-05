@@ -67,7 +67,6 @@ public class H2ActorDAO implements ActorDAO {
 	private PreparedStatement populateRolePS;
 	private static final String populateRoleQuery = "SELECT character, role FROM acting_roles WHERE movie_id=? AND actor_id=?";
 
-	
 	/**
 	 * The DAOs private constructor prepares the various, frequently used
 	 * queries as Prepared Statements and otherwise initializes the state of the
@@ -89,7 +88,6 @@ public class H2ActorDAO implements ActorDAO {
 			moviesForActorPS = conn.prepareStatement(moviesForActorQuery);
 			populateRolePS = conn.prepareStatement(populateRoleQuery);
 		} catch (SQLException ex) {
-			// TODO; decide what to do here
 			ex.printStackTrace();
 		}
 
@@ -262,7 +260,13 @@ public class H2ActorDAO implements ActorDAO {
 	}
 
 	/**
-	 * TODO: javadoc me
+	 * Delete the specified actor from the database in a forcible way.
+	 * Basically, remove any tuples from the database that have any references
+	 * to this particular actors. If you do not want this behavior or at least
+	 * want to be warned first with an exception use deleteActor().
+	 * 
+	 * @param a
+	 *            The actor to remove from the database.
 	 */
 	public void forceDeleteActor(Actor a) {
 		if (!(a instanceof DBActor)) {
