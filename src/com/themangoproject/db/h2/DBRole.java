@@ -119,8 +119,9 @@ public class DBRole implements Role {
      * @return the movie this role is a part of.
      */
     public Movie getMovie() {
-      //TODO: fix me!
-        return H2MovieDAO.getInstance().getMovieFromId(this.movieID);
+    	DBMovie movie = new DBMovie();
+    	movie.setId(this.movieID);
+        return movie;
     }
 
     /**

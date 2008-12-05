@@ -7,8 +7,6 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.ldap.PagedResultsControl;
-
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
  * for communicating with the H2 database system, specifically with regards to
@@ -471,14 +469,6 @@ public class H2MovieDAO implements MovieDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-	}
-
-	// TODO: More work for you Paul!! I don't know
-	// if this is the best way to handle it, but it was the best
-	// I could think of right now.
-	public Movie getMovieFromId(int movieID) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
