@@ -5,8 +5,12 @@ import com.themangoproject.model.*;
 import java.util.Date;
 import java.util.List;
 import java.awt.Image;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
@@ -473,7 +477,6 @@ public class H2MovieDAO implements MovieDAO {
 			throw new ClassCastException();
 		}
 		DBMovie movie = (DBMovie) m;
-
 		try {
 			removeGenreFromMoviePS.setInt(1, movie.getId());
 			removeGenreFromMoviePS.setString(2, genre);
@@ -492,8 +495,51 @@ public class H2MovieDAO implements MovieDAO {
 	 * @param image
 	 *            The image that should be added to the database.
 	 */
-	public void setImageForMovie(Image image, Movie m) {
-		
+	public void setImageForMovie(InputStream imageIS, Movie m) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
+		try {
+			setImageDataForMoviePS.setInt(1, movie.getId());
+			if (imageIS != null) {
+				setImageDataForMoviePS.setBinaryStream(2, imageIS);
+			} else {
+				setImageDataForMoviePS.setNull(2, Types.BLOB);
+			}
+			setImageDataForMoviePS.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 
+	/**
+	 * Get the cover art image for the specified movie from the database. This
+	 * will return null if there is no image stored.
+	 * 
+	 * @param m
+	 *            The movie whose cover art we would like to retrieve
+	 */
+	public Image getImageForMovie(Movie m) {
+		if (!(m instanceof DBMovie)) {
+			throw new ClassCastException();
+		}
+		DBMovie movie = (DBMovie) m;
+		Image image = null;
+		
+		try {
+			getImageForMoviePS.setInt(1, movie.getId());
+			ResultSet rs = getImageForMoviePS.executeQuery();
+			if (rs.first()) {
+				InputStream is = rs.getBinaryStream("image_data");
+				image = ImageIO.read(is);
+			}
+		} catch (SQLException ex) {
+			image = null;
+			ex.printStackTrace();
+		} catch (IOException e) {
+			image = null;
+		}
+		return image;
+	}
 }
