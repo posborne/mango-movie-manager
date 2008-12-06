@@ -4,6 +4,7 @@ import com.themangoproject.model.*;
 
 import java.util.Date;
 import java.util.List;
+import java.awt.Image;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -85,6 +86,14 @@ public class H2MovieDAO implements MovieDAO {
 	private PreparedStatement removeMovieFromActingRolesPS;
 	private static final String removeMovieFromActingRolesQuery = "DELETE FROM acting_roles WHERE movie_id=?";
 
+	/** Set the image data for the specified movie */
+	private PreparedStatement setImageDataForMoviePS;
+	private static final String setImageDataForMovieQuery = "UPDATE movie SET image_data=? WHERE id=?";
+
+	/** Get the image data for the specified movie */
+	private PreparedStatement getImageForMoviePS;
+	private static final String getImageForMovieQuery = "SELECT image_data FROM movie WHERE id=?";
+
 	/**
 	 * The private singleton constructor for the DAO initializes the different
 	 * prepared statements that will be used by the class.
@@ -110,6 +119,9 @@ public class H2MovieDAO implements MovieDAO {
 					.prepareStatement(removeMovieFromListsQuery);
 			removeMovieFromSetsPS = conn
 					.prepareStatement(removeMovieFromSetsQuery);
+			setImageDataForMoviePS = conn
+					.prepareStatement(setImageDataForMovieQuery);
+			getImageForMoviePS = conn.prepareStatement(getImageForMovieQuery);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -406,7 +418,7 @@ public class H2MovieDAO implements MovieDAO {
 				movie.setRuntime(rs.getInt("runtime"));
 				movie.setTitle(rs.getString("title"));
 				movie.setType(rs.getString("type"));
-				
+
 				int year = rs.getInt("year");
 				if (year == 0) {
 					year = -1;
@@ -469,6 +481,19 @@ public class H2MovieDAO implements MovieDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	/**
+	 * Store the specified image in the database, associated with the id of the
+	 * provided movie.
+	 * 
+	 * @param m
+	 *            The movie the image should be associated with.
+	 * @param image
+	 *            The image that should be added to the database.
+	 */
+	public void setImageForMovie(Image image, Movie m) {
+		
 	}
 
 }

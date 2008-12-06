@@ -160,14 +160,11 @@ public class H2ActorDAO implements ActorDAO {
 
 	/**
 	 * Add the specified actor to the database.
-	 * 
-	 * @param actor
-	 *            The actor that should be added to the database.
 	 */
-	public void addActor(Actor actor) {
+	public void addActor(String firstName, String lastName) {
 		try {
-			addActorPS.setString(1, actor.getFirstName());
-			addActorPS.setString(2, actor.getLastName());
+			addActorPS.setString(1, firstName);
+			addActorPS.setString(2, lastName);
 			addActorPS.execute();
 		} catch (SQLException ex) {
 			ex.printStackTrace();

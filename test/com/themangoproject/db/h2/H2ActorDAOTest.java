@@ -94,7 +94,7 @@ public class H2ActorDAOTest extends TestCase {
 		Actor testActor = new DBActor();
 		testActor.setFirstName("Phil");
 		testActor.setLastName("McTest");
-		dao.addActor(testActor);
+		dao.addActor(null, null);
 		
 		// Is it in there?
 		List<String> actorNames = getActorListString(dao.getAllActors());

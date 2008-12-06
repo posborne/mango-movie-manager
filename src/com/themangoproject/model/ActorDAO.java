@@ -9,7 +9,7 @@ public interface ActorDAO {
 
     public List<Actor> getAllActors ();
     public List<Role> getRolesForActor (Actor actor);
-    public void addActor (Actor actor);
+    public void addActor (String firstName, String lastName);
     public void updateActor (Actor actor);
     public void forceDeleteActor (Actor actor);
     public void deleteActor (Actor actor) throws ActorExistsInOtherRelationsException;
