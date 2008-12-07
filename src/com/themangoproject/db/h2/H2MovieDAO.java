@@ -92,11 +92,11 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Set the image data for the specified movie */
 	private PreparedStatement setImageDataForMoviePS;
-	private static final String setImageDataForMovieQuery = "UPDATE movie SET image_data=? WHERE id=?";
+	private static final String setImageDataForMovieQuery = "UPDATE movie SET cover_art=? WHERE id=?";
 
 	/** Get the image data for the specified movie */
 	private PreparedStatement getImageForMoviePS;
-	private static final String getImageForMovieQuery = "SELECT image_data FROM movie WHERE id=?";
+	private static final String getImageForMovieQuery = "SELECT cover_art FROM movie WHERE id=?";
 
 	/**
 	 * The private singleton constructor for the DAO initializes the different
