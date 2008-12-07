@@ -10,7 +10,7 @@ import com.themangoproject.model.*;
  * database.
  * 
  * @author Paul Osborne
- */
+ */ 
 public class PersonComboBoxModel extends DefaultComboBoxModel {
 
 	/** Generated serial version uid */
@@ -39,7 +39,7 @@ public class PersonComboBoxModel extends DefaultComboBoxModel {
 	 */
 	@Override
 	public Object getElementAt(int index) {
-		return persons.get(index);
+		return persons.get(index).getName();
 	}
 
 }

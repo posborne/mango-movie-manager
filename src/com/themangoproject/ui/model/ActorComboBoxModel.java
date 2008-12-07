@@ -4,6 +4,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
+import java.util.ArrayList;
 
 /**
  * This combo box model gives encapsulates the list of all actors that exist.
