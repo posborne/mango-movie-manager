@@ -32,11 +32,11 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Retrieve ids of all movies in the database */
 	private PreparedStatement allMoviesPS;
-	private static final String allMoviesQuery = "SELECT id FROM movie";
+	private static final String allMoviesSQL = "SELECT id FROM movie";
 
 	/** Add a movie to the database */
 	private PreparedStatement addMoviePS;
-	private static final String addMovieQuery = 
+	private static final String addMovieSQL = 
                 "INSERT INTO movie "
 			+ "(director, title, rating, runtime, year, asin, purchase_date, "
 			+ "custom_description, condition, type, mango_rating, owner_id, borrower_id)"
@@ -44,7 +44,7 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Update a movie an existing movie in the database */
 	private PreparedStatement updateMoviePS;
-	private static final String updateMoviesQuery = 
+	private static final String updateMoviesSQL = 
                 "UPDATE movie"
 			+ " SET director=?, title=?, rating=?, runtime=?, year=?, asin=?,"
 			+ " purchase_date=?, custom_description=?, condition=?, type=?,"
@@ -52,64 +52,64 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Delete movie with specified id from the database */
 	private PreparedStatement deleteMoviePS;
-	private static final String deleteMovieQuery = 
+	private static final String deleteMovieSQL = 
                 "DELETE FROM movie WHERE id=?";
 
 	/** Retrieve all genres for a movie */
 	private PreparedStatement genresForMoviePS;
-	private static final String genresForMovieQuery = 
+	private static final String genresForMovieSQL = 
                 "SELECT name"
 			+ " FROM movie, genre" + " WHERE movie_id=id AND id=?";
 
 	/** Retrieve all actors for a movie */
 	private PreparedStatement actorsForMoviePS;
-	private static final String actorsForMovieQuery = 
+	private static final String actorsForMovieSQL = 
                 "SELECT actor_id"
 			+ " FROM movie, acting_roles" + " WHERE movie_id=id AND id=?";
 
 	private PreparedStatement populateMoviePS;
-	private static final String populateMovieQuery = 
+	private static final String populateMovieSQL = 
                 "SELECT * FROM movie"
 			+ " WHERE id=?";
 
 	private PreparedStatement addGenreToMoviePS;
-	private static final String addGenreToMovieQuery = 
+	private static final String addGenreToMovieSQL = 
                 "INSERT INTO genre "
 			+ "(movie_id, name)" + " VALUES (?, ?)";
 
 	private PreparedStatement removeGenreFromMoviePS;
-	private static final String removeGenreFromMovieQuery = 
+	private static final String removeGenreFromMovieSQL = 
                 "DELETE FROM genre"
 			+ " WHERE movie_id=? AND name=?";
 
 	/** Remove tuples with reference to movie from genre table */
 	private PreparedStatement removeMovieFromGenreTablePS;
-	private static final String removeMovieFromGenreTableQuery = 
+	private static final String removeMovieFromGenreTableSQL = 
                 "DELETE FROM genre WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from lists table */
 	private PreparedStatement removeMovieFromListsPS;
-	private static final String removeMovieFromListsQuery = 
+	private static final String removeMovieFromListsSQL = 
                 "DELETE FROM lists WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from sets table */
 	private PreparedStatement removeMovieFromSetsPS;
-	private static final String removeMovieFromSetsQuery = 
+	private static final String removeMovieFromSetsSQL = 
                 "DELETE FROM sets WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from acting_roles table */
 	private PreparedStatement removeMovieFromActingRolesPS;
-	private static final String removeMovieFromActingRolesQuery = 
+	private static final String removeMovieFromActingRolesSQL = 
                 "DELETE FROM acting_roles WHERE movie_id=?";
 
 	/** Set the image data for the specified movie */
 	private PreparedStatement setImageDataForMoviePS;
-	private static final String setImageDataForMovieQuery = 
+	private static final String setImageDataForMovieSQL = 
                 "UPDATE movie SET cover_art=? WHERE id=?";
 
 	/** Get the image data for the specified movie */
 	private PreparedStatement getImageForMoviePS;
-	private static final String getImageForMovieQuery = 
+	private static final String getImageForMovieSQL = 
                 "SELECT cover_art FROM movie WHERE id=?";
 
 	/**
@@ -119,27 +119,27 @@ public class H2MovieDAO implements MovieDAO {
 	private H2MovieDAO() {
 		conn = H2Util.getInstance().getConnection();
 		try {
-			allMoviesPS = conn.prepareStatement(allMoviesQuery);
-			updateMoviePS = conn.prepareStatement(updateMoviesQuery);
-			addMoviePS = conn.prepareStatement(addMovieQuery);
-			deleteMoviePS = conn.prepareStatement(deleteMovieQuery);
-			genresForMoviePS = conn.prepareStatement(genresForMovieQuery);
-			actorsForMoviePS = conn.prepareStatement(actorsForMovieQuery);
-			populateMoviePS = conn.prepareStatement(populateMovieQuery);
-			addGenreToMoviePS = conn.prepareStatement(addGenreToMovieQuery);
+			allMoviesPS = conn.prepareStatement(allMoviesSQL);
+			updateMoviePS = conn.prepareStatement(updateMoviesSQL);
+			addMoviePS = conn.prepareStatement(addMovieSQL);
+			deleteMoviePS = conn.prepareStatement(deleteMovieSQL);
+			genresForMoviePS = conn.prepareStatement(genresForMovieSQL);
+			actorsForMoviePS = conn.prepareStatement(actorsForMovieSQL);
+			populateMoviePS = conn.prepareStatement(populateMovieSQL);
+			addGenreToMoviePS = conn.prepareStatement(addGenreToMovieSQL);
 			removeGenreFromMoviePS = conn
-					.prepareStatement(removeGenreFromMovieQuery);
+					.prepareStatement(removeGenreFromMovieSQL);
 			removeMovieFromActingRolesPS = conn
-					.prepareStatement(removeMovieFromActingRolesQuery);
+					.prepareStatement(removeMovieFromActingRolesSQL);
 			removeMovieFromGenreTablePS = conn
-					.prepareStatement(removeMovieFromGenreTableQuery);
+					.prepareStatement(removeMovieFromGenreTableSQL);
 			removeMovieFromListsPS = conn
-					.prepareStatement(removeMovieFromListsQuery);
+					.prepareStatement(removeMovieFromListsSQL);
 			removeMovieFromSetsPS = conn
-					.prepareStatement(removeMovieFromSetsQuery);
+					.prepareStatement(removeMovieFromSetsSQL);
 //			setImageDataForMoviePS = conn
-//					.prepareStatement(setImageDataForMovieQuery);
-//			getImageForMoviePS = conn.prepareStatement(getImageForMovieQuery);
+//					.prepareStatement(setImageDataForMovieSQL);
+//			getImageForMoviePS = conn.prepareStatement(getImageForMovieSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

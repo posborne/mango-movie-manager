@@ -17,5 +17,13 @@ public class H2DAOFactory implements DAOFactory {
         return H2MovieDAO.getInstance();
     }
 
+	public ListsDAO getListsDAO() {
+		return H2ListsDAO.getInstance();
+	}
+
+	public SetsDAO getSetsDAO() {
+		return H2SetsDAO.getInstance();
+	}
+
 }
 

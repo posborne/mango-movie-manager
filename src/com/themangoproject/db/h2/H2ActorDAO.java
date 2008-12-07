@@ -27,45 +27,45 @@ public class H2ActorDAO implements ActorDAO {
 	/** Prepared statement for retrieving ids of all actors */
 	private PreparedStatement allActorsPS;
 	/** Retrieve ids and names of all actors */
-	private static final String allActorsQuery = "SELECT id, first_name, last_name"
+	private static final String allActorsSQL = "SELECT id, first_name, last_name"
 			+ " FROM actor";
 
 	/** Retrieve all roles for an actor */
 	private PreparedStatement rolesForActorPS;
-	private static final String rolesForActorQuery = "SELECT movie_id, role, character"
+	private static final String rolesForActorSQL = "SELECT movie_id, role, character"
 			+ " FROM movie, acting_roles" + " WHERE actor_id=?";
 
 	/** Add an actor to the database (no roles) */
 	private PreparedStatement addActorPS;
-	private static final String addActorQuery = "INSERT INTO actor (first_name, last_name)"
+	private static final String addActorSQL = "INSERT INTO actor (first_name, last_name)"
 			+ " VALUES(?, ?)";
 
 	/** Update an actor in the database */
 	private PreparedStatement updateActorPS;
-	private static final String updateActorQuery = "UPDATE actor"
+	private static final String updateActorSQL = "UPDATE actor"
 			+ " SET first_name=?, last_name=?" + " WHERE id=?";
 
 	/** Retrieve an actors information */
 	private PreparedStatement populateActorPS;
-	private static final String populateActorQuery = "SELECT first_name, last_name"
+	private static final String populateActorSQL = "SELECT first_name, last_name"
 			+ " FROM actor" + " WHERE id=?";
 
 	/** Delete an actor from the database */
 	private PreparedStatement deleteActorPS;
-	private static final String deleteActorQuery = "DELETE FROM actor WHERE id=?";
+	private static final String deleteActorSQL = "DELETE FROM actor WHERE id=?";
 
 	/** Delete acting roles with a give actor */
 	private PreparedStatement deleteActingRolesWithActorPS;
-	private static final String deleteActingRolesWithActorQuery = "DELETE FROM acting_roles"
+	private static final String deleteActingRolesWithActorSQL = "DELETE FROM acting_roles"
 			+ " WHERE actor_id=?";
 
-	/** Query for the movies an actor has been in */
+	/** SQL for the movies an actor has been in */
 	private PreparedStatement moviesForActorPS;
-	private static final String moviesForActorQuery = "SELECT movie_id FROM acting_roles WHERE actor_id=?";
+	private static final String moviesForActorSQL = "SELECT movie_id FROM acting_roles WHERE actor_id=?";
 
 	/** Populate a role from the database based on the actor and movie ids */
 	private PreparedStatement populateRolePS;
-	private static final String populateRoleQuery = "SELECT character, role FROM acting_roles WHERE movie_id=? AND actor_id=?";
+	private static final String populateRoleSQL = "SELECT character, role FROM acting_roles WHERE movie_id=? AND actor_id=?";
 
 	/**
 	 * The DAOs private constructor prepares the various, frequently used
@@ -76,17 +76,17 @@ public class H2ActorDAO implements ActorDAO {
 		// TODO: this is temporary
 		conn = H2Util.getInstance().getConnection();
 		try {
-			allActorsPS = conn.prepareStatement(allActorsQuery);
-			updateActorPS = conn.prepareStatement(updateActorQuery);
-			rolesForActorPS = conn.prepareStatement(rolesForActorQuery);
-			addActorPS = conn.prepareStatement(addActorQuery);
-			updateActorPS = conn.prepareStatement(updateActorQuery);
-			populateActorPS = conn.prepareStatement(populateActorQuery);
-			deleteActorPS = conn.prepareStatement(deleteActorQuery);
+			allActorsPS = conn.prepareStatement(allActorsSQL);
+			updateActorPS = conn.prepareStatement(updateActorSQL);
+			rolesForActorPS = conn.prepareStatement(rolesForActorSQL);
+			addActorPS = conn.prepareStatement(addActorSQL);
+			updateActorPS = conn.prepareStatement(updateActorSQL);
+			populateActorPS = conn.prepareStatement(populateActorSQL);
+			deleteActorPS = conn.prepareStatement(deleteActorSQL);
 			deleteActingRolesWithActorPS = conn
-					.prepareStatement(deleteActingRolesWithActorQuery);
-			moviesForActorPS = conn.prepareStatement(moviesForActorQuery);
-			populateRolePS = conn.prepareStatement(populateRoleQuery);
+					.prepareStatement(deleteActingRolesWithActorSQL);
+			moviesForActorPS = conn.prepareStatement(moviesForActorSQL);
+			populateRolePS = conn.prepareStatement(populateRoleSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

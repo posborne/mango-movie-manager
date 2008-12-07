@@ -40,19 +40,19 @@ public class H2PersonDAO implements PersonDAO {
 
 	/** Prepared statement for returning a movie */
 	private PreparedStatement returnMovieForPersonPS;
-	private static final String returnMovieForPersonQuery = "UPDATE movie SET borrower_id=NULL WHERE id=?";
+	private static final String returnMovieForPersonSQL = "UPDATE movie SET borrower_id=NULL WHERE id=?";
 
 	/** Prepared statement for borrowing a movie to a person */
 	private PreparedStatement borrowMovieToPersonPS;
-	private static final String borrowMovieToPersonQuery = "UPDATE movie SET borrower_id=? WHERE id=?";
+	private static final String borrowMovieToPersonSQL = "UPDATE movie SET borrower_id=? WHERE id=?";
 
 	/** Prepared statement for obtaining the movies owned by a person */
 	private PreparedStatement ownedMoviesForPersonPS;
-	private static final String ownedMoviesForPersonQuery = "SELECT id FROM movie WHERE owner_id=?";
+	private static final String ownedMoviesForPersonSQL = "SELECT id FROM movie WHERE owner_id=?";
 
 	/** Prepared statement for obtaining the movies being borrowed by a person */
 	private PreparedStatement borrowedMoviesForPersonPS;
-	private static final String borrowedMoviesForPersonQuery = "SELECT id FROM movie WHERE borrower_id=?";
+	private static final String borrowedMoviesForPersonSQL = "SELECT id FROM movie WHERE borrower_id=?";
 
 	/**
 	 * The private construction for the DAO gets everything ready to go,
@@ -67,13 +67,13 @@ public class H2PersonDAO implements PersonDAO {
 			populatePersonPS = conn.prepareStatement(populatePersonStatement);
 			allPersonsPS = conn.prepareStatement(allPersonsStatement);
 			borrowedMoviesForPersonPS = conn
-					.prepareStatement(borrowedMoviesForPersonQuery);
+					.prepareStatement(borrowedMoviesForPersonSQL);
 			ownedMoviesForPersonPS = conn
-					.prepareStatement(ownedMoviesForPersonQuery);
+					.prepareStatement(ownedMoviesForPersonSQL);
 			returnMovieForPersonPS = conn
-					.prepareStatement(returnMovieForPersonQuery);
+					.prepareStatement(returnMovieForPersonSQL);
 			borrowMovieToPersonPS = conn
-					.prepareStatement(borrowMovieToPersonQuery);
+					.prepareStatement(borrowMovieToPersonSQL);
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
 			ex.printStackTrace(System.err);

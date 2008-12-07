@@ -1,11 +1,12 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.H2ListsDAO;
 import com.themangoproject.db.h2.H2MovieDAO;
 import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
+import com.themangoproject.db.h2.H2SetsDAO;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class MangoController {
 	private MovieDAO movieDAO;
 	/** ActorDAO that will be used */
 	private ActorDAO actorDAO;
+	/** ListsDAO that will be used */
+	private ListsDAO listsDAO;
+	/** SetsDAO that will be used */
+	private SetsDAO setsDAO;
 
 	/**
 	 * Instantiate the singleton instance of the Mango controller.
@@ -33,6 +38,8 @@ public class MangoController {
 		personDAO = H2PersonDAO.getInstance();
 		movieDAO = H2MovieDAO.getInstance();
 		actorDAO = H2ActorDAO.getInstance();
+		listsDAO = H2ListsDAO.getInstance();
+		setsDAO = H2SetsDAO.getInstance();
 	}
 
 	/**
@@ -131,18 +138,18 @@ public class MangoController {
 		return null; // TODO: implement
 	}
         
-        /**
-         * Return a list containing the labels of all sets in the database.
-         */
-        public List<String> getAllSets() {
-           return new ArrayList<String>();
-        }
-        
-        /**
-         * Return a list containing the labels of all lists in the databse.
-         */
-        public List<String> getAllLists() {
-            return new ArrayList<String>();
-        }
+    /**
+     * Return a list containing the labels of all sets in the database.
+     */
+    public List<String> getAllSets() {
+    	return setsDAO.getAllSets();
+    }
+    
+    /**
+     * Return a list containing the labels of all lists in the databse.
+     */
+    public List<String> getAllLists() {
+    	return listsDAO.getAllLists();
+    }
 
 }
