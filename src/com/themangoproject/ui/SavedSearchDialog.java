@@ -1,16 +1,13 @@
-/*
- * SavedSearchDialog.java
- *
- * Created on November 23, 2008, 2:06 AM
- */
 
 package com.themangoproject.ui;
 
-import java.awt.event.KeyEvent;
+import com.themangoproject.ui.model.AttributesComboBoxModel;
+import com.themangoproject.ui.model.ConstraintComboBoxModel;
+
 
 /**
  *
- * @author  kronning
+ * @author  Kyle Ronning
  */
 public class SavedSearchDialog extends javax.swing.JDialog {
 
@@ -18,6 +15,8 @@ public class SavedSearchDialog extends javax.swing.JDialog {
     public SavedSearchDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.addSubstractPanel1.setComboBoxPrefs(new AttributesComboBoxModel(),
+                new ConstraintComboBoxModel(), false, false);
     }
 
     /** This method is called from within the constructor to
@@ -88,8 +87,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
                         .addGap(73, 73, 73)
                         .addComponent(jLabel3)
                         .addGap(68, 68, 68)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(jLabel4))
                     .addComponent(addSubstractPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -195,4 +193,11 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * A meethod to get the information to construct a saved search
+     * Change the name of this method
+     */
+//    public void getSavedSearchInfo() {
+//        
+//    }
 }

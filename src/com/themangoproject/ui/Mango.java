@@ -6,6 +6,7 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.db.h2.H2Util;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -20,6 +21,8 @@ public class Mango extends javax.swing.JFrame {
     /** Creates new form Mango */
     public Mango() {
         initComponents();
+        H2Util.getInstance().setDatabaseLocation("~/Desktop/db/mango.db");
+        //H2Util.getInstance().initializeSchemaOnDb();
     }
 
     /** This method is called from within the constructor to

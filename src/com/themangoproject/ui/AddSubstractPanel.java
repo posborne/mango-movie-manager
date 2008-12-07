@@ -1,27 +1,24 @@
-/*
- * AddSubstractDaddyPanel.java
- *
- * Created on November 20, 2008, 9:20 PM
- */
 
 package com.themangoproject.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
+import javax.swing.ComboBoxModel;
 
 /**
  * AddSubstractPanel is a panel to collect AddSubtractInnerPanels.
  * 
  * @author  Kyle Ronning
- * @version 1.0
+ * @version 12-6-2008
  */
 public class AddSubstractPanel extends javax.swing.JPanel {
 
     /** Creates new form AddSubstractDaddyPanel */
     public AddSubstractPanel() {
         initComponents();
-        // Add a glue component to take up extra space so the panels that
-        // are added aren't stretched.
-        this.jPanel1.add(Box.createVerticalGlue(), 1);
     }
 
     /** This method is called from within the constructor to
@@ -35,17 +32,11 @@ public class AddSubstractPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        addSubtractInnerPanel1 = new com.themangoproject.ui.AddSubtractInnerPanel();
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
-
-        // Disable the minus button
-        this.addSubtractInnerPanel1.disableMinusButton();
-        jPanel1.add(addSubtractInnerPanel1);
-
         jScrollPane1.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -62,26 +53,33 @@ public class AddSubstractPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.themangoproject.ui.AddSubtractInnerPanel addSubtractInnerPanel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    /** ComboBoxModels */
+    private ComboBoxModel cbm1;
+    private ComboBoxModel cbm2;
+    /** Editable ComboBoxes */
+    private boolean cbEditable1;
+    private boolean cbEditable2;
     
     /**
      * Adds an AddSubtractInnerPanel to this panel.
      */
     public void addAddSubPanel() {
-        this.jPanel1.add(new AddSubtractInnerPanel(), 
-                this.jPanel1.getComponentCount() - 1);
+        try {
+            AddSubtractInnerPanel asip = new AddSubtractInnerPanel(
+                this.cbm1.getClass().newInstance(), 
+                this.cbm2.getClass().newInstance());
+            asip.setComboBox1Editable(this.cbEditable1);
+            asip.setComboBox2Editable(this.cbEditable2);
+            this.jPanel1.add(asip, this.jPanel1.getComponentCount() - 1);                        
+        } catch (InstantiationException ex) {
+        } catch (IllegalAccessException ex) {
+        }
+
         if (this.jPanel1.getComponentCount() == 3)
-            ((AddSubtractInnerPanel)this.jPanel1.getComponent(0)).enableMinusButton();
-        //else if (this.getComponentCount() == 10) {
-        //    for (int i = 0; i < 10; i++) {
-                // disable all + buttons
-        //        ((AddSubtractInnerPanel)
-        //                this.getComponent(i)).disablePlusButton();
-        //    }
-        //}        
+            ((AddSubtractInnerPanel)this.jPanel1.getComponent(0)).enableMinusButton();    
         this.jPanel1.revalidate();
         this.jPanel1.repaint();
     }
@@ -92,13 +90,6 @@ public class AddSubstractPanel extends javax.swing.JPanel {
      */
     public void removeAddSubPanel(AddSubtractInnerPanel a) {
         this.jPanel1.remove(a);
-        //if (this.getComponentCount() == 9) {
-        //    for (int i = 0; i < 9; i++) {
-                // disable all + buttons
-        //        ((AddSubtractInnerPanel)
-        //                this.getComponent(i)).enablePlusButton();
-        //    }            
-        //}
         if (this.jPanel1.getComponentCount() == 2) {
             // Disable the one - button
             ((AddSubtractInnerPanel)
@@ -107,5 +98,43 @@ public class AddSubstractPanel extends javax.swing.JPanel {
         this.jPanel1.revalidate();
         this.jPanel1.repaint();
     }
-         
+    
+    /**
+     * Sets the ComboBoxModels that should be assigned to each new panel and
+     * sets the property of each ComboBoxes editable state.
+     * 
+     * @param cbm1 The first ComboBoxModel
+     * @param cbm2 The second ComboBoxModel
+     * @param cb1 Set the left ComboBox editable if true.
+     * @param cb2 Set the right ComboBox editable if true.
+     */
+    public void setComboBoxPrefs(ComboBoxModel cbm1, ComboBoxModel cbm2, 
+            boolean cb1, boolean cb2) {
+        this.cbm1 = cbm1;
+        this.cbm2 = cbm2;
+        this.cbEditable1 = cb1;
+        this.cbEditable2 = cb2;
+        AddSubtractInnerPanel asip = new AddSubtractInnerPanel(cbm1, cbm2);
+        asip.setComboBox1Editable(this.cbEditable1);
+        asip.setComboBox2Editable(this.cbEditable2);
+        this.jPanel1.add(asip);
+        // Add a glue component to take up extra space so the panels that
+        // are added aren't stretched.
+        this.jPanel1.add(Box.createVerticalGlue(), 1);
+    }
+    
+    /**
+     * Gets the values of each inner panel and stores them as a String array.
+     * The String arrays are returned in a List object.
+     * @return A List of values from all the inner panels as a String array.
+     */
+    public List<String[]> getInnerPanelsValues() {
+        List<String[]> info = new ArrayList<String[]>();
+        for (int i = 0; i < this.jPanel1.getComponentCount(); i++) {
+            if (this.jPanel1.getComponent(i) instanceof AddSubtractInnerPanel)
+                info.add(((AddSubtractInnerPanel)this.jPanel1.getComponent(i)).
+                        getInnerPanelValues());
+        }
+        return info;
+    }
 }

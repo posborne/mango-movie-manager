@@ -40,13 +40,6 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
             <Property name="axis" type="int" value="1"/>
           </Layout>
-          <SubComponents>
-            <Component class="com.themangoproject.ui.AddSubtractInnerPanel" name="addSubtractInnerPanel1">
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="// Disable the minus button&#xa;this.addSubtractInnerPanel1.disableMinusButton();"/>
-              </AuxValues>
-            </Component>
-          </SubComponents>
         </Container>
       </SubComponents>
     </Container>

@@ -1,26 +1,22 @@
-/*
- * AddSubtractDropDownPanel.java
- *
- * Created on November 19, 2008, 10:47 PM
- */
 
 package com.themangoproject.ui;
 
-import javax.swing.DefaultComboBoxModel;
-
+import javax.swing.ComboBoxModel;
 
 /**
  * AddSubtractInnerPanel is a panel that to collect search criteria for 
  * Saved Searches.
  * 
  * @author  Kyle Ronning
- * @version 1.0
+ * @version 12-6-2008
  */
 public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
     /** Creates new form AddSubtractDropDownPanel */
-    public AddSubtractInnerPanel() {
+    public AddSubtractInnerPanel(ComboBoxModel cbm1, ComboBoxModel cbm2) {
         initComponents();
+        this.jComboBox1.setModel(cbm1);
+        this.jComboBox2.setModel(cbm2);
     }
 
     /** This method is called from within the constructor to
@@ -40,7 +36,6 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(442, 35));
 
-        jComboBox1.setEditable(true);
         jComboBox1.setMaximumRowCount(5);
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9" }));
 
@@ -121,21 +116,7 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
-//    /**
-//     * Disable the plus button in this panel.
-//     */
-//    public void disablePlusButton() {
-//        this.jButton1.setEnabled(false);
-//    }
-//    
-//    /**
-//     * Enable the plus button in this panel.
-//     */
-//    public void enablePlusButton() {
-//        this.jButton1.setEnabled(true);
-//    }
-    
+   
     /**
      * Disable the minus button in this panel.
      */
@@ -150,12 +131,35 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         this.jButton3.setEnabled(true);
     }
     
+   
     /**
-     * Sets models for the two JComboBoxes
+     * Returns the selected items in the two ComboBoxes and the text in the 
+     * TextField.  The values are returned as Strings in an array.  The first
+     * element is the String value of the first ComboBox, the second element is
+     * the String value of the second ComboBox, and the last value is the String
+     * value of the TextField.
+     * 
+     * @return The values from the ComboBoxes and TextField.
      */
-    public void setComboBoxModels(DefaultComboBoxModel m1, DefaultComboBoxModel m2) {
-        //this.jComboBox1.setModel(m1);
-        //this.jComboBox2.setModel(m2);
+    public String[] getInnerPanelValues() {
+        String[] items = { (String)this.jComboBox1.getSelectedItem(), 
+            (String)this.jComboBox2.getSelectedItem(), this.jTextField1.getText()};
+        return items;
     }
     
+    /**
+     * Set the first ComboBox editable
+     * @param edit Sets the first ComboBox editable if true.
+     */
+    public void setComboBox1Editable(boolean edit) {
+        this.jComboBox1.setEditable(edit);
+    }
+    
+    /**
+     * Set the second ComboBox editable
+     * @param edit Sets the second ComboBox editable if true.
+     */
+    public void setComboBox2Editable(boolean edit) {
+        this.jComboBox2.setEditable(edit);
+    }
 }
