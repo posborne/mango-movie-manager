@@ -193,7 +193,7 @@ public class DBPerson implements Person {
      */
     public String toStirng() {
         // TODO: What do we want this to do?
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.getName();
     }
     
     private class UpdatedPersonState implements DBPersonState {
