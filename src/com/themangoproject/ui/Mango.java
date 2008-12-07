@@ -20,9 +20,10 @@ public class Mango extends javax.swing.JFrame {
 
     /** Creates new form Mango */
     public Mango() {
-        initComponents();
         H2Util.getInstance().setDatabaseLocation("~/Desktop/db/mango.db");
         //H2Util.getInstance().initializeSchemaOnDb();
+        initComponents();
+
     }
 
     /** This method is called from within the constructor to
