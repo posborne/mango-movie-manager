@@ -1,7 +1,5 @@
-package com.themangoproject.ui.model;
+package com.themangoproject.ui.model.navigator;
 
-import com.themangoproject.ui.model.navigator.ListsMutableTreeNode;
-import com.themangoproject.ui.model.navigator.SetsMutableTreeNode;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**

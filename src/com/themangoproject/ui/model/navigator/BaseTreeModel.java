@@ -1,6 +1,7 @@
-package com.themangoproject.ui.model;
+package com.themangoproject.ui.model.navigator;
 
 import javax.swing.tree.DefaultTreeModel;
+
 
 
 /**

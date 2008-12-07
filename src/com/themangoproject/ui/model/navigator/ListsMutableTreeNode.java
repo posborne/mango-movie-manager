@@ -23,6 +23,6 @@ public class ListsMutableTreeNode extends DefaultMutableTreeNode {
         for (String list : lists) {
             this.add(new DefaultMutableTreeNode(list));
         }
-        this.add(new DefaultMutableTreeNode("Add New List"));
+        this.add(new AddListMutableTreeNode());
     }
 }
