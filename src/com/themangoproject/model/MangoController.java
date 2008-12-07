@@ -5,6 +5,7 @@ import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -129,5 +130,19 @@ public class MangoController {
 	public List<Movie> executeMovieQuery(String query) throws SQLException {
 		return null; // TODO: implement
 	}
+        
+        /**
+         * Return a list containing the labels of all sets in the database.
+         */
+        public List<String> getAllSets() {
+           return new ArrayList<String>();
+        }
+        
+        /**
+         * Return a list containing the labels of all lists in the databse.
+         */
+        public List<String> getAllLists() {
+            return new ArrayList<String>();
+        }
 
 }

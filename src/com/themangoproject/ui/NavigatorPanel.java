@@ -6,6 +6,8 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.ui.model.BaseTreeModel;
+
 /**
  *
  * @author  osbpau
