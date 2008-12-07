@@ -11,19 +11,20 @@ class NavigatorRootNode extends DefaultMutableTreeNode {
         
 	public NavigatorRootNode() {
         super("Invisible Root Node", true);
-        DefaultMutableTreeNode actions = new DefaultMutableTreeNode("Library", true);
+        DefaultMutableTreeNode actions = new ActionsMutableTreeNode();
         DefaultMutableTreeNode allMovies, myMovies, friendsMovies, borrowedMovies,
                 loanedMovies, wishList;
         
-        allMovies = new DefaultMutableTreeNode("All Movies");
-        myMovies = new DefaultMutableTreeNode("My Movies");
-        friendsMovies = new DefaultMutableTreeNode("Friend's Movies");
-        borrowedMovies = new DefaultMutableTreeNode("Borrowed Movies");
-        loanedMovies = new DefaultMutableTreeNode("Loaned Movies");
-        wishList = new DefaultMutableTreeNode("Wish List");
+        allMovies = new AllMoviesMutableTreeNode();
+        myMovies = new MyMoviesMutableTreeNode();
+        friendsMovies = new FriendsMoviesMutableTreeNode();
+        borrowedMovies = new BorrowedMoviesMutableTreeNode();
+        loanedMovies = new LoanedMoviesMutableTreeNode();
+        wishList = new WishListMutableTreeNode();
         
         actions.add(allMovies);
         actions.add(myMovies);
+        actions.add(friendsMovies);
         actions.add(borrowedMovies);
         actions.add(loanedMovies);
         actions.add(wishList);
