@@ -7,8 +7,11 @@
 package com.themangoproject.ui;
 
 import com.themangoproject.db.h2.H2Util;
+import com.themangoproject.db.h2.TestingSetupUtility;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.TableModel;
 
 /**
  * Mango is the main class for the Mango Movie Manager program.
@@ -21,9 +24,19 @@ public class Mango extends javax.swing.JFrame {
     /** Creates new form Mango */
     public Mango() {
         H2Util.getInstance().setDatabaseLocation("~/Desktop/db/mango.db");
-        //H2Util.getInstance().initializeSchemaOnDb();
+        H2Util.getInstance().initializeSchemaOnDb();
+        TestingSetupUtility.executeInserts();
         initComponents();
-
+        createdInstance = this;
+    }
+    
+    private static Mango createdInstance;
+    public static Mango getCreatedInstance() {
+    	return createdInstance;
+    }
+    
+    public void setTableModel(TableModel tm) {
+    	((ViewPanel)viewPanel1).setTableModel(tm);
     }
 
     /** This method is called from within the constructor to

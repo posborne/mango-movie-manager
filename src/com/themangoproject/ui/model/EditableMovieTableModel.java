@@ -1,28 +1,56 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.themangoproject.ui.model;
 
+import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+import com.themangoproject.model.Movie;
 
 /**
  *
- * @author kronning
+ * @author Kyle Ronning, Paul Osborne
  */
-public class EditableMovieTableModel extends AbstractTableModel{
+public abstract class EditableMovieTableModel extends AbstractTableModel{
 
-    public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet.");
+	private final String columns[] = {
+			"#",
+			"Title",
+			"Director",
+			"Rating",
+			"Year",
+			"Mango Rating",
+			"Type"
+	};
+	
+	public abstract List<Movie> getMovies();
+	
+	public int getRowCount() {
+        return getMovies().size();
     }
 
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return columns.length;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Movie m = getMovies().get(rowIndex);
+    	switch (columnIndex) {
+        case 0:
+        	return columnIndex + 1;
+        case 1:
+        	return m.getTitle();
+        case 2:
+        	return m.getDirector();
+        case 3:
+        	return m.getRating();
+        case 4:
+        	return m.getYear();
+        case 5:
+        	return m.getMangoRating();
+        case 6:
+        	return m.getType();
+        default:
+        	return "???";
+        }
     }
 
 }

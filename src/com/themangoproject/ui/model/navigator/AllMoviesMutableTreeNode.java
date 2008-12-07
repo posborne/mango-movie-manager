@@ -3,6 +3,8 @@ package com.themangoproject.ui.model.navigator;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.themangoproject.ui.Mango;
+import com.themangoproject.ui.UIController;
+import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 
 public class AllMoviesMutableTreeNode extends DefaultMutableTreeNode implements
 		MangoMutableTreeNode {
@@ -13,7 +15,7 @@ public class AllMoviesMutableTreeNode extends DefaultMutableTreeNode implements
 	
 	@Override
 	public void doYourThing(Mango mangoPanel) {
-		// TODO Auto-generated method stub
+		UIController.getInstance().setViewTableModel(new AllMoviesEditableTableModel());
 		System.out.println("All Movies");
 	}
 
