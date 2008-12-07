@@ -4,11 +4,9 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.MutableTreeNode;
-
-import com.themangoproject.ui.model.navigator.AddListMutableTreeNode;
+import com.themangoproject.ui.model.navigator.MangoMutableTreeNode;
 
 /**
- * 
  * @author Paul Osborne
  */
 public class NavigatorTreeSelectionListener implements TreeSelectionListener {
@@ -25,15 +23,8 @@ public class NavigatorTreeSelectionListener implements TreeSelectionListener {
 	@Override
 	public void valueChanged(TreeSelectionEvent tse) {
 		MutableTreeNode node = (MutableTreeNode) 
-			tree.getLastSelectedPathComponent();
-		
-		if (node instanceof AddListMutableTreeNode) {
-			// Show dialog to create a new set or list
-		    SetListDialog sld =
-		            new SetListDialog((Mango)tree.getTopLevelAncestor(), true);
-		    sld.setLocationRelativeTo((Mango)tree.getTopLevelAncestor());
-		    sld.setVisible(true);
-		}
+		tree.getLastSelectedPathComponent();
+		((MangoMutableTreeNode) node).doYourThing((Mango)tree.getTopLevelAncestor());
 	}
 
 }
