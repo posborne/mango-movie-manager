@@ -10,7 +10,10 @@ import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
 import com.themangoproject.ui.model.RoleComboBoxModel;
+import com.themangoproject.webservice.AmazonMovieDetails;
+import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -702,8 +705,35 @@ private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton5ActionPerformed
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-// TODO add your handling code here:
-    // Add code to request information from amazon
+    // Get information from amazon.
+    int proceed = JOptionPane.showConfirmDialog(this, 
+            "Amazon will try to populate certain fields to make your life " + 
+            "easier.  Any information maybe be altered.  Do you want to proceed?", 
+            "Confirm", JOptionPane.YES_NO_OPTION);
+    if (proceed == JOptionPane.YES_OPTION) {
+        AmazonMovieDetails amazon = new AmazonMovieDetails();
+        boolean valid = amazon.getMovieXMLDocument(this.jTextField3.getText());
+        if (valid) {
+            System.out.println("Title: " + amazon.getTitle());
+            System.out.println("Director: " + amazon.getDirector());
+            System.out.println("Rating: " + amazon.getRating());
+            System.out.println("Release Date: " + amazon.getReleaseDate());
+            System.out.println("Runtime: " + amazon.getRuntime());
+            if (amazon.getMovieImage() == null)
+                System.out.println("Image: Null");
+            else
+                System.out.println("Image: " + amazon.getMovieImage().toString());
+            System.out.println("Actors:");
+            List<String> actors = amazon.getActors();
+            for (int i = 0; i < actors.size(); i++) {
+                System.out.println("\tActor: " + actors.get(i));
+            }
+        } else {
+            System.out.println("Something failed in the request: calls to " + 
+                    "getters will\nreturn empty strings, movie image will " + 
+                    "return null.");
+        }
+    }
 }//GEN-LAST:event_jButton3ActionPerformed
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -816,6 +846,9 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 new RoleComboBoxModel(), false, true);
         this.jComboBox5.setModel(new PersonComboBoxModel());
         this.jComboBox6.setModel(new PersonComboBoxModel());
+        
+        //AmazonMovieDetails a = new AmazonMovieDetails("B0019CSXAM");
+        
     }
 
 }
