@@ -44,7 +44,7 @@ public class H2ActorDAOTest extends TestCase {
 	
 	@Test
 	public void testGetAllActors() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		ActorDAO dao = H2ActorDAO.getInstance();
 		String correctActors[] = { "Willis, Bruce", "Bedalia, Bonnie",
 				"Gleason, Paul", "Irons, Jeremy", "Jackson, Samuel L.",
@@ -58,7 +58,7 @@ public class H2ActorDAOTest extends TestCase {
 
 	@Test
 	public void testGetRolesForActor() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		DBActor bruce = new DBActor();
 		bruce.setId(1);
 		
@@ -87,7 +87,7 @@ public class H2ActorDAOTest extends TestCase {
 	@Test
 	public void testAddActor() {
 		// clear things out
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		ActorDAO dao = H2ActorDAO.getInstance();
 		dao.addActor("Phil", "McTest");
@@ -100,7 +100,7 @@ public class H2ActorDAOTest extends TestCase {
 	@Test
 	public void testPopulateActor() {
 		// Clear things out
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		// Bruce is known to have id 1
 		DBActor bruce = new DBActor();
@@ -115,7 +115,7 @@ public class H2ActorDAOTest extends TestCase {
 	@Test
 	public void testUpdateActor() {
 		// clear things out
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		ActorDAO dao = H2ActorDAO.getInstance();
 		
 		// We know that Bruce Willis is id 1
@@ -135,7 +135,7 @@ public class H2ActorDAOTest extends TestCase {
 	@Test
 	public void testDeleteActor() {
 		// clear things out
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		ActorDAO dao = H2ActorDAO.getInstance();
 		
 		// We know Bruce Willis is id 1
@@ -163,7 +163,7 @@ public class H2ActorDAOTest extends TestCase {
 
 	@Test
 	public void testGetMoviesForActor() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		ActorDAO dao = H2ActorDAO.getInstance();
 		
 		// Bruce is id 1

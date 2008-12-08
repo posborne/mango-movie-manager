@@ -1,10 +1,8 @@
 package com.themangoproject.db.h2;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,12 +15,12 @@ public class H2ListsDAOTest {
 		// Get everything primed and ready to roll
 		H2Util.getInstance().setDatabaseLocation("~/mangotesting.db");
 		H2Util.getInstance().initializeSchemaOnDb();
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 	}
 
 	@Test
 	public void testGetAllLists() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		List<String> lists = H2ListsDAO.getInstance().getAllLists();
 		assertTrue(lists.size() == 1);
@@ -31,7 +29,7 @@ public class H2ListsDAOTest {
 
 	@Test
 	public void testGetMoviesInList() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		List<Movie> marathonMovies = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
 		ArrayList<String> movieTitles = new ArrayList<String>();
@@ -44,7 +42,7 @@ public class H2ListsDAOTest {
 
 	@Test
 	public void testRemoveList() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		H2ListsDAO.getInstance().removeList("Action Marathon");
 		assertTrue(H2ListsDAO.getInstance().getAllLists().size() == 0);
@@ -52,7 +50,7 @@ public class H2ListsDAOTest {
 
 	@Test
 	public void testRemoveMovieFromList() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
@@ -60,14 +58,32 @@ public class H2ListsDAOTest {
 
 	@Test
 	public void testReorderMoviesInList() {
-		TestingSetupUtility.executeInserts();
-		fail("Not yet implemented"); // TODO
+		TestUtility.executeInserts();
+		
+		// get the movies and reorder them
+		List<Movie> movies = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
+		movies.add(movies.get(0));
+		movies.remove(0);
+		
+		H2ListsDAO.getInstance().reorderMoviesInList("Action Marathon", movies);
+		
+		List<Movie> moviesAgain = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
+		assertEquals("Die Hard: With a Vengeance", moviesAgain.get(0).getTitle());
+		assertEquals("Die Hard", moviesAgain.get(1).getTitle());
 	}
 
 	@Test
 	public void testAddMovieToList() {
-		TestingSetupUtility.executeInserts();
-		fail("Not yet implemented"); // TODO
+		TestUtility.executeInserts();
+		H2ListsDAO.getInstance().addMovieToList("Action Marathon", 
+			H2ListsDAO.getInstance().getMoviesInList("Action Marathon").get(0));
+		
+		List<Movie> movies = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
+		
+		assertEquals(3, movies.size());
+		assertEquals("Die Hard", movies.get(0).getTitle());
+		assertEquals("Die Hard: With a Vengeance", movies.get(2).getTitle());
+		assertEquals("Die Hard", movies.get(0).getTitle());
 	}
 
 }

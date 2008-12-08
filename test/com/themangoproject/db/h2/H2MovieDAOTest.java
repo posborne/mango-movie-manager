@@ -24,7 +24,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testGetAllMovies() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		List<Movie> movies = H2MovieDAO.getInstance().getAllMovies();
 		ArrayList<String> titles = new ArrayList<String>();
 		for (Movie m : movies) {
@@ -38,7 +38,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testUpdateMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
 		dieHard.getTitle();
@@ -54,7 +54,7 @@ public class H2MovieDAOTest extends TestCase {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testAddMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie newMovie = new DBMovie();
 		newMovie.setDirector("Ridley Scott");
@@ -80,7 +80,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testDeleteMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
@@ -102,7 +102,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testGetGenresForMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
@@ -115,7 +115,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testGetActorsForMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
@@ -139,7 +139,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testGetMovieInfo() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
@@ -163,7 +163,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testAddGenreToMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
@@ -175,7 +175,7 @@ public class H2MovieDAOTest extends TestCase {
 
 	@Test
 	public void testRemoveGenreFromMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 		
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);

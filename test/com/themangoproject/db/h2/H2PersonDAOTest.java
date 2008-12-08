@@ -35,7 +35,7 @@ public class H2PersonDAOTest extends TestCase {
 		// Get everything primed and ready to roll
 		H2Util.getInstance().setDatabaseLocation("~/mangotesting.db");
 		H2Util.getInstance().initializeSchemaOnDb();
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class H2PersonDAOTest extends TestCase {
 	 */
 	@Test
 	public void testAddPerson() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		DBPerson p = new DBPerson();
 		p.setName("Bob Billy McTest");
@@ -71,7 +71,7 @@ public class H2PersonDAOTest extends TestCase {
 	 */
 	@Test
 	public void testUpdatePerson() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		DBPerson p = new DBPerson();
 		p.setId(1); // Paul is person 1
@@ -92,7 +92,7 @@ public class H2PersonDAOTest extends TestCase {
 
 	@Test
 	public void testBorrowMovie() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		// setup people and movie
 		DBPerson kyle = new DBPerson();
@@ -109,7 +109,7 @@ public class H2PersonDAOTest extends TestCase {
 
 	@Test
 	public void testGetAllPersons() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		List<Person> people = H2PersonDAO.getInstance().getAllPersons();
 		String[] names = { "Paul Osborne", "Zachary Varberg", "Kyle Ronning" };
@@ -121,7 +121,7 @@ public class H2PersonDAOTest extends TestCase {
 
 	@Test
 	public void testGetBorrowedMovies() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		DBPerson zach = new DBPerson();
 		zach.setId(2);
@@ -133,7 +133,7 @@ public class H2PersonDAOTest extends TestCase {
 
 	@Test
 	public void testGetOwnedMovies() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		DBPerson paul = new DBPerson();
 		paul.setId(1);
@@ -156,7 +156,7 @@ public class H2PersonDAOTest extends TestCase {
 
 	@Test
 	public void testPopulatePerson() {
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		// Paul is id 1
 		DBPerson paul = new DBPerson();
@@ -178,7 +178,7 @@ public class H2PersonDAOTest extends TestCase {
 	public void testReturnMovie() {
 		// TODO: things still need to be sorted out with how borrower
 		// ids are handles here and there.
-		TestingSetupUtility.executeInserts();
+		TestUtility.executeInserts();
 
 		DBMovie dieHard = new DBMovie();
 		dieHard.setId(1);
