@@ -6,11 +6,12 @@ import javax.swing.DefaultComboBoxModel;
 /**
  * AttributesComboBoxModel is a DefaultComboBoxModel for the ComboBox in a
  * SavedSearchDialog.  The model displays all attributes that are searchable.
- * @author kronning
+ * 
+ * @author Kyle Ronning
  */
 public class AttributesComboBoxModel extends DefaultComboBoxModel {
-    
-    /** List of attributes */
+	private static final long serialVersionUID = -5574393541155232995L;
+	/** List of attributes */
     private String[] attributes = 
         {"Character", "Condition", "Director", "Genre", "Mango Rating", 
          "Purchase Date", "Rating", "Role", "Runtime", "Title", "Type", "Year"};

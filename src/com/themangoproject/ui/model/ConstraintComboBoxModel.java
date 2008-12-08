@@ -10,8 +10,8 @@ import javax.swing.DefaultComboBoxModel;
  * @author Kyle Ronning
  */
 public class ConstraintComboBoxModel extends DefaultComboBoxModel {
-    
-    /** List of constraints */
+	private static final long serialVersionUID = -7327178317367492600L;
+	/** List of constraints */
     private String[] constraints = {"Contains", "Does Not Contain", "is", "Is Not",
                 "Is Less Than", "Is Greater Than"};
 

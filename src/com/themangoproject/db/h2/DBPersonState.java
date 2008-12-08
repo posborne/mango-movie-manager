@@ -1,15 +1,7 @@
-/**
- * 
- */
 package com.themangoproject.db.h2;
-
-import java.util.List;
-
-import com.themangoproject.model.Movie;
 
 /**
  * @author Zachary Varberg
- *
  */
 public interface DBPersonState {
 

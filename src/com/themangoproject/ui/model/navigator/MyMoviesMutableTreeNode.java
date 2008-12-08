@@ -6,6 +6,7 @@ import com.themangoproject.ui.Mango;
 
 public class MyMoviesMutableTreeNode extends DefaultMutableTreeNode implements
 		MangoMutableTreeNode {
+	private static final long serialVersionUID = 7060486692062839309L;
 
 	public MyMoviesMutableTreeNode() {
 		super("My Movies");

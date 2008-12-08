@@ -1,13 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.themangoproject.ui.model.navigator;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.Mango;
-
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -22,13 +16,18 @@ public class SetsMutableTreeNode extends DefaultMutableTreeNode
     
     public SetsMutableTreeNode() {
         super("Sets", true);
+        fetchSets();
+    }
+
+    private void fetchSets() {
         sets = MangoController.getInstance().getAllSets();
+        this.removeAllChildren();
         for (String set : sets) {
             this.add(new SetMutableTreeNode(set));
         }
         this.add(new AddSetMutableTreeNode());
     }
-
+    
 	@Override
 	public void doYourThing(Mango mangoPanel) {
 		// TODO: I guess this doesn't need to do anything

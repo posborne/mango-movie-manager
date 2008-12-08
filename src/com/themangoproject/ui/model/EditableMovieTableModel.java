@@ -62,7 +62,7 @@ public abstract class EditableMovieTableModel extends AbstractTableModel{
     	return !(columnIndex == 1);
     }
     
-    public Class getColumnClass(int columnIndex) {
+    public Class<? extends Object> getColumnClass(int columnIndex) {
     	return getValueAt(0, columnIndex).getClass();
     }
     

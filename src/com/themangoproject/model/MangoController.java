@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 /**
  * This is the controller. A class that has a number of methods useful for all
  * sorts of classes to have access too.
@@ -137,25 +139,58 @@ public class MangoController {
 	public List<Movie> executeMovieQuery(String query) throws SQLException {
 		return null; // TODO: implement
 	}
-        
-    /**
-     * Return a list containing the labels of all sets in the database.
-     */
-    public List<String> getAllSets() {
-    	return setsDAO.getAllSets();
-    }
-    
-    /**
-     * Return a list containing the labels of all lists in the databse.
-     */
-    public List<String> getAllLists() {
-    	return listsDAO.getAllLists();
-    }
 
+	/**
+	 * Return a list containing the labels of all sets in the database.
+	 */
+	public List<String> getAllSets() {
+		return setsDAO.getAllSets();
+	}
+
+	/**
+	 * Return a list containing the labels of all lists in the databse.
+	 */
+	public List<String> getAllLists() {
+		return listsDAO.getAllLists();
+	}
+
+	/**
+	 * Add a ChangeListener that should be notified when certain things occur.
+	 * 
+	 * @param l
+	 *            The change listener that should be added.
+	 */
+	public void addListsChangeListener(ChangeListener l) {
+		listsDAO.addListsChangeListener(l);
+	}
+
+	/**
+	 * Remove the specified lists change listener.
+	 * 
+	 * @param l
+	 */
+	public void removeListsChangeListener(ChangeListener l) {
+		listsDAO.removeListsChangeListener(l);
+	}
+
+	/**
+	 * Retrieve a list of the list with the specified label.
+	 * 
+	 * @param label
+	 *            The label of the list we are interested in.
+	 * @return a list of all the movies in the list with the specified label.
+	 */
 	public List<Movie> getListWithLabel(String label) {
 		return listsDAO.getMoviesInList(label);
 	}
 
+	/**
+	 * Retrieve a list of the movies in the set with the specified label.
+	 * 
+	 * @param label
+	 *            The label of the set we are interested in.
+	 * @return a list of movies in the set.
+	 */
 	public List<Movie> getSetWithLabel(String label) {
 		return setsDAO.getMoviesInSet(label);
 	}

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 import com.themangoproject.model.ListsDAO;
 import com.themangoproject.model.Movie;
 
@@ -17,59 +19,60 @@ public class H2ListsDAO implements ListsDAO {
 
 	private static H2ListsDAO instance;
 	private Connection conn;
-	
+
 	private PreparedStatement allListsPS;
-	private static final String allListsSQL =
-		"SELECT DISTINCT label FROM lists ORDER BY label";
-	
+	private static final String allListsSQL = "SELECT DISTINCT label FROM lists ORDER BY label";
+
 	private PreparedStatement getMoviesInListPS;
-	private static final String getMoviesInListSQL =
-		"SELECT movie_id, order_id " +
-		"FROM lists " +
-		"WHERE label=? " +
-		"ORDER BY order_id ASC";
-	
+	private static final String getMoviesInListSQL = "SELECT movie_id, order_id "
+			+ "FROM lists " + "WHERE label=? " + "ORDER BY order_id ASC";
+
 	private PreparedStatement removeMovieFromListPS;
-	private static final String removeMovieFromListSQL = 
-		"DELETE FROM lists WHERE label=? AND movie_id=?";
-	
+	private static final String removeMovieFromListSQL = "DELETE FROM lists WHERE label=? AND movie_id=?";
+
 	private PreparedStatement renameListPS;
-	private static final String renameListSQL =
-		"UPDATE lists SET label=? WHERE label=?";
-	
+	private static final String renameListSQL = "UPDATE lists SET label=? WHERE label=?";
+
 	private PreparedStatement removeListPS;
-	private static final String removeListSQL =
-		"DELETE FROM lists WHERE label=?";
-	
+	private static final String removeListSQL = "DELETE FROM lists WHERE label=?";
+
 	private PreparedStatement setItemOrderPS;
-	private static final String setItemOrderSQL =
-		"UPDATE lists SET order_id=? WHERE label=? AND order_id=?";
-	
+	private static final String setItemOrderSQL = "UPDATE lists SET order_id=? WHERE label=? AND order_id=?";
+
 	private PreparedStatement addMovieToListPS;
-	private static final String addMovieToListSQL = 
-		"INSERT INTO lists (label, movie_id, order_id) " +
-			"VALUES(?, ?, ?)";
-	
+	private static final String addMovieToListSQL = "INSERT INTO lists (label, movie_id, order_id) "
+			+ "VALUES(?, ?, ?)";
+
 	private PreparedStatement highestOrderInListPS;
-	private static final String hightestOrderInListSQL =
-		"SELECT MAX(order_id) FROM lists WHERE label=?";
-	
+	private static final String hightestOrderInListSQL = "SELECT MAX(order_id) FROM lists WHERE label=?";
+
+	/**
+	 * Private constructor for the singleton instance.
+	 */
 	private H2ListsDAO() {
 		conn = H2Util.getInstance().getConnection();
+		listsChangeListeners = new ArrayList<ChangeListener>();
 		try {
 			allListsPS = conn.prepareStatement(allListsSQL);
 			getMoviesInListPS = conn.prepareStatement(getMoviesInListSQL);
-			removeMovieFromListPS = conn.prepareStatement(removeMovieFromListSQL);
+			removeMovieFromListPS = conn
+					.prepareStatement(removeMovieFromListSQL);
 			renameListPS = conn.prepareStatement(renameListSQL);
 			removeListPS = conn.prepareStatement(removeListSQL);
 			setItemOrderPS = conn.prepareStatement(setItemOrderSQL);
 			addMovieToListPS = conn.prepareStatement(addMovieToListSQL);
-			highestOrderInListPS = conn.prepareStatement(hightestOrderInListSQL);
+			highestOrderInListPS = conn
+					.prepareStatement(hightestOrderInListSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Get the static singleton instance.
+	 * 
+	 * @return the singleton H2ListsDAO.
+	 */
 	public static H2ListsDAO getInstance() {
 		if (instance == null) {
 			instance = new H2ListsDAO();
@@ -78,7 +81,9 @@ public class H2ListsDAO implements ListsDAO {
 	}
 
 	/**
+	 * Retrieve a list of all the lists in the database.
 	 * 
+	 * @return a list of all the lists in the database.
 	 */
 	@Override
 	public List<String> getAllLists() {
@@ -94,6 +99,13 @@ public class H2ListsDAO implements ListsDAO {
 		return labels;
 	}
 
+	/**
+	 * Retrieve the list of movies in the list with the specified label.
+	 * 
+	 * @param label
+	 *            The label of the list we are interested in.
+	 * @return the list of all movies in the list with the specified label.
+	 */
 	@Override
 	public List<Movie> getMoviesInList(String label) {
 		ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -112,6 +124,12 @@ public class H2ListsDAO implements ListsDAO {
 		return movies;
 	}
 
+	/**
+	 * Remove the movie from the list with the specified label.
+	 * 
+	 * @param label
+	 *            Remove the list with the specified label from the database.
+	 */
 	@Override
 	public void removeList(String label) {
 		try {
@@ -120,19 +138,37 @@ public class H2ListsDAO implements ListsDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		notifyListsChanged();
 	}
 
+	/**
+	 * Remove the movie from the specified list that
+	 * 
+	 * @param label
+	 *            The label of the movie that should be removed.
+	 * @param m
+	 *            The movie that should be removed.
+	 */
 	@Override
-	public void removeMovieFromList(String label, int inOrderPosition) {
+	public void removeMovieFromList(String label, Movie m) {
 		try {
 			removeMovieFromListPS.setString(1, label);
-			removeMovieFromListPS.setInt(2, inOrderPosition);
+			removeMovieFromListPS.setInt(2, ((DBListMovie) m).getOrderId());
 			removeMovieFromListPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 	}
 
+	/**
+	 * Reorder the movies in the list in the database to match the order of the
+	 * movies in the list passed in.
+	 * 
+	 * @param label
+	 *            The label of the list that should be reordered.
+	 * @param moviesInOrder
+	 *            The new order for the movies.
+	 */
 	@Override
 	public void reorderMoviesInList(String label, List<Movie> moviesInOrder) {
 		try {
@@ -143,7 +179,7 @@ public class H2ListsDAO implements ListsDAO {
 				DBListMovie m = (DBListMovie) moviesInOrder.get(i);
 				setItemOrderPS.setInt(1, highest + i + 1);
 				setItemOrderPS.setString(2, label);
-				setItemOrderPS.setInt(3, m.getOrderId()); 
+				setItemOrderPS.setInt(3, m.getOrderId());
 				setItemOrderPS.executeUpdate();
 			}
 			conn.commit();
@@ -152,13 +188,21 @@ public class H2ListsDAO implements ListsDAO {
 			ex.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Add the specified movie to the list with the specified label.
+	 * 
+	 * @param label
+	 *            The label of the list the movie should be added to.
+	 * @param m
+	 *            The movie that should be added to the list.
+	 */
 	public void addMovieToList(String label, Movie m) {
 		if (!(m instanceof DBMovie)) {
 			throw new ClassCastException();
 		}
 		DBMovie movie = (DBMovie) m;
-		
+		boolean newList = (getHighestOrderInList(label) == 0);
 		try {
 			addMovieToListPS.setString(1, label);
 			addMovieToListPS.setInt(2, movie.getId());
@@ -167,8 +211,18 @@ public class H2ListsDAO implements ListsDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		if (newList) {
+			notifyListsChanged();
+		}
 	}
-	
+
+	/**
+	 * Get the highest order element in the list.
+	 * 
+	 * @param label
+	 *            The label of the list we are interested in.
+	 * @return the highest order id for the list.
+	 */
 	private int getHighestOrderInList(String label) {
 		int highest = 0;
 		try {
@@ -184,5 +238,39 @@ public class H2ListsDAO implements ListsDAO {
 		}
 		return highest;
 	}
-	
+
+	private ArrayList<ChangeListener> listsChangeListeners;
+
+	/**
+	 * Add the specified change listener to the list that will be notified when
+	 * a change to this list of sets occurs.
+	 * 
+	 * @param l
+	 *            The change listener to add.
+	 */
+	@Override
+	public void addListsChangeListener(ChangeListener l) {
+		listsChangeListeners.add(l);
+	}
+
+	/**
+	 * Remove the specified listener from the list of listeners.
+	 * 
+	 * @param l
+	 *            The listener to remove
+	 */
+	@Override
+	public void removeListsChangeListener(ChangeListener l) {
+		listsChangeListeners.remove(l);
+	}
+
+	/**
+	 * Notify all the list listeners that the set of lists have changed.
+	 */
+	private void notifyListsChanged() {
+		for (ChangeListener l : listsChangeListeners) {
+			l.stateChanged(null); // what object should be passed?
+		}
+	}
+
 }

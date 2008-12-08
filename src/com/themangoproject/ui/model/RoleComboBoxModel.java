@@ -8,12 +8,13 @@ import javax.swing.DefaultComboBoxModel;
  * @author Kyle Ronning
  */
 public class RoleComboBoxModel extends DefaultComboBoxModel {
-    /** List of constraints */
+	private static final long serialVersionUID = 6997281484522311569L;
+	/** List of constraints */
     private String[] roles = {"Lead Actor", "Lead Actress", 
         "Supporting Actor", "Supporting Actress", "Cameo"};
 
     /**
-     * Instatiate an instance of a RoleComboBoxModel.
+     * Instantiate an instance of a RoleComboBoxModel.
      */
     public RoleComboBoxModel() {
 
