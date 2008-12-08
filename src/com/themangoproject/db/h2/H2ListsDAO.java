@@ -92,7 +92,7 @@ public class H2ListsDAO implements ListsDAO {
 	}
 
 	@Override
-	public List<Movie> getMoviesInSet(String label) {
+	public List<Movie> getMoviesInList(String label) {
 		ArrayList<Movie> movies = new ArrayList<Movie>();
 		try {
 			getMoviesInListPS.setString(1, label);

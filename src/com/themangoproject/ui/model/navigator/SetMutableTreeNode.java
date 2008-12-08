@@ -3,6 +3,8 @@ package com.themangoproject.ui.model.navigator;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.themangoproject.ui.Mango;
+import com.themangoproject.ui.UIController;
+import com.themangoproject.ui.model.SetEditableMovieTableModel;
 
 /**
  * @author Paul Osborne
@@ -20,8 +22,7 @@ public class SetMutableTreeNode extends DefaultMutableTreeNode implements
 	
 	@Override
 	public void doYourThing(Mango mangoPanel) {
-		// TODO update the table to display the list.
-		System.out.println("Displaying set: " + setLabel);
+		UIController.getInstance().setViewTableModel(new SetEditableMovieTableModel(setLabel));
 	}
 
 }

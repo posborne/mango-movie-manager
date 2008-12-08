@@ -152,4 +152,12 @@ public class MangoController {
     	return listsDAO.getAllLists();
     }
 
+	public List<Movie> getListWithLabel(String label) {
+		return listsDAO.getMoviesInList(label);
+	}
+
+	public List<Movie> getSetWithLabel(String label) {
+		return setsDAO.getMoviesInSet(label);
+	}
+
 }

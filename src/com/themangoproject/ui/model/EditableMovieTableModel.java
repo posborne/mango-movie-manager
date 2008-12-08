@@ -11,6 +11,7 @@ import com.themangoproject.model.Movie;
  */
 public abstract class EditableMovieTableModel extends AbstractTableModel{
 
+	private static final long serialVersionUID = -7581259670968084268L;
 	private final String columns[] = {
 			"#",
 			"Title",
@@ -30,12 +31,16 @@ public abstract class EditableMovieTableModel extends AbstractTableModel{
     public int getColumnCount() {
         return columns.length;
     }
+    
+    public String getColumnName(int columnIndex) {
+    	return columns[columnIndex];
+    }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         Movie m = getMovies().get(rowIndex);
     	switch (columnIndex) {
         case 0:
-        	return columnIndex + 1;
+        	return rowIndex + 1;
         case 1:
         	return m.getTitle();
         case 2:
@@ -51,6 +56,40 @@ public abstract class EditableMovieTableModel extends AbstractTableModel{
         default:
         	return "???";
         }
+    }
+    
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+    	return !(columnIndex == 1);
+    }
+    
+    public Class getColumnClass(int columnIndex) {
+    	return getValueAt(0, columnIndex).getClass();
+    }
+    
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
+    	Movie m = getMovies().get(rowIndex);
+    	switch (columnIndex) {
+    	case 1:
+    		m.setTitle((String)value);
+    		break;
+    	case 2:
+    		m.setDirector((String)value);
+    		break;
+    	case 3:
+    		m.setRating((String) value);
+    		break;
+    	case 4:
+    		m.setYear((Integer) value);
+    		break;
+    	case 5:
+    		m.setMangoRating((Integer) value);
+    		break;
+    	case 6:
+    		m.setType((String) value);
+    		break;
+    	default:
+    		break; // Can't be edited
+    	}
     }
 
 }
