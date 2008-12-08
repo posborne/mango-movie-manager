@@ -223,20 +223,21 @@
                 <Component class="javax.swing.JComboBox" name="jComboBox2">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="13">
+                      <StringArray count="14">
                         <StringItem index="0" value="G"/>
                         <StringItem index="1" value="PG"/>
                         <StringItem index="2" value="PG-13"/>
                         <StringItem index="3" value="NC-17"/>
                         <StringItem index="4" value="R"/>
                         <StringItem index="5" value="NR"/>
-                        <StringItem index="6" value="RP"/>
-                        <StringItem index="7" value="TV-Y7"/>
-                        <StringItem index="8" value="TV-Y7FV"/>
-                        <StringItem index="9" value="TV-G"/>
-                        <StringItem index="10" value="TV-PG"/>
-                        <StringItem index="11" value="TV-14"/>
-                        <StringItem index="12" value="TV-MA"/>
+                        <StringItem index="6" value="Unrated"/>
+                        <StringItem index="7" value="RP"/>
+                        <StringItem index="8" value="TV-Y7"/>
+                        <StringItem index="9" value="TV-Y7FV"/>
+                        <StringItem index="10" value="TV-G"/>
+                        <StringItem index="11" value="TV-PG"/>
+                        <StringItem index="12" value="TV-14"/>
+                        <StringItem index="13" value="TV-MA"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -612,6 +613,7 @@
                         <StringItem index="3" value="Item 4"/>
                       </StringArray>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBox1">
@@ -619,6 +621,7 @@
                     <Property name="text" type="java.lang.String" value="Borrowed"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox1ItemStateChanged"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
                   </Events>
                 </Component>

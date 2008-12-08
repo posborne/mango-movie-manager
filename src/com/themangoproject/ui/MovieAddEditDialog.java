@@ -11,7 +11,9 @@ import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
 import com.themangoproject.ui.model.RoleComboBoxModel;
 import com.themangoproject.webservice.AmazonMovieDetails;
+import java.awt.event.ItemEvent;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -122,7 +124,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Run Time");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "PG", "PG-13", "NC-17", "R", "NR", "RP", "TV-Y7", "TV-Y7FV", "TV-G", "TV-PG", "TV-14", "TV-MA" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "PG", "PG-13", "NC-17", "R", "NR", "Unrated", "RP", "TV-Y7", "TV-Y7FV", "TV-G", "TV-PG", "TV-14", "TV-MA" }));
 
         jLabel6.setText("minutes");
 
@@ -346,8 +348,14 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox6.setEnabled(false);
 
         jCheckBox1.setText("Borrowed");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
@@ -714,24 +722,23 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         AmazonMovieDetails amazon = new AmazonMovieDetails();
         boolean valid = amazon.getMovieXMLDocument(this.jTextField3.getText());
         if (valid) {
-            System.out.println("Title: " + amazon.getTitle());
-            System.out.println("Director: " + amazon.getDirector());
-            System.out.println("Rating: " + amazon.getRating());
-            System.out.println("Release Date: " + amazon.getReleaseDate());
-            System.out.println("Runtime: " + amazon.getRuntime());
-            if (amazon.getMovieImage() == null)
-                System.out.println("Image: Null");
-            else
-                System.out.println("Image: " + amazon.getMovieImage().toString());
-            System.out.println("Actors:");
-            List<String> actors = amazon.getActors();
-            for (int i = 0; i < actors.size(); i++) {
-                System.out.println("\tActor: " + actors.get(i));
-            }
+            this.jTextField1.setText(amazon.getTitle());
+            this.jTextField2.setText(amazon.getDirector());
+            this.jTextField10.setText(amazon.getReleaseDate());
+            this.jComboBox2.setSelectedItem(amazon.getRating());
+            this.jSpinner1.setValue(Integer.parseInt(amazon.getRuntime()));
+            this.jLabel15.setIcon(amazon.getMovieImage());
+            // actors
+//            System.out.println("Actors:");
+//            List<String> actors = amazon.getActors();
+//            for (int i = 0; i < actors.size(); i++) {
+//                System.out.println("\tActor: " + actors.get(i));
+//            }
         } else {
-            System.out.println("Something failed in the request: calls to " + 
-                    "getters will\nreturn empty strings, movie image will " + 
-                    "return null.");
+            JOptionPane.showMessageDialog(this, 
+                "Amazon was unable to gather requested information.\n" + 
+                "Check your ASIN number and your Internet connection", 
+                "Could not gather information", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }//GEN-LAST:event_jButton3ActionPerformed
@@ -751,8 +758,27 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton6ActionPerformed
 
 private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-// TODO add your handling code here:
+    // Reset Thumbnail to default image Default Image
+    int proceed = JOptionPane.showConfirmDialog(this, 
+        "Are you sure you want to reset the thumbnail image to the default" +
+        "image?", "Reset Thumbnail to Default", JOptionPane.YES_NO_OPTION);
+    if (proceed == JOptionPane.YES_OPTION) {
+        this.jLabel15.setIcon(new ImageIcon(getClass().
+            getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
+    }
 }//GEN-LAST:event_jButton8ActionPerformed
+
+private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+    // Borrowed check box
+    Object source = evt.getItemSelectable();
+    int state = evt.getStateChange();
+    if (source == this.jCheckBox1) {
+        if (state == ItemEvent.SELECTED)
+            this.jComboBox6.setEnabled(true);
+        else
+            this.jComboBox6.setEnabled(false);
+    }
+}//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     /**
     * @param args the command line arguments
