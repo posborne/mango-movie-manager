@@ -76,7 +76,7 @@ public class H2ActorDAOTest extends TestCase {
 				"movie: 1, role: Lead Character, character: Officer John McClane",
 				"movie: 2, role: Lead Character, character: John McClane",
 		};
-		
+		System.out.println(resultantRolesText);
 		for (int i = 0; i < rolesTextList.length; i++) {
 			assertTrue(resultantRolesText.contains(rolesTextList[i]));
 		}
@@ -88,13 +88,9 @@ public class H2ActorDAOTest extends TestCase {
 	public void testAddActor() {
 		// clear things out
 		TestingSetupUtility.executeInserts();
-		ActorDAO dao = H2ActorDAO.getInstance();
 		
-		// create test actor
-		Actor testActor = new DBActor();
-		testActor.setFirstName("Phil");
-		testActor.setLastName("McTest");
-		dao.addActor(null, null);
+		ActorDAO dao = H2ActorDAO.getInstance();
+		dao.addActor("Phil", "McTest");
 		
 		// Is it in there?
 		List<String> actorNames = getActorListString(dao.getAllActors());
@@ -133,7 +129,6 @@ public class H2ActorDAOTest extends TestCase {
 		dao.updateActor(bruce);
 		
 		List<String> actorNames = getActorListString(dao.getAllActors());
-		System.out.println(actorNames);
 		assertTrue(actorNames.contains("Not Willis, Not Bruce"));
 	}
 
