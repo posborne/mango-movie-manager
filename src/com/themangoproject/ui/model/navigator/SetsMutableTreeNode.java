@@ -23,7 +23,6 @@ public class SetsMutableTreeNode extends DefaultMutableTreeNode
     public SetsMutableTreeNode() {
         super("Sets", true);
         sets = MangoController.getInstance().getAllSets();
-        sets.add("fillerSet");
         for (String set : sets) {
             this.add(new SetMutableTreeNode(set));
         }

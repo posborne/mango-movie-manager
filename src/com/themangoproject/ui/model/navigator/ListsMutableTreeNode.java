@@ -22,7 +22,7 @@ public class ListsMutableTreeNode extends DefaultMutableTreeNode
     
     public ListsMutableTreeNode() {
         super("Lists", true);
-        lists = MangoController.getInstance().getAllSets();
+        lists = MangoController.getInstance().getAllLists();
         for (String list : lists) {
             this.add(new ListMutableTreeNode(list));
         }

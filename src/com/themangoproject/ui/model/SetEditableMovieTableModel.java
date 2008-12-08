@@ -15,8 +15,7 @@ public class SetEditableMovieTableModel extends EditableMovieTableModel {
 	
 	@Override
 	public List<Movie> getMovies() {
-		// TODO Auto-generated method stub
-		return null;
+		return movies;
 	}
 
 }
