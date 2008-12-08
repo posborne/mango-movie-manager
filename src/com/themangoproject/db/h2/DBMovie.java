@@ -29,7 +29,6 @@ public class DBMovie implements Movie {
 	// private MangoController controller;
 	private MovieDAO movieDAO;
 	private DBMovieState state;
-	private int orderId = -1; // used by lists
 
 	public DBMovie() {
 		// controller = MangoController.getInstance();
@@ -56,24 +55,6 @@ public class DBMovie implements Movie {
 	 */
 	public int getId() {
 		return state.getId();
-	}
-
-	/**
-	 * Set the order id for the movie.
-	 * 
-	 * @param orderId
-	 *            The order in the list the movie is a part of.
-	 */
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-
-	/**
-	 * @return The order id for the movie (if created by in the list DAO) or -1
-	 *         if it has no order id.
-	 */
-	public int getOrderId() {
-		return orderId;
 	}
 
 	/**

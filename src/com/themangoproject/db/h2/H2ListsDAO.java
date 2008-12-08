@@ -20,7 +20,7 @@ public class H2ListsDAO implements ListsDAO {
 	
 	private PreparedStatement allListsPS;
 	private static final String allListsSQL =
-		"SELECT label FROM lists ORDER BY label";
+		"SELECT DISTINCT label FROM lists ORDER BY label";
 	
 	private PreparedStatement getMoviesInListPS;
 	private static final String getMoviesInListSQL =
@@ -77,6 +77,9 @@ public class H2ListsDAO implements ListsDAO {
 		return instance;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public List<String> getAllLists() {
 		ArrayList<String> labels = new ArrayList<String>();
