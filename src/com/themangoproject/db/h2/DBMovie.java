@@ -29,6 +29,7 @@ public class DBMovie implements Movie {
 	// private MangoController controller;
 	private MovieDAO movieDAO;
 	private DBMovieState state;
+	private int orderId = -1; // used by lists
 
 	public DBMovie() {
 		// controller = MangoController.getInstance();
@@ -55,6 +56,24 @@ public class DBMovie implements Movie {
 	 */
 	public int getId() {
 		return state.getId();
+	}
+
+	/**
+	 * Set the order id for the movie.
+	 * 
+	 * @param orderId
+	 *            The order in the list the movie is a part of.
+	 */
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	/**
+	 * @return The order id for the movie (if created by in the list DAO) or -1
+	 *         if it has no order id.
+	 */
+	public int getOrderId() {
+		return orderId;
 	}
 
 	/**
@@ -312,10 +331,10 @@ public class DBMovie implements Movie {
 	 *            the owner of this movie
 	 */
 	public void setOwner(Person owner) {
-	    if(owner == null)
-	        this.ownerId = -1;
-	    else
-	        this.ownerId = ((DBPerson) owner).getId();
+		if (owner == null)
+			this.ownerId = -1;
+		else
+			this.ownerId = ((DBPerson) owner).getId();
 	}
 
 	/**
@@ -335,10 +354,10 @@ public class DBMovie implements Movie {
 	 *            the borrower of the movie
 	 */
 	public void setBorrower(Person borrower) {
-	    if(borrower == null)
-	        this.borrowerId = -1;
-	    else
-	        this.borrowerId = ((DBPerson) borrower).getId();
+		if (borrower == null)
+			this.borrowerId = -1;
+		else
+			this.borrowerId = ((DBPerson) borrower).getId();
 	}
 
 	/**
@@ -520,10 +539,10 @@ public class DBMovie implements Movie {
 			DBPerson owner = new DBPerson();
 			owner.setId(DBMovie.this.ownerId);
 			try {
-                H2PersonDAO.getInstance().populatePerson(owner);
-            } catch (PersonNotFoundException e){
-                return null;
-            }
+				H2PersonDAO.getInstance().populatePerson(owner);
+			} catch (PersonNotFoundException e) {
+				return null;
+			}
 			return owner;
 		}
 
@@ -535,14 +554,14 @@ public class DBMovie implements Movie {
 		 */
 		// TODO: is that statement in the return correct?
 		public Person getBorrower() {
-		    DBPerson borrower = new DBPerson();
-		    borrower.setId(DBMovie.this.borrowerId);
-		    try {
-		        H2PersonDAO.getInstance().populatePerson(borrower);
-		    } catch (PersonNotFoundException e){
-		        return null;
-		    }
-		    return borrower;
+			DBPerson borrower = new DBPerson();
+			borrower.setId(DBMovie.this.borrowerId);
+			try {
+				H2PersonDAO.getInstance().populatePerson(borrower);
+			} catch (PersonNotFoundException e) {
+				return null;
+			}
+			return borrower;
 		}
 
 		/**
@@ -583,8 +602,8 @@ public class DBMovie implements Movie {
 		 * @return the DB ID of this movie
 		 */
 		public int getId() {
-//			DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
-//			DBMovie.this.state = new UpdatedMovieState();
+			// DBMovie.this.movieDAO.getMovieInfo(DBMovie.this);
+			// DBMovie.this.state = new UpdatedMovieState();
 			// TODO: the above creates StackOverflowErrors... this
 			// temporarily solves the problem
 			return DBMovie.this.id;
