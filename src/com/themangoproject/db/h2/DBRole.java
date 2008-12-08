@@ -14,7 +14,7 @@ import com.themangoproject.model.*;
  */
 public class DBRole implements Role {
 
-    private int id, movieID = -1, actorID = -1;
+    private int id = -1, movieID = -1, actorID = -1;
     private String character, role;
     private DBRoleState state;
     private ActorDAO actorDAO; 
