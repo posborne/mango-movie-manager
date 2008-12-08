@@ -32,12 +32,8 @@ public class H2ListsDAOTest {
 		TestUtility.executeInserts();
 		
 		List<Movie> marathonMovies = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
-		ArrayList<String> movieTitles = new ArrayList<String>();
-		for (Movie m : marathonMovies) {
-			movieTitles.add(m.getTitle());
-		}
-		assertTrue(movieTitles.contains("Die Hard"));
-		assertTrue(movieTitles.contains("Die Hard: With a Vengeance"));
+		assertEquals("Die Hard", marathonMovies.get(0).getTitle());
+		assertEquals("Die Hard: With a Vengeance", marathonMovies.get(1).getTitle());
 	}
 
 	@Test
@@ -62,10 +58,11 @@ public class H2ListsDAOTest {
 		
 		// get the movies and reorder them
 		List<Movie> movies = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
-		movies.add(movies.get(0));
-		movies.remove(0);
+		ArrayList<Movie> newMoviesList = new ArrayList<Movie>();
+		newMoviesList.add(movies.get(1));
+		newMoviesList.add(movies.get(0));
 		
-		H2ListsDAO.getInstance().reorderMoviesInList("Action Marathon", movies);
+		H2ListsDAO.getInstance().reorderMoviesInList("Action Marathon", newMoviesList);
 		
 		List<Movie> moviesAgain = H2ListsDAO.getInstance().getMoviesInList("Action Marathon");
 		assertEquals("Die Hard: With a Vengeance", moviesAgain.get(0).getTitle());
@@ -82,8 +79,8 @@ public class H2ListsDAOTest {
 		
 		assertEquals(3, movies.size());
 		assertEquals("Die Hard", movies.get(0).getTitle());
-		assertEquals("Die Hard: With a Vengeance", movies.get(2).getTitle());
-		assertEquals("Die Hard", movies.get(0).getTitle());
+		assertEquals("Die Hard: With a Vengeance", movies.get(1).getTitle());
+		assertEquals("Die Hard", movies.get(2).getTitle());
 	}
 
 }

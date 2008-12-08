@@ -27,7 +27,7 @@ public class H2ListsDAO implements ListsDAO {
 		"SELECT movie_id, order_id " +
 		"FROM lists " +
 		"WHERE label=? " +
-		"ORDER BY order_id";
+		"ORDER BY order_id ASC";
 	
 	private PreparedStatement removeMovieFromListPS;
 	private static final String removeMovieFromListSQL = 
@@ -101,8 +101,9 @@ public class H2ListsDAO implements ListsDAO {
 			getMoviesInListPS.setString(1, label);
 			ResultSet rs = getMoviesInListPS.executeQuery();
 			while (rs.next()) {
-				DBMovie m = new DBMovie();
+				DBListMovie m = new DBListMovie();
 				m.setId(rs.getInt("movie_id"));
+				m.setOrderId(rs.getInt("order_id"));
 				movies.add(m);
 			}
 		} catch (SQLException ex) {
@@ -137,13 +138,12 @@ public class H2ListsDAO implements ListsDAO {
 		try {
 			// all these need to be done as a single transaction
 			conn.setAutoCommit(false);
+			int highest = getHighestOrderInList(label);
 			for (int i = 0; i < moviesInOrder.size(); i++) {
-				DBMovie m = (DBMovie) moviesInOrder.get(i);
-				setItemOrderPS.setInt(1, i + 1);
+				DBListMovie m = (DBListMovie) moviesInOrder.get(i);
+				setItemOrderPS.setInt(1, highest + i + 1);
 				setItemOrderPS.setString(2, label);
-				// TODO: how do we get the old order?
-				// what is here is only temporary...
-				setItemOrderPS.setInt(3, i + 1); 
+				setItemOrderPS.setInt(3, m.getOrderId()); 
 				setItemOrderPS.executeUpdate();
 			}
 			conn.commit();
@@ -163,6 +163,7 @@ public class H2ListsDAO implements ListsDAO {
 			addMovieToListPS.setString(1, label);
 			addMovieToListPS.setInt(2, movie.getId());
 			addMovieToListPS.setInt(3, getHighestOrderInList(label) + 1);
+			addMovieToListPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
