@@ -82,7 +82,7 @@ public class AmazonMovieDetails {
             this.setRuntimeNode(movieDocument.
                     getElementsByTagName("RunningTime").item(0));
             this.setMovieImageNode(movieDocument.
-                    getElementsByTagName("MediumImage").item(0));
+                    getElementsByTagName("MediumImage").item(0).getFirstChild());
             this.setActorNodeList(movieDocument.
                     getElementsByTagName("Actor"));
             return true;
