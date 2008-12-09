@@ -2,27 +2,39 @@ package com.themangoproject.ui.model;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+
+import com.themangoproject.model.Actor;
+import com.themangoproject.model.MangoController;
+import com.themangoproject.model.Movie;
 import com.themangoproject.model.Person;
 
 /**
- * Table model encapsulating a view of the People contained in the Mango DB
+ * Table model encapsulating a view of the Actors contained in the Mango DB
  * backend.
  * 
- * @author Paul Osborne
+ * @author Zach Varberg
  */
 public class ActorTableModel extends AbstractTableModel {
 
-	/** Generated serial version UID */
-	private static final long serialVersionUID = -392463901990643277L;
-        private final String columns[] = {
-			"#",
-			"First Name",
-			"Last Name"
-	};
+    /** Generated serial version UID */
+    private static final long serialVersionUID = -392463901990643277L;
+    private final String columns[] = {
+            "#",
+            "First Name",
+            "Last Name"
+    };
 
-	/** List of people in the storage backend */
-	private List<Person> persons;
+    /** List of actors in the storage backend */
+    private List<Actor> actors;
 
+    public ActorTableModel(){
+        actors = MangoController.getInstance().getAllActors();
+    }
+    
+	public String getColumnName(int columnIndex) {
+        return columns[columnIndex];
+    }
+	
 	/**
 	 * The number of columns is the number of persons in the table.
 	 * 
@@ -30,7 +42,7 @@ public class ActorTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public int getColumnCount() {
-		return 1; // TODO: implement getColumnCount
+		return columns.length;
 	}
 
 	/**
@@ -40,7 +52,7 @@ public class ActorTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public int getRowCount() {
-		return persons.size();
+		return this.actors.size();
 	}
 
 	/**
@@ -56,8 +68,41 @@ public class ActorTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	    Actor a = actors.get(rowIndex);
+        switch (columnIndex) {
+        case 0:
+            return rowIndex + 1;
+        case 1:
+            return a.getFirstName();
+        case 2:
+            return a.getLastName();
+        default:
+            return "???";
+        }
 	}
+	
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return !(columnIndex == 1);
+    }
+    
+    public Class<? extends Object> getColumnClass(int columnIndex) {
+        return getValueAt(0, columnIndex).getClass();
+    }
+    
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
+        Actor a = actors.get(rowIndex);
+        switch (columnIndex) {
+        case 1:
+            a.setFirstName((String)value);
+            MangoController.getInstance().updateActor(a);
+            break;
+        case 2:
+            a.setLastName((String)value);
+            MangoController.getInstance().updateActor(a);
+            break;
+        default:
+            break; // Can't be edited
+        }
+    }
 
 }
