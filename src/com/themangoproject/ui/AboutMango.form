@@ -29,7 +29,7 @@
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="409" max="32767" attributes="0"/>
+              <EmptySpace pref="411" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -61,7 +61,7 @@
             <Property name="editable" type="boolean" value="false"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Mango Movie Manager&#xa;&#xa;Developers:&#xa;&#xa;Paul Osborne&#xa;Kyle Ronning&#xa;Zachary Varberg"/>
+            <Property name="text" type="java.lang.String" value="Mango Movie Manager&#xa;&#xa;Developers:&#xa;&#xa;Paul Osborne&#xa;paul@themangoproject.com&#xa;&#xa;Kyle Ronning&#xa;kyle@themangoproject.com&#xa;&#xa;Zachary Varberg&#xa;zach@themangoproject.com&#xa;&#xa;Originally developed for Database Systems at Bethel University fall 2008&#xa;"/>
           </Properties>
         </Component>
       </SubComponents>

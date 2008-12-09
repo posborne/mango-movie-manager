@@ -14,6 +14,11 @@ public class ActorTableModel extends AbstractTableModel {
 
 	/** Generated serial version UID */
 	private static final long serialVersionUID = -392463901990643277L;
+        private final String columns[] = {
+			"#",
+			"First Name",
+			"Last Name"
+	};
 
 	/** List of people in the storage backend */
 	private List<Person> persons;

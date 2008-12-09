@@ -40,7 +40,7 @@ public class AboutMango extends javax.swing.JDialog {
         jTextArea1.setEditable(false);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Mango Movie Manager\n\nDevelopers:\n\nPaul Osborne\nKyle Ronning\nZachary Varberg");
+        jTextArea1.setText("Mango Movie Manager\n\nDevelopers:\n\nPaul Osborne\npaul@themangoproject.com\n\nKyle Ronning\nkyle@themangoproject.com\n\nZachary Varberg\nzach@themangoproject.com\n\nOriginally developed for Database Systems at Bethel University fall 2008\n");
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("Close");
@@ -59,7 +59,7 @@ public class AboutMango extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(409, Short.MAX_VALUE)
+                .addContainerGap(411, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
