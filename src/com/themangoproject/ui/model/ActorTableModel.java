@@ -35,21 +35,11 @@ public class ActorTableModel extends AbstractTableModel {
         return columns[columnIndex];
     }
 	
-	/**
-	 * The number of columns is the number of persons in the table.
-	 * 
-	 * @return The number of people who fit the current model criterium
-	 */
 	@Override
 	public int getColumnCount() {
 		return columns.length;
 	}
 
-	/**
-	 * Get the number of rows in the model.
-	 * 
-	 * @return the number of rows in the model.
-	 */
 	@Override
 	public int getRowCount() {
 		return this.actors.size();

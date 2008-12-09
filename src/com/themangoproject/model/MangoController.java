@@ -19,7 +19,7 @@ import javax.swing.event.ChangeListener;
  * This is the controller. A class that has a number of methods useful for all
  * sorts of classes to have access too.
  * 
- * @author Paul Osborne, Zachary Varberg
+ * @author Paul Osborne, Zachary Varberg, Kyle Ronning
  */
 public class MangoController {
 
@@ -100,19 +100,25 @@ public class MangoController {
          * @param phone The phone number of the person.
          * @param email The email of the person.
          * @param address The address of the person.
+         * 
+         * @throws PersonExistsException if this person already exists in the DB
          */
-    public void addPerson(String name, String phone, String email, String address) {
-        // TODO: PAUL fix this
+    public void addPerson(String name, String phone, String email, String address) throws PersonExistsException {
         Person person = new DBPerson();
         person.setName(name);
         person.setPhoneNumber(phone);
         person.setEmail(email);
         person.setAddress(address);
-        try {
-            personDAO.addPerson(person);
-        } catch (PersonExistsException ex) {
-            Logger.getLogger(MangoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        personDAO.addPerson(person);
+    }
+    
+    /**
+     * This will take the person passed and update their information in the DB
+     * 
+     * @param p the person to be updated
+     */
+    public void updatePerson(Person p){
+        this.personDAO.updatePerson(p);
     }
 
         /**
