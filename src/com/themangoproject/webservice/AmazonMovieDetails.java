@@ -252,6 +252,22 @@ public class AmazonMovieDetails {
     }
     
     /**
+     * Returns the url were the image for the movie is located.
+     * 
+     * @return The url where the movie image is located.
+     */
+    public URL getMovieURL() {
+        if (this.imageNode == null)
+            return null;
+        URL url;
+        try {
+            url = new URL(this.imageNode.getTextContent());
+        } catch (MalformedURLException e) {
+            return null;
+        }
+        return url;
+    }
+    /**
      * Gets image as an Icon object.  If there is no image null returned.
      * @return The image as an Icon object.
      */
