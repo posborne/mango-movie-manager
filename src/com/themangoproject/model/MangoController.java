@@ -56,6 +56,16 @@ public class MangoController {
 		return instance;
 	}
 
+        /**
+         * This will add a new list with name <code>name</code>.
+         * 
+         * @param name The name of the list.
+         */
+    public void addList(String name) {
+        // TODO: implement method in the H2ListDOA
+        //listsDAO.addList(name);
+    }
+
 	/**
 	 * This will add a movie and save it.
 	 * 
@@ -79,6 +89,15 @@ public class MangoController {
 	public void addActor(String firstName, String lastName) {
 		actorDAO.addActor(firstName, lastName);
 	}
+
+        /**
+         * This will add a new set with name <code>name</code>.
+         * @param name The name of the list.
+         */
+    public void addSet(String name) {
+        // TODO: Implement method in H2SetDOA
+        //setDAO.addSet(name);
+    }
 
 	/**
 	 * This will save the changes made to this actor
