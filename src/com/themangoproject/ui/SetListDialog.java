@@ -6,6 +6,8 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.model.MangoController;
+
 /**
  *
  * @author  kronning
@@ -117,12 +119,20 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // Create a new set or list
     if (this.jRadioButton1.isSelected()) { // List
         System.out.println("List");
+        MangoController.getInstance().addList(this.jTextField1.getText());
     } else if (this.jRadioButton2.isSelected()) { // Set
         System.out.println("Set");
+        MangoController.getInstance().addSet(this.jTextField1.getText());
     }
     this.dispose();
 }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Sets the set radio button selected.
+     */
+    public void setSetSelected() {
+        this.jRadioButton2.setSelected(true); 
+    }
     /**
     * @param args the command line arguments
     */
