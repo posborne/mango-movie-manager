@@ -1,5 +1,6 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.DBPerson;
 import com.themangoproject.db.h2.H2ListsDAO;
 import com.themangoproject.db.h2.H2MovieDAO;
 import com.themangoproject.db.h2.H2ActorDAO;
@@ -10,6 +11,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -89,6 +92,28 @@ public class MangoController {
 	public void addActor(String firstName, String lastName) {
 		actorDAO.addActor(firstName, lastName);
 	}
+
+        /**
+         * This will add a new person.
+         * 
+         * @param name The name of the person.
+         * @param phone The phone number of the person.
+         * @param email The email of the person.
+         * @param address The address of the person.
+         */
+    public void addPerson(String name, String phone, String email, String address) {
+        // TODO: PAUL fix this
+        Person person = new DBPerson();
+        person.setName(name);
+        person.setPhoneNumber(phone);
+        person.setEmail(email);
+        person.setAddress(address);
+        try {
+            personDAO.addPerson(person);
+        } catch (PersonExistsException ex) {
+            Logger.getLogger(MangoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
         /**
          * This will add a new set with name <code>name</code>.
