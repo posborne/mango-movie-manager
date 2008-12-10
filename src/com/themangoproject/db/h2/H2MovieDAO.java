@@ -236,15 +236,15 @@ public class H2MovieDAO implements MovieDAO {
 			addMoviePS.setString(3, rating);
 
 			if (runtime == -1) {
-				addMoviePS.setInt(4, runtime);
-			} else {
 				addMoviePS.setNull(4, Types.INTEGER);
+			} else {
+                                addMoviePS.setInt(4, runtime);
 			}
 
 			if (year == -1) {
-				addMoviePS.setInt(5, year);
+                                addMoviePS.setNull(5, Types.INTEGER);
 			} else {
-				addMoviePS.setNull(5, Types.INTEGER);
+				addMoviePS.setInt(5, year);
 			}
 			addMoviePS.setString(6, asin);
 			addMoviePS.setDate(7, (java.sql.Date) purchaseDate);
