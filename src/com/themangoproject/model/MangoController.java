@@ -72,11 +72,11 @@ public class MangoController {
 	 * @param movie
 	 *            the movie to be added
 	 */
-	public void addMovie(String title, String director, String rating,
+	public Movie addMovie(String title, String director, String rating,
 			int runtime, int year, String asin, Date purchaseDate,
 			String customDescription, String condition, String type,
 			int mangoRating) {
-		movieDAO.addMovie(title, director, rating, runtime, year, asin,
+		return movieDAO.addMovie(title, director, rating, runtime, year, asin,
 				purchaseDate, customDescription, condition, type, mangoRating);
 	}
 

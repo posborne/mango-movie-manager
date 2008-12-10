@@ -40,82 +40,73 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Add a movie to the database */
 	private PreparedStatement addMoviePS;
-	private static final String addMovieSQL = 
-                "INSERT INTO movie "
+	private static final String addMovieSQL = "INSERT INTO movie "
 			+ "(director, title, rating, runtime, year, asin, purchase_date, "
 			+ "custom_description, condition, type, mango_rating, owner_id, borrower_id)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	/** Update a movie an existing movie in the database */
 	private PreparedStatement updateMoviePS;
-	private static final String updateMoviesSQL = 
-                "UPDATE movie"
+	private static final String updateMoviesSQL = "UPDATE movie"
 			+ " SET director=?, title=?, rating=?, runtime=?, year=?, asin=?,"
 			+ " purchase_date=?, custom_description=?, condition=?, type=?,"
 			+ " mango_rating=?, owner_id=?, borrower_id=?" + " WHERE id=?";
 
 	/** Delete movie with specified id from the database */
 	private PreparedStatement deleteMoviePS;
-	private static final String deleteMovieSQL = 
-                "DELETE FROM movie WHERE id=?";
+	private static final String deleteMovieSQL = "DELETE FROM movie WHERE id=?";
 
 	/** Retrieve all genres for a movie */
 	private PreparedStatement genresForMoviePS;
-	private static final String genresForMovieSQL = 
-                "SELECT name"
+	private static final String genresForMovieSQL = "SELECT name"
 			+ " FROM movie, genre" + " WHERE movie_id=id AND id=?";
 
 	/** Retrieve all actors for a movie */
 	private PreparedStatement actorsForMoviePS;
-	private static final String actorsForMovieSQL = 
-                "SELECT actor_id"
+	private static final String actorsForMovieSQL = "SELECT actor_id"
 			+ " FROM movie, acting_roles" + " WHERE movie_id=id AND id=?";
 
 	private PreparedStatement populateMoviePS;
-	private static final String populateMovieSQL = 
-                "SELECT * FROM movie"
+	private static final String populateMovieSQL = "SELECT * FROM movie"
 			+ " WHERE id=?";
 
 	private PreparedStatement addGenreToMoviePS;
-	private static final String addGenreToMovieSQL = 
-                "INSERT INTO genre "
+	private static final String addGenreToMovieSQL = "INSERT INTO genre "
 			+ "(movie_id, name)" + " VALUES (?, ?)";
 
 	private PreparedStatement removeGenreFromMoviePS;
-	private static final String removeGenreFromMovieSQL = 
-                "DELETE FROM genre"
+	private static final String removeGenreFromMovieSQL = "DELETE FROM genre"
 			+ " WHERE movie_id=? AND name=?";
 
 	/** Remove tuples with reference to movie from genre table */
 	private PreparedStatement removeMovieFromGenreTablePS;
-	private static final String removeMovieFromGenreTableSQL = 
-                "DELETE FROM genre WHERE movie_id=?";
+	private static final String removeMovieFromGenreTableSQL = "DELETE FROM genre WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from lists table */
 	private PreparedStatement removeMovieFromListsPS;
-	private static final String removeMovieFromListsSQL = 
-                "DELETE FROM list_contents WHERE movie_id=?";
+	private static final String removeMovieFromListsSQL = "DELETE FROM list_contents WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from sets table */
 	private PreparedStatement removeMovieFromSetsPS;
-	private static final String removeMovieFromSetsSQL = 
-                "DELETE FROM set_contents WHERE movie_id=?";
+	private static final String removeMovieFromSetsSQL = "DELETE FROM set_contents WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from acting_roles table */
 	private PreparedStatement removeMovieFromActingRolesPS;
-	private static final String removeMovieFromActingRolesSQL = 
-                "DELETE FROM acting_roles WHERE movie_id=?";
+	private static final String removeMovieFromActingRolesSQL = "DELETE FROM acting_roles WHERE movie_id=?";
 
 	/** Set the image data for the specified movie */
 	private PreparedStatement setImageDataForMoviePS;
-	private static final String setImageDataForMovieSQL = 
-                "UPDATE movie SET cover_art=? WHERE id=?";
+	private static final String setImageDataForMovieSQL = "UPDATE movie SET cover_art=? WHERE id=?";
 
 	/** Get the image data for the specified movie */
 	private PreparedStatement getImageForMoviePS;
-	private static final String getImageForMovieSQL = 
-                "SELECT cover_art FROM movie WHERE id=?";
+	private static final String getImageForMovieSQL = "SELECT cover_art FROM movie WHERE id=?";
 
+	/** Get last inserted id */
+	private PreparedStatement lastInsertPS;
+	private static final String lastInsertSQL =
+		"SELECT last_insert_id()";
+	
 	/**
 	 * The private singleton constructor for the DAO initializes the different
 	 * prepared statements that will be used by the class.
@@ -144,6 +135,7 @@ public class H2MovieDAO implements MovieDAO {
 			setImageDataForMoviePS = conn
 					.prepareStatement(setImageDataForMovieSQL);
 			getImageForMoviePS = conn.prepareStatement(getImageForMovieSQL);
+			lastInsertPS = conn.prepareStatement(lastInsertSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -229,12 +221,13 @@ public class H2MovieDAO implements MovieDAO {
 	/**
 	 * Add the specified movie to the database.
 	 */
-	public void addMovie(String title, String director, String rating,
+	public Movie addMovie(String title, String director, String rating,
 			int runtime, int year, String asin, Date purchaseDate,
 			String customDescription, String condition, String type,
 			int mangoRating) {
-
+		int movieId = -1;
 		try {
+			conn.setAutoCommit(false);
 			addMoviePS.setString(1, director);
 			addMoviePS.setString(2, title);
 			addMoviePS.setString(3, rating);
@@ -242,22 +235,22 @@ public class H2MovieDAO implements MovieDAO {
 			if (runtime == -1) {
 				addMoviePS.setNull(4, Types.INTEGER);
 			} else {
-                                addMoviePS.setInt(4, runtime);
+				addMoviePS.setInt(4, runtime);
 			}
 
 			if (year == -1) {
-                                addMoviePS.setNull(5, Types.INTEGER);
+				addMoviePS.setNull(5, Types.INTEGER);
 			} else {
 				addMoviePS.setInt(5, year);
 			}
 			addMoviePS.setString(6, asin);
-                        
-                        if (purchaseDate == null) {
-                            addMoviePS.setNull(7, Types.DATE);
-                        } else {
-                            addMoviePS.setDate(7, (java.sql.Date) purchaseDate);
-                        }
-                        
+
+			if (purchaseDate == null) {
+				addMoviePS.setNull(7, Types.DATE);
+			} else {
+				addMoviePS.setDate(7, (java.sql.Date) purchaseDate);
+			}
+
 			addMoviePS.setString(8, customDescription);
 			addMoviePS.setString(9, condition);
 			addMoviePS.setString(10, type);
@@ -267,9 +260,19 @@ public class H2MovieDAO implements MovieDAO {
 
 			// Do it!
 			addMoviePS.executeUpdate();
+			ResultSet rs = lastInsertPS.executeQuery();
+			if (rs.first()) {
+				movieId = rs.getInt(1);
+			}
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+			return null;
 		}
+		DBMovie m = new DBMovie();
+		m.setId(movieId);
+		return m;
 	}
 
 	/**
@@ -518,7 +521,8 @@ public class H2MovieDAO implements MovieDAO {
 	 *            The movie the image should be associated with.
 	 * @param image
 	 *            The image that should be added to the database.
-	 * @throws MalformedURLException if the URL is not valid.
+	 * @throws MalformedURLException
+	 *             if the URL is not valid.
 	 */
 	public void setImageForMovie(InputStream is, Movie m) {
 		if (!(m instanceof DBMovie)) {
@@ -551,28 +555,28 @@ public class H2MovieDAO implements MovieDAO {
 		}
 		DBMovie movie = (DBMovie) m;
 		ImageIcon image = null;
-		
+
 		try {
 			getImageForMoviePS.setInt(1, movie.getId());
 			ResultSet rs = getImageForMoviePS.executeQuery();
 			if (rs.first()) {
-			      InputStream input = rs.getBinaryStream("cover_art");
-                              if (input == null) {
-                                  return null;
-                              }
-                              // setup the streams
-                              ByteArrayOutputStream output = new ByteArrayOutputStream();
-                              // set read buffer size
-                              byte[] rb = new byte[1024];
-                              int ch = 0;
-                              while ((ch=input.read(rb)) != -1){
-                                // process blob
-                                output.write(rb, 0, ch);
-                              }
-                              byte[] b = output.toByteArray();
-                              input.close();
-                              output.close();
-                              image = new ImageIcon(b);
+				InputStream input = rs.getBinaryStream("cover_art");
+				if (input == null) {
+					return null;
+				}
+				// setup the streams
+				ByteArrayOutputStream output = new ByteArrayOutputStream();
+				// set read buffer size
+				byte[] rb = new byte[1024];
+				int ch = 0;
+				while ((ch = input.read(rb)) != -1) {
+					// process blob
+					output.write(rb, 0, ch);
+				}
+				byte[] b = output.toByteArray();
+				input.close();
+				output.close();
+				image = new ImageIcon(b);
 			}
 		} catch (SQLException ex) {
 			image = null;

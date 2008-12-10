@@ -7,6 +7,7 @@
 package com.themangoproject.ui;
 
 import com.themangoproject.model.MangoController;
+import com.themangoproject.model.Movie;
 import com.themangoproject.model.PersonExistsException;
 import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
@@ -15,6 +16,8 @@ import com.themangoproject.webservice.AmazonMovieDetails;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -752,8 +756,22 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     String type = (String) jComboBox3.getSelectedItem();
     
     // Add that movie, ahh yeah
-    MangoController.getInstance().addMovie(title, director, rating, runtime, 
+    Movie m = null;
+    m = MangoController.getInstance().addMovie(title, director, rating, runtime, 
             year, asin, purchDate, custDesc, condition, type, mangorating);
+    
+    // Now we wanna add the image to the DB for the movie
+    if (m != null) {
+    	Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
+    	BufferedImage bi = Pictures.toBufferedImage(i);
+    	try {
+			ImageIO.write(bi, "jpg", new File("temp.jpg"));
+	    	MangoController.getInstance().setImageForMovie(m, new FileInputStream("temp.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

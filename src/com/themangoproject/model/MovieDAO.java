@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface MovieDAO {
     public List<Movie> getAllMovies ();
-
     public Image getImageForMovie(Movie m);
     public void updateMovie (Movie movie);
-    public void addMovie (String title, String director, String rating, int runtime, int year, String asin, Date purchaseDate, String customDescription, String condition, String type, int mangoRating);
+    public Movie addMovie (String title, String director, String rating, int runtime, int year, String asin, Date purchaseDate, String customDescription, String condition, String type, int mangoRating);
     public void deleteMovie (Movie movie) throws MovieDeleteConflict;
     public void forceDeleteMovie (Movie movie);
     public List<String> getGenresForMovie (Movie movie);
