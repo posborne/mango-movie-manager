@@ -104,6 +104,12 @@ public class AddSubstractPanel extends javax.swing.JPanel {
         this.jPanel1.repaint();
     }
     
+    public void removeFirstAddSubPanel() {
+        this.jPanel1.remove(0);
+        this.jPanel1.revalidate();
+        this.jPanel1.repaint();
+    }
+    
     /**
      * Sets the ComboBoxModels that should be assigned to each new panel and
      * sets the property of each ComboBoxes editable state.

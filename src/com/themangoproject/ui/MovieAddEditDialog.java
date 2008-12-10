@@ -19,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -210,7 +212,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-ray", "Digtial", "DVD", "HD-DVD", "VCD", "VHS" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
 
         jLabel11.setText("Condition");
 
@@ -443,11 +445,11 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                                 .addComponent(jLabel19)
                                 .addGap(211, 211, 211))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
+                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
                     .addComponent(jLabel21)
                     .addComponent(jLabel25)
                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -686,7 +688,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
@@ -716,10 +718,42 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     // Save button -- Use the controller
+    String title = this.jTextField1.getText();
+    String director = this.jTextField2.getText();
+    String rating = (String)this.jComboBox2.getSelectedItem();
+    int runtime = ((Integer)this.jSpinner1.getValue()).intValue();
+    if (runtime < 0) 
+        runtime = -1;
+    int year = -1;
+    int mangorating = -1;
+    try {
+        year = Integer.parseInt(this.jTextField10.getText());
+        mangorating = Integer.parseInt((String) this.jComboBox4.getSelectedItem());
+    } catch (NumberFormatException e) {
+        year = -1;
+        mangorating = 0;
+    }
+    String asin = this.jTextField3.getText();
+    String[] purchDateString = this.jTextField4.getText().split("/");
+    Date purchDate;
+    if (purchDateString.length == 3) {
+        int pYear = Integer.parseInt(purchDateString[2]);
+        int month = Integer.parseInt(purchDateString[0]) - 1;
+        int day = Integer.parseInt(purchDateString[1]);
+        if (month < 0 || month > 11)
+            purchDate = null;
+        purchDate =  new GregorianCalendar(pYear, month, day).getTime();
+    } else {
+        purchDate = null;
+    }
+      
+    String custDesc = this.jTextArea1.getText();
+    String condition = jTextField5.getText();
+    String type = (String) jComboBox3.getSelectedItem();
     
-    //Movie movie = new DBMovie();
-    //movie.addActor()
-    //MangoController.getInstance().addMovie(movie);
+    // Add that movie, ahh yeah
+    MangoController.getInstance().addMovie(title, director, rating, runtime, 
+            year, asin, purchDate, custDesc, condition, type, mangorating);
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -803,7 +837,9 @@ private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
             // Create a new person.
-            MangoController.getInstance().addPerson(this.jTextField6.getText(), this.jTextField7.getText(), this.jTextField12.getText(), this.jTextArea2.getText());
+            MangoController.getInstance().addPerson(this.jTextField6.getText(), 
+                    this.jTextField7.getText(), this.jTextField12.getText(), 
+                    this.jTextArea2.getText());
         } catch (PersonExistsException ex) {
             // JOptionPane//GEN-LAST:event_jButton6ActionPerformed
         }
@@ -835,8 +871,10 @@ private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
 
 private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
     // Add new Actor
-    MangoController.getInstance().addActor(this.jTextField8.getText(),
-            this.jTextField9.getText());
+    if (!this.jTextField8.getText().equals("") && 
+            !this.jTextField9.getText().equals(""))
+        MangoController.getInstance().addActor(this.jTextField8.getText(),
+                this.jTextField9.getText());
 }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
