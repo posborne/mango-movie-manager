@@ -6,6 +6,8 @@
 
 package com.themangoproject.ui;
 
+import javax.swing.JTree;
+
 import com.themangoproject.ui.model.navigator.BaseTreeModel;
 
 /**
@@ -60,5 +62,8 @@ public class NavigatorPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree navigatorTree;
     // End of variables declaration//GEN-END:variables
+	public JTree getNavigatorTree() {
+		return this.navigatorTree;
+	}
 
 }

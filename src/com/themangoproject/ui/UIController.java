@@ -1,6 +1,7 @@
 package com.themangoproject.ui;
 
 import javax.swing.JTable;
+import javax.swing.JTree;
 import javax.swing.table.TableModel;
 
 public class UIController {
@@ -24,6 +25,14 @@ public class UIController {
 	
 	public JTable getViewTable() {
 		return mango.getTable();
+	}
+	
+	public JTree getNavigatorTree() {
+		if (mango != null) {
+			return mango.getNavigatorTree();
+		} else {
+			return null;
+		}
 	}
 	
 }

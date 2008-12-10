@@ -4,6 +4,7 @@ import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import javax.swing.JTable;
+import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
@@ -347,5 +348,9 @@ public void toggleInfoPanel() {
     // My field variables
     private boolean infoPaneOn = true;
     private int dividerLoc;
+
+	public JTree getNavigatorTree() {
+		return this.navigatorPanel1.getNavigatorTree();
+	}
     
 }

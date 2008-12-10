@@ -58,7 +58,7 @@ public class H2SetsDAO implements SetsDAO {
 			removeMovieFromSetPS = conn.prepareStatement(removeMovieFromSetSQL);
 			addMovieToSetPS = conn.prepareStatement(addMovieToSetSQL);
 			setIdForLabelPS = conn.prepareStatement(setIdForLabelSQL);
-			createSetPS = conn.prepareStatement(createSetSQL);
+			addSetPS = conn.prepareStatement(addSetSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -136,20 +136,6 @@ public class H2SetsDAO implements SetsDAO {
 			removeMovieFromSetPS.setString(1, label);
 			removeMovieFromSetPS.setInt(2,((DBMovie)m).getId());
 			removeMovieFromSetPS.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	private PreparedStatement createSetPS;
-	private static final String createSetSQL =
-		"INSERT INTO sets (label) VALUES (?)";
-	
-	@Override
-	public void createSet(String label) {
-		try {
-			createSetPS.setString(1, label);
-			createSetPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

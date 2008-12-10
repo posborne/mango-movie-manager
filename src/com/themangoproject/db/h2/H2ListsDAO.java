@@ -238,6 +238,7 @@ public class H2ListsDAO implements ListsDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		notifyListsChanged();
 	}
 
 	/**
@@ -309,6 +310,7 @@ public class H2ListsDAO implements ListsDAO {
 	 */
 	@Override
 	public void addListsChangeListener(ChangeListener l) {
+		System.out.println("Adding Listener! Bia!");
 		listsChangeListeners.add(l);
 	}
 
@@ -327,6 +329,7 @@ public class H2ListsDAO implements ListsDAO {
 	 * Notify all the list listeners that the set of lists have changed.
 	 */
 	private void notifyListsChanged() {
+		System.out.println("Notifying of Lists Change! Bia!");
 		for (ChangeListener l : listsChangeListeners) {
 			l.stateChanged(null); // what object should be passed?
 		}

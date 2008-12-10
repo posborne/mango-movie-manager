@@ -251,4 +251,9 @@ public class MangoController {
 		return setsDAO.getMoviesInSet(label);
 	}
 
+	public void addSetsChangeListener(ChangeListener changeListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

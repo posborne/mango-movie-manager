@@ -8,7 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 class NavigatorRootNode extends DefaultMutableTreeNode {
 
 	private static final long serialVersionUID = 6737021383031998889L;
-        
+	
 	public NavigatorRootNode() {
         super("Invisible Root Node", true);
         DefaultMutableTreeNode actions = new ActionsMutableTreeNode();
