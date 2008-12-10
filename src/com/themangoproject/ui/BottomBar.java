@@ -195,16 +195,17 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     jfc.addChoosableFileFilter(new ImageFilter());
     jfc.setAcceptAllFileFilterUsed(false);
     int i = jfc.showOpenDialog(this);
+    File file = null;
     
     if(i == JFileChooser.APPROVE_OPTION){
         Image image = null;
         InputStream is = null;
         try {
-            File file = null;
+            
             file = jfc.getSelectedFile();
             
             image = ImageIO.read(file);
-//            if(im != null){
+            if(image != null){
                image = image.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
                
                BufferedImage im = Pictures.toBufferedImage(image);
@@ -212,9 +213,9 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                ImageIO.write(im, "png", file);
                
                 is = new FileInputStream(file);
-//            } else {
-//                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
-//            }
+            } else {
+                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
+            }
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
@@ -228,8 +229,7 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int selRow = UIController.getInstance().getViewTable().getSelectedRow();
         Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
         
-//        System.out.println(m.getTitle());
-        MangoController.getInstance().setImageForMovie(m,is);
+        MangoController.getInstance().setImageForMovie(m,is);   
         
     }
     /*
