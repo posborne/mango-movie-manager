@@ -80,6 +80,9 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
         try {
             JTable table = UIController.getInstance().getViewTable();
             int row = table.getSelectedRow();
+            if (row < 0) {
+            	return;
+            }
             EditableMovieTableModel tm = (EditableMovieTableModel) table.getModel();
             Image i = tm.getMovieForRow(row).getImage();
             setThumbnailImage(i);

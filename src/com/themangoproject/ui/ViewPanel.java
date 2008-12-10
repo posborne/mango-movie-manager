@@ -188,6 +188,7 @@ private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     // End of variables declaration//GEN-END:variables
 
     public void setTableModel(TableModel model) {
+    	jTable1.clearSelection();
         this.jTable1.setModel(model);
     }
     
