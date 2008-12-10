@@ -39,11 +39,13 @@ import javax.swing.JOptionPane;
  */
 public class MovieAddEditDialog extends javax.swing.JDialog {
 
+    private Movie m;
     /** Creates new form MovieAddEditDialog */
     public MovieAddEditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setCombBoxModels();
+        m = null;
     }
 
     /** This method is called from within the constructor to
@@ -714,7 +716,36 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void populateData(Movie m){
+    this.jTextField1.setText(m.getTitle());
+    this.jTextField2.setText(m.getDirector());
+    this.jTextField10.setText(new Integer(m.getYear()).toString());
+    this.jComboBox2.setSelectedItem(m.getRating());
+    this.jSpinner1.setValue(m.getRuntime());
+    this.jTextField4.setText(m.getPurchaseDate().toString());
+    this.jComboBox4.setSelectedItem(new Integer(m.getMangoRating()).toString());
+    this.jComboBox3.setSelectedItem(m.getType());
+    this.jTextField5.setText(m.getCondition());
+    this.jTextField11.setText(genreText(m));
+    this.jTextArea1.setText(m.getCustomDescription());
+    Image i = m.getImage();
+    if(i != null)
+        this.jLabel15.setIcon(new ImageIcon(i));
 
+    this.m = m;
+}
+
+private String genreText(Movie m){
+    String tmp = "";
+    List<String> str = m.getGenres();
+    for(String s :str ){
+        tmp += s + ", ";
+    }
+    if(tmp.length() > 0){
+        tmp = tmp.substring(0, tmp.length()-2);
+    }
+    return tmp;
+}
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     // Cancel Button
     this.dispose();
@@ -722,6 +753,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     // Save button -- Use the controller
+
     String title = this.jTextField1.getText();
     String director = this.jTextField2.getText();
     String rating = (String)this.jComboBox2.getSelectedItem();
@@ -756,22 +788,43 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     String type = (String) jComboBox3.getSelectedItem();
     
     // Add that movie, ahh yeah
-    Movie m = null;
-    m = MangoController.getInstance().addMovie(title, director, rating, runtime, 
+//    Movie m = null;
+//    m = MangoController.getInstance().addMovie(title, director, rating, runtime, 
+//            year, asin, purchDate, custDesc, condition, type, mangorating);
+
+    if(m == null){
+    Movie mov = null;
+    mov = MangoController.getInstance().addMovie(title, director, rating, runtime, 
             year, asin, purchDate, custDesc, condition, type, mangorating);
-    
     // Now we wanna add the image to the DB for the movie
-    if (m != null) {
+    if (mov != null) {
     	Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
     	BufferedImage bi = Pictures.toBufferedImage(i);
     	try {
 			ImageIO.write(bi, "jpg", new File("temp.jpg"));
-	    	MangoController.getInstance().setImageForMovie(m, new FileInputStream("temp.jpg"));
+	    	MangoController.getInstance().setImageForMovie(mov, new FileInputStream("temp.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
+    } else {
+        m.setTitle(title);
+        m.setDirector(director);
+        m.setRating(rating);
+        m.setRuntime(runtime);
+        m.setYear(year);
+        m.setASIN(asin);
+        m.setPurchaseDate(purchDate);
+        m.setCustomDescription(custDesc);
+        m.setCondition(condition);
+        m.setType(type);
+        m.setMangoRating(mangorating);
+        MangoController.getInstance().updateMovie(m);
+    }
+
+    
+    
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

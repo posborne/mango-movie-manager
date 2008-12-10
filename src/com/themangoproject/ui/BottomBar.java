@@ -161,6 +161,9 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
     maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
     
+    int selRow = UIController.getInstance().getViewTable().getSelectedRow();
+    Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
+    maed.populateData(m);
     // Add code to gather information about a movie given the cell that is
     // selected in the table
     
