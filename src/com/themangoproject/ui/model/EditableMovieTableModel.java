@@ -1,5 +1,6 @@
 package com.themangoproject.ui.model;
 
+import java.awt.Image;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -21,6 +22,10 @@ public abstract class EditableMovieTableModel extends AbstractTableModel{
 			"Mango Rating",
 			"Type"
 	};
+
+    public Movie getMovieForRow(int row) {
+        return getMovies().get(row);
+    }
 	
 	public abstract List<Movie> getMovies();
 	

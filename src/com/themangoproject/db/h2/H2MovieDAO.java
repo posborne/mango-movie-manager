@@ -5,12 +5,16 @@ import com.themangoproject.model.*;
 import java.util.Date;
 import java.util.List;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
@@ -546,14 +550,29 @@ public class H2MovieDAO implements MovieDAO {
 			throw new ClassCastException();
 		}
 		DBMovie movie = (DBMovie) m;
-		Image image = null;
+		ImageIcon image = null;
 		
 		try {
 			getImageForMoviePS.setInt(1, movie.getId());
 			ResultSet rs = getImageForMoviePS.executeQuery();
 			if (rs.first()) {
-				InputStream is = rs.getBinaryStream("cover_art");
-				image = ImageIO.read(is);
+			      InputStream input = rs.getBinaryStream("cover_art");
+                              if (input == null) {
+                                  return null;
+                              }
+                              // setup the streams
+                              ByteArrayOutputStream output = new ByteArrayOutputStream();
+                              // set read buffer size
+                              byte[] rb = new byte[1024];
+                              int ch = 0;
+                              while ((ch=input.read(rb)) != -1){
+                                // process blob
+                                output.write(rb, 0, ch);
+                              }
+                              byte[] b = output.toByteArray();
+                              input.close();
+                              output.close();
+                              image = new ImageIcon(b);
 			}
 		} catch (SQLException ex) {
 			image = null;
@@ -561,6 +580,6 @@ public class H2MovieDAO implements MovieDAO {
 		} catch (IOException e) {
 			image = null;
 		}
-		return image;
+		return image.getImage();
 	}
 }

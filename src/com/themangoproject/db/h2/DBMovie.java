@@ -1,5 +1,6 @@
 package com.themangoproject.db.h2;
 
+import java.awt.Image;
 import java.util.Date;
 import java.util.List;
 
@@ -410,6 +411,11 @@ public class DBMovie implements Movie {
 		return this.state.getBorrowerId();
 	}
 
+        
+        public Image getImage() {
+            return this.state.getImage();
+        }
+        
 	private class UpdatedMovieState implements DBMovieState {
 		/**
 		 * This will return the Database unique ID of this movie
@@ -574,6 +580,10 @@ public class DBMovie implements Movie {
 		public int getBorrowerId() {
 			return DBMovie.this.borrowerId;
 		}
+
+                public Image getImage() {
+                        return movieDAO.getImageForMovie(DBMovie.this);
+                }
 	}
 
 	private class NotfullMovieState implements DBMovieState {
@@ -775,6 +785,10 @@ public class DBMovie implements Movie {
 			DBMovie.this.state = new UpdatedMovieState();
 			return DBMovie.this.borrowerId;
 		}
+
+                public Image getImage() {
+                    return movieDAO.getImageForMovie(DBMovie.this);
+                }
 	}
 
 }

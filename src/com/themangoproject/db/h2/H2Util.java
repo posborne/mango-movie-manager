@@ -95,7 +95,7 @@ public class H2Util {
 	 *            The name of the database that should be initialized.
 	 */
 	public void initializeSchemaOnDb() {
-		Connection conn = getConnection();
+		conn = getConnection();
 		try {
 			Statement stat = conn.createStatement();
 			// Drop everything if exists (in right order)

@@ -1,10 +1,13 @@
 package com.themangoproject.model;
 
+import java.awt.Image;
 import java.util.Date;
 import java.util.List;
 
 
 public interface Movie {
+
+    public Image getImage();
 
 	// getters
     public String getTitle ();

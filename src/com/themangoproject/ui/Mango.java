@@ -27,6 +27,7 @@ public class Mango extends javax.swing.JFrame {
         initComponents();
         createdInstance = this;
         this.setTableModel(new AllMoviesEditableTableModel());
+        this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel1);
     }
     
     private static Mango createdInstance;

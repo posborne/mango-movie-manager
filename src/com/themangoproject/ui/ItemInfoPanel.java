@@ -6,13 +6,20 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.ui.model.EditableMovieTableModel;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  * ItemInfoPanel is a panel that displays an image.
  * 
  * @author  Kyle Ronning, Paul Osborne
  * @version 1.0
  */
-public class ItemInfoPanel extends javax.swing.JPanel {
+public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionListener {
 
     /** Creates new form ItemInfoPanel */
     public ItemInfoPanel() {
@@ -56,9 +63,28 @@ public class ItemInfoPanel extends javax.swing.JPanel {
      * movie in the table.
      * 
      */
-    public void setThumbnailImage() {
-        //TODO: Implement this method - Add parameter
-        // Is called when a different row is selected.
-        //this.jLabel1.setIcon(icon);
+    public void setThumbnailImage(Image image) {
+        if (image != null) {
+            this.jLabel1.setIcon(new ImageIcon(image));
+        }
     }
+    
+    /**
+     * List selection listener for movie selections.
+     * 
+     * @param lse The list selection event.
+     */
+    public void valueChanged(ListSelectionEvent lse) {
+        try {
+            JTable table = UIController.getInstance().getViewTable();
+            int row = table.getSelectedRow();
+            EditableMovieTableModel tm = (EditableMovieTableModel) table.getModel();
+            Image i = tm.getMovieForRow(row).getImage();
+            setThumbnailImage(i);
+            System.out.println("Yes!!!!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
