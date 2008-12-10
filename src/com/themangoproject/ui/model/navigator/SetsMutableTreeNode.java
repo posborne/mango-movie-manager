@@ -12,8 +12,18 @@ import javax.swing.tree.DefaultTreeModel;
 /**
  * @author Paul Osborne
  */
-public class SetsMutableTreeNode extends DefaultMutableTreeNode
-		implements MangoMutableTreeNode {
+public class SetsMutableTreeNode extends DefaultMutableTreeNode implements
+		MangoMutableTreeNode {
+
+	public class SetsChangeListener implements ChangeListener {
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			SetsMutableTreeNode.this.fetchSets();
+			DefaultTreeModel tm = (DefaultTreeModel) UIController.getInstance()
+					.getNavigatorTree().getModel();
+			tm.nodeStructureChanged(SetsMutableTreeNode.this);
+		}
+	}
 
 	private static final long serialVersionUID = -2616587037657452968L;
 	private List<String> sets;
@@ -21,17 +31,8 @@ public class SetsMutableTreeNode extends DefaultMutableTreeNode
 	public SetsMutableTreeNode() {
 		super("Sets", true);
 		fetchSets();
-		
 		MangoController.getInstance().addSetsChangeListener(
-				new ChangeListener() {
-					@Override
-					public void stateChanged(ChangeEvent ce) {
-						fetchSets();
-						((DefaultTreeModel) UIController.getInstance()
-								.getNavigatorTree().getModel())
-								.nodeStructureChanged(SetsMutableTreeNode.this);
-					}
-			});
+				new SetsChangeListener());
 	}
 
 	private void fetchSets() {

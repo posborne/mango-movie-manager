@@ -252,8 +252,11 @@ public class MangoController {
 	}
 
 	public void addSetsChangeListener(ChangeListener changeListener) {
-		// TODO Auto-generated method stub
-		
+		setsDAO.addSetsChangeListener(changeListener);
+	}
+	
+	public void removeSetsChangeListener(ChangeListener changeListener) {
+		setsDAO.removeSetsChangeListener(changeListener);
 	}
 
 }

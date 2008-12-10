@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.SetsDAO;
 
@@ -50,6 +52,7 @@ public class H2SetsDAO implements SetsDAO {
 	
 	private H2SetsDAO() {
 		conn = H2Util.getInstance().getConnection();
+		setsChangeListeners = new ArrayList<ChangeListener>();
 		try {
 			allSetsPS = conn.prepareStatement(allSetsSQL);
 			moviesInSetPS = conn.prepareStatement(moviesInSetSQL);
@@ -82,6 +85,7 @@ public class H2SetsDAO implements SetsDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		fireSetsChangedEvent();
 	}
 	
 	@Override
@@ -128,6 +132,7 @@ public class H2SetsDAO implements SetsDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		fireSetsChangedEvent();
 	}
 
 	@Override
@@ -154,6 +159,24 @@ public class H2SetsDAO implements SetsDAO {
 			addMovieToSetPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	private ArrayList<ChangeListener> setsChangeListeners;
+	
+	@Override
+	public void addSetsChangeListener(ChangeListener changeListener) {
+		setsChangeListeners.add(changeListener);		
+	}
+
+	@Override
+	public void removeSetsChangeListener(ChangeListener changeListener) {
+		setsChangeListeners.remove(changeListener);
+	}
+	
+	private void fireSetsChangedEvent() {
+		for (ChangeListener l : setsChangeListeners) {
+			l.stateChanged(null);
 		}
 	}
 	
