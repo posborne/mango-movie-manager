@@ -788,9 +788,6 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     String type = (String) jComboBox3.getSelectedItem();
     
     // Add that movie, ahh yeah
-//    Movie m = null;
-//    m = MangoController.getInstance().addMovie(title, director, rating, runtime, 
-//            year, asin, purchDate, custDesc, condition, type, mangorating);
 
     if(m == null){
     Movie mov = null;
