@@ -5,12 +5,19 @@ import com.themangoproject.model.*;
 import java.util.Date;
 import java.util.List;
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.ImageIcon;
 
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
@@ -90,12 +97,12 @@ public class H2MovieDAO implements MovieDAO {
 	/** Remove tuples with reference to movie from lists table */
 	private PreparedStatement removeMovieFromListsPS;
 	private static final String removeMovieFromListsSQL = 
-                "DELETE FROM lists WHERE movie_id=?";
+                "DELETE FROM list_contents WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from sets table */
 	private PreparedStatement removeMovieFromSetsPS;
 	private static final String removeMovieFromSetsSQL = 
-                "DELETE FROM sets WHERE movie_id=?";
+                "DELETE FROM set_contents WHERE movie_id=?";
 
 	/** Remove tuples with reference to movie from acting_roles table */
 	private PreparedStatement removeMovieFromActingRolesPS;
@@ -137,9 +144,9 @@ public class H2MovieDAO implements MovieDAO {
 					.prepareStatement(removeMovieFromListsSQL);
 			removeMovieFromSetsPS = conn
 					.prepareStatement(removeMovieFromSetsSQL);
-//			setImageDataForMoviePS = conn
-//					.prepareStatement(setImageDataForMovieSQL);
-//			getImageForMoviePS = conn.prepareStatement(getImageForMovieSQL);
+			setImageDataForMoviePS = conn
+					.prepareStatement(setImageDataForMovieSQL);
+			getImageForMoviePS = conn.prepareStatement(getImageForMovieSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -508,16 +515,17 @@ public class H2MovieDAO implements MovieDAO {
 	 *            The movie the image should be associated with.
 	 * @param image
 	 *            The image that should be added to the database.
+	 * @throws MalformedURLException if the URL is not valid.
 	 */
-	public void setImageForMovie(InputStream imageIS, Movie m) {
+	public void setImageForMovie(InputStream is, Movie m) {
 		if (!(m instanceof DBMovie)) {
 			throw new ClassCastException();
 		}
 		DBMovie movie = (DBMovie) m;
 		try {
 			setImageDataForMoviePS.setInt(1, movie.getId());
-			if (imageIS != null) {
-				setImageDataForMoviePS.setBinaryStream(2, imageIS);
+			if (is != null) {
+				setImageDataForMoviePS.setBinaryStream(2, is);
 			} else {
 				setImageDataForMoviePS.setNull(2, Types.BLOB);
 			}

@@ -28,8 +28,14 @@ public class TestUtility {
 	private static final String clearLists=
 		"DELETE FROM lists";
 	
+	private static final String clearListContents =
+		"DELETE FROM list_contents";
+	
 	private static final String clearSets =
 		"DELETE FROM sets";
+	
+	private static final String clearSetContents =
+		"DELETE FROM set_contents";
 	
 	private static final String personInserts =
 		"INSERT INTO person (id, name, address, phone_num, email)" +
@@ -68,15 +74,23 @@ public class TestUtility {
 		"(2, 'Action')," +
 		"(2, 'Thriller')";
 	
-	private static final String listsInserts = 
-		"INSERT INTO lists (label, movie_id, order_id)" +
-		"VALUES ('Action Marathon', 1, 1)," +
-		"('Action Marathon', 2, 2)";
+	private static final String listContentsInserts = 
+		"INSERT INTO list_contents (list_id, movie_id, order_id)" +
+		"VALUES (1, 1, 1)," +
+		"(1, 2, 2)";
 	
-	private static final String setsInserts = 
-		"INSERT INTO sets (label, movie_id) " +
-		"VALUES ('Die Hard Series', 1)," +
-		"('Die Hard Series', 2)";
+	private static final String listInserts =
+		"INSERT INTO lists (id, label)" +
+		"	VALUES(1, 'Action Marathon')";
+	
+	private static final String setContentsInserts = 
+		"INSERT INTO set_contents (set_id, movie_id) " +
+		"VALUES (1, 1)," +
+		"(1, 2)";
+	
+	private static final String setInserts =
+		"INSERT INTO sets (id, label)" +
+		"	VALUES (1, 'Die Hard Series')";
 	
 	public static void executeInserts() {
 		Connection conn = H2Util.getInstance().getConnection();
@@ -85,8 +99,10 @@ public class TestUtility {
 			stat = conn.createStatement();
 			
 			// Clear Everything
+			stat.executeUpdate(clearListContents);
 			stat.executeUpdate(clearLists);
 			stat.executeUpdate(clearSavedSearches);
+			stat.executeUpdate(clearSetContents);
 			stat.executeUpdate(clearSets);
 			stat.executeUpdate(clearActingRoles);
 			stat.executeUpdate(clearGenre);
@@ -100,8 +116,10 @@ public class TestUtility {
 			stat.executeUpdate(actorInserts);
 			stat.executeUpdate(genreInserts);
 			stat.executeUpdate(actingRoleInserts);
-			stat.executeUpdate(setsInserts);
-			stat.executeUpdate(listsInserts);
+			stat.executeUpdate(setInserts);
+			stat.executeUpdate(setContentsInserts);
+			stat.executeUpdate(listInserts);
+			stat.executeUpdate(listContentsInserts);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

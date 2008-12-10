@@ -87,26 +87,48 @@ public class DBSchema {
 	
 	public static final String createListsTable =
 		"CREATE TABLE lists (" +
-		"	label		CHAR(30) NOT NULL," +
+		"	id		INT NOT NULL AUTO_INCREMENT," +
+		"	label	CHAR(30) NOT NULL," +
+		"	UNIQUE(label)," +
+		"	PRIMARY KEY(id) )";
+	
+	public static final String createListContentsTable =
+		"CREATE TABLE list_contents (" +
+		"	list_id		INT NOT NULL," +
 		"	movie_id	INT NOT NULL," +
 		"	order_id	INT NOT NULL," +
+		"	FOREIGN KEY (list_id) REFERENCES lists(id)," +
 		"	FOREIGN KEY (movie_id) REFERENCES movie(id)," +
-		"	PRIMARY KEY (label, movie_id, order_id) )";
+		"	PRIMARY KEY (list_id, order_id) )";
 	
 	public static final String createSetsTable =
 		"CREATE TABLE sets (" +
-		"	label 		CHAR(30) NOT NULL," +
+		"	id			INT NOT NULL AUTO_INCREMENT," +
+		"	label		CHAR(30) NOT NULL," +
+		"	UNIQUE(label)," +
+		"	PRIMARY KEY (id) )";
+	
+	public static final String createSetContentsTable =
+		"CREATE TABLE set_contents (" +
+		"	set_id 		INT NOT NULL," +
 		"	movie_id 	INT NOT NULL," +
-		"	PRIMARY KEY (label, movie_id) )";
+		"	FOREIGN KEY (set_id) REFERENCES sets(id)," +
+		"	PRIMARY KEY (set_id, movie_id) )";
 	
 	public static final String dropSetsTable =
 		"DROP TABLE IF EXISTS sets";
+	
+	public static final String dropSetContentsTable =
+		"DROP TABLE IF EXISTS set_contents";
 	
 	public static final String dropSavedSearchesTable =
 		"DROP TABLE IF EXISTS saved_searches";
 	
 	public static final String dropListsTable =
 		"DROP TABLE IF EXISTS lists";
+	
+	public static final String dropListContentsTable =
+		"DROP TABLE IF EXISTS list_contents";
 	
 	public static final String dropGenreTable =
 		"DROP TABLE IF EXISTS genre";

@@ -20,33 +20,45 @@ public class H2SetsDAO implements SetsDAO {
 	
 	private PreparedStatement allSetsPS;
 	private static final String allSetsSQL =
-		"SELECT DISTINCT label FROM sets";
+		"SELECT label FROM sets";
 	
 	private PreparedStatement moviesInSetPS;
 	private static final String moviesInSetSQL =
-		"SELECT movie_id FROM sets WHERE label=?";
+		"SELECT movie_id FROM set_contents WHERE " +
+		"    set_id IN (SELECT id FROM sets WHERE label=?)";
 	
-	private PreparedStatement removeSetPS;
+	private PreparedStatement removeSetFromSetContentsPS;
 	private static final String removeSetSQL =
+		"DELETE FROM set_contents WHERE set_id IN (SELECT id FROM sets WHERE label=?)";
+	
+	private PreparedStatement removeSetFromSetsPS;
+	private static final String removeSetFromSetsSQL =
 		"DELETE FROM sets WHERE label=?";
 	
 	private PreparedStatement removeMovieFromSetPS;
 	private static final String removeMovieFromSetSQL =
-		"DELETE FROM sets WHERE label=? AND movie_id=?";
+		"DELETE FROM set_contents WHERE set_id IN (SELECT id FROM sets WHERE label=?) AND movie_id=?";
 	
 	private PreparedStatement addMovieToSetPS;
 	private static final String addMovieToSetSQL =
-		"INSERT INTO sets (label, movie_id) " +
-			"VALUES (?, ?)";
+		"INSERT INTO set_contents (set_id, movie_id) " +
+		"	VALUES(?, ?)";
+	
+	private PreparedStatement setIdForLabelPS;
+	private static final String setIdForLabelSQL =
+		"SELECT id FROM sets WHERE label=?";
 	
 	private H2SetsDAO() {
 		conn = H2Util.getInstance().getConnection();
 		try {
 			allSetsPS = conn.prepareStatement(allSetsSQL);
 			moviesInSetPS = conn.prepareStatement(moviesInSetSQL);
-			removeSetPS = conn.prepareStatement(removeSetSQL);
+			removeSetFromSetContentsPS = conn.prepareStatement(removeSetSQL);
+			removeSetFromSetsPS = conn.prepareStatement(removeSetFromSetsSQL);
 			removeMovieFromSetPS = conn.prepareStatement(removeMovieFromSetSQL);
 			addMovieToSetPS = conn.prepareStatement(addMovieToSetSQL);
+			setIdForLabelPS = conn.prepareStatement(setIdForLabelSQL);
+			createSetPS = conn.prepareStatement(createSetSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -93,8 +105,13 @@ public class H2SetsDAO implements SetsDAO {
 	@Override
 	public void removeSet(String label) {
 		try {
-			removeSetPS.setString(1, label);
-			removeSetPS.executeUpdate();
+			conn.setAutoCommit(false);
+			removeSetFromSetContentsPS.setString(1, label);
+			removeSetFromSetsPS.setString(1, label);
+			removeSetFromSetContentsPS.executeUpdate();
+			removeSetFromSetsPS.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -110,11 +127,30 @@ public class H2SetsDAO implements SetsDAO {
 			ex.printStackTrace();
 		}
 	}
+	
+	private PreparedStatement createSetPS;
+	private static final String createSetSQL =
+		"INSERT INTO sets (label) VALUES (?)";
+	
+	@Override
+	public void createSet(String label) {
+		try {
+			createSetPS.setString(1, label);
+			createSetPS.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 
 	@Override
 	public void addMovieToSet(String label, Movie m) {
 		try {
-			addMovieToSetPS.setString(1, label);
+			setIdForLabelPS.setString(1, label);
+			ResultSet rs = setIdForLabelPS.executeQuery();
+			rs.next();
+			int setId = rs.getInt("id");
+
+			addMovieToSetPS.setInt(1, setId);
 			addMovieToSetPS.setInt(2, ((DBMovie)m).getId());
 			addMovieToSetPS.executeUpdate();
 		} catch (SQLException ex) {

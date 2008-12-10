@@ -21,30 +21,52 @@ public class H2ListsDAO implements ListsDAO {
 	private Connection conn;
 
 	private PreparedStatement allListsPS;
-	private static final String allListsSQL = "SELECT DISTINCT label FROM lists ORDER BY label";
+	private static final String allListsSQL = "SELECT label FROM lists";
 
 	private PreparedStatement getMoviesInListPS;
 	private static final String getMoviesInListSQL = "SELECT movie_id, order_id "
-			+ "FROM lists " + "WHERE label=? " + "ORDER BY order_id ASC";
+			+ "	FROM lists, list_contents "
+			+ "	WHERE label=? AND list_id=id" + 
+			"	ORDER BY order_id ASC";
 
 	private PreparedStatement removeMovieFromListPS;
-	private static final String removeMovieFromListSQL = "DELETE FROM lists WHERE label=? AND movie_id=?";
+	private static final String removeMovieFromListSQL = "DELETE FROM list_contents"
+			+ "	WHERE order_id=? AND list_id IN (SELECT id FROM lists WHERE label=?)";
 
 	private PreparedStatement renameListPS;
 	private static final String renameListSQL = "UPDATE lists SET label=? WHERE label=?";
 
-	private PreparedStatement removeListPS;
-	private static final String removeListSQL = "DELETE FROM lists WHERE label=?";
+	private PreparedStatement removeListFromListsPS;
+	private static final String removeListFromListsSQL = "DELETE FROM lists WHERE label=?";
+
+	private PreparedStatement removeListFromListContentsPS;
+	private static final String removeListFromListContentsSQL = "DELETE FROM list_contents"
+			+ "	WHERE list_id IN (SELECT id FROM lists WHERE label=?)";
 
 	private PreparedStatement setItemOrderPS;
-	private static final String setItemOrderSQL = "UPDATE lists SET order_id=? WHERE label=? AND order_id=?";
+	private static final String setItemOrderSQL = 
+		"UPDATE list_contents " +
+		"	SET order_id=? " +
+		"	WHERE list_id " +
+		"		IN (SELECT id FROM lists WHERE label=?) " +
+		"		AND order_id=?";
 
 	private PreparedStatement addMovieToListPS;
-	private static final String addMovieToListSQL = "INSERT INTO lists (label, movie_id, order_id) "
-			+ "VALUES(?, ?, ?)";
+	private static final String addMovieToListSQL = 
+		"INSERT INTO list_contents (list_id, movie_id, order_id) "
+			+ "		VALUES(?, ?, ?)";
 
+	private PreparedStatement listIdForLabelPS;
+	private static final String listIdForLabelSQL =
+		"SELECT id FROM lists WHERE label=?";
+	
 	private PreparedStatement highestOrderInListPS;
-	private static final String hightestOrderInListSQL = "SELECT MAX(order_id) FROM lists WHERE label=?";
+	private static final String hightestOrderInListSQL = 
+		"SELECT MAX(order_id) FROM list_contents " +
+		"	WHERE list_id in (SELECT id FROM lists WHERE label=?)";
+
+	private PreparedStatement addListPS;
+	private static final String addListSQL = "INSERT INTO lists(label) VALUES (?)";
 
 	/**
 	 * Private constructor for the singleton instance.
@@ -54,15 +76,21 @@ public class H2ListsDAO implements ListsDAO {
 		listsChangeListeners = new ArrayList<ChangeListener>();
 		try {
 			allListsPS = conn.prepareStatement(allListsSQL);
-			getMoviesInListPS = conn.prepareStatement(getMoviesInListSQL);
+			getMoviesInListPS = conn
+					.prepareStatement(getMoviesInListSQL);
 			removeMovieFromListPS = conn
 					.prepareStatement(removeMovieFromListSQL);
 			renameListPS = conn.prepareStatement(renameListSQL);
-			removeListPS = conn.prepareStatement(removeListSQL);
+			removeListFromListsPS = conn
+					.prepareStatement(removeListFromListsSQL);
+			removeListFromListContentsPS = conn
+					.prepareStatement(removeListFromListContentsSQL);
 			setItemOrderPS = conn.prepareStatement(setItemOrderSQL);
 			addMovieToListPS = conn.prepareStatement(addMovieToListSQL);
 			highestOrderInListPS = conn
 					.prepareStatement(hightestOrderInListSQL);
+			addListPS = conn.prepareStatement(addListSQL);
+			listIdForLabelPS = conn.prepareStatement(listIdForLabelSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -133,8 +161,14 @@ public class H2ListsDAO implements ListsDAO {
 	@Override
 	public void removeList(String label) {
 		try {
-			removeListPS.setString(1, label);
-			removeListPS.executeUpdate();
+			// Do this as a transaction
+			conn.setAutoCommit(false);
+			removeListFromListsPS.setString(1, label);
+			removeListFromListContentsPS.setString(1, label);
+			removeListFromListContentsPS.executeUpdate();
+			removeListFromListsPS.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -153,7 +187,8 @@ public class H2ListsDAO implements ListsDAO {
 	public void removeMovieFromList(String label, Movie m) {
 		try {
 			removeMovieFromListPS.setString(1, label);
-			removeMovieFromListPS.setInt(2, ((DBListMovie) m).getOrderId());
+			removeMovieFromListPS.setInt(2, ((DBListMovie) m)
+					.getOrderId());
 			removeMovieFromListPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -170,7 +205,8 @@ public class H2ListsDAO implements ListsDAO {
 	 *            The new order for the movies.
 	 */
 	@Override
-	public void reorderMoviesInList(String label, List<Movie> moviesInOrder) {
+	public void reorderMoviesInList(String label,
+			List<Movie> moviesInOrder) {
 		try {
 			// all these need to be done as a single transaction
 			conn.setAutoCommit(false);
@@ -184,6 +220,21 @@ public class H2ListsDAO implements ListsDAO {
 			}
 			conn.commit();
 			conn.setAutoCommit(true);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Add a new list with the specified label.
+	 * 
+	 * @param label
+	 *            The label for the new list.
+	 */
+	public void addList(String label) {
+		try {
+			addListPS.setString(1, label);
+			addListPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -204,9 +255,16 @@ public class H2ListsDAO implements ListsDAO {
 		DBMovie movie = (DBMovie) m;
 		boolean newList = (getHighestOrderInList(label) == 0);
 		try {
-			addMovieToListPS.setString(1, label);
+			// TODO: some of this is moderately ugly
+			listIdForLabelPS.setString(1, label);
+			ResultSet rs = listIdForLabelPS.executeQuery();
+			rs.first();
+			int listId = rs.getInt("id");
+			
+			addMovieToListPS.setInt(1, listId); 
 			addMovieToListPS.setInt(2, movie.getId());
-			addMovieToListPS.setInt(3, getHighestOrderInList(label) + 1);
+			addMovieToListPS
+					.setInt(3, getHighestOrderInList(label) + 1);
 			addMovieToListPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -239,6 +297,7 @@ public class H2ListsDAO implements ListsDAO {
 		return highest;
 	}
 
+	/** List of change listeners to notify */
 	private ArrayList<ChangeListener> listsChangeListeners;
 
 	/**

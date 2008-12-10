@@ -99,10 +99,13 @@ public class H2Util {
 		try {
 			Statement stat = conn.createStatement();
 			// Drop everything if exists (in right order)
+			stat.executeUpdate(DBSchema.dropSetContentsTable);
 			stat.executeUpdate(DBSchema.dropSetsTable);
 			stat.executeUpdate(DBSchema.dropGenreTable);
 			stat.executeUpdate(DBSchema.dropSavedSearchesTable);
 			stat.executeUpdate(DBSchema.dropActingRolesTable);
+			stat.executeUpdate(DBSchema.dropSetContentsTable);
+			stat.executeUpdate(DBSchema.dropListContentsTable);
 			stat.executeUpdate(DBSchema.dropListsTable);
 			stat.executeUpdate(DBSchema.dropActorTable);
 			stat.executeUpdate(DBSchema.dropMovieTable);
@@ -121,7 +124,9 @@ public class H2Util {
 			stat.executeUpdate(DBSchema.createGenreTable);
 			stat.executeUpdate(DBSchema.createActingRolesTable);
 			stat.executeUpdate(DBSchema.createListsTable);
+			stat.executeUpdate(DBSchema.createListContentsTable);
 			stat.executeUpdate(DBSchema.createSetsTable);
+			stat.executeUpdate(DBSchema.createSetContentsTable);
 			stat.executeUpdate(DBSchema.createSavedSearchesTable);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
