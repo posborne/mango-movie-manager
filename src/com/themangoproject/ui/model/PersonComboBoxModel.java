@@ -41,5 +41,9 @@ public class PersonComboBoxModel extends DefaultComboBoxModel {
 	public Object getElementAt(int index) {
 		return persons.get(index).getName();
 	}
+        
+        public Object getPersonAt(int index) {
+            return persons.get(index);
+        }
 
 }

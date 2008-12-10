@@ -34,5 +34,9 @@ public class UIController {
 			return null;
 		}
 	}
+        
+        public int getTableItemCount() {
+            return mango.getTableItemCount();
+        }
 	
 }

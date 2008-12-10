@@ -771,14 +771,15 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     String asin = this.jTextField3.getText();
     String[] purchDateString = this.jTextField4.getText().split("/");
-    Date purchDate;
+    java.sql.Date purchDate;
     if (purchDateString.length == 3) {
         int pYear = Integer.parseInt(purchDateString[2]);
         int month = Integer.parseInt(purchDateString[0]) - 1;
         int day = Integer.parseInt(purchDateString[1]);
         if (month < 0 || month > 11)
             purchDate = null;
-        purchDate =  new GregorianCalendar(pYear, month, day).getTime();
+        long date = new GregorianCalendar(pYear, month, day).getTimeInMillis();
+        purchDate =  new java.sql.Date(date);
     } else {
         purchDate = null;
     }
@@ -790,21 +791,24 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // Add that movie, ahh yeah
 
     if(m == null){
-    Movie mov = null;
-    mov = MangoController.getInstance().addMovie(title, director, rating, runtime, 
-            year, asin, purchDate, custDesc, condition, type, mangorating);
-    // Now we wanna add the image to the DB for the movie
-    if (mov != null) {
-    	Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
-    	BufferedImage bi = Pictures.toBufferedImage(i);
-    	try {
+        Movie mov = null;
+        mov = MangoController.getInstance().addMovie(title, director, rating, runtime, 
+                year, asin, purchDate, custDesc, condition, type, mangorating);
+        // Now we wanna add the image to the DB for the movie
+        if (mov != null) {
+            Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
+            BufferedImage bi = Pictures.toBufferedImage(i);
+            try {
 			ImageIO.write(bi, "jpg", new File("temp.jpg"));
-	    	MangoController.getInstance().setImageForMovie(mov, new FileInputStream("temp.jpg"));
-		} catch (IOException e) {
+                    MangoController.getInstance().setImageForMovie(mov, new FileInputStream("temp.jpg"));
+            } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-    }
+            }
+        }
+        JOptionPane.showMessageDialog(this, 
+                "The movie was successfully added.", 
+                "Save Successfull", JOptionPane.OK_OPTION);
     } else {
         m.setTitle(title);
         m.setDirector(director);
@@ -818,6 +822,19 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         m.setType(type);
         m.setMangoRating(mangorating);
         MangoController.getInstance().updateMovie(m);
+        Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
+        BufferedImage bi = Pictures.toBufferedImage(i);
+        try {
+            ImageIO.write(bi, "jpg", new File("temp.jpg"));
+            MangoController.getInstance().setImageForMovie(m, new FileInputStream("temp.jpg"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(this, 
+                "The movie was successfully updated.", "Update Successfull", 
+                JOptionPane.OK_OPTION);
+        
     }
 
     
@@ -882,8 +899,8 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                             " " + actorName[1], actorName[2]);
                 else
                     MangoController.getInstance().addActor(actors.get(i), "");
-                //this.addSubstractPanel1.createAndSetSelected(actors.get(i));
-                this.addSubstractPanel1.createAndSetSelected(actorName[0] + " " + actorName[1]);
+                this.addSubstractPanel1.createAndSetSelected(actors.get(i));
+                //this.addSubstractPanel1.createAndSetSelected(actorName[0] + " " + actorName[1]);
                 //System.out.println()
             }
 

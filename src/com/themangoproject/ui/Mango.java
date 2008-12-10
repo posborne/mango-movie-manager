@@ -73,10 +73,15 @@ public class Mango extends javax.swing.JFrame {
     
     public void setTableModel(TableModel tm) {
     	((ViewPanel)viewPanel1).setTableModel(tm);
+        bottomBar1.setLabelInfo(UIController.getInstance().getTableItemCount() + " items");
     }
     
     public JTable getTable() {
     	return ((ViewPanel) viewPanel1).getTable();
+    }
+
+    public int getTableItemCount() {
+        return ((ViewPanel) viewPanel1).getTable().getRowCount();
     }
 
     /** This method is called from within the constructor to

@@ -41,7 +41,11 @@ public class ActorComboBoxModel extends DefaultComboBoxModel {
 	 */
 	@Override
 	public Object getElementAt(int index) {
-		return actors.get(index);
+		return actors.get(index).toString();
 	}
+        
+        public Object getActorAt(int index) {
+            return actors.get(index);
+        }
 
 }
