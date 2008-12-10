@@ -7,12 +7,17 @@
 package com.themangoproject.ui;
 
 import com.themangoproject.model.MangoController;
+import com.themangoproject.model.PersonExistsException;
 import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
 import com.themangoproject.ui.model.RoleComboBoxModel;
 import com.themangoproject.webservice.AmazonMovieDetails;
 import java.awt.event.ItemEvent;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -87,6 +92,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jButton6 = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        jTextField12 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -356,11 +363,6 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 jCheckBox1ItemStateChanged(evt);
             }
         });
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
 
         jLabel18.setText("Borrower");
 
@@ -404,7 +406,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel19.setText("Name");
 
-        jLabel20.setText("E-Mail");
+        jLabel20.setText("Phone Number");
 
         jLabel21.setText("Address");
 
@@ -420,6 +422,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel25.setText("E-Mail");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -427,20 +431,22 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                    .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel11Layout.createSequentialGroup()
-                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel11Layout.createSequentialGroup()
                                 .addComponent(jLabel19)
-                                .addGap(211, 211, 211)))
+                                .addGap(211, 211, 211))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
                     .addComponent(jLabel21)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel25)
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -454,12 +460,16 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(17, 17, 17)
                 .addComponent(jButton6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -480,7 +490,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Associations", jPanel6);
@@ -531,6 +541,11 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         jLabel23.setText("Last Name");
 
         jButton7.setText("Add Actor");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -676,7 +691,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
@@ -703,6 +718,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    // Upload image button code.
     JFileChooser jfc = new JFileChooser();
     int i = jfc.showOpenDialog(this);
     if (i == JFileChooser.APPROVE_OPTION)
@@ -728,12 +744,24 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             this.jComboBox2.setSelectedItem(amazon.getRating());
             this.jSpinner1.setValue(Integer.parseInt(amazon.getRuntime()));
             this.jLabel15.setIcon(amazon.getMovieImage());
+            this.imageURL = amazon.getMovieURL();
             // actors
-//            System.out.println("Actors:");
-//            List<String> actors = amazon.getActors();
-//            for (int i = 0; i < actors.size(); i++) {
-//                System.out.println("\tActor: " + actors.get(i));
-//            }
+            List<String> actors = amazon.getActors();
+            for (int i = 0; i < actors.size(); i++) {
+                String[] actorName = actors.get(i).split(" ");
+                if (actorName.length == 2)
+                    MangoController.getInstance().addActor(actorName[0], 
+                            actorName[1]);
+                else if (actorName.length == 3)
+                    MangoController.getInstance().addActor(actorName[0] + 
+                            " " + actorName[1], actorName[2]);
+                else
+                    MangoController.getInstance().addActor(actors.get(i), "");
+                //this.addSubstractPanel1.createAndSetSelected(actors.get(i));
+                this.addSubstractPanel1.createAndSetSelected(actorName[0] + " " + actorName[1]);
+                //System.out.println()
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, 
                 "Amazon was unable to gather requested information.\n" + 
@@ -749,13 +777,14 @@ private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     this.dispose();
 }//GEN-LAST:event_jButton4ActionPerformed
 
-private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-// TODO add your handling code here:
-}//GEN-LAST:event_jCheckBox1ActionPerformed
-
 private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-// TODO add your handling code here:
-}//GEN-LAST:event_jButton6ActionPerformed
+        try {
+            // Create a new person.
+            MangoController.getInstance().addPerson(this.jTextField6.getText(), this.jTextField7.getText(), this.jTextField12.getText(), this.jTextArea2.getText());
+        } catch (PersonExistsException ex) {
+            // JOptionPane//GEN-LAST:event_jButton6ActionPerformed
+        }
+}                                        
 
 private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
     // Reset Thumbnail to default image Default Image
@@ -765,6 +794,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     if (proceed == JOptionPane.YES_OPTION) {
         this.jLabel15.setIcon(new ImageIcon(getClass().
             getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
+        this.imageURL = null;
     }
 }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -779,6 +809,12 @@ private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
             this.jComboBox6.setEnabled(false);
     }
 }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    // Add new Actor
+    MangoController.getInstance().addActor(this.jTextField8.getText(),
+            this.jTextField9.getText());
+}//GEN-LAST:event_jButton7ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -830,6 +866,7 @@ private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -857,6 +894,7 @@ private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -866,7 +904,8 @@ private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
-
+    /** URL for the image */
+    private URL imageURL = null;
     private void setCombBoxModels() {
         this.addSubstractPanel1.setComboBoxPrefs(new ActorComboBoxModel(), 
                 new RoleComboBoxModel(), false, true);

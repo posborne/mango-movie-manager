@@ -162,4 +162,14 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     public void setComboBox2Editable(boolean edit) {
         this.jComboBox2.setEditable(edit);
     }
+    
+    /**
+     * Selects the given item in the left combo box from a given string.
+     * 
+     * @param name The name of the item.
+     */
+    public void setSelectedLeftComboBox(String name) {
+        this.jComboBox1.setSelectedItem(name);
+        //this.jComboBox1.
+    }
 }

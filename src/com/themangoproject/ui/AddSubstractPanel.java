@@ -66,22 +66,27 @@ public class AddSubstractPanel extends javax.swing.JPanel {
     /**
      * Adds an AddSubtractInnerPanel to this panel.
      */
-    public void addAddSubPanel() {
+    public AddSubtractInnerPanel addAddSubPanel() {
+        AddSubtractInnerPanel asip;
         try {
-            AddSubtractInnerPanel asip = new AddSubtractInnerPanel(
+            asip = new AddSubtractInnerPanel(
                 this.cbm1.getClass().newInstance(), 
                 this.cbm2.getClass().newInstance());
             asip.setComboBox1Editable(this.cbEditable1);
             asip.setComboBox2Editable(this.cbEditable2);
             this.jPanel1.add(asip, this.jPanel1.getComponentCount() - 1);                        
         } catch (InstantiationException ex) {
+            return null;
         } catch (IllegalAccessException ex) {
+            return null;
         }
 
         if (this.jPanel1.getComponentCount() == 3)
             ((AddSubtractInnerPanel)this.jPanel1.getComponent(0)).enableMinusButton();    
         this.jPanel1.revalidate();
         this.jPanel1.repaint();
+        
+        return asip;
     }
     
     /**
@@ -115,6 +120,7 @@ public class AddSubstractPanel extends javax.swing.JPanel {
         this.cbEditable1 = cb1;
         this.cbEditable2 = cb2;
         AddSubtractInnerPanel asip = new AddSubtractInnerPanel(cbm1, cbm2);
+        asip.disableMinusButton();
         asip.setComboBox1Editable(this.cbEditable1);
         asip.setComboBox2Editable(this.cbEditable2);
         this.jPanel1.add(asip);
@@ -136,5 +142,15 @@ public class AddSubstractPanel extends javax.swing.JPanel {
                         getInnerPanelValues());
         }
         return info;
+    }
+    
+    /**
+     * Creates a new inner panel and trys to select an item with a given name.
+     * 
+     * @param name The name of the item.
+     */
+    public void createAndSetSelected(String name) {
+        AddSubtractInnerPanel asip = addAddSubPanel();
+        asip.setSelectedLeftComboBox(name);
     }
 }
