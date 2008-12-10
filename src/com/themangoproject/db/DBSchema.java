@@ -10,7 +10,7 @@ public class DBSchema {
 
 	public static final String createMovieMediumDomain = 
 		"CREATE DOMAIN MOVIE_MEDIUM AS CHAR(10) " + 
-		"CHECK (VALUE IN ('DVD', 'VHS', 'BRAY', 'HD-DVD', 'DIGITAL', 'VCD') )";
+		"CHECK (VALUE IN ('DVD', 'VHS', 'Blu-ray', 'HD-DVD', 'Digital', 'VCD') )";
 
 	public static final String dropMovieRatingDomain = 
 		"DROP DOMAIN IF EXISTS MOVIE_RATING";
