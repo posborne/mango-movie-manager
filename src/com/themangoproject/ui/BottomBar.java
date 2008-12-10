@@ -3,7 +3,9 @@ package com.themangoproject.ui;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import java.awt.GraphicsDevice;
 import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -200,10 +202,16 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         try {
             File file = null;
             file = jfc.getSelectedFile();
-            is = new FileInputStream(file);
-            BufferedImage im = ImageIO.read(file);
+            
+            image = ImageIO.read(file);
 //            if(im != null){
-               image = im.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
+               image = image.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
+               
+               BufferedImage im = Pictures.toBufferedImage(image);
+               file = new File("temp.png");
+               ImageIO.write(im, "png", file);
+               
+                is = new FileInputStream(file);
 //            } else {
 //                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
 //            }
@@ -214,6 +222,8 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
         int selRow = UIController.getInstance().getViewTable().getSelectedRow();
         Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
@@ -240,6 +250,9 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 //        System.out.println("Cancel");
     // Add code to add thumbnail image to this movie
 }//GEN-LAST:event_jButton6ActionPerformed
+
+
+
 
 /**
  * Sets the icon to the appropriate arrow.  Up arrow if the InfoPanel is hidden.

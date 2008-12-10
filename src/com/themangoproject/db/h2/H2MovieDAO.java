@@ -522,11 +522,11 @@ public class H2MovieDAO implements MovieDAO {
 		}
 		DBMovie movie = (DBMovie) m;
 		try {
-			setImageDataForMoviePS.setInt(1, movie.getId());
+			setImageDataForMoviePS.setInt(2, movie.getId());
 			if (is != null) {
-				setImageDataForMoviePS.setBinaryStream(2, is);
+				setImageDataForMoviePS.setBinaryStream(1, is);
 			} else {
-				setImageDataForMoviePS.setNull(2, Types.BLOB);
+				setImageDataForMoviePS.setNull(1, Types.BLOB);
 			}
 			setImageDataForMoviePS.executeUpdate();
 		} catch (SQLException ex) {
