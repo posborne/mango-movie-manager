@@ -1,7 +1,5 @@
 package com.themangoproject.ui;
 
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -30,8 +28,8 @@ public class Mango extends javax.swing.JFrame {
 	/** Creates new form Mango */
     public Mango() {
         H2Util.getInstance().setDatabaseLocation("~/Desktop/db/mango.db");
-        H2Util.getInstance().initializeSchemaOnDb();
-        TestUtility.executeInserts();
+        //H2Util.getInstance().initializeSchemaOnDb();
+        //TestUtility.executeInserts();
         initComponents();
         createdInstance = this;
         this.setTableModel(new AllMoviesEditableTableModel());
