@@ -1,14 +1,7 @@
-/*
- * Mango.java
- *
- * Created on October 30, 2008, 1:54 AM
- */
-
 package com.themangoproject.ui;
 
 import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
-
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
@@ -21,7 +14,9 @@ import javax.swing.table.TableModel;
  */
 public class Mango extends javax.swing.JFrame {
 
-    /** Creates new form Mango */
+	private static final long serialVersionUID = 3994487592258060215L;
+
+	/** Creates new form Mango */
     public Mango() {
         H2Util.getInstance().setDatabaseLocation("~/Desktop/db/mango.db");
         H2Util.getInstance().initializeSchemaOnDb();
@@ -37,6 +32,10 @@ public class Mango extends javax.swing.JFrame {
     
     public void setTableModel(TableModel tm) {
     	((ViewPanel)viewPanel1).setTableModel(tm);
+    }
+    
+    public TableModel getTableModel() {
+    	return ((ViewPanel) viewPanel1).getTableModel();
     }
 
     /** This method is called from within the constructor to

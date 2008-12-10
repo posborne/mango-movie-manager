@@ -20,4 +20,9 @@ public class UIController {
 	public void setViewTableModel(TableModel tm) {
 		mango.setTableModel(tm);
 	}
+	
+	public TableModel getViewTableModel() {
+		return mango.getTableModel();
+	}
+	
 }

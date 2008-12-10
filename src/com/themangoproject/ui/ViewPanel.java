@@ -189,6 +189,10 @@ private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     public void setTableModel(TableModel model) {
         this.jTable1.setModel(model);
     }
+    
+    public TableModel getTableModel() {
+    	return this.jTable1.getModel();
+    }
 
     public void tableChanged(TableModelEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
