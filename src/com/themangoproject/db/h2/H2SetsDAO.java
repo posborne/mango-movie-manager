@@ -71,6 +71,19 @@ public class H2SetsDAO implements SetsDAO {
 		return instance;
 	}
 
+	private PreparedStatement addSetPS;
+	private static final String addSetSQL =
+		"INSERT INTO sets(label) VALUES(?)";
+	
+	public void addSet(String label) {
+		try {
+			addSetPS.setString(1, label);
+			addSetPS.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 	@Override
 	public List<String> getAllSets() {
 		ArrayList<String> sets = new ArrayList<String>();

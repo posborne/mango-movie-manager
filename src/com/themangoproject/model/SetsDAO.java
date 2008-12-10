@@ -9,4 +9,5 @@ public interface SetsDAO {
 	public void removeMovieFromSet(String label, Movie m);
 	public void addMovieToSet(String label, Movie m);
 	public void createSet(String label);
+	public void addSet(String label);
 }
