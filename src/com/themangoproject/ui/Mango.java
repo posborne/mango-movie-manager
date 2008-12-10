@@ -1,8 +1,16 @@
 package com.themangoproject.ui;
 
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.UIManager;
@@ -28,6 +36,36 @@ public class Mango extends javax.swing.JFrame {
         createdInstance = this;
         this.setTableModel(new AllMoviesEditableTableModel());
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel1);
+        final JPopupMenu moviePopupMenu = new JPopupMenu("Movie Actions");
+        moviePopupMenu.add(new JMenuItem("Movies, I like those"));
+        this.getTable().addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("Yeah?");
+				if (e.isPopupTrigger()) {
+					moviePopupMenu.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
     }
     
     private static Mango createdInstance;
