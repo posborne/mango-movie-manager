@@ -173,6 +173,7 @@ private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
     // Create a new upload thumbnail dialog
     JFileChooser jfc = new JFileChooser();
+    jfc.setFileFilter(new ImageFilter());
     int i = jfc.showOpenDialog(this);
     if (i == JFileChooser.APPROVE_OPTION)
         System.out.println("OK");
