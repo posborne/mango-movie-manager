@@ -1,5 +1,14 @@
 package com.themangoproject.ui;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageInputStream;
+import javax.swing.*;
 import javax.swing.JFileChooser;
 
 /*
@@ -172,13 +181,45 @@ private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
 private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
     // Create a new upload thumbnail dialog
+    //TODO: add to correct movie
     JFileChooser jfc = new JFileChooser();
-    jfc.setFileFilter(new ImageFilter());
+    jfc.addChoosableFileFilter(new ImageFilter());
+    jfc.setAcceptAllFileFilterUsed(false);
     int i = jfc.showOpenDialog(this);
-    if (i == JFileChooser.APPROVE_OPTION)
-        System.out.println("OK");
-    else
-        System.out.println("Cancel");
+    
+    if(i == JFileChooser.APPROVE_OPTION){
+        Image image = null;    
+        try {
+            BufferedImage im = ImageIO.read(jfc.getSelectedFile());
+//            if(im != null){
+               image = im.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
+//            } else {
+//                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
+//            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
+            Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
+            Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    /*
+     * This is test code to make sure the image is being uploaded correctly.
+     * 
+    JDialog dia = new JDialog();
+    JLabel lab = new JLabel();
+    lab.setIcon(new ImageIcon(image));
+    dia.add(lab);
+    dia.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    dia.pack();
+    dia.setVisible(true);
+    */
+    
+//    if (i == JFileChooser.APPROVE_OPTION)
+//        System.out.println("OK");
+//    else
+//        System.out.println("Cancel");
     // Add code to add thumbnail image to this movie
 }//GEN-LAST:event_jButton6ActionPerformed
 
