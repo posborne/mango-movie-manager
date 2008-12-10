@@ -11,9 +11,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -66,8 +63,7 @@ public class MangoController {
          * @param name The name of the list.
          */
     public void addList(String name) {
-        // TODO: implement method in the H2ListDOA
-        //listsDAO.addList(name);
+        listsDAO.addList(name);
     }
 
 	/**
@@ -137,8 +133,7 @@ public class MangoController {
          * @param name The name of the list.
          */
     public void addSet(String name) {
-        // TODO: Implement method in H2SetDOA
-        //setDAO.addSet(name);
+        setsDAO.addSet(name);
     }
 
 	/**

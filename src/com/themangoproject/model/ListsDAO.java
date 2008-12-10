@@ -12,4 +12,5 @@ public interface ListsDAO {
 	public void reorderMoviesInList(String label, List<Movie> moviesInOrder);
 	public void addListsChangeListener(ChangeListener l);
 	public void removeListsChangeListener(ChangeListener l);
+	public void addList(String label);
 }
