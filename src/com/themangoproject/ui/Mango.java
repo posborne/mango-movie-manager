@@ -2,6 +2,7 @@ package com.themangoproject.ui;
 
 import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
+import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,6 +25,7 @@ public class Mango extends javax.swing.JFrame {
         TestUtility.executeInserts();
         initComponents();
         createdInstance = this;
+        this.setTableModel(new AllMoviesEditableTableModel());
     }
     
     private static Mango createdInstance;

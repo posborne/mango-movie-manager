@@ -218,6 +218,7 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int selRow = UIController.getInstance().getViewTable().getSelectedRow();
         Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
         
+//        System.out.println(m.getTitle());
         MangoController.getInstance().setImageForMovie(m,is);
         
     }
