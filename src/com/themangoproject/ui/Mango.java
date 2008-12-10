@@ -2,6 +2,7 @@ package com.themangoproject.ui;
 
 import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
@@ -34,8 +35,8 @@ public class Mango extends javax.swing.JFrame {
     	((ViewPanel)viewPanel1).setTableModel(tm);
     }
     
-    public TableModel getTableModel() {
-    	return ((ViewPanel) viewPanel1).getTableModel();
+    public JTable getTable() {
+    	return ((ViewPanel) viewPanel1).getTable();
     }
 
     /** This method is called from within the constructor to

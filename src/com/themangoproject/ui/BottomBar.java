@@ -1,13 +1,20 @@
 package com.themangoproject.ui;
 
+import com.themangoproject.model.MangoController;
+import com.themangoproject.model.Movie;
+import com.themangoproject.ui.model.EditableMovieTableModel;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.swing.JFileChooser;
 
@@ -188,9 +195,13 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     int i = jfc.showOpenDialog(this);
     
     if(i == JFileChooser.APPROVE_OPTION){
-        Image image = null;    
+        Image image = null;
+        InputStream is = null;
         try {
-            BufferedImage im = ImageIO.read(jfc.getSelectedFile());
+            File file = null;
+            file = jfc.getSelectedFile();
+            is = new FileInputStream(file);
+            BufferedImage im = ImageIO.read(file);
 //            if(im != null){
                image = im.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
 //            } else {
@@ -203,6 +214,12 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        int selRow = UIController.getInstance().getViewTable().getSelectedRow();
+        Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
+        
+        MangoController.getInstance().setImageForMovie(m,is);
+        
     }
     /*
      * This is test code to make sure the image is being uploaded correctly.

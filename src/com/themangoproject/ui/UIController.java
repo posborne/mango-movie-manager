@@ -1,5 +1,6 @@
 package com.themangoproject.ui;
 
+import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 public class UIController {
@@ -21,8 +22,8 @@ public class UIController {
 		mango.setTableModel(tm);
 	}
 	
-	public TableModel getViewTableModel() {
-		return mango.getTableModel();
+	public JTable getViewTable() {
+		return mango.getTable();
 	}
 	
 }

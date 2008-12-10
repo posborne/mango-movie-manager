@@ -7,6 +7,7 @@ import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
 import com.themangoproject.db.h2.H2SetsDAO;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -92,6 +93,16 @@ public class MangoController {
 	public void addActor(String firstName, String lastName) {
 		actorDAO.addActor(firstName, lastName);
 	}
+        /**
+         * This will set the image for this movie based on the inputstream
+         * passed
+         * 
+         * @param m the movie with the new image
+         * @param is and InputStream representing the movie to be added.
+         */
+        public void setImageForMovie(Movie m, InputStream is){
+            this.movieDAO.setImageForMovie(is, m);
+        }
 
         /**
          * This will add a new person.

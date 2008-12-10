@@ -11,6 +11,7 @@ import java.awt.print.PrinterException;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.JTable.PrintMode;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -190,8 +191,8 @@ private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         this.jTable1.setModel(model);
     }
     
-    public TableModel getTableModel() {
-    	return this.jTable1.getModel();
+    public JTable getTable() {
+    	return this.jTable1;
     }
 
     public void tableChanged(TableModelEvent e) {

@@ -35,6 +35,10 @@ public abstract class EditableMovieTableModel extends AbstractTableModel{
     public String getColumnName(int columnIndex) {
     	return columns[columnIndex];
     }
+    
+    public Movie getMovieFromRow(int rowIndex) {
+        return getMovies().get(rowIndex);
+    }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         Movie m = getMovies().get(rowIndex);
