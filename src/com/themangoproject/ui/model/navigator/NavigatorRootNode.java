@@ -13,13 +13,15 @@ class NavigatorRootNode extends DefaultMutableTreeNode {
         super("Invisible Root Node", true);
         DefaultMutableTreeNode actions = new ActionsMutableTreeNode();
         DefaultMutableTreeNode allMovies, myMovies, friendsMovies, borrowedMovies,
-                loanedMovies, wishList;
+                loanedMovies, wishList, allPeople, allActors;
         
         allMovies = new AllMoviesMutableTreeNode();
         myMovies = new MyMoviesMutableTreeNode();
         friendsMovies = new FriendsMoviesMutableTreeNode();
         borrowedMovies = new BorrowedMoviesMutableTreeNode();
         loanedMovies = new LoanedMoviesMutableTreeNode();
+        allPeople = new AllPeopleMutableTreeNode();
+        allActors = new AllActorsMutableTreeNode();
         wishList = new WishListMutableTreeNode();
         
         actions.add(allMovies);
@@ -27,6 +29,8 @@ class NavigatorRootNode extends DefaultMutableTreeNode {
         actions.add(friendsMovies);
         actions.add(borrowedMovies);
         actions.add(loanedMovies);
+        actions.add(allPeople);
+        actions.add(allActors);
         actions.add(wishList);
         
         SetsMutableTreeNode setsNode = new SetsMutableTreeNode();
