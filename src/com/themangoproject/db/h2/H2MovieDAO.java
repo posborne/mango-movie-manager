@@ -5,19 +5,12 @@ import com.themangoproject.model.*;
 import java.util.Date;
 import java.util.List;
 import java.awt.Image;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.ImageIcon;
 
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
