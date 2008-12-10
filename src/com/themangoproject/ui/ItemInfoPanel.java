@@ -66,6 +66,8 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
     public void setThumbnailImage(Image image) {
         if (image != null) {
             this.jLabel1.setIcon(new ImageIcon(image));
+        } else {
+            this.jLabel1.setIcon(new ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
         }
     }
     
