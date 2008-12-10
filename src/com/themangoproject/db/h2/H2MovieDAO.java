@@ -247,7 +247,13 @@ public class H2MovieDAO implements MovieDAO {
 				addMoviePS.setInt(5, year);
 			}
 			addMoviePS.setString(6, asin);
-			addMoviePS.setDate(7, (java.sql.Date) purchaseDate);
+                        
+                        if (purchaseDate == null) {
+                            addMoviePS.setNull(7, Types.DATE);
+                        } else {
+                            addMoviePS.setDate(7, (java.sql.Date) purchaseDate);
+                        }
+                        
 			addMoviePS.setString(8, customDescription);
 			addMoviePS.setString(9, condition);
 			addMoviePS.setString(10, type);
