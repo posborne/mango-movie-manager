@@ -235,7 +235,7 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         MangoController.getInstance().setImageForMovie(m,is);  
         //TODO:  Not the best way to do this, but it works.
         UIController.getInstance().getViewTable().clearSelection();
-        UIController.getInstance().getViewTable().addRowSelectionInterval(selRow, selRow);
+        UIController.getInstance().getViewTable().setRowSelectionInterval(selRow, selRow);
         
         
     }
