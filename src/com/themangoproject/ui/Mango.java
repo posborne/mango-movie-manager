@@ -44,28 +44,7 @@ public class Mango extends javax.swing.JFrame {
         createdInstance = this;
         this.setTableModel(new AllMoviesEditableTableModel());
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel1);
-        final JPopupMenu moviePopupMenu = new JPopupMenu("Movie Actions");
-        JMenuItem test = new JMenuItem("Delete Selected");
-        test.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EditableMovieTableModel tm = (EditableMovieTableModel)(getTable().getModel());
-				Movie m = tm.getMovieForRow(getTable().getSelectedRow());
-				try {
-					MangoController.getInstance().deleteMovie(m);
-				} catch (MovieDeleteConflict dc) {
-					if (1 == JOptionPane.showConfirmDialog(
-							UIController.getInstance().getViewTable(),
-							"This movie is in multiple set, list, genre, or " +
-							"actor relationships.  \nDeleting will remove all this " +
-							"information.  Continue?", 
-							"Confirm Delete", 
-							JOptionPane.YES_NO_OPTION)) {
-						MangoController.getInstance().forceDeleteMovie(m);
-					}
-				}
-			}
-        });
-        moviePopupMenu.add(test);
+        final MoviePopupMenu moviePopupMenu = new MoviePopupMenu();
         this.getTable().addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent arg0) {}
 			public void mouseEntered(MouseEvent e) {}

@@ -280,4 +280,8 @@ public class MangoController {
 		movieDAO.forceDeleteMovie(m);
 	}
 
+	public void addMovieToSet(String label, Movie m) {
+		setsDAO.addMovieToSet(label, m);
+	}
+
 }
