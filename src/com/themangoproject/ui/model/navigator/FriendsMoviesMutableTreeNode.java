@@ -15,7 +15,6 @@ public class FriendsMoviesMutableTreeNode extends DefaultMutableTreeNode
 	
 	@Override
 	public void doYourThing(Mango mangoPanel) {
-		// TODO Auto-generated method stub
 		System.out.println("Friend's Movies");
 	}
 

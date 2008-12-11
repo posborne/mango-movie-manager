@@ -15,16 +15,6 @@ import javax.swing.tree.DefaultTreeModel;
 public class SetsMutableTreeNode extends DefaultMutableTreeNode implements
 		MangoMutableTreeNode {
 
-	public class SetsChangeListener implements ChangeListener {
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			SetsMutableTreeNode.this.fetchSets();
-			DefaultTreeModel tm = (DefaultTreeModel) UIController.getInstance()
-					.getNavigatorTree().getModel();
-			tm.nodeStructureChanged(SetsMutableTreeNode.this);
-		}
-	}
-
 	private static final long serialVersionUID = -2616587037657452968L;
 	private List<String> sets;
 
@@ -47,5 +37,16 @@ public class SetsMutableTreeNode extends DefaultMutableTreeNode implements
 	@Override
 	public void doYourThing(Mango mangoPanel) {
 		// I guess this doesn't need to do anything
+	}
+	
+
+	public class SetsChangeListener implements ChangeListener {
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			SetsMutableTreeNode.this.fetchSets();
+			DefaultTreeModel tm = (DefaultTreeModel) UIController.getInstance()
+					.getNavigatorTree().getModel();
+			tm.nodeStructureChanged(SetsMutableTreeNode.this);
+		}
 	}
 }

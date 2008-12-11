@@ -16,7 +16,6 @@ public class AllMoviesMutableTreeNode extends DefaultMutableTreeNode implements
 	@Override
 	public void doYourThing(Mango mangoPanel) {
 		UIController.getInstance().setViewTableModel(new AllMoviesEditableTableModel());
-		System.out.println("All Movies");
 	}
 
 }

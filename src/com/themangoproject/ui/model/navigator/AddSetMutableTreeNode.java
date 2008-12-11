@@ -21,6 +21,7 @@ public class AddSetMutableTreeNode extends DefaultMutableTreeNode implements
 	public void doYourThing(Mango mangoPanel) {
 		SetListDialog sld = new SetListDialog(mangoPanel, true);
 		sld.setLocationRelativeTo(mangoPanel);
+		sld.setSetSelected();
 		sld.setVisible(true);
 	}
 

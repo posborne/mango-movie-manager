@@ -44,7 +44,6 @@ public class ListsMutableTreeNode extends DefaultMutableTreeNode
 	public class ListsChangeListener implements ChangeListener {
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			System.out.println("Tree should be updated now");
 			ListsMutableTreeNode.this.fetchLists();
 			DefaultTreeModel tm = 
 				(DefaultTreeModel)UIController.getInstance().getNavigatorTree().getModel();

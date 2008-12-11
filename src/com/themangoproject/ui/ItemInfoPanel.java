@@ -86,7 +86,6 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
             EditableMovieTableModel tm = (EditableMovieTableModel) table.getModel();
             Image i = tm.getMovieForRow(row).getImage();
             setThumbnailImage(i);
-            System.out.println("Yes!!!!");
         } catch (Exception e) {
             e.printStackTrace();
         }
