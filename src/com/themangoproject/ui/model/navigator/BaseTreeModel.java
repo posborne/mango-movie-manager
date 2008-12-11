@@ -1,7 +1,6 @@
 package com.themangoproject.ui.model.navigator;
 
 import javax.swing.tree.DefaultTreeModel;
-
 import com.themangoproject.ui.Mango;
 
 /**

@@ -5,16 +5,15 @@ import com.themangoproject.model.*;
 import java.util.Date;
 import java.util.List;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * The <code>H2MovieDAO</code> is an <code>MovieDAO</code> that provides methods
@@ -33,6 +32,8 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Database connection for the DAO */
 	private Connection conn;
+
+	private ArrayList<ChangeListener> moviesChangeListeners;
 
 	/** Retrieve ids of all movies in the database */
 	private PreparedStatement allMoviesPS;
@@ -104,15 +105,15 @@ public class H2MovieDAO implements MovieDAO {
 
 	/** Get last inserted id */
 	private PreparedStatement lastInsertPS;
-	private static final String lastInsertSQL =
-		"SELECT last_insert_id()";
-	
+	private static final String lastInsertSQL = "SELECT last_insert_id()";
+
 	/**
 	 * The private singleton constructor for the DAO initializes the different
 	 * prepared statements that will be used by the class.
 	 */
 	private H2MovieDAO() {
 		conn = H2Util.getInstance().getConnection();
+		moviesChangeListeners = new ArrayList<ChangeListener>();
 		try {
 			allMoviesPS = conn.prepareStatement(allMoviesSQL);
 			updateMoviePS = conn.prepareStatement(updateMoviesSQL);
@@ -270,6 +271,7 @@ public class H2MovieDAO implements MovieDAO {
 			ex.printStackTrace();
 			return null;
 		}
+		fireMoviesChangedEvent();
 		DBMovie m = new DBMovie();
 		m.setId(movieId);
 		return m;
@@ -298,6 +300,7 @@ public class H2MovieDAO implements MovieDAO {
 		} catch (SQLException ex) {
 			throw new MovieDeleteConflict();
 		}
+		fireMoviesChangedEvent();
 	}
 
 	/**
@@ -339,6 +342,7 @@ public class H2MovieDAO implements MovieDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		fireMoviesChangedEvent();
 	}
 
 	/**
@@ -585,5 +589,42 @@ public class H2MovieDAO implements MovieDAO {
 			image = null;
 		}
 		return image.getImage();
+	}
+
+	/**
+	 * Add a change listener that will be notified when movies are added or
+	 * deleted from the database.
+	 * 
+	 * @param l
+	 *            The change listener that should be added.
+	 */
+	public void addMoviesChangeListener(ChangeListener l) {
+		moviesChangeListeners.add(l);
+	}
+
+	/**
+	 * Remove all change listeners.
+	 */
+	public void removeAllMoviesChangeListeners() {
+		moviesChangeListeners.clear();
+	}
+
+	/**
+	 * Remove the specified change listener.
+	 * 
+	 * @param l
+	 *            The change listener that should be removed.
+	 */
+	public void removeMoviesChangeListener(ChangeListener l) {
+		moviesChangeListeners.remove(l);
+	}
+
+	/**
+	 * Inform all listeners that things have changed.
+	 */
+	private void fireMoviesChangedEvent() {
+		for (ChangeListener l : moviesChangeListeners) {
+			l.stateChanged(null);
+		}
 	}
 }

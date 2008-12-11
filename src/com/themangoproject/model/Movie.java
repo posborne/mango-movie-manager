@@ -4,13 +4,14 @@ import java.awt.Image;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 
 public interface Movie {
 
-    public Image getImage();
-
 	// getters
-    public String getTitle ();
+    public Image getImage();
+	public String getTitle ();
     public String getDirector ();
     public String getRating ();
     public int getRuntime ();
@@ -42,5 +43,10 @@ public interface Movie {
     public void setBorrower(Person borrower);
     public void addGenre(String genre);
     public void removeGenre(String genre);
+    
+    // event listeners
+    public void addChangeListener(ChangeListener l);
+    public void removeChangeListener(ChangeListener l);
+    public void removeAllChangeListeners();
 }
 

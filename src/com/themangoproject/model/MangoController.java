@@ -6,6 +6,7 @@ import com.themangoproject.db.h2.H2MovieDAO;
 import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
 import com.themangoproject.db.h2.H2SetsDAO;
+import com.themangoproject.ui.model.EditableMovieTableModel;
 
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -257,6 +258,18 @@ public class MangoController {
 	
 	public void removeSetsChangeListener(ChangeListener changeListener) {
 		setsDAO.removeSetsChangeListener(changeListener);
+	}
+
+	public void removeMoviesChangeListener(ChangeListener l) {
+		movieDAO.removeMoviesChangeListener(l);
+	}
+	
+	public void clearAllMoviesChangeListener() {
+		movieDAO.removeAllMoviesChangeListeners();
+	}
+	
+	public void addMoviesChangeListener(ChangeListener l) {
+		movieDAO.addMoviesChangeListener(l);
 	}
 
 }

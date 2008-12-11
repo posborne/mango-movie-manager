@@ -1,8 +1,10 @@
 package com.themangoproject.db.h2;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.event.ChangeListener;
 
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.DAOFactory;
@@ -27,15 +29,15 @@ public class DBMovie implements Movie {
 			condition;
 	private Date purchaseDate;
 	private int ownerId = -1, borrowerId = -1;
-	// private MangoController controller;
 	private MovieDAO movieDAO;
 	private DBMovieState state;
+	private ArrayList<ChangeListener> changeListeners;
 
 	public DBMovie() {
-		// controller = MangoController.getInstance();
 		DAOFactory fact = new H2DAOFactory();
 		movieDAO = fact.getMovieDAO();
 		state = new NotfullMovieState();
+		changeListeners = new ArrayList<ChangeListener>();
 	}
 
 	/**
@@ -45,8 +47,8 @@ public class DBMovie implements Movie {
 	 *            The new id for the movie
 	 */
 	void setId(int id) {
-		// TODO: this might need to change to fit state pattern
 		this.id = id;
+		fireMovieChanged();
 	}
 
 	/**
@@ -66,6 +68,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setDirector(String director) {
 		this.director = director;
+		fireMovieChanged();
 	}
 
 	/**
@@ -85,6 +88,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+		fireMovieChanged();
 	}
 
 	/**
@@ -105,6 +109,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setRating(String rating) {
 		this.rating = rating;
+		fireMovieChanged();
 	}
 
 	/**
@@ -123,6 +128,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setRuntime(int runtime) {
 		this.runtime = runtime;
+		fireMovieChanged();
 	}
 
 	/**
@@ -146,6 +152,7 @@ public class DBMovie implements Movie {
 	public void setMangoRating(int mangoRating) throws IllegalArgumentException {
 		if (mangoRating <= 10 && mangoRating >= 0) {
 			this.mangoRating = mangoRating;
+			fireMovieChanged();
 		} else {
 			throw new IllegalArgumentException(
 					"Mango rating must be between 0 and 10");
@@ -213,6 +220,7 @@ public class DBMovie implements Movie {
 	public void setYear(int year) throws IllegalArgumentException {
 		if ((year < 10000 && year > 1890) || year == -1) {
 			DBMovie.this.year = year;
+			fireMovieChanged();
 		} else {
 			throw new IllegalArgumentException("Not a valid year;");
 		}
@@ -235,6 +243,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setASIN(String ASIN) {
 		this.ASIN = ASIN;
+		fireMovieChanged();
 	}
 
 	/**
@@ -255,6 +264,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
+		fireMovieChanged();
 	}
 
 	/**
@@ -275,6 +285,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setCustomDescription(String customDescription) {
 		this.customDescription = customDescription;
+		fireMovieChanged();
 	}
 
 	/**
@@ -295,6 +306,7 @@ public class DBMovie implements Movie {
 	public void setType(String type) {
 		// TODO: input validation
 		this.type = type;
+		fireMovieChanged();
 	}
 
 	/**
@@ -313,10 +325,12 @@ public class DBMovie implements Movie {
 	 *            the owner of this movie
 	 */
 	public void setOwner(Person owner) {
-		if (owner == null)
+		if (owner == null) {
 			this.ownerId = -1;
-		else
+		} else {
 			this.ownerId = ((DBPerson) owner).getId();
+		}
+		fireMovieChanged();
 	}
 
 	/**
@@ -336,10 +350,13 @@ public class DBMovie implements Movie {
 	 *            the borrower of the movie
 	 */
 	public void setBorrower(Person borrower) {
-		if (borrower == null)
+		if (borrower == null) {
 			this.borrowerId = -1;
-		else
+		} else {
 			this.borrowerId = ((DBPerson) borrower).getId();
+		}
+		fireMovieChanged();
+
 	}
 
 	/**
@@ -391,6 +408,7 @@ public class DBMovie implements Movie {
 	 */
 	public void setCondition(String condition) {
 		this.condition = condition;
+		fireMovieChanged();
 	}
 
 	/**
@@ -411,11 +429,53 @@ public class DBMovie implements Movie {
 		return this.state.getBorrowerId();
 	}
 
-        
-        public Image getImage() {
-            return this.state.getImage();
-        }
-        
+	/**
+	 * Get the image for the movie.
+	 * 
+	 * @return the image from the database or null
+	 */
+	public Image getImage() {
+		return this.state.getImage();
+	}
+
+	/**
+	 * Add a change listener on changes in the state of the object.
+	 * 
+	 * @param l
+	 *            The change listener that should be added
+	 */
+	public void addChangeListener(ChangeListener l) {
+		changeListeners.add(l);
+	}
+
+	/**
+	 * Remove the specified change listener from the list of listeners notified
+	 * in the case of a change.
+	 * 
+	 * @param l
+	 *            The change listener to remove.
+	 */
+	public void removeChangeListener(ChangeListener l) {
+		changeListeners.remove(l);
+	}
+
+	/**
+	 * Remove all change listeners.  This movie feels antisocial.
+	 */
+	public void removeAllChangeListeners() {
+		changeListeners.clear();
+	}
+
+	/**
+	 * Notify all listeners that there has been a change in the state of the
+	 * object.
+	 */
+	private void fireMovieChanged() {
+		for (ChangeListener l : changeListeners) {
+			l.stateChanged(null);
+		}
+	}
+
 	private class UpdatedMovieState implements DBMovieState {
 		/**
 		 * This will return the Database unique ID of this movie
@@ -581,9 +641,9 @@ public class DBMovie implements Movie {
 			return DBMovie.this.borrowerId;
 		}
 
-                public Image getImage() {
-                        return movieDAO.getImageForMovie(DBMovie.this);
-                }
+		public Image getImage() {
+			return movieDAO.getImageForMovie(DBMovie.this);
+		}
 	}
 
 	private class NotfullMovieState implements DBMovieState {
@@ -786,9 +846,9 @@ public class DBMovie implements Movie {
 			return DBMovie.this.borrowerId;
 		}
 
-                public Image getImage() {
-                    return movieDAO.getImageForMovie(DBMovie.this);
-                }
+		public Image getImage() {
+			return movieDAO.getImageForMovie(DBMovie.this);
+		}
 	}
 
 }

@@ -1,8 +1,8 @@
 package com.themangoproject.ui.model;
 
-import java.awt.Image;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 import com.themangoproject.model.Movie;
 
@@ -10,7 +10,7 @@ import com.themangoproject.model.Movie;
  *
  * @author Kyle Ronning, Paul Osborne
  */
-public abstract class EditableMovieTableModel extends AbstractTableModel{
+public abstract class EditableMovieTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -7581259670968084268L;
 	private final String columns[] = {
@@ -100,5 +100,7 @@ public abstract class EditableMovieTableModel extends AbstractTableModel{
     		break; // Can't be edited
     	}
     }
+
+	public abstract ChangeListener getMoviesChangeListener();
 
 }

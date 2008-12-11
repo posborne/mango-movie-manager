@@ -15,7 +15,12 @@ import javax.swing.JTable;
 import javax.swing.JTable.PrintMode;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import com.themangoproject.model.MangoController;
+import com.themangoproject.model.Movie;
+import com.themangoproject.ui.model.EditableMovieTableModel;
 
 /**
  * ViewPanel is the main panel of the Mango program.  There are action buttons
@@ -189,7 +194,20 @@ private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     public void setTableModel(TableModel model) {
     	jTable1.clearSelection();
-        this.jTable1.setModel(model);
+    	if (!(jTable1.getModel() instanceof DefaultTableModel)) {
+			int rows = this.jTable1.getModel().getRowCount();
+			for (int i = 0; i < rows; i++) {
+				Movie m = ((EditableMovieTableModel)jTable1.getModel()).getMovieForRow(i);
+				m.removeAllChangeListeners();
+				// remove change listener on movies
+				MangoController.getInstance()
+					.removeMoviesChangeListener(
+							((EditableMovieTableModel)this.jTable1.getModel())
+								.getMoviesChangeListener());
+			}
+    	}
+		this.jTable1.setModel(model);
+        
     }
     
     public JTable getTable() {
