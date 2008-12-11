@@ -272,4 +272,12 @@ public class MangoController {
 		movieDAO.addMoviesChangeListener(l);
 	}
 
+	public void deleteMovie(Movie m) throws MovieDeleteConflict {
+		movieDAO.deleteMovie(m);
+	}
+	
+	public void forceDeleteMovie(Movie m) {
+		movieDAO.forceDeleteMovie(m);
+	}
+
 }

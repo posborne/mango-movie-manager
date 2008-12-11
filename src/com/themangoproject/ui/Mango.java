@@ -1,19 +1,29 @@
 package com.themangoproject.ui;
 
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
+import com.themangoproject.model.MangoController;
+import com.themangoproject.model.Movie;
+import com.themangoproject.model.MovieDeleteConflict;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
+import com.themangoproject.ui.model.EditableMovieTableModel;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
+
+import sun.awt.datatransfer.DataTransferer.IndexOrderComparator;
 
 /**
  * Mango is the main class for the Mango Movie Manager program.
@@ -35,34 +45,45 @@ public class Mango extends javax.swing.JFrame {
         this.setTableModel(new AllMoviesEditableTableModel());
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel1);
         final JPopupMenu moviePopupMenu = new JPopupMenu("Movie Actions");
-        moviePopupMenu.add(new JMenuItem("Movies, I like those"));
+        JMenuItem test = new JMenuItem("Delete Selected");
+        test.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditableMovieTableModel tm = (EditableMovieTableModel)(getTable().getModel());
+				Movie m = tm.getMovieForRow(getTable().getSelectedRow());
+				try {
+					MangoController.getInstance().deleteMovie(m);
+				} catch (MovieDeleteConflict dc) {
+					if (1 == JOptionPane.showConfirmDialog(
+							UIController.getInstance().getViewTable(),
+							"This movie is in multiple set, list, genre, or " +
+							"actor relationships.  \nDeleting will remove all this " +
+							"information.  Continue?", 
+							"Confirm Delete", 
+							JOptionPane.YES_NO_OPTION)) {
+						MangoController.getInstance().forceDeleteMovie(m);
+					}
+				}
+			}
+        });
+        moviePopupMenu.add(test);
         this.getTable().addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {
-				System.out.println("Yeah?");
+				showPopup(e);
+			}
+			public void mouseClicked(MouseEvent e) {
+				showPopup(e);
+			}
+			private void showPopup(MouseEvent e) {
 				if (e.isPopupTrigger()) {
+					JTable table = ((JTable)e.getComponent());
+					int selectedRow = table.rowAtPoint(new Point(e.getX(),e.getY()));
+					table.setRowSelectionInterval(selectedRow, selectedRow);
 					moviePopupMenu.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-        	
         });
     }
     
