@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
+
+import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 
 /**
@@ -68,7 +70,7 @@ public abstract class EditableMovieTableModel extends AbstractTableModel {
     }
     
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	return !(columnIndex == 1);
+    	return !(columnIndex == 0);
     }
     
     public Class<? extends Object> getColumnClass(int columnIndex) {
@@ -99,6 +101,7 @@ public abstract class EditableMovieTableModel extends AbstractTableModel {
     	default:
     		break; // Can't be edited
     	}
+    	MangoController.getInstance().updateMovie(m);
     }
 
 	public abstract ChangeListener getMoviesChangeListener();
