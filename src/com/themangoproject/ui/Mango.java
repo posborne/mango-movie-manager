@@ -46,14 +46,15 @@ public class Mango extends javax.swing.JFrame {
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel1);
         final MoviePopupMenu moviePopupMenu = new MoviePopupMenu();
         this.getTable().addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent e) {
+				showPopup(e);
+			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {
 				showPopup(e);
 			}
 			public void mouseClicked(MouseEvent e) {
-				showPopup(e);
 			}
 			private void showPopup(MouseEvent e) {
 				if (e.isPopupTrigger()) {
