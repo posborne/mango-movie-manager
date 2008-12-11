@@ -19,6 +19,7 @@ public class NavigatorPanel extends javax.swing.JPanel {
     /** Creates new form NavigatorPanel */
     public NavigatorPanel() {
         initComponents();
+        navigatorTree.setShowsRootHandles(true);
         addTreeListeners();
     }
 
