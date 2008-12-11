@@ -232,7 +232,11 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int selRow = UIController.getInstance().getViewTable().getSelectedRow();
         Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
         
-        MangoController.getInstance().setImageForMovie(m,is);   
+        MangoController.getInstance().setImageForMovie(m,is);  
+        //TODO:  Not the best way to do this, but it works.
+        UIController.getInstance().getViewTable().clearSelection();
+        UIController.getInstance().getViewTable().addRowSelectionInterval(selRow, selRow);
+        
         
     }
     /*
