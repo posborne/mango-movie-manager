@@ -13,6 +13,7 @@ import com.themangoproject.model.Movie;
 import com.themangoproject.model.MovieDeleteConflict;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import com.themangoproject.ui.moviepopup.MoviePopupMenu;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;

@@ -284,4 +284,8 @@ public class MangoController {
 		setsDAO.addMovieToSet(label, m);
 	}
 
+	public void addMovieToList(String label, Movie m) {
+		listsDAO.addMovieToList(label, m);
+	}
+
 }

@@ -328,7 +328,8 @@ public class H2ListsDAO implements ListsDAO {
 	 * Notify all the list listeners that the set of lists have changed.
 	 */
 	private void notifyListsChanged() {
-		for (ChangeListener l : listsChangeListeners) {
+		for (int i = 0; i < listsChangeListeners.size(); i++) {
+			ChangeListener l = listsChangeListeners.get(i);
 			l.stateChanged(null); // what object should be passed?
 		}
 	}
