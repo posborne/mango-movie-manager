@@ -44,7 +44,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
     public MovieAddEditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setCombBoxModels();
+        //setCombBoxModels();
         m = null;
     }
 
@@ -62,70 +62,70 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         topInfoComponentsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        titleTF = new javax.swing.JTextField();
+        directorTF = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jSpinner1 = new javax.swing.JSpinner();
+        ratingCB = new javax.swing.JComboBox();
+        runtimeSpinner = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        yearTF = new javax.swing.JTextField();
         middleInfoComponentsPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        purchaseDateTF = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox4 = new javax.swing.JComboBox();
+        typeCB = new javax.swing.JComboBox();
+        mangoRatingCB = new javax.swing.JComboBox();
         jLabel11 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        conditionCB = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        customDescriptionScrollPane = new javax.swing.JScrollPane();
+        customDescriptionTA = new javax.swing.JTextArea();
         jLabel24 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        genreTF = new javax.swing.JTextField();
         bottomInfoComponentsPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        amazonRetrieveButton = new javax.swing.JButton();
+        asinTF = new javax.swing.JTextField();
         associationsPane = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        setOwnerBorrowerPane = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox();
-        jComboBox6 = new javax.swing.JComboBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        ownerCB = new javax.swing.JComboBox();
+        borrowerCB = new javax.swing.JComboBox();
+        borrowedCheckBox = new javax.swing.JCheckBox();
         jLabel18 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        addPersonPanel = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        nameTF = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        phoneNumberTF = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
+        addressScrollPane = new javax.swing.JScrollPane();
+        AddressTA = new javax.swing.JTextArea();
+        addPersonButton = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        emailTF = new javax.swing.JTextField();
         actorsPane = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
+        actingRolesPane = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        addSubstractPanel1 = new com.themangoproject.ui.AddSubstractPanel();
-        jPanel7 = new javax.swing.JPanel();
+        addSubstractActorsPanel = new com.themangoproject.ui.AddSubstractPanel();
+        addActorPanel = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
+        actorFirstNameTF = new javax.swing.JTextField();
+        actorLastNameTF = new javax.swing.JTextField();
+        addActorButton = new javax.swing.JButton();
         artworkPane = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        changeThumbnailButton = new javax.swing.JButton();
+        defaultImageButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add/Edit Movie");
@@ -144,7 +144,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Run Time");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "PG", "PG-13", "NC-17", "R", "NR", "Unrated", "RP", "TV-Y7", "TV-Y7FV", "TV-G", "TV-PG", "TV-14", "TV-MA" }));
+        ratingCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "PG", "PG-13", "NC-17", "R", "NR", "Unrated", "RP", "TV-Y7", "TV-Y7FV", "TV-G", "TV-PG", "TV-14", "TV-MA" }));
 
         jLabel6.setText("minutes");
 
@@ -158,27 +158,27 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                .addComponent(titleTF, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(222, 222, 222)))
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
+                            .addComponent(directorTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topInfoComponentsPanelLayout.createSequentialGroup()
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(yearTF, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, 0, 190, Short.MAX_VALUE)
+                            .addComponent(ratingCB, 0, 179, Short.MAX_VALUE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(runtimeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6)))))
                 .addContainerGap())
@@ -192,8 +192,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(titleTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(directorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -202,9 +202,9 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(runtimeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ratingCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -216,18 +216,18 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel10.setText("Mango Rating");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-ray", "Digtial", "DVD", "HD-DVD", "VCD", "VHS" }));
+        typeCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-ray", "Digtial", "DVD", "HD-DVD", "VCD", "VHS" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
+        mangoRatingCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
 
         jLabel11.setText("Condition");
 
         jLabel12.setText("Custom Description");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        customDescriptionTA.setColumns(20);
+        customDescriptionTA.setLineWrap(true);
+        customDescriptionTA.setRows(5);
+        customDescriptionScrollPane.setViewportView(customDescriptionTA);
 
         jLabel24.setText("Genre (separate with commas)");
 
@@ -245,26 +245,26 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10))
                             .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                .addComponent(purchaseDateTF, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, 0, 156, Short.MAX_VALUE)))
+                                .addComponent(mangoRatingCB, 0, 161, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox3, 0, 152, Short.MAX_VALUE)
+                            .addComponent(typeCB, 0, 161, Short.MAX_VALUE)
                             .addComponent(jLabel9)))
                     .addComponent(jLabel12)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middleInfoComponentsPanelLayout.createSequentialGroup()
                         .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                .addComponent(conditionCB, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(197, 197, 197)))
                         .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))))
+                            .addComponent(genreTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         middleInfoComponentsPanelLayout.setVerticalGroup(
@@ -277,21 +277,21 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(purchaseDateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mangoRatingCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel24))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(conditionCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(genreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -299,10 +299,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel7.setText("ASIN");
 
-        jButton3.setText("Get Information Via Amazon");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        amazonRetrieveButton.setText("Get Information Via Amazon");
+        amazonRetrieveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                amazonRetrieveButtonActionPerformed(evt);
             }
         });
 
@@ -315,9 +315,9 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addGroup(bottomInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(asinTF, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(amazonRetrieveButton)))
                 .addContainerGap())
         );
         bottomInfoComponentsPanelLayout.setVerticalGroup(
@@ -325,15 +325,15 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(bottomInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
+                    .addComponent(amazonRetrieveButton)
                     .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(asinTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        bottomInfoComponentsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jTextField3});
+        bottomInfoComponentsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amazonRetrieveButton, asinTF});
 
         javax.swing.GroupLayout movieInfoPaneLayout = new javax.swing.GroupLayout(movieInfoPane);
         movieInfoPane.setLayout(movieInfoPaneLayout);
@@ -361,61 +361,61 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         tabbedPane.addTab("Movie Info", movieInfoPane);
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setOwnerBorrowerPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel17.setText("Owner");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ownerCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox6.setEnabled(false);
+        borrowerCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        borrowerCB.setEnabled(false);
 
-        jCheckBox1.setText("Borrowed");
-        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+        borrowedCheckBox.setText("Borrowed");
+        borrowedCheckBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox1ItemStateChanged(evt);
+                borrowedCheckBoxItemStateChanged(evt);
             }
         });
 
         jLabel18.setText("Borrower");
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout setOwnerBorrowerPaneLayout = new javax.swing.GroupLayout(setOwnerBorrowerPane);
+        setOwnerBorrowerPane.setLayout(setOwnerBorrowerPaneLayout);
+        setOwnerBorrowerPaneLayout.setHorizontalGroup(
+            setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jComboBox5, 0, 201, Short.MAX_VALUE)
+                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
+                        .addComponent(ownerCB, 0, 198, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(170, 170, 170)))
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jComboBox6, 0, 202, Short.MAX_VALUE)
+                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
+                        .addComponent(borrowerCB, 0, 171, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1))
+                        .addComponent(borrowedCheckBox))
                     .addComponent(jLabel18))
                 .addContainerGap())
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        setOwnerBorrowerPaneLayout.setVerticalGroup(
+            setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ownerCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(borrowedCheckBox)
+                    .addComponent(borrowerCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Create New Person"));
+        addPersonPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Create New Person"));
 
         jLabel19.setText("Name");
 
@@ -423,65 +423,65 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel21.setText("Address");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        AddressTA.setColumns(20);
+        AddressTA.setLineWrap(true);
+        AddressTA.setRows(5);
+        addressScrollPane.setViewportView(AddressTA);
 
-        jButton6.setText("Add Person");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        addPersonButton.setText("Add Person");
+        addPersonButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                addPersonButtonActionPerformed(evt);
             }
         });
 
         jLabel25.setText("E-Mail");
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout addPersonPanelLayout = new javax.swing.GroupLayout(addPersonPanel);
+        addPersonPanel.setLayout(addPersonPanelLayout);
+        addPersonPanelLayout.setHorizontalGroup(
+            addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPersonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(emailTF, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                    .addGroup(addPersonPanelLayout.createSequentialGroup()
+                        .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addPersonPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addGap(211, 211, 211))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPersonPanelLayout.createSequentialGroup()
+                                .addComponent(nameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
+                            .addComponent(phoneNumberTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)))
                     .addComponent(jLabel21)
                     .addComponent(jLabel25)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
+                    .addComponent(addPersonButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addressScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        addPersonPanelLayout.setVerticalGroup(
+            addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPersonPanelLayout.createSequentialGroup()
+                .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(jLabel20))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phoneNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addressScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
-                .addComponent(jButton6)
+                .addComponent(addPersonButton)
                 .addContainerGap())
         );
 
@@ -492,23 +492,23 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, associationsPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(associationsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addPersonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(setOwnerBorrowerPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         associationsPaneLayout.setVerticalGroup(
             associationsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(associationsPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(setOwnerBorrowerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addComponent(addPersonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Associations", associationsPane);
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        actingRolesPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel14.setText("Role");
 
@@ -516,82 +516,82 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel13.setText("Actor");
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+        javax.swing.GroupLayout actingRolesPaneLayout = new javax.swing.GroupLayout(actingRolesPane);
+        actingRolesPane.setLayout(actingRolesPaneLayout);
+        actingRolesPaneLayout.setHorizontalGroup(
+            actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actingRolesPaneLayout.createSequentialGroup()
+                .addGroup(actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(actingRolesPaneLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel13)
                         .addGap(92, 92, 92)
                         .addComponent(jLabel14)
                         .addGap(98, 98, 98)
                         .addComponent(jLabel16))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGroup(actingRolesPaneLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(addSubstractPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(addSubstractActorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        actingRolesPaneLayout.setVerticalGroup(
+            actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actingRolesPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jLabel16)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addSubstractPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(addSubstractActorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Add Actor"));
+        addActorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Add Actor"));
 
         jLabel22.setText("First Name");
 
         jLabel23.setText("Last Name");
 
-        jButton7.setText("Add Actor");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        addActorButton.setText("Add Actor");
+        addActorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                addActorButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout addActorPanelLayout = new javax.swing.GroupLayout(addActorPanel);
+        addActorPanel.setLayout(addActorPanelLayout);
+        addActorPanelLayout.setHorizontalGroup(
+            addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addActorPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addActorPanelLayout.createSequentialGroup()
+                        .addComponent(actorFirstNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGroup(addActorPanelLayout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addGap(135, 135, 135)))
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addActorPanelLayout.createSequentialGroup()
+                        .addComponent(actorLastNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7))
+                        .addComponent(addActorButton))
                     .addComponent(jLabel23))
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        addActorPanelLayout.setVerticalGroup(
+            addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addActorPanelLayout.createSequentialGroup()
+                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
                     .addComponent(jLabel23))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(actorFirstNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addActorButton)
+                    .addComponent(actorLastNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -602,17 +602,17 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actorsPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(actorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(actingRolesPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addActorPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         actorsPaneLayout.setVerticalGroup(
             actorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actorsPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(actingRolesPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addActorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -621,17 +621,17 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png"))); // NOI18N
 
-        jButton5.setText("Change Thumbnail");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        changeThumbnailButton.setText("Change Thumbnail");
+        changeThumbnailButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                changeThumbnailButtonActionPerformed(evt);
             }
         });
 
-        jButton8.setText("Default Image");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        defaultImageButton.setText("Default Image");
+        defaultImageButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                defaultImageButtonActionPerformed(evt);
             }
         });
 
@@ -642,45 +642,45 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, artworkPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                     .addGroup(artworkPaneLayout.createSequentialGroup()
-                        .addComponent(jButton8)
+                        .addComponent(defaultImageButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)))
+                        .addComponent(changeThumbnailButton)))
                 .addContainerGap())
         );
         artworkPaneLayout.setVerticalGroup(
             artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, artworkPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton8))
+                    .addComponent(changeThumbnailButton)
+                    .addComponent(defaultImageButton))
                 .addContainerGap())
         );
 
         tabbedPane.addTab("Artwork", artworkPane);
 
-        jButton1.setText("Cancel");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Save");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Close");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                closeButtonActionPerformed(evt);
             }
         });
 
@@ -693,11 +693,11 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(closeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 375, Short.MAX_VALUE)
+                        .addComponent(saveButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(cancelButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -707,27 +707,27 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(cancelButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton4)))
+                        .addComponent(saveButton)
+                        .addComponent(closeButton)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 public void populateData(Movie m){
-    this.jTextField1.setText(m.getTitle());
-    this.jTextField2.setText(m.getDirector());
-    this.jTextField10.setText(new Integer(m.getYear()).toString());
-    this.jComboBox2.setSelectedItem(m.getRating());
-    this.jSpinner1.setValue(m.getRuntime());
+    this.titleTF.setText(m.getTitle());
+    this.directorTF.setText(m.getDirector());
+    this.yearTF.setText(new Integer(m.getYear()).toString());
+    this.ratingCB.setSelectedItem(m.getRating());
+    this.runtimeSpinner.setValue(m.getRuntime());
 //    this.jTextField4.setText(m.getPurchaseDate().toString());
-    this.jComboBox4.setSelectedItem(new Integer(m.getMangoRating()).toString());
-    this.jComboBox3.setSelectedItem(m.getType());
-    this.jTextField5.setText(m.getCondition());
-    this.jTextField11.setText(genreText(m));
-    this.jTextArea1.setText(m.getCustomDescription());
+    this.mangoRatingCB.setSelectedItem(new Integer(m.getMangoRating()).toString());
+    this.typeCB.setSelectedItem(m.getType());
+    this.conditionCB.setText(m.getCondition());
+    this.genreTF.setText(genreText(m));
+    this.customDescriptionTA.setText(m.getCustomDescription());
     Image i = m.getImage();
     if(i != null)
         this.jLabel15.setIcon(new ImageIcon(i));
@@ -746,31 +746,31 @@ private String genreText(Movie m){
     }
     return tmp;
 }
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
     // Cancel Button
     this.dispose();
-}//GEN-LAST:event_jButton1ActionPerformed
+}//GEN-LAST:event_cancelButtonActionPerformed
 
-private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
     // Save button -- Use the controller
 
-    String title = this.jTextField1.getText();
-    String director = this.jTextField2.getText();
-    String rating = (String)this.jComboBox2.getSelectedItem();
-    int runtime = ((Integer)this.jSpinner1.getValue()).intValue();
+    String title = this.titleTF.getText();
+    String director = this.directorTF.getText();
+    String rating = (String)this.ratingCB.getSelectedItem();
+    int runtime = ((Integer)this.runtimeSpinner.getValue()).intValue();
     if (runtime < 0) 
         runtime = -1;
     int year = -1;
     int mangorating = -1;
     try {
-        year = Integer.parseInt(this.jTextField10.getText());
-        mangorating = Integer.parseInt((String) this.jComboBox4.getSelectedItem());
+        year = Integer.parseInt(this.yearTF.getText());
+        mangorating = Integer.parseInt((String) this.mangoRatingCB.getSelectedItem());
     } catch (NumberFormatException e) {
         year = -1;
         mangorating = 0;
     }
-    String asin = this.jTextField3.getText();
-    String[] purchDateString = this.jTextField4.getText().split("/");
+    String asin = this.asinTF.getText();
+    String[] purchDateString = this.purchaseDateTF.getText().split("/");
     java.sql.Date purchDate;
     if (purchDateString.length == 3) {
         int pYear = Integer.parseInt(purchDateString[2]);
@@ -784,9 +784,9 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         purchDate = null;
     }
       
-    String custDesc = this.jTextArea1.getText();
-    String condition = jTextField5.getText();
-    String type = (String) jComboBox3.getSelectedItem();
+    String custDesc = this.customDescriptionTA.getText();
+    String condition = conditionCB.getText();
+    String type = (String) typeCB.getSelectedItem();
     
     // Add that movie, ahh yeah
 
@@ -839,9 +839,9 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     
     
-}//GEN-LAST:event_jButton2ActionPerformed
+}//GEN-LAST:event_saveButtonActionPerformed
 
-private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+private void changeThumbnailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeThumbnailButtonActionPerformed
     // Upload image button code.
     JFileChooser jfc = new JFileChooser();
     jfc.addChoosableFileFilter(new ImageFilter());
@@ -858,19 +858,19 @@ private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 //                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
 //            }
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
+            JOptionPane.showMessageDialog(addPersonButton, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
+            JOptionPane.showMessageDialog(addPersonButton, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         this.jLabel15.setIcon(new ImageIcon(image));
     }
     // Add code to add thumbnail image to this movie
-}//GEN-LAST:event_jButton5ActionPerformed
+}//GEN-LAST:event_changeThumbnailButtonActionPerformed
 
-private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amazonRetrieveButtonActionPerformed
     // Get information from amazon.
     int proceed = JOptionPane.showConfirmDialog(this, 
             "Amazon will try to populate certain fields to make your life " + 
@@ -878,13 +878,13 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             "Confirm", JOptionPane.YES_NO_OPTION);
     if (proceed == JOptionPane.YES_OPTION) {
         AmazonMovieDetails amazon = new AmazonMovieDetails();
-        boolean valid = amazon.getMovieXMLDocument(this.jTextField3.getText());
+        boolean valid = amazon.getMovieXMLDocument(this.asinTF.getText());
         if (valid) {
-            this.jTextField1.setText(amazon.getTitle());
-            this.jTextField2.setText(amazon.getDirector());
-            this.jTextField10.setText(amazon.getReleaseDate());
-            this.jComboBox2.setSelectedItem(amazon.getRating());
-            this.jSpinner1.setValue(Integer.parseInt(amazon.getRuntime()));
+            this.titleTF.setText(amazon.getTitle());
+            this.directorTF.setText(amazon.getDirector());
+            this.yearTF.setText(amazon.getReleaseDate());
+            this.ratingCB.setSelectedItem(amazon.getRating());
+            this.runtimeSpinner.setValue(Integer.parseInt(amazon.getRuntime()));
             this.jLabel15.setIcon(amazon.getMovieImage());
             this.imageURL = amazon.getMovieURL();
             // actors
@@ -899,7 +899,7 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                             " " + actorName[1], actorName[2]);
                 else
                     MangoController.getInstance().addActor(actors.get(i), "");
-                this.addSubstractPanel1.createAndSetSelected(actors.get(i));
+                this.addSubstractActorsPanel.createAndSetSelected(actors.get(i));
                 //this.addSubstractPanel1.createAndSetSelected(actorName[0] + " " + actorName[1]);
                 //System.out.println()
             }
@@ -911,26 +911,26 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 "Could not gather information", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-}//GEN-LAST:event_jButton3ActionPerformed
+}//GEN-LAST:event_amazonRetrieveButtonActionPerformed
 
-private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
     // Close Button
     // Warn about saving
     this.dispose();
-}//GEN-LAST:event_jButton4ActionPerformed
+}//GEN-LAST:event_closeButtonActionPerformed
 
-private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonButtonActionPerformed
         try {
             // Create a new person.
-            MangoController.getInstance().addPerson(this.jTextField6.getText(), 
-                    this.jTextField7.getText(), this.jTextField12.getText(), 
-                    this.jTextArea2.getText());
+            MangoController.getInstance().addPerson(this.nameTF.getText(), 
+                    this.phoneNumberTF.getText(), this.emailTF.getText(), 
+                    this.AddressTA.getText());
         } catch (PersonExistsException ex) {
-            // JOptionPane//GEN-LAST:event_jButton6ActionPerformed
-        }
+}//GEN-LAST:event_addPersonButtonActionPerformed
+        
 }                                        
 
-private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultImageButtonActionPerformed
     // Reset Thumbnail to default image Default Image
     int proceed = JOptionPane.showConfirmDialog(this, 
         "Are you sure you want to reset the thumbnail image to the default" +
@@ -940,27 +940,27 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
         this.imageURL = null;
     }
-}//GEN-LAST:event_jButton8ActionPerformed
+}//GEN-LAST:event_defaultImageButtonActionPerformed
 
-private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+private void borrowedCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_borrowedCheckBoxItemStateChanged
     // Borrowed check box
     Object source = evt.getItemSelectable();
     int state = evt.getStateChange();
-    if (source == this.jCheckBox1) {
+    if (source == this.borrowedCheckBox) {
         if (state == ItemEvent.SELECTED)
-            this.jComboBox6.setEnabled(true);
+            this.borrowerCB.setEnabled(true);
         else
-            this.jComboBox6.setEnabled(false);
+            this.borrowerCB.setEnabled(false);
     }
-}//GEN-LAST:event_jCheckBox1ItemStateChanged
+}//GEN-LAST:event_borrowedCheckBoxItemStateChanged
 
-private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActorButtonActionPerformed
     // Add new Actor
-    if (!this.jTextField8.getText().equals("") && 
-            !this.jTextField9.getText().equals(""))
-        MangoController.getInstance().addActor(this.jTextField8.getText(),
-                this.jTextField9.getText());
-}//GEN-LAST:event_jButton7ActionPerformed
+    if (!this.actorFirstNameTF.getText().equals("") && 
+            !this.actorLastNameTF.getText().equals(""))
+        MangoController.getInstance().addActor(this.actorFirstNameTF.getText(),
+                this.actorLastNameTF.getText());
+}//GEN-LAST:event_addActorButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -980,25 +980,34 @@ private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea AddressTA;
+    private javax.swing.JPanel actingRolesPane;
+    private javax.swing.JTextField actorFirstNameTF;
+    private javax.swing.JTextField actorLastNameTF;
     private javax.swing.JPanel actorsPane;
-    private com.themangoproject.ui.AddSubstractPanel addSubstractPanel1;
+    private javax.swing.JButton addActorButton;
+    private javax.swing.JPanel addActorPanel;
+    private javax.swing.JButton addPersonButton;
+    private javax.swing.JPanel addPersonPanel;
+    private com.themangoproject.ui.AddSubstractPanel addSubstractActorsPanel;
+    private javax.swing.JScrollPane addressScrollPane;
+    private javax.swing.JButton amazonRetrieveButton;
     private javax.swing.JPanel artworkPane;
+    private javax.swing.JTextField asinTF;
     private javax.swing.JPanel associationsPane;
+    private javax.swing.JCheckBox borrowedCheckBox;
+    private javax.swing.JComboBox borrowerCB;
     private javax.swing.JPanel bottomInfoComponentsPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JComboBox jComboBox5;
-    private javax.swing.JComboBox jComboBox6;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton changeThumbnailButton;
+    private javax.swing.JButton closeButton;
+    private javax.swing.JTextField conditionCB;
+    private javax.swing.JScrollPane customDescriptionScrollPane;
+    private javax.swing.JTextArea customDescriptionTA;
+    private javax.swing.JButton defaultImageButton;
+    private javax.swing.JTextField directorTF;
+    private javax.swing.JTextField emailTF;
+    private javax.swing.JTextField genreTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1024,39 +1033,30 @@ private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JComboBox mangoRatingCB;
     private javax.swing.JPanel middleInfoComponentsPanel;
     private javax.swing.JPanel movieInfoPane;
+    private javax.swing.JTextField nameTF;
+    private javax.swing.JComboBox ownerCB;
+    private javax.swing.JTextField phoneNumberTF;
+    private javax.swing.JTextField purchaseDateTF;
+    private javax.swing.JComboBox ratingCB;
+    private javax.swing.JSpinner runtimeSpinner;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JPanel setOwnerBorrowerPane;
     private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JTextField titleTF;
     private javax.swing.JPanel topInfoComponentsPanel;
+    private javax.swing.JComboBox typeCB;
+    private javax.swing.JTextField yearTF;
     // End of variables declaration//GEN-END:variables
     /** URL for the image */
     private URL imageURL = null;
     private void setCombBoxModels() {
-        this.addSubstractPanel1.setComboBoxPrefs(new ActorComboBoxModel(), 
+        this.addSubstractActorsPanel.setComboBoxPrefs(new ActorComboBoxModel(), 
                 new RoleComboBoxModel(), false, true);
-        this.jComboBox5.setModel(new PersonComboBoxModel());
-        this.jComboBox6.setModel(new PersonComboBoxModel());
+        this.ownerCB.setModel(new PersonComboBoxModel());
+        this.borrowerCB.setModel(new PersonComboBoxModel());
         
         //AmazonMovieDetails a = new AmazonMovieDetails("B0019CSXAM");
         
