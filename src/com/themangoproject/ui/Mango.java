@@ -42,7 +42,7 @@ public class Mango extends javax.swing.JFrame {
         initComponents();
         createdInstance = this;
         this.setTableModel(new AllMoviesEditableTableModel());
-        this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel1);
+        this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel);
         final MoviePopupMenu moviePopupMenu = new MoviePopupMenu();
         this.getTable().addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
@@ -72,16 +72,16 @@ public class Mango extends javax.swing.JFrame {
     }
     
     public void setTableModel(TableModel tm) {
-    	((ViewPanel)viewPanel1).setTableModel(tm);
-        bottomBar1.setLabelInfo(UIController.getInstance().getTableItemCount() + " items");
+    	((ViewPanel)viewPanel).setTableModel(tm);
+        bottomBar.setLabelInfo(UIController.getInstance().getTableItemCount() + " items");
     }
     
     public JTable getTable() {
-    	return ((ViewPanel) viewPanel1).getTable();
+    	return ((ViewPanel) viewPanel).getTable();
     }
 
     public int getTableItemCount() {
-        return ((ViewPanel) viewPanel1).getTable().getRowCount();
+        return ((ViewPanel) viewPanel).getTable().getRowCount();
     }
 
     /** This method is called from within the constructor to
@@ -95,21 +95,21 @@ public class Mango extends javax.swing.JFrame {
 
         mainSplitPane = new javax.swing.JSplitPane();
         leftSplitPane = new javax.swing.JSplitPane();
-        navigatorPanel1 = new com.themangoproject.ui.NavigatorPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        itemInfoPanel1 = new com.themangoproject.ui.ItemInfoPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        viewPanel1 = new com.themangoproject.ui.ViewPanel();
-        bottomBar1 = new com.themangoproject.ui.BottomBar();
-        mainMenuBar1 = new javax.swing.JMenuBar();
-        fileMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JSeparator();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        viewMenu1 = new javax.swing.JMenu();
+        itemInfoScrollPane = new javax.swing.JScrollPane();
+        itemInfoPanel = new com.themangoproject.ui.ItemInfoPanel();
+        navigatorPanel = new com.themangoproject.ui.NavigatorPanel();
+        viewPanelScrollPane = new javax.swing.JScrollPane();
+        viewPanel = new com.themangoproject.ui.ViewPanel();
+        bottomBar = new com.themangoproject.ui.BottomBar();
+        mainMenuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        addMovieMenuItem = new javax.swing.JMenuItem();
+        editSelectedMovieMenuItem = new javax.swing.JMenuItem();
+        createSetListMenuItem = new javax.swing.JMenuItem();
+        createSavedSearchMenuItem = new javax.swing.JMenuItem();
+        fileMenuSeperator = new javax.swing.JSeparator();
+        exitMenuItem = new javax.swing.JMenuItem();
+        viewMenu = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -117,9 +117,9 @@ public class Mango extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        aboutMenuItem = new javax.swing.JMenuItem();
+        helpMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mango Movie Manager");
@@ -133,172 +133,172 @@ public class Mango extends javax.swing.JFrame {
         leftSplitPane.setDividerSize(3);
         leftSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setResizeWeight(1.0);
-        leftSplitPane.setTopComponent(navigatorPanel1);
 
-        jScrollPane2.setViewportView(itemInfoPanel1);
+        itemInfoScrollPane.setViewportView(itemInfoPanel);
 
-        leftSplitPane.setRightComponent(jScrollPane2);
+        leftSplitPane.setRightComponent(itemInfoScrollPane);
+        leftSplitPane.setLeftComponent(navigatorPanel);
 
         mainSplitPane.setLeftComponent(leftSplitPane);
 
-        jScrollPane1.setViewportView(viewPanel1);
+        viewPanelScrollPane.setViewportView(viewPanel);
 
-        mainSplitPane.setRightComponent(jScrollPane1);
+        mainSplitPane.setRightComponent(viewPanelScrollPane);
 
-        fileMenu1.setText("File");
+        fileMenu.setText("File");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieadd.png"))); // NOI18N
-        jMenuItem1.setText("Add Movie");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        addMovieMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        addMovieMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieadd.png"))); // NOI18N
+        addMovieMenuItem.setText("Add Movie");
+        addMovieMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                addMovieMenuItemActionPerformed(evt);
             }
         });
-        fileMenu1.add(jMenuItem1);
+        fileMenu.add(addMovieMenuItem);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieedit.png"))); // NOI18N
-        jMenuItem3.setText("Edit Selected Movie");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        editSelectedMovieMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        editSelectedMovieMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieedit.png"))); // NOI18N
+        editSelectedMovieMenuItem.setText("Edit Selected Movie");
+        editSelectedMovieMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                editSelectedMovieMenuItemActionPerformed(evt);
             }
         });
-        fileMenu1.add(jMenuItem3);
+        fileMenu.add(editSelectedMovieMenuItem);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/setlistadd.png"))); // NOI18N
-        jMenuItem2.setText("Create Set/List");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        createSetListMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        createSetListMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/setlistadd.png"))); // NOI18N
+        createSetListMenuItem.setText("Create Set/List");
+        createSetListMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                createSetListMenuItemActionPerformed(evt);
             }
         });
-        fileMenu1.add(jMenuItem2);
+        fileMenu.add(createSetListMenuItem);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/advancedsearch.png"))); // NOI18N
-        jMenuItem7.setText("Create Saved Search");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        createSavedSearchMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        createSavedSearchMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/advancedsearch.png"))); // NOI18N
+        createSavedSearchMenuItem.setText("Create Saved Search");
+        createSavedSearchMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                createSavedSearchMenuItemActionPerformed(evt);
             }
         });
-        fileMenu1.add(jMenuItem7);
-        fileMenu1.add(jSeparator1);
+        fileMenu.add(createSavedSearchMenuItem);
+        fileMenu.add(fileMenuSeperator);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/door_in.png"))); // NOI18N
-        jMenuItem4.setText("Exit");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/door_in.png"))); // NOI18N
+        exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                exitMenuItemActionPerformed(evt);
             }
         });
-        fileMenu1.add(jMenuItem4);
+        fileMenu.add(exitMenuItem);
 
-        mainMenuBar1.add(fileMenu1);
+        mainMenuBar.add(fileMenu);
 
-        viewMenu1.setText("View");
+        viewMenu.setText("View");
 
         jMenuItem8.setText("All Movies");
-        viewMenu1.add(jMenuItem8);
+        viewMenu.add(jMenuItem8);
 
         jMenuItem9.setText("My Movies");
-        viewMenu1.add(jMenuItem9);
+        viewMenu.add(jMenuItem9);
 
         jMenuItem10.setText("Friend's Movie");
-        viewMenu1.add(jMenuItem10);
+        viewMenu.add(jMenuItem10);
 
         jMenuItem11.setText("Borrowed Movies");
-        viewMenu1.add(jMenuItem11);
+        viewMenu.add(jMenuItem11);
 
         jMenuItem12.setText("Loaned Movies");
-        viewMenu1.add(jMenuItem12);
+        viewMenu.add(jMenuItem12);
 
         jMenuItem13.setText("Show People");
-        viewMenu1.add(jMenuItem13);
+        viewMenu.add(jMenuItem13);
 
         jMenuItem14.setText("Wish List");
-        viewMenu1.add(jMenuItem14);
+        viewMenu.add(jMenuItem14);
 
-        mainMenuBar1.add(viewMenu1);
+        mainMenuBar.add(viewMenu);
 
-        jMenu2.setText("Help");
+        helpMenu.setText("Help");
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem5.setText("About Mango");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        aboutMenuItem.setText("About Mango");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                aboutMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        helpMenu.add(aboutMenuItem);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/help.png"))); // NOI18N
-        jMenuItem6.setText("Help");
-        jMenu2.add(jMenuItem6);
+        helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/help.png"))); // NOI18N
+        helpMenuItem.setText("Help");
+        helpMenu.add(helpMenuItem);
 
-        mainMenuBar1.add(jMenu2);
+        mainMenuBar.add(helpMenu);
 
-        setJMenuBar(mainMenuBar1);
+        setJMenuBar(mainMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
-            .addComponent(bottomBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+            .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bottomBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
     this.dispose(); // exit the application
-}//GEN-LAST:event_jMenuItem4ActionPerformed
+}//GEN-LAST:event_exitMenuItemActionPerformed
 
-private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+private void addMovieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMovieMenuItemActionPerformed
     // Add a new movie
     MovieAddEditDialog maed = new MovieAddEditDialog(this, true);
     maed.setLocationRelativeTo(this);
     maed.setVisible(true);
-}//GEN-LAST:event_jMenuItem1ActionPerformed
+}//GEN-LAST:event_addMovieMenuItemActionPerformed
 
-private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+private void createSetListMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSetListMenuItemActionPerformed
     // Show dialog to create a new set or list
     SetListDialog sld = new SetListDialog(this, true);
     sld.setLocationRelativeTo(this);
     sld.setVisible(true);
-}//GEN-LAST:event_jMenuItem2ActionPerformed
+}//GEN-LAST:event_createSetListMenuItemActionPerformed
 
-private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+private void createSavedSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSavedSearchMenuItemActionPerformed
     // Add Saved Search
     SavedSearchDialog ssd = new SavedSearchDialog(this, true);
     ssd.setLocationRelativeTo(this);
     ssd.setVisible(true);
-}//GEN-LAST:event_jMenuItem7ActionPerformed
+}//GEN-LAST:event_createSavedSearchMenuItemActionPerformed
 
-private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+private void editSelectedMovieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSelectedMovieMenuItemActionPerformed
     // Edit Selected Movie
     MovieAddEditDialog maed = new MovieAddEditDialog(this, true);
     maed.setLocationRelativeTo(this);
     maed.setVisible(true);
-}//GEN-LAST:event_jMenuItem3ActionPerformed
+}//GEN-LAST:event_editSelectedMovieMenuItemActionPerformed
 
-private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
     AboutMango am = new AboutMango(this, true);
     am.setLocationRelativeTo(this);
     am.setVisible(true);
-}//GEN-LAST:event_jMenuItem5ActionPerformed
+}//GEN-LAST:event_aboutMenuItemActionPerformed
 
 /**
  * Toggle the InfoPanel from hidden to showing and vice versa.  Called when a 
@@ -310,15 +310,15 @@ public void toggleInfoPanel() {
         // Record the divider location
         this.dividerLoc = this.leftSplitPane.getDividerLocation();
         this.leftSplitPane.setDividerSize(0);
-        this.bottomBar1.setInfoIcon(0);
+        this.bottomBar.setInfoIcon(0);
     } else {
         this.leftSplitPane.setDividerSize(3);
-        this.bottomBar1.setInfoIcon(1);  // make better later
+        this.bottomBar.setInfoIcon(1);  // make better later
     }
     // Set divider location
     this.leftSplitPane.setDividerLocation(this.dividerLoc);  
     // Show or hide the infopane
-    this.jScrollPane2.setVisible(this.infoPaneOn);
+    this.itemInfoScrollPane.setVisible(this.infoPaneOn);
 }
 
     /**
@@ -358,33 +358,33 @@ public void toggleInfoPanel() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.themangoproject.ui.BottomBar bottomBar1;
-    private javax.swing.JMenu fileMenu1;
-    private com.themangoproject.ui.ItemInfoPanel itemInfoPanel1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JMenuItem addMovieMenuItem;
+    private com.themangoproject.ui.BottomBar bottomBar;
+    private javax.swing.JMenuItem createSavedSearchMenuItem;
+    private javax.swing.JMenuItem createSetListMenuItem;
+    private javax.swing.JMenuItem editSelectedMovieMenuItem;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JSeparator fileMenuSeperator;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem helpMenuItem;
+    private com.themangoproject.ui.ItemInfoPanel itemInfoPanel;
+    private javax.swing.JScrollPane itemInfoScrollPane;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane leftSplitPane;
-    private javax.swing.JMenuBar mainMenuBar1;
+    private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JSplitPane mainSplitPane;
-    private com.themangoproject.ui.NavigatorPanel navigatorPanel1;
-    private javax.swing.JMenu viewMenu1;
-    private com.themangoproject.ui.ViewPanel viewPanel1;
+    private com.themangoproject.ui.NavigatorPanel navigatorPanel;
+    private javax.swing.JMenu viewMenu;
+    private com.themangoproject.ui.ViewPanel viewPanel;
+    private javax.swing.JScrollPane viewPanelScrollPane;
     // End of variables declaration//GEN-END:variables
 
     // My field variables
@@ -392,7 +392,7 @@ public void toggleInfoPanel() {
     private int dividerLoc;
 
 	public JTree getNavigatorTree() {
-		return this.navigatorPanel1.getNavigatorTree();
+		return this.navigatorPanel.getNavigatorTree();
 	}
     
 }
