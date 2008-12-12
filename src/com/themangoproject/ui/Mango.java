@@ -24,8 +24,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
 
-import sun.awt.datatransfer.DataTransferer.IndexOrderComparator;
-
 /**
  * Mango is the main class for the Mango Movie Manager program.
  * 
