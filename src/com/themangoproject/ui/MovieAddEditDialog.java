@@ -723,7 +723,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 public void populateData(Movie m){
     this.titleTF.setText(m.getTitle());
     this.directorTF.setText(m.getDirector());
-    this.yearTF.setText(new Integer(m.getYear()).toString());
+    if (m.getYear() == -1)
+        this.yearTF.setText("");
+    else
+        this.yearTF.setText(new Integer(m.getYear()).toString());
     this.ratingCB.setSelectedItem(m.getRating());
     this.runtimeSpinner.setValue(m.getRuntime());
     if(m.getPurchaseDate() != null)
