@@ -144,6 +144,7 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
         tableScrollPane.setBorder(null);
         tableScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
+        viewTable.setAutoCreateRowSorter(true);
         viewTable.setModel(new AllMoviesEditableTableModel());
         viewTable.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tableScrollPane.setViewportView(viewTable);

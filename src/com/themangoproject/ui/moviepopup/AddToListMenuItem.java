@@ -29,7 +29,7 @@ public class AddToListMenuItem extends JMenu implements ChangeListener {
 		public void actionPerformed(ActionEvent e) {
 			// Get the selected movie
 			JTable table = UIController.getInstance().getViewTable();
-			int selectedRow = table.getSelectedRow();
+			int selectedRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
 			Movie m = ((EditableMovieTableModel) table.getModel())
 					.getMovieForRow(selectedRow);
 			

@@ -161,8 +161,9 @@ private void editMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
             new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
     maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
     
-    int selRow = UIController.getInstance().getViewTable().getSelectedRow();
-    Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
+    JTable table = UIController.getInstance().getViewTable();
+    int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
+    Movie m = ((EditableMovieTableModel)table.getModel()).getMovieFromRow(selRow);
     maed.populateData(m);
     // Add code to gather information about a movie given the cell that is
     // selected in the table
@@ -228,16 +229,14 @@ private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt)
         }
         
         
-        
-        int selRow = UIController.getInstance().getViewTable().getSelectedRow();
+        JTable table = UIController.getInstance().getViewTable();
+        int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
         Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
         
         MangoController.getInstance().setImageForMovie(m,is);  
         //TODO:  Not the best way to do this, but it works.
         UIController.getInstance().getViewTable().clearSelection();
         UIController.getInstance().getViewTable().setRowSelectionInterval(selRow, selRow);
-        
-        
     }
     /*
      * This is test code to make sure the image is being uploaded correctly.

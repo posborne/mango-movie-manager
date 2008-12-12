@@ -45,7 +45,7 @@ public class DeleteMovieMenuItem extends JMenuItem {
 			JTable table = UIController.getInstance().getViewTable();
 			EditableMovieTableModel tm = (EditableMovieTableModel) (table
 					.getModel());
-			Movie m = tm.getMovieForRow(table.getSelectedRow());
+			Movie m = tm.getMovieForRow(table.getRowSorter().convertRowIndexToModel(table.getSelectedRow()));
 			
 			// Attempt to delete, prompt for force delete
 			try {

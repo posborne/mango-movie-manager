@@ -79,7 +79,7 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
     public void valueChanged(ListSelectionEvent lse) {
         try {
             JTable table = UIController.getInstance().getViewTable();
-            int row = table.getSelectedRow();
+            int row = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
             if (row < 0) {
             	return;
             }
