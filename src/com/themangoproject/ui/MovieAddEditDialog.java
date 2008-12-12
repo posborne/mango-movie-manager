@@ -1,8 +1,3 @@
-/*
- * MovieAddEditDialog.java
- *
- * Created on November 23, 2008, 1:44 AM
- */
 
 package com.themangoproject.ui;
 
@@ -42,14 +37,78 @@ import javax.swing.JOptionPane;
  */
 public class MovieAddEditDialog extends javax.swing.JDialog {
 
+    /** A Movie for the dialog to work with. */
     private Movie m;
-    /** Creates new form MovieAddEditDialog */
+    
+    /** 
+     * Creates a new dialog MovieAddEditDialog to add or edit a movie.
+     * @param parent The parent frame.
+     * @param set the dialog modal if true.
+     */
     public MovieAddEditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        // we need this guys
         setCombBoxModels();
         m = null;
+    }
+    
+    /**
+     * Populates a the dialog with movie information.
+     * 
+     * @param m The <code>Movie</code> to provide the movie information to the
+     * dialog.
+     */
+    public void populateData(Movie m){
+        this.titleTF.setText(m.getTitle());
+        this.directorTF.setText(m.getDirector());
+        if (m.getYear() == -1)
+            this.yearTF.setText("");
+        else
+            this.yearTF.setText(new Integer(m.getYear()).toString());
+        this.ratingCB.setSelectedItem(m.getRating());
+        this.runtimeSpinner.setValue(m.getRuntime());
+        if(m.getPurchaseDate() != null)
+            this.purchaseDateTF.setText(DateFormat.
+                    getDateInstance(DateFormat.SHORT).format(m.getPurchaseDate()));
+        this.mangoRatingCB.setSelectedItem("" + m.getMangoRating());
+        this.typeCB.setSelectedItem(m.getType());
+        this.conditionCB.setText(m.getCondition());
+        this.genreTF.setText(genreText(m));
+        this.customDescriptionTA.setText(m.getCustomDescription());
+        Image i = m.getImage();
+        if(i != null)
+            this.jLabel15.setIcon(new ImageIcon(i));
+
+        this.m = m;
+    }
+    
+    /**
+     * This method is needed to set up the add actor panel and other comboboxes.
+     */
+    private void setCombBoxModels() {
+        this.addSubstractActorsPanel.setComboBoxPrefs(new ActorComboBoxModel(), 
+                new RoleComboBoxModel(), false, true);
+        this.ownerCB.setModel(new PersonComboBoxModel());
+        this.borrowerCB.setModel(new PersonComboBoxModel());
+            
+    }
+
+    /**
+     * Gets the genres for a movie and creates a comma separated list.
+     * 
+     * @param m The movie to grab the genres from.
+     * @return The comma separated list of genres for a <code>Movie m</code>
+     */
+    private String genreText(Movie m){
+        String tmp = "";
+        List<String> str = m.getGenres();
+        for(String s : str ){
+            tmp += s + ", ";
+        }
+        if(tmp.length() > 0){
+            tmp = tmp.substring(0, tmp.length()-2);
+        }
+        return tmp;
     }
 
     /** This method is called from within the constructor to
@@ -129,7 +188,6 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         defaultImageButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add/Edit Movie");
@@ -162,21 +220,21 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(titleTF, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                                .addComponent(titleTF, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(222, 222, 222)))
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(directorTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)))
+                            .addComponent(directorTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topInfoComponentsPanelLayout.createSequentialGroup()
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(yearTF, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ratingCB, 0, 179, Short.MAX_VALUE)
+                            .addComponent(ratingCB, 0, 190, Short.MAX_VALUE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,26 +307,26 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10))
                             .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(purchaseDateTF, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                                .addComponent(purchaseDateTF, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mangoRatingCB, 0, 161, Short.MAX_VALUE)))
+                                .addComponent(mangoRatingCB, 0, 156, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(typeCB, 0, 161, Short.MAX_VALUE)
+                            .addComponent(typeCB, 0, 152, Short.MAX_VALUE)
                             .addComponent(jLabel9)))
                     .addComponent(jLabel12)
-                    .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
+                    .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middleInfoComponentsPanelLayout.createSequentialGroup()
                         .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(conditionCB, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                .addComponent(conditionCB, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(197, 197, 197)))
                         .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
-                            .addComponent(genreTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))))
+                            .addComponent(genreTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         middleInfoComponentsPanelLayout.setVerticalGroup(
@@ -295,7 +353,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -391,14 +449,14 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                        .addComponent(ownerCB, 0, 198, Short.MAX_VALUE)
+                        .addComponent(ownerCB, 0, 215, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(170, 170, 170)))
                 .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                        .addComponent(borrowerCB, 0, 171, Short.MAX_VALUE)
+                        .addComponent(borrowerCB, 0, 188, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(borrowedCheckBox))
                     .addComponent(jLabel18))
@@ -448,22 +506,22 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(addPersonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emailTF, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                    .addComponent(emailTF, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                     .addGroup(addPersonPanelLayout.createSequentialGroup()
                         .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(addPersonPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addGap(211, 211, 211))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPersonPanelLayout.createSequentialGroup()
-                                .addComponent(nameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                                .addComponent(nameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
-                            .addComponent(phoneNumberTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)))
+                            .addComponent(phoneNumberTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
                     .addComponent(jLabel21)
                     .addComponent(jLabel25)
                     .addComponent(addPersonButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(addressScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
+                    .addComponent(addressScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
                 .addContainerGap())
         );
         addPersonPanelLayout.setVerticalGroup(
@@ -507,7 +565,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addComponent(setOwnerBorrowerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addPersonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Associations", associationsPane);
@@ -536,7 +594,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addGroup(actingRolesPaneLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(addSubstractActorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         actingRolesPaneLayout.setVerticalGroup(
             actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -548,7 +606,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addSubstractActorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         addActorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Add Actor"));
@@ -572,14 +630,14 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(addActorPanelLayout.createSequentialGroup()
-                        .addComponent(actorFirstNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                        .addComponent(actorFirstNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(addActorPanelLayout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addGap(135, 135, 135)))
                 .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(addActorPanelLayout.createSequentialGroup()
-                        .addComponent(actorLastNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                        .addComponent(actorLastNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addActorButton))
                     .addComponent(jLabel23))
@@ -646,7 +704,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, artworkPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                     .addGroup(artworkPaneLayout.createSequentialGroup()
                         .addComponent(defaultImageButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -657,7 +715,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, artworkPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(changeThumbnailButton)
@@ -681,13 +739,6 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             }
         });
 
-        closeButton.setText("Close");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -696,9 +747,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(closeButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 375, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(saveButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelButton)))
@@ -712,55 +761,21 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cancelButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(saveButton)
-                        .addComponent(closeButton)))
+                    .addComponent(saveButton))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public void populateData(Movie m){
-    this.titleTF.setText(m.getTitle());
-    this.directorTF.setText(m.getDirector());
-    if (m.getYear() == -1)
-        this.yearTF.setText("");
-    else
-        this.yearTF.setText(new Integer(m.getYear()).toString());
-    this.ratingCB.setSelectedItem(m.getRating());
-    this.runtimeSpinner.setValue(m.getRuntime());
-    if(m.getPurchaseDate() != null)
-        this.purchaseDateTF.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(m.getPurchaseDate()));
-    this.mangoRatingCB.setSelectedItem(new Integer(m.getMangoRating()).toString());
-    this.typeCB.setSelectedItem(m.getType());
-    this.conditionCB.setText(m.getCondition());
-    this.genreTF.setText(genreText(m));
-    this.customDescriptionTA.setText(m.getCustomDescription());
-    Image i = m.getImage();
-    if(i != null)
-        this.jLabel15.setIcon(new ImageIcon(i));
 
-    this.m = m;
-}
 
-private String genreText(Movie m){
-    String tmp = "";
-    List<String> str = m.getGenres();
-    for(String s :str ){
-        tmp += s + ", ";
-    }
-    if(tmp.length() > 0){
-        tmp = tmp.substring(0, tmp.length()-2);
-    }
-    return tmp;
-}
 private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-    // Cancel Button
+    // Cancel Button - Discard any unsaved changes.
     this.dispose();
 }//GEN-LAST:event_cancelButtonActionPerformed
 
 private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-    // Save button -- Use the controller
+    // Save button
 
     String title = this.titleTF.getText();
     String director = this.directorTF.getText();
@@ -781,13 +796,22 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     String[] purchDateString = this.purchaseDateTF.getText().split("/");
     java.sql.Date purchDate;
     if (purchDateString.length == 3) {
-        int pYear = Integer.parseInt(purchDateString[2]);
-        int month = Integer.parseInt(purchDateString[0]) - 1;
-        int day = Integer.parseInt(purchDateString[1]);
+        int pYear = 0;
+        int month = 0;
+        int day = 0;
+        try {
+            pYear = Integer.parseInt(purchDateString[2]);
+            month = Integer.parseInt(purchDateString[0]) - 1;
+            day = Integer.parseInt(purchDateString[1]);
+        } catch (NumberFormatException e) {
+            purchDate = null;
+        }
         if (month < 0 || month > 11)
             purchDate = null;
-        long date = new GregorianCalendar(pYear, month, day).getTimeInMillis();
-        purchDate =  new java.sql.Date(date);
+        else {
+            long date = new GregorianCalendar(pYear, month, day).getTimeInMillis();
+            purchDate =  new java.sql.Date(date);
+        }
     } else {
         purchDate = null;
     }
@@ -796,27 +820,33 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     String condition = conditionCB.getText();
     String type = (String) typeCB.getSelectedItem();
     
-    // Add that movie, ahh yeah
 
     if(m == null){
         Movie mov = null;
         mov = MangoController.getInstance().addMovie(title, director, rating, runtime, 
                 year, asin, purchDate, custDesc, condition, type, mangorating);
         // Now we wanna add the image to the DB for the movie
-        if (mov != null) {
+        if (mov != null) { // Add other information
+            // Genre
+            
+            // Actors
+            
+            // Owner and borrower
+            
+            // Image
             Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
             BufferedImage bi = Pictures.toBufferedImage(i);
             try {
-			ImageIO.write(bi, "jpg", new File("temp.jpg"));
-                    MangoController.getInstance().setImageForMovie(mov, new FileInputStream("temp.jpg"));
+                ImageIO.write(bi, "jpg", new File("temp.jpg"));
+                MangoController.getInstance().setImageForMovie(mov, new FileInputStream("temp.jpg"));
             } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         JOptionPane.showMessageDialog(this, 
                 "The movie was successfully added.", 
-                "Save Successfull", JOptionPane.OK_OPTION);
+                "Save Successfull", JOptionPane.INFORMATION_MESSAGE);
     } else {
         m.setTitle(title);
         m.setDirector(director);
@@ -830,6 +860,14 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         m.setType(type);
         m.setMangoRating(mangorating);
         MangoController.getInstance().updateMovie(m);
+        
+        // Genre
+            
+        // Actors
+            
+        // Owner and borrower
+            
+        // Image
         Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
         BufferedImage bi = Pictures.toBufferedImage(i);
         try {
@@ -841,8 +879,8 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
         JOptionPane.showMessageDialog(this, 
                 "The movie was successfully updated.", "Update Successfull", 
-                JOptionPane.OK_OPTION);
-        
+                JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }
 
     
@@ -860,11 +898,8 @@ private void changeThumbnailButtonActionPerformed(java.awt.event.ActionEvent evt
         Image image = null;    
         try {
             BufferedImage im = ImageIO.read(jfc.getSelectedFile());
-//            if(im != null){
-               image = im.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
-//            } else {
-//                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
-//            }
+            image = im.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
+            this.jLabel15.setIcon(new ImageIcon(image));
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(addPersonButton, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
@@ -873,7 +908,7 @@ private void changeThumbnailButtonActionPerformed(java.awt.event.ActionEvent evt
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.jLabel15.setIcon(new ImageIcon(image));
+
     }
     // Add code to add thumbnail image to this movie
 }//GEN-LAST:event_changeThumbnailButtonActionPerformed
@@ -921,12 +956,6 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
     }
 }//GEN-LAST:event_amazonRetrieveButtonActionPerformed
 
-private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-    // Close Button
-    // Warn about saving
-    this.dispose();
-}//GEN-LAST:event_closeButtonActionPerformed
-
 private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonButtonActionPerformed
     try {
         // Create a new person.
@@ -944,7 +973,7 @@ private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
 private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultImageButtonActionPerformed
     // Reset Thumbnail to default image Default Image
     int proceed = JOptionPane.showConfirmDialog(this, 
-        "Are you sure you want to reset the thumbnail image to the default" +
+        "Are you sure you want to reset the thumbnail image to the default " +
         "image?", "Reset Thumbnail to Default", JOptionPane.YES_NO_OPTION);
     if (proceed == JOptionPane.YES_OPTION) {
         this.jLabel15.setIcon(new ImageIcon(getClass().
@@ -1011,7 +1040,6 @@ private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JPanel bottomInfoComponentsPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton changeThumbnailButton;
-    private javax.swing.JButton closeButton;
     private javax.swing.JTextField conditionCB;
     private javax.swing.JScrollPane customDescriptionScrollPane;
     private javax.swing.JTextArea customDescriptionTA;
@@ -1061,19 +1089,5 @@ private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JComboBox typeCB;
     private javax.swing.JTextField yearTF;
     // End of variables declaration//GEN-END:variables
-    /** URL for the image */
-    //private URL imageURL = null;
-    /**
-     * This method is needed to set up the add actor panel.
-     */
-    private void setCombBoxModels() {
-        this.addSubstractActorsPanel.setComboBoxPrefs(new ActorComboBoxModel(), 
-                new RoleComboBoxModel(), false, true);
-        this.ownerCB.setModel(new PersonComboBoxModel());
-        this.borrowerCB.setModel(new PersonComboBoxModel());
-        
-        //AmazonMovieDetails a = new AmazonMovieDetails("B0019CSXAM");
-        
-    }
 
 }
