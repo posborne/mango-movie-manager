@@ -22,8 +22,11 @@ import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import javax.swing.RowFilter;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableRowSorter;
 
 /**
  * ViewPanel is the main panel of the Mango program.  There are action buttons
@@ -39,6 +42,10 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
     public ViewPanel() {
         initComponents();
         initColumnSizes();
+        
+        // setup row sorter and filter
+        TableRowSorter rowSorter = new TableRowSorter<TableModel>(viewTable.getModel());
+        viewTable.setRowSorter(rowSorter);
     }
 
     /**
@@ -144,7 +151,6 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
         tableScrollPane.setBorder(null);
         tableScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
-        viewTable.setAutoCreateRowSorter(true);
         viewTable.setModel(new AllMoviesEditableTableModel());
         viewTable.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tableScrollPane.setViewportView(viewTable);
@@ -166,12 +172,9 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
     }// </editor-fold>//GEN-END:initComponents
 
 private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-//        try {
-//            // Searches for the given string of text within the table
-//            this.jTable1.print(PrintMode.FIT_WIDTH, new MessageFormat("Header"), footerFormat);
-//        } catch (PrinterException ex) {
-//            Logger.getLogger(ViewPanel.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    String filterText = searchTF.getText();
+    TableRowSorter trs = (TableRowSorter) viewTable.getRowSorter();
+    trs.setRowFilter(RowFilter.regexFilter(filterText));    
 }//GEN-LAST:event_searchButtonActionPerformed
 
 private void searchTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTFFocusGained
