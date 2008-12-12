@@ -1,18 +1,14 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
-
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.awt.Image;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -317,7 +313,8 @@ public class H2MovieDAO implements MovieDAO {
 			throw new ClassCastException();
 		}
 		DBMovie movie = (DBMovie) m;
-
+		System.out.println("Force Deleting: " + m.getTitle());
+		
 		try {
 			// We want to submit statements as transaction
 			conn.setAutoCommit(false);

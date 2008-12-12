@@ -41,7 +41,7 @@ public class MoviePopupMenu extends JPopupMenu {
 					try {
 						MangoController.getInstance().deleteMovie(m);
 					} catch (MovieDeleteConflict dc) {
-						if (1 == JOptionPane.showConfirmDialog(
+						if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
 								UIController.getInstance().getViewTable(),
 								"This movie is in multiple set, list, genre, or " +
 								"actor relationships.  \nDeleting will remove all this " +
@@ -67,6 +67,7 @@ public class MoviePopupMenu extends JPopupMenu {
 		@Override
 		public void stateChanged(ChangeEvent arg0) {
 			this.removeAll();
+			addSets();
 		}
 		
 		private void addSets() {
