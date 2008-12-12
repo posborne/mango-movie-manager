@@ -51,62 +51,62 @@ public class BottomBar extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        statusLabel = new javax.swing.JLabel();
+        addMovieButton = new javax.swing.JButton();
+        editMovieButton = new javax.swing.JButton();
+        addListSetButton = new javax.swing.JButton();
+        createSavedSearchButton = new javax.swing.JButton();
+        showHideButton = new javax.swing.JButton();
+        associateImageButton = new javax.swing.JButton();
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("# Movies / # Actors");
+        statusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        statusLabel.setText("# Movies / # Actors");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieadd.png"))); // NOI18N
-        jButton1.setToolTipText("Add New Movie");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addMovieButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieadd.png"))); // NOI18N
+        addMovieButton.setToolTipText("Add New Movie");
+        addMovieButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addMovieButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieedit.png"))); // NOI18N
-        jButton2.setToolTipText("Edit Selected Movie");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        editMovieButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieedit.png"))); // NOI18N
+        editMovieButton.setToolTipText("Edit Selected Movie");
+        editMovieButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                editMovieButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/setlistadd.png"))); // NOI18N
-        jButton3.setToolTipText("Create Set/List");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        addListSetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/setlistadd.png"))); // NOI18N
+        addListSetButton.setToolTipText("Create Set/List");
+        addListSetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                addListSetButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/advancedsearch.png"))); // NOI18N
-        jButton4.setToolTipText("Create Saved Search");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        createSavedSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/advancedsearch.png"))); // NOI18N
+        createSavedSearchButton.setToolTipText("Create Saved Search");
+        createSavedSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                createSavedSearchButtonActionPerformed(evt);
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/arrow_down.png"))); // NOI18N
-        jButton5.setToolTipText("Show/Hide Info Panel");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        showHideButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/arrow_down.png"))); // NOI18N
+        showHideButton.setToolTipText("Show/Hide Info Panel");
+        showHideButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                showHideButtonActionPerformed(evt);
             }
         });
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/picture_add.png"))); // NOI18N
-        jButton6.setToolTipText("Upload Thumbnail Image");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        associateImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/picture_add.png"))); // NOI18N
+        associateImageButton.setToolTipText("Upload Thumbnail Image");
+        associateImageButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                associateImageButtonActionPerformed(evt);
             }
         });
 
@@ -115,48 +115,48 @@ public class BottomBar extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addMovieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(editMovieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addListSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(createSavedSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(showHideButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(associateImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4, jButton5, jButton6});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addListSetButton, addMovieButton, associateImageButton, createSavedSearchButton, editMovieButton, showHideButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1)
-            .addComponent(jButton2)
-            .addComponent(jButton3)
-            .addComponent(jButton4)
-            .addComponent(jButton5)
-            .addComponent(jButton6)
-            .addComponent(jLabel1)
+            .addComponent(addMovieButton)
+            .addComponent(editMovieButton)
+            .addComponent(addListSetButton)
+            .addComponent(createSavedSearchButton)
+            .addComponent(showHideButton)
+            .addComponent(associateImageButton)
+            .addComponent(statusLabel)
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jLabel1});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addListSetButton, addMovieButton, associateImageButton, createSavedSearchButton, editMovieButton, showHideButton, statusLabel});
 
     }// </editor-fold>//GEN-END:initComponents
 
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+private void addMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMovieButtonActionPerformed
     // Create a new movie dialog
     MovieAddEditDialog maed = 
             new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
     maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
     maed.setVisible(true);
-}//GEN-LAST:event_jButton1ActionPerformed
+}//GEN-LAST:event_addMovieButtonActionPerformed
 
-private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+private void editMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMovieButtonActionPerformed
     MovieAddEditDialog maed = 
             new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
     maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
@@ -168,30 +168,30 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // selected in the table
     
     maed.setVisible(true);
-}//GEN-LAST:event_jButton2ActionPerformed
+}//GEN-LAST:event_editMovieButtonActionPerformed
 
-private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+private void addListSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addListSetButtonActionPerformed
     // Show dialog to create a new set or list
     SetListDialog sld =
             new SetListDialog((Mango)this.getTopLevelAncestor(), true);
     sld.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
     sld.setVisible(true);
-}//GEN-LAST:event_jButton3ActionPerformed
+}//GEN-LAST:event_addListSetButtonActionPerformed
 
-private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+private void createSavedSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSavedSearchButtonActionPerformed
     // Show dialog to create a saved search
     SavedSearchDialog ssd = 
             new SavedSearchDialog((Mango)this.getTopLevelAncestor(), true);
     ssd.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
     ssd.setVisible(true);
-}//GEN-LAST:event_jButton4ActionPerformed
+}//GEN-LAST:event_createSavedSearchButtonActionPerformed
 
-private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+private void showHideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showHideButtonActionPerformed
     // Hide or show the InfoPanel
     ((Mango)this.getTopLevelAncestor()).toggleInfoPanel();
-}//GEN-LAST:event_jButton5ActionPerformed
+}//GEN-LAST:event_showHideButtonActionPerformed
 
-private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associateImageButtonActionPerformed
     // Create a new upload thumbnail dialog
     //TODO: add to correct movie
     JFileChooser jfc = new JFileChooser();
@@ -217,13 +217,13 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                
                 is = new FileInputStream(file);
             } else {
-                JOptionPane.showMessageDialog(jButton6, "Error uploading picture:\nIncorrect file type.");
+                JOptionPane.showMessageDialog(associateImageButton, "Error uploading picture:\nIncorrect file type.");
             }
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
+            JOptionPane.showMessageDialog(associateImageButton, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(jButton6, "Error uploading picture");
+            JOptionPane.showMessageDialog(associateImageButton, "Error uploading picture");
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -256,7 +256,7 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 //    else
 //        System.out.println("Cancel");
     // Add code to add thumbnail image to this movie
-}//GEN-LAST:event_jButton6ActionPerformed
+}//GEN-LAST:event_associateImageButtonActionPerformed
 
 
 
@@ -269,10 +269,10 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
  */
 public void setInfoIcon(int i) {
     if (i == 0)
-        this.jButton5.setIcon(new javax.swing.ImageIcon(getClass().
+        this.showHideButton.setIcon(new javax.swing.ImageIcon(getClass().
                 getResource("/com/themangoproject/ui/images/arrow_up.png")));
     else if (i == 1)
-        this.jButton5.setIcon(new javax.swing.ImageIcon(getClass().
+        this.showHideButton.setIcon(new javax.swing.ImageIcon(getClass().
                 getResource("/com/themangoproject/ui/images/arrow_down.png")));
 }
 
@@ -282,17 +282,17 @@ public void setInfoIcon(int i) {
  * @param label The text to show in the label for status information.
  */
 public void setLabelInfo(String label) {
-    this.jLabel1.setText(label);
+    this.statusLabel.setText(label);
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton addListSetButton;
+    private javax.swing.JButton addMovieButton;
+    private javax.swing.JButton associateImageButton;
+    private javax.swing.JButton createSavedSearchButton;
+    private javax.swing.JButton editMovieButton;
+    private javax.swing.JButton showHideButton;
+    private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 
 }

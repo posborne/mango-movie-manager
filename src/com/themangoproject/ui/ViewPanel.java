@@ -46,77 +46,77 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        controlsPanel = new javax.swing.JPanel();
+        searchTF = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        printButton = new javax.swing.JButton();
+        tableScrollPane = new javax.swing.JScrollPane();
+        viewTable = new javax.swing.JTable();
 
-        jTextField1.setForeground(new java.awt.Color(140, 140, 140));
-        jTextField1.setText("Search");
-        jTextField1.setMargin(new java.awt.Insets(2, 4, 2, 2));
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        searchTF.setForeground(new java.awt.Color(140, 140, 140));
+        searchTF.setText("Search");
+        searchTF.setMargin(new java.awt.Insets(2, 4, 2, 2));
+        searchTF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField1FocusGained(evt);
+                searchTFFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
+                searchTFFocusLost(evt);
             }
         });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        searchTF.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
+                searchTFKeyReleased(evt);
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/search.png"))); // NOI18N
-        jButton1.setToolTipText("Search");
-        jButton1.setBorder(null);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/search.png"))); // NOI18N
+        searchButton.setToolTipText("Search");
+        searchButton.setBorder(null);
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/printer.png"))); // NOI18N
-        jButton2.setToolTipText("Print Table");
-        jButton2.setBorder(null);
+        printButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/printer.png"))); // NOI18N
+        printButton.setToolTipText("Print Table");
+        printButton.setBorder(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout controlsPanelLayout = new javax.swing.GroupLayout(controlsPanel);
+        controlsPanel.setLayout(controlsPanelLayout);
+        controlsPanelLayout.setHorizontalGroup(
+            controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(printButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        controlsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {printButton, searchButton});
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        controlsPanelLayout.setVerticalGroup(
+            controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addGroup(controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(printButton))
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jTextField1});
+        controlsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {printButton, searchButton, searchTF});
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(0, 0));
+        tableScrollPane.setBorder(null);
+        tableScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        viewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -128,90 +128,90 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setMaximumSize(new java.awt.Dimension(32767, 32767));
-        jScrollPane1.setViewportView(jTable1);
+        viewTable.setMaximumSize(new java.awt.Dimension(32767, 32767));
+        tableScrollPane.setViewportView(viewTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+            .addComponent(controlsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(controlsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
 //        try {
 //            // Searches for the given string of text within the table
 //            this.jTable1.print(PrintMode.FIT_WIDTH, new MessageFormat("Header"), footerFormat);
 //        } catch (PrinterException ex) {
 //            Logger.getLogger(ViewPanel.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-}//GEN-LAST:event_jButton1ActionPerformed
+}//GEN-LAST:event_searchButtonActionPerformed
 
-private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+private void searchTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTFFocusGained
     // If text was previously added to the text field nothing happens.  If
     // The text is gray colored it will say "Search" and will be replaced
     // with black text and an empty string
-    if (this.jTextField1.getForeground().equals(new Color(140, 140, 140))) {
-        this.jTextField1.setForeground(new Color(0, 0, 0));
-        this.jTextField1.setText("");
+    if (this.searchTF.getForeground().equals(new Color(140, 140, 140))) {
+        this.searchTF.setForeground(new Color(0, 0, 0));
+        this.searchTF.setText("");
     }
-}//GEN-LAST:event_jTextField1FocusGained
+}//GEN-LAST:event_searchTFFocusGained
 
-private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+private void searchTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTFFocusLost
     // Sets the text to read "Search" in gray color when focus is lost if 
     // the text field contains no text
-    if (this.jTextField1.getText().equals("")) {
-        this.jTextField1.setForeground(new Color(140, 140, 140));
-        this.jTextField1.setText("Search");
+    if (this.searchTF.getText().equals("")) {
+        this.searchTF.setForeground(new Color(140, 140, 140));
+        this.searchTF.setText("Search");
     }
-}//GEN-LAST:event_jTextField1FocusLost
+}//GEN-LAST:event_searchTFFocusLost
 
-private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+private void searchTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTFKeyReleased
     // Searches for the given string of text within the table
     
     // Set row sorter of TableRowSorter 
     
-}//GEN-LAST:event_jTextField1KeyReleased
+}//GEN-LAST:event_searchTFKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel controlsPanel;
+    private javax.swing.JButton printButton;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchTF;
+    private javax.swing.JScrollPane tableScrollPane;
+    private javax.swing.JTable viewTable;
     // End of variables declaration//GEN-END:variables
 
     public void setTableModel(TableModel model) {
-    	jTable1.clearSelection();
-    	if (!(jTable1.getModel() instanceof DefaultTableModel)) {
-			int rows = this.jTable1.getModel().getRowCount();
+    	viewTable.clearSelection();
+    	if (!(viewTable.getModel() instanceof DefaultTableModel)) {
+			int rows = this.viewTable.getModel().getRowCount();
 			for (int i = 0; i < rows; i++) {
-				Movie m = ((EditableMovieTableModel)jTable1.getModel()).getMovieForRow(i);
+				Movie m = ((EditableMovieTableModel)viewTable.getModel()).getMovieForRow(i);
 				m.removeAllChangeListeners();
 				// remove change listener on movies
 				MangoController.getInstance()
 					.removeMoviesChangeListener(
-							((EditableMovieTableModel)this.jTable1.getModel())
+							((EditableMovieTableModel)this.viewTable.getModel())
 								.getMoviesChangeListener());
 			}
     	}
-		this.jTable1.setModel(model);
+		this.viewTable.setModel(model);
         
     }
     
     public JTable getTable() {
-    	return this.jTable1;
+    	return this.viewTable;
     }
 
     public void tableChanged(TableModelEvent e) {

@@ -16,43 +16,43 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jButton1" linkSize="11" min="-2" pref="39" max="-2" attributes="0"/>
+              <Component id="addMovieButton" linkSize="11" min="-2" pref="39" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton2" linkSize="11" min="-2" pref="39" max="-2" attributes="0"/>
+              <Component id="editMovieButton" linkSize="11" min="-2" pref="39" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton3" linkSize="11" min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="addListSetButton" linkSize="11" min="-2" pref="38" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton4" linkSize="11" min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="createSavedSearchButton" linkSize="11" min="-2" pref="38" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton5" linkSize="11" min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="showHideButton" linkSize="11" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" pref="306" max="32767" attributes="0"/>
+              <Component id="statusLabel" pref="306" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton6" linkSize="11" min="-2" pref="37" max="-2" attributes="0"/>
+              <Component id="associateImageButton" linkSize="11" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jButton1" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jButton2" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jButton3" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jButton4" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jButton5" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jButton6" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
-          <Component id="jLabel1" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="addMovieButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="editMovieButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="addListSetButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="createSavedSearchButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="showHideButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="associateImageButton" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="statusLabel" linkSize="9" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="statusLabel">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="# Movies / # Actors"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="addMovieButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/themangoproject/ui/images/movieadd.png"/>
@@ -60,10 +60,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Add New Movie"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMovieButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="editMovieButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/themangoproject/ui/images/movieedit.png"/>
@@ -71,10 +71,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Edit Selected Movie"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editMovieButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="addListSetButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/themangoproject/ui/images/setlistadd.png"/>
@@ -82,10 +82,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Create Set/List"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addListSetButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="createSavedSearchButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/themangoproject/ui/images/advancedsearch.png"/>
@@ -93,10 +93,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Create Saved Search"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createSavedSearchButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="showHideButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/themangoproject/ui/images/arrow_down.png"/>
@@ -104,10 +104,10 @@
         <Property name="toolTipText" type="java.lang.String" value="Show/Hide Info Panel"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showHideButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="associateImageButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/themangoproject/ui/images/picture_add.png"/>
@@ -115,7 +115,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Upload Thumbnail Image"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="associateImageButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

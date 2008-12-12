@@ -35,27 +35,27 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        coverArtLabel = new javax.swing.JLabel();
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png"))); // NOI18N
-        jLabel1.setAlignmentX(0.5F);
+        coverArtLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        coverArtLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png"))); // NOI18N
+        coverArtLabel.setAlignmentX(0.5F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+            .addComponent(coverArtLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+            .addComponent(coverArtLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel coverArtLabel;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -65,9 +65,9 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
      */
     public void setThumbnailImage(Image image) {
         if (image != null) {
-            this.jLabel1.setIcon(new ImageIcon(image));
+            this.coverArtLabel.setIcon(new ImageIcon(image));
         } else {
-            this.jLabel1.setIcon(new ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
+            this.coverArtLabel.setIcon(new ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
         }
     }
     
