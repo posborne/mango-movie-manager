@@ -722,7 +722,7 @@ public void populateData(Movie m){
     this.jTextField10.setText(new Integer(m.getYear()).toString());
     this.jComboBox2.setSelectedItem(m.getRating());
     this.jSpinner1.setValue(m.getRuntime());
-    this.jTextField4.setText(m.getPurchaseDate().toString());
+//    this.jTextField4.setText(m.getPurchaseDate().toString());
     this.jComboBox4.setSelectedItem(new Integer(m.getMangoRating()).toString());
     this.jComboBox3.setSelectedItem(m.getType());
     this.jTextField5.setText(m.getCondition());
