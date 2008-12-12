@@ -20,7 +20,10 @@ import javax.swing.table.TableModel;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
+import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  * ViewPanel is the main panel of the Mango program.  There are action buttons
@@ -35,6 +38,31 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
     /** Creates new form ViewPanel */
     public ViewPanel() {
         initComponents();
+        initColumnSizes();
+    }
+
+    /**
+     * Initialize column sizes to be reasonable.
+     */
+    private void initColumnSizes() {
+        if (viewTable.getColumnModel().getColumnCount() > 0) {
+            TableColumnModel tcm = viewTable.getColumnModel();
+            // Number Column
+            tcm.getColumn(0).setPreferredWidth(30);
+            tcm.getColumn(0).setMaxWidth(50);
+            // Rating Column
+            tcm.getColumn(3).setPreferredWidth(45);
+            tcm.getColumn(3).setMaxWidth(70);
+            // Year column
+            tcm.getColumn(4).setPreferredWidth(50);
+            tcm.getColumn(4).setMaxWidth(70);
+            // Mango Rating
+            tcm.getColumn(5).setPreferredWidth(40);
+            tcm.getColumn(5).setMaxWidth(90);
+            // Type 
+            tcm.getColumn(6).setPreferredWidth(80);
+            tcm.getColumn(6).setMaxWidth(100);
+        }
     }
 
     /** This method is called from within the constructor to
@@ -116,18 +144,8 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
         tableScrollPane.setBorder(null);
         tableScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
-        viewTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        viewTable.setAutoCreateRowSorter(true);
+        viewTable.setModel(new AllMoviesEditableTableModel());
         viewTable.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tableScrollPane.setViewportView(viewTable);
 
@@ -192,6 +210,17 @@ private void searchTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private javax.swing.JTable viewTable;
     // End of variables declaration//GEN-END:variables
 
+    
+    
+    /**
+     * Set the table model to the specified model.  When changing the table
+     * model through this method any listeners that are out of date will be
+     * removed from the current table and table models, making it so there
+     * isn't memory being lost as a result of listeners referencing items that
+     * will not be used again.
+     * 
+     * @param model The new table model.
+     */
     public void setTableModel(TableModel model) {
     	viewTable.clearSelection();
     	if (!(viewTable.getModel() instanceof DefaultTableModel)) {
@@ -210,6 +239,11 @@ private void searchTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         
     }
     
+    /**
+     * Get the view table
+     * 
+     * @return a reference to the view table.
+     */
     public JTable getTable() {
     	return this.viewTable;
     }

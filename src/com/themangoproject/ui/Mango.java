@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -41,7 +42,6 @@ public class Mango extends javax.swing.JFrame {
         //TestUtility.executeInserts();
         initComponents();
         createdInstance = this;
-        this.setTableModel(new AllMoviesEditableTableModel());
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel);
         final MoviePopupMenu moviePopupMenu = new MoviePopupMenu();
         this.getTable().addMouseListener(new MouseListener() {
