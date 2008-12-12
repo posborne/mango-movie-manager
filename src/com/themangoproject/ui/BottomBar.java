@@ -3,6 +3,7 @@ package com.themangoproject.ui;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import com.themangoproject.ui.model.EditableMovieTableModel;
 import java.awt.GraphicsDevice;
 import java.awt.Image;
 import java.awt.Transparency;
@@ -213,8 +214,8 @@ private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt)
                image = image.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
                
                BufferedImage im = Pictures.toBufferedImage(image);
-               file = new File("temp.png");
-               ImageIO.write(im, "png", file);
+               file = new File("temp.jpg");
+               ImageIO.write(im, "jpg", file);
                
                 is = new FileInputStream(file);
             } else {
@@ -228,15 +229,20 @@ private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt)
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
         JTable table = UIController.getInstance().getViewTable();
-        int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
-        Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
+        int modelIndex = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
+        Movie m = ((EditableMovieTableModel)table.getModel()).getMovieForRow(modelIndex); 
         
-        MangoController.getInstance().setImageForMovie(m,is);  
+//        JTable table = UIController.getInstance().getViewTable();
+//        int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
+//        Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
+        
+        MangoController.getInstance().setImageForMovie(m,is);
+//        table.getRowSorter().
         //TODO:  Not the best way to do this, but it works.
-        UIController.getInstance().getViewTable().clearSelection();
-        UIController.getInstance().getViewTable().setRowSelectionInterval(selRow, selRow);
+//        UIController.getInstance().getViewTable().clearSelection();
+//        UIController.getInstance().getViewTable().setRowSelectionInterval(selRow, selRow);
+
     }
     /*
      * This is test code to make sure the image is being uploaded correctly.
