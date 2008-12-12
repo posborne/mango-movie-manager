@@ -20,23 +20,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
+ * MovieAddEditDialog is a dialog to add and edit movies.  Movie details can
+ * be added along with owner and borrower infomation, and a thumbnail image.
+ * Some of the entry of movie information can be simplified if you have an
+ * Amazon ASIN number for the movie.  It will retrieve basic movie information
+ * and a thumbnail image.
+ * 
+ * @author  Kyle Ronning
  *
- * @author  kronning
  */
 public class MovieAddEditDialog extends javax.swing.JDialog {
 
@@ -45,7 +47,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
     public MovieAddEditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //setCombBoxModels();
+        // we need this guys
+        setCombBoxModels();
         m = null;
     }
 
@@ -888,7 +891,7 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
             this.ratingCB.setSelectedItem(amazon.getRating());
             this.runtimeSpinner.setValue(Integer.parseInt(amazon.getRuntime()));
             this.jLabel15.setIcon(amazon.getMovieImage());
-            this.imageURL = amazon.getMovieURL();
+//            this.imageURL = amazon.getMovieURL();
             // actors
             List<String> actors = amazon.getActors();
             for (int i = 0; i < actors.size(); i++) {
@@ -922,15 +925,18 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_closeButtonActionPerformed
 
 private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonButtonActionPerformed
-        try {
-            // Create a new person.
-            MangoController.getInstance().addPerson(this.nameTF.getText(), 
-                    this.phoneNumberTF.getText(), this.emailTF.getText(), 
-                    this.AddressTA.getText());
-        } catch (PersonExistsException ex) {
+    try {
+        // Create a new person.
+        MangoController.getInstance().addPerson(this.nameTF.getText(), 
+                this.phoneNumberTF.getText(), this.emailTF.getText(), 
+                this.AddressTA.getText());
+    } catch (PersonExistsException ex) {
+        JOptionPane.showMessageDialog(this, this.nameTF + " already exists", 
+                "Person Already exists", JOptionPane.OK_OPTION);
+    }       
 }//GEN-LAST:event_addPersonButtonActionPerformed
-        
-}                                        
+
+                                      
 
 private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultImageButtonActionPerformed
     // Reset Thumbnail to default image Default Image
@@ -940,7 +946,7 @@ private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {
     if (proceed == JOptionPane.YES_OPTION) {
         this.jLabel15.setIcon(new ImageIcon(getClass().
             getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
-        this.imageURL = null;
+//        this.imageURL = null;
     }
 }//GEN-LAST:event_defaultImageButtonActionPerformed
 
@@ -1053,7 +1059,10 @@ private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JTextField yearTF;
     // End of variables declaration//GEN-END:variables
     /** URL for the image */
-    private URL imageURL = null;
+    //private URL imageURL = null;
+    /**
+     * This method is needed to set up the add actor panel.
+     */
     private void setCombBoxModels() {
         this.addSubstractActorsPanel.setComboBoxPrefs(new ActorComboBoxModel(), 
                 new RoleComboBoxModel(), false, true);
