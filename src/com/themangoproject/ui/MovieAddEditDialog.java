@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -722,7 +723,8 @@ public void populateData(Movie m){
     this.yearTF.setText(new Integer(m.getYear()).toString());
     this.ratingCB.setSelectedItem(m.getRating());
     this.runtimeSpinner.setValue(m.getRuntime());
-//    this.jTextField4.setText(m.getPurchaseDate().toString());
+    if(m.getPurchaseDate() != null)
+        this.purchaseDateTF.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(m.getPurchaseDate()));
     this.mangoRatingCB.setSelectedItem(new Integer(m.getMangoRating()).toString());
     this.typeCB.setSelectedItem(m.getType());
     this.conditionCB.setText(m.getCondition());

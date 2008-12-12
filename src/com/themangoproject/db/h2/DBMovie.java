@@ -202,7 +202,8 @@ public class DBMovie implements Movie {
 	/**
 	 * This will return the year the movie was released
 	 * 
-	 * @return the year the movie was released.
+	 * @return the year the movie was released.  Will return -1 if this value
+         * is not set.
 	 */
 	public int getYear() {
 		return this.state.getYear();
