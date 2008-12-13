@@ -71,6 +71,10 @@ public class H2MovieDAO implements MovieDAO {
         private static final String addActorToMovieSQL = "INSERT INTO acting_roles"
                         + " (movie_id, actor_id, role, character) VALUES (?, ?, ?, ?)";
         
+        private PreparedStatement removeActorFromMoviePS;
+        private static final String removeActorFromMovieSQL = "DELETE FROM acting_roles"
+                        + " WHERE movie_id=? AND actor_id=?";
+        
 	private PreparedStatement addGenreToMoviePS;
 	private static final String addGenreToMovieSQL = "INSERT INTO genre "
 			+ "(movie_id, name)" + " VALUES (?, ?)";
@@ -123,6 +127,7 @@ public class H2MovieDAO implements MovieDAO {
 			actorsForMoviePS = conn.prepareStatement(actorsForMovieSQL);
 			populateMoviePS = conn.prepareStatement(populateMovieSQL);
                         addActorToMoviePS = conn.prepareStatement(addActorToMovieSQL);
+                        removeActorFromMoviePS = conn.prepareStatement(removeActorFromMovieSQL);
 			addGenreToMoviePS = conn.prepareStatement(addGenreToMovieSQL);
 			removeGenreFromMoviePS = conn
 					.prepareStatement(removeGenreFromMovieSQL);
@@ -492,6 +497,27 @@ public class H2MovieDAO implements MovieDAO {
             } catch(SQLException ex) {
                 ex.printStackTrace();
             }
+        }
+        
+        /**
+         * Removes an actor <code>a</code> from a movie <code>m</code>.
+         * 
+         * @param m The movie to remove the actor from.
+         * @param a The actor to remove from the movie.
+         */
+        public void removeActorFromMovie(Movie m, Actor a) {
+            if (!(m instanceof DBMovie) && !(a instanceof DBActor)) {
+                throw new ClassCastException();
+            }
+            DBMovie movie = (DBMovie) m;
+            DBActor actor = (DBActor) a;
+            try {
+                removeActorFromMoviePS.setInt(1, movie.getId());
+                removeActorFromMoviePS.setInt(2, actor.getId());
+                removeActorFromMoviePS.executeUpdate();
+            } catch(SQLException ex) {
+                ex.printStackTrace();
+            }            
         }
             
 	/**
