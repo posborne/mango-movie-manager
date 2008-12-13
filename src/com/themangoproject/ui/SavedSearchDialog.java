@@ -7,6 +7,8 @@ import com.themangoproject.model.Movie;
 import com.themangoproject.model.SearchCondition;
 import com.themangoproject.ui.model.AttributesComboBoxModel;
 import com.themangoproject.ui.model.ConstraintComboBoxModel;
+import com.themangoproject.ui.model.SearchEditableTableModel;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,11 +19,14 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author  Kyle Ronning
+ * @author  Kyle Ronning, Paul Osborne
  */
 public class SavedSearchDialog extends javax.swing.JDialog {
 
-    /** Creates new form SavedSearchDialog */
+    /** Generated serial UID */
+	private static final long serialVersionUID = -8915616635728028158L;
+	
+	/** Creates new form SavedSearchDialog */
     public SavedSearchDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -206,14 +211,7 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeSearchButtonActionPerformed
     AdvancedSearch as = buildAdvancedSearch();
-        try {
-            List<Movie> movies = MangoController.getInstance().executeSearch(as.getSearchQuery());//GEN-LAST:event_executeSearchButtonActionPerformed
-            for (Movie m : movies) {
-                System.out.println("Movie: " + m.getTitle());
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    UIController.getInstance().setViewTableModel(new SearchEditableTableModel(as.getSearchQuery()));
 }
 
     /**

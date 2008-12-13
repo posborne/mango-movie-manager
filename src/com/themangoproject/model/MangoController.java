@@ -213,19 +213,6 @@ public class MangoController {
 	}
 
 	/**
-	 * Execute the specified that returns a movie result set.
-	 * 
-	 * @param query
-	 *            The query that should be executed
-	 * @return A list containing the movies matching the query
-	 * @throws SQLException
-	 *             if there is a problem with the query
-	 */
-	public List<Movie> executeMovieQuery(String query) throws SQLException {
-		return null; // TODO: implement
-	}
-
-	/**
 	 * Return a list containing the labels of all sets in the database.
 	 */
 	public List<String> getAllSets() {
