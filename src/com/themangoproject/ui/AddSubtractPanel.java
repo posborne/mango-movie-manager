@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  * AddSubstractPanel is a panel to collect AddSubtractInnerPanels.
@@ -156,7 +157,22 @@ public class AddSubtractPanel extends javax.swing.JPanel {
      * @param name The name of the item.
      */
     public void createAndSetSelected(String name) {
-        AddSubtractInnerPanel asip = addAddSubPanel();
-        asip.setSelectedLeftComboBox(name);
+        // This code will be relevant when the comboboxmodels become listeners
+//        if (this.jPanel1.getComponentCount() == 2) {
+//            // This means there may only be one panel and it may be empty.
+//            List<AddSubtractInnerPanel> info = this.getInnerPanelsValues();
+//            JComboBox cb1 = (JComboBox) ((AddSubtractInnerPanel)info.get(0)).getLeftComboObject();
+//            int cbIndex1 = cb1.getSelectedIndex();
+//            if (cbIndex1 == -1)
+//                cb1.setSelectedItem("Kyle Ronning");
+//            else {
+//                AddSubtractInnerPanel asip = addAddSubPanel();
+//                asip.setSelectedLeftComboBox(name);
+//            }
+//                
+//        } else  {
+            AddSubtractInnerPanel asip = addAddSubPanel();
+            asip.setSelectedLeftComboBox(name);
+//        }
     }
 }
