@@ -137,7 +137,7 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
      * @return The left combo box.
      */
     public Object getLeftComboObject() {
-        return this.jComboBox1.getSelectedItem();
+        return this.jComboBox1;
     }
     
     /**

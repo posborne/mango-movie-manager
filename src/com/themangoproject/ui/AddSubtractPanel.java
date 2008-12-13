@@ -145,7 +145,7 @@ public class AddSubtractPanel extends javax.swing.JPanel {
         List<AddSubtractInnerPanel> info = new ArrayList<AddSubtractInnerPanel>();
         for (int i = 0; i < this.jPanel1.getComponentCount(); i++) {
             if (this.jPanel1.getComponent(i) instanceof AddSubtractInnerPanel)
-                info.add((AddSubtractInnerPanel) this.getComponent(i));
+                info.add((AddSubtractInnerPanel) this.jPanel1.getComponent(i));
         }
         return info;
     }

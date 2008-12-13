@@ -1,8 +1,18 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.model.AdvancedSearch;
+import com.themangoproject.model.MangoController;
+import com.themangoproject.model.Movie;
+import com.themangoproject.model.SearchCondition;
 import com.themangoproject.ui.model.AttributesComboBoxModel;
 import com.themangoproject.ui.model.ConstraintComboBoxModel;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 
 /**
@@ -17,6 +27,26 @@ public class SavedSearchDialog extends javax.swing.JDialog {
         initComponents();
         this.addSubtractSearchPanel.setComboBoxPrefs(new AttributesComboBoxModel(),
                 new ConstraintComboBoxModel(), false, false);
+    }
+
+    private AdvancedSearch buildAdvancedSearch() {
+        List<AddSubtractInnerPanel> panels = this.addSubtractSearchPanel.getInnerPanelsValues();
+        AdvancedSearch as = new AdvancedSearch();
+        for (AddSubtractInnerPanel panel : panels) {
+            JComboBox leftCB = (JComboBox) panel.getLeftComboObject();
+            JComboBox rightCB = (JComboBox) panel.getRightComboObject();
+            String attribute = (String) leftCB.getSelectedItem();
+            String condtion = (String) rightCB.getSelectedItem();
+            String value = (String)panel.getTextFieldObject();
+
+            try {
+                int intval = Integer.parseInt(value);
+                as.addSearchCondition(new SearchCondition(attribute, condtion, intval));
+            } catch (NumberFormatException e) {
+                as.addSearchCondition(new SearchCondition(attribute, condtion, value));
+            }
+        }
+        return as;
     }
 
     /** This method is called from within the constructor to
@@ -38,6 +68,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
         addSubtractSearchPanel = new com.themangoproject.ui.AddSubtractPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        executeSearchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Saved Search");
@@ -104,6 +135,13 @@ public class SavedSearchDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        executeSearchButton.setText("Execute Search");
+        executeSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                executeSearchButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,13 +151,15 @@ public class SavedSearchDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                        .addComponent(executeSearchButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton))
                     .addComponent(jLabel1)
-                    .addComponent(searchCriterionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchNameTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))
+                    .addComponent(searchCriterionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 527, Short.MAX_VALUE)
+                    .addComponent(searchNameTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -138,7 +178,8 @@ public class SavedSearchDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(closeButton)
                     .addComponent(saveButton)
-                    .addComponent(cancelButton))
+                    .addComponent(cancelButton)
+                    .addComponent(executeSearchButton))
                 .addContainerGap())
         );
 
@@ -163,6 +204,18 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     this.dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
+private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeSearchButtonActionPerformed
+    AdvancedSearch as = buildAdvancedSearch();
+        try {
+            List<Movie> movies = MangoController.getInstance().executeSearch(as.getSearchQuery());//GEN-LAST:event_executeSearchButtonActionPerformed
+            for (Movie m : movies) {
+                System.out.println("Movie: " + m.getTitle());
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+}
+
     /**
     * @param args the command line arguments
     */
@@ -184,6 +237,7 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private com.themangoproject.ui.AddSubtractPanel addSubtractSearchPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton closeButton;
+    private javax.swing.JButton executeSearchButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
