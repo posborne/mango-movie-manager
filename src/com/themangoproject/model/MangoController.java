@@ -288,4 +288,8 @@ public class MangoController {
 		listsDAO.addMovieToList(label, m);
 	}
 
+	public void deleteSet(String setLabel) {
+		setsDAO.removeSet(setLabel);
+	}
+
 }

@@ -4,6 +4,8 @@ import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.Mango;
 import com.themangoproject.ui.UIController;
 import java.util.List;
+
+import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -48,5 +50,11 @@ public class SetsMutableTreeNode extends DefaultMutableTreeNode implements
 					.getNavigatorTree().getModel();
 			tm.nodeStructureChanged(SetsMutableTreeNode.this);
 		}
+	}
+
+
+	@Override
+	public JPopupMenu getPopupMenu() {
+		return null; // I am not a leaf
 	}
 }

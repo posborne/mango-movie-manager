@@ -1,5 +1,6 @@
 package com.themangoproject.ui.model.navigator;
 
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.themangoproject.ui.Mango;
@@ -15,6 +16,11 @@ public class ActionsMutableTreeNode extends DefaultMutableTreeNode implements
 	@Override
 	public void doYourThing(Mango mangoPanel) {
 		// Do Nothing
+	}
+
+	@Override
+	public JPopupMenu getPopupMenu() {
+		return null; // Not a leaf, no need
 	}
 
 }

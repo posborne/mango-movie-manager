@@ -4,7 +4,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.themangoproject.ui.Mango;
 
-public class WishListMutableTreeNode extends DefaultMutableTreeNode implements
+public class WishListMutableTreeNode extends SetMutableTreeNode implements
 		MangoMutableTreeNode {
 	private static final long serialVersionUID = -5636817461368261287L;
 

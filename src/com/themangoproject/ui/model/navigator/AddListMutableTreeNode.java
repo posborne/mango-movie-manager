@@ -3,6 +3,7 @@
  */
 package com.themangoproject.ui.model.navigator;
 
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.themangoproject.ui.Mango;
@@ -23,6 +24,12 @@ public class AddListMutableTreeNode extends DefaultMutableTreeNode implements Ma
 		SetListDialog sld = new SetListDialog(mangoPanel, true);
 		sld.setLocationRelativeTo(mangoPanel);
 		sld.setVisible(true);
+	}
+
+	@Override
+	public JPopupMenu getPopupMenu() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.themangoproject.ui.model.navigator;
 
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import com.themangoproject.ui.Mango;
 import com.themangoproject.ui.UIController;
@@ -16,6 +17,11 @@ public class AllMoviesMutableTreeNode extends DefaultMutableTreeNode implements
 	@Override
 	public void doYourThing(Mango mangoPanel) {
 		UIController.getInstance().setViewTableModel(new AllMoviesEditableTableModel());
+	}
+
+	@Override
+	public JPopupMenu getPopupMenu() {
+		return null;
 	}
 
 }
