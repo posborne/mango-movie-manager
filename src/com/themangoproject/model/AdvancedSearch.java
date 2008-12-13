@@ -19,8 +19,8 @@ public class AdvancedSearch {
     
     public String getSearchQuery() {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT M.id " +
-                "FROM movie M, acting_roles AR, actor A " +
+        sb.append("SELECT id " +
+                "FROM movie " +
                 "WHERE ");
         for (int i = 0; i < searchConditions.size(); i++) {
             SearchCondition sc = searchConditions.get(i);

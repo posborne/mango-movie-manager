@@ -58,7 +58,11 @@ public class SearchCondition {
         if (this.hasIntegerValue()) {
             sb.append(" " + intValue);
         } else {
-            sb.append(" '" + stringValue + "'");
+            if (constraint.toLowerCase().contains("contain")) {
+                sb.append(" '%" + stringValue + "%'");
+            } else {
+                sb.append(" '" + stringValue + "'");
+            }
         }
         return sb.toString();
     }
