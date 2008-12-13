@@ -22,6 +22,7 @@ public interface MovieDAO {
     public void forceDeleteMovie (Movie movie);
     public void removeGenreFromMovie(Movie movie, String genre);
     public void addActorToMovie(Movie movie, Actor actor, String role, String character);
+    public void removeActorFromMovie(Movie movie, Actor actor);
     public void addGenreToMovie(Movie movie, String genre);
     public void setImageForMovie(InputStream is, Movie m);
     
