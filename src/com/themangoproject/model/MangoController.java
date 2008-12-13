@@ -292,4 +292,11 @@ public class MangoController {
 		setsDAO.removeSet(setLabel);
 	}
 
+	/**
+	 * @param listLabel The label of the list to remove.
+	 */
+	public void deleteList(String listLabel) {
+		listsDAO.removeList(listLabel);
+	}
+
 }

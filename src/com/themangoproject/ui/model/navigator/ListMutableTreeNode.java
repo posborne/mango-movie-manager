@@ -1,8 +1,15 @@
 package com.themangoproject.ui.model.navigator;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.Mango;
 import com.themangoproject.ui.UIController;
 import com.themangoproject.ui.model.ListEditableMovieTableModel;
@@ -29,8 +36,21 @@ public class ListMutableTreeNode extends DefaultMutableTreeNode implements
 
 	@Override
 	public JPopupMenu getPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
+		JMenuItem removeListItem = new JMenuItem("Delete List");
+		removeListItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog((Component)e.getSource(),
+						"Are you sure you want to remove the list \"" + listLabel + "\"?",
+						"Confirm List Deletion",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					MangoController.getInstance().deleteList(listLabel);
+				}
+			}
+		});
+		
+		JPopupMenu listPopup = new JPopupMenu();
+		listPopup.add(removeListItem);
+		return listPopup;
 	}
 
 }
