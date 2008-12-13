@@ -67,6 +67,10 @@ public class H2MovieDAO implements MovieDAO {
 	private static final String populateMovieSQL = "SELECT * FROM movie"
 			+ " WHERE id=?";
 
+        private PreparedStatement addActorToMoviePS;
+        private static final String addActorToMovieSQL = "INSERT INTO acting_roles"
+                        + " (movie_id, actor_id, role, character) VALUES (?, ?, ?, ?)";
+        
 	private PreparedStatement addGenreToMoviePS;
 	private static final String addGenreToMovieSQL = "INSERT INTO genre "
 			+ "(movie_id, name)" + " VALUES (?, ?)";
@@ -118,6 +122,7 @@ public class H2MovieDAO implements MovieDAO {
 			genresForMoviePS = conn.prepareStatement(genresForMovieSQL);
 			actorsForMoviePS = conn.prepareStatement(actorsForMovieSQL);
 			populateMoviePS = conn.prepareStatement(populateMovieSQL);
+                        addActorToMoviePS = conn.prepareStatement(addActorToMovieSQL);
 			addGenreToMoviePS = conn.prepareStatement(addGenreToMovieSQL);
 			removeGenreFromMoviePS = conn
 					.prepareStatement(removeGenreFromMovieSQL);
@@ -463,6 +468,31 @@ public class H2MovieDAO implements MovieDAO {
 		}
 	}
 
+        /**
+         * Add the specified actor, role, and character to a movie <code>m</code>.
+         * 
+         * @param m The movie to which an actor is being added.
+         * @param a The actor to add to the movie.
+         * @param role The role the actor plays in the movie.
+         * @param character The character the actor plays in the movie.
+         */
+        public void addActorToMovie(Movie m, Actor a, String role, 
+                String character) {
+            if (!(m instanceof DBMovie) && !(a instanceof DBActor)) {
+                throw new ClassCastException();
+            }
+            DBMovie movie = (DBMovie) m;
+            DBActor actor = (DBActor) a;
+            try {
+                addActorToMoviePS.setInt(1, movie.getId());
+                addActorToMoviePS.setInt(2, actor.getId());
+                addActorToMoviePS.setString(3, role);
+                addActorToMoviePS.setString(4, character);
+            } catch(SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+            
 	/**
 	 * Add the specified genre to the movie if it does not exist.
 	 * 
@@ -624,4 +654,5 @@ public class H2MovieDAO implements MovieDAO {
 			l.stateChanged(null);
 		}
 	}
+
 }
