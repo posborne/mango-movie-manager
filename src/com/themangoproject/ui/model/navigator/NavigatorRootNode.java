@@ -35,10 +35,12 @@ class NavigatorRootNode extends DefaultMutableTreeNode {
         
         SetsMutableTreeNode setsNode = new SetsMutableTreeNode();
         ListsMutableTreeNode listsNode = new ListsMutableTreeNode();
+        SavedSearchesMutableTreeNode savedSearchesNode = new SavedSearchesMutableTreeNode();
 
         this.add(actions);
         this.add(setsNode);
         this.add(listsNode);
+        this.add(savedSearchesNode);
     }
 
 }

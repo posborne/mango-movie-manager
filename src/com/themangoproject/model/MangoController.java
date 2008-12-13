@@ -353,4 +353,8 @@ public class MangoController {
 	public void removeSavedSearchListener(ChangeListener l) {
 		searchDAO.removeSavedSearchChangeListener(l);
 	}
+	
+	public List<String> getAllSavedSearches() {
+		return searchDAO.getAllSavedSearches();
+	}
 }

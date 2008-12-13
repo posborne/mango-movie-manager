@@ -8,6 +8,7 @@ import com.themangoproject.model.SearchCondition;
 import com.themangoproject.ui.model.AttributesComboBoxModel;
 import com.themangoproject.ui.model.ConstraintComboBoxModel;
 import com.themangoproject.ui.model.SearchEditableTableModel;
+import com.themangoproject.ui.model.UnsavedSearchEditabledTableModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -211,7 +212,7 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeSearchButtonActionPerformed
     AdvancedSearch as = buildAdvancedSearch();
-    UIController.getInstance().setViewTableModel(new SearchEditableTableModel(as.getSearchQuery()));
+    UIController.getInstance().setViewTableModel(new UnsavedSearchEditabledTableModel(as.getSearchQuery()));
 }
 
     /**

@@ -10,16 +10,16 @@ import javax.swing.event.ChangeListener;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 
-public class SearchEditableTableModel extends EditableMovieTableModel implements
+public abstract class SearchEditableTableModel extends EditableMovieTableModel implements
 		MangoTableModelIF {
 
-	private String searchQuery;
+	/** Serial UID */
+	private static final long serialVersionUID = -3378374611042190618L;
 	private List<Movie> movies;
 	private ChangeListener moviesChangeListener;
 	private ChangeListener singleMovieChangeListener;
 	
-	public SearchEditableTableModel(String query) {
-		this.searchQuery = query;
+	public SearchEditableTableModel() {
 		movies = new ArrayList<Movie>();
 		moviesChangeListener = new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -43,7 +43,7 @@ public class SearchEditableTableModel extends EditableMovieTableModel implements
 		}
 		// add change listeners to new movies
 		try {
-			movies = MangoController.getInstance().executeSearch(searchQuery);
+			movies = executeSearch();
 			for (Movie m : movies) {
 				m.addChangeListener(singleMovieChangeListener);
 			}
@@ -51,6 +51,8 @@ public class SearchEditableTableModel extends EditableMovieTableModel implements
 			e.printStackTrace();
 		}
 	}
+	
+	public abstract List<Movie> executeSearch() throws SQLException;
 
 	@Override
 	public List<Movie> getMovies() {
