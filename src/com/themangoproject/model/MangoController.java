@@ -5,6 +5,7 @@ import com.themangoproject.db.h2.H2ListsDAO;
 import com.themangoproject.db.h2.H2MovieDAO;
 import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
+import com.themangoproject.db.h2.H2SearchDAO;
 import com.themangoproject.db.h2.H2SetsDAO;
 
 import java.io.InputStream;
@@ -33,6 +34,8 @@ public class MangoController {
 	private ListsDAO listsDAO;
 	/** SetsDAO that will be used */
 	private SetsDAO setsDAO;
+	/** Search DAO that will be used */
+	private SearchDAO searchDAO;
 
 	/**
 	 * Instantiate the singleton instance of the Mango controller.
@@ -43,6 +46,7 @@ public class MangoController {
 		actorDAO = H2ActorDAO.getInstance();
 		listsDAO = H2ListsDAO.getInstance();
 		setsDAO = H2SetsDAO.getInstance();
+		searchDAO = H2SearchDAO.getInstance();
 	}
 
 	/**
@@ -313,5 +317,28 @@ public class MangoController {
 	public void renameList(String oldLabel, String newLabel) {
 		listsDAO.renameList(oldLabel, newLabel);
 	}
-
+	
+	public List<Movie> executeSearch(String query) throws SQLException {
+		return searchDAO.executeSearch(query);
+	}
+	
+	public List<Movie> executeSavedSearch(String searchLabel) throws SQLException {
+		return searchDAO.executeSavedSearch(searchLabel);
+	}
+	
+	public void saveSearch(String searchLabel, String query) {
+		searchDAO.saveSearch(searchLabel, query);
+	}
+	
+	public void removeSavedSearch(String searchLabel) {
+		searchDAO.removeSavedSearch(searchLabel);
+	}
+	
+	public void addSaveSearchListener(ChangeListener l) {
+		searchDAO.addSavedSearchChangeListener(l);
+	}
+	
+	public void removeSavedSearchListener(ChangeListener l) {
+		searchDAO.removeSavedSearchChangeListener(l);
+	}
 }
