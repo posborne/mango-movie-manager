@@ -14,10 +14,10 @@ import javax.swing.ComboBoxModel;
  * @author  Kyle Ronning
  * @version 12-6-2008
  */
-public class AddSubstractPanel extends javax.swing.JPanel {
+public class AddSubtractPanel extends javax.swing.JPanel {
 
     /** Creates new form AddSubstractDaddyPanel */
-    public AddSubstractPanel() {
+    public AddSubtractPanel() {
         initComponents();
     }
 
@@ -136,16 +136,16 @@ public class AddSubstractPanel extends javax.swing.JPanel {
     }
     
     /**
-     * Gets the values of each inner panel and stores them as a String array.
-     * The String arrays are returned in a List object.
-     * @return A List of values from all the inner panels as a String array.
+     * Gets the AddSubtractInnerPanels from this panel.  These panels contain
+     * information usefull for searches and other actions.
+     * 
+     * @return A List of AddSubtractInnerPanels.
      */
-    public List<String[]> getInnerPanelsValues() {
-        List<String[]> info = new ArrayList<String[]>();
+    public List<AddSubtractInnerPanel> getInnerPanelsValues() {
+        List<AddSubtractInnerPanel> info = new ArrayList<AddSubtractInnerPanel>();
         for (int i = 0; i < this.jPanel1.getComponentCount(); i++) {
             if (this.jPanel1.getComponent(i) instanceof AddSubtractInnerPanel)
-                info.add(((AddSubtractInnerPanel)this.jPanel1.getComponent(i)).
-                        getInnerPanelValues());
+                info.add((AddSubtractInnerPanel) this.getComponent(i));
         }
         return info;
     }

@@ -24,6 +24,8 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
     /** Creates new form ItemInfoPanel */
     public ItemInfoPanel() {
         initComponents();
+        // Set default image
+        this.setThumbnailImage(null);
     }
 
     /** This method is called from within the constructor to
@@ -38,7 +40,6 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
         coverArtLabel = new javax.swing.JLabel();
 
         coverArtLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        coverArtLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png"))); // NOI18N
         coverArtLabel.setAlignmentX(0.5F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -67,7 +68,10 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
         if (image != null) {
             this.coverArtLabel.setIcon(new ImageIcon(image));
         } else {
-            this.coverArtLabel.setIcon(new ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
+            Image im = new ImageIcon(getClass().getResource(
+                    "/com/themangoproject/ui/images/defaultMangoLogo.jpg")).
+                    getImage();
+            this.coverArtLabel.setIcon(new ImageIcon(im.getScaledInstance(160, 160, Image.SCALE_DEFAULT)));
         }
     }
     

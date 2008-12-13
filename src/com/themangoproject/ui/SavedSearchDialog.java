@@ -35,7 +35,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
         closeButton = new javax.swing.JButton();
         searchCriterionPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        addSubtractSearchPanel = new com.themangoproject.ui.AddSubstractPanel();
+        addSubtractSearchPanel = new com.themangoproject.ui.AddSubtractPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -181,7 +181,7 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.themangoproject.ui.AddSubstractPanel addSubtractSearchPanel;
+    private com.themangoproject.ui.AddSubtractPanel addSubtractSearchPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel jLabel1;

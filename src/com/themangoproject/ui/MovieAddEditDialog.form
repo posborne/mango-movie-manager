@@ -842,7 +842,7 @@
                     <Property name="text" type="java.lang.String" value="Actor"/>
                   </Properties>
                 </Component>
-                <Component class="com.themangoproject.ui.AddSubstractPanel" name="addSubstractActorsPanel">
+                <Component class="com.themangoproject.ui.AddSubtractPanel" name="addSubstractActorsPanel">
                 </Component>
               </SubComponents>
             </Container>

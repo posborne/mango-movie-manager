@@ -77,6 +77,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         this.conditionCB.setText(m.getCondition());
         this.genreTF.setText(genreText(m));
         this.customDescriptionTA.setText(m.getCustomDescription());
+        this.asinTF.setText(m.getASIN());
+        
+        // TODO: need code to load in actors and people here
+        
         Image i = m.getImage();
         if(i != null)
             this.jLabel15.setIcon(new ImageIcon(i));
@@ -177,7 +181,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        addSubstractActorsPanel = new com.themangoproject.ui.AddSubstractPanel();
+        addSubstractActorsPanel = new com.themangoproject.ui.AddSubtractPanel();
         addActorPanel = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -881,10 +885,10 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
         JOptionPane.showMessageDialog(this, 
                 "The movie was successfully updated.", "Update Successfull", 
-                JOptionPane.INFORMATION_MESSAGE);
-        this.dispose();
+                JOptionPane.INFORMATION_MESSAGE); 
     }
-
+    // Close after exit
+    this.dispose();
     
     
 }//GEN-LAST:event_saveButtonActionPerformed
@@ -918,8 +922,9 @@ private void changeThumbnailButtonActionPerformed(java.awt.event.ActionEvent evt
 private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amazonRetrieveButtonActionPerformed
     // Get information from amazon.
     int proceed = JOptionPane.showConfirmDialog(this, 
-            "Amazon will try to populate certain fields to make your life " + 
-            "easier.  Any information maybe be altered.  Do you want to proceed?", 
+            "Mango will attempt to gather information from Amazon.com.  The " + 
+            "provided information may not be\naccurate.  Any information already " + 
+            "filled out may be altered.  Do you want to proceed?", 
             "Confirm", JOptionPane.YES_NO_OPTION);
     if (proceed == JOptionPane.YES_OPTION) {
         AmazonMovieDetails amazon = new AmazonMovieDetails();
@@ -931,7 +936,8 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
             this.ratingCB.setSelectedItem(amazon.getRating());
             this.runtimeSpinner.setValue(Integer.parseInt(amazon.getRuntime()));
             this.jLabel15.setIcon(amazon.getMovieImage());
-//            this.imageURL = amazon.getMovieURL();
+            // Set as DVD if from amazon.  There is no way to know the format easily.
+            this.typeCB.setSelectedItem("DVD");
             // actors
             List<String> actors = amazon.getActors();
             for (int i = 0; i < actors.size(); i++) {
@@ -945,8 +951,6 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
                 else
                     MangoController.getInstance().addActor(actors.get(i), "");
                 this.addSubstractActorsPanel.createAndSetSelected(actors.get(i));
-                //this.addSubstractPanel1.createAndSetSelected(actorName[0] + " " + actorName[1]);
-                //System.out.println()
             }
 
         } else {
@@ -978,9 +982,12 @@ private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {
         "Are you sure you want to reset the thumbnail image to the default " +
         "image?", "Reset Thumbnail to Default", JOptionPane.YES_NO_OPTION);
     if (proceed == JOptionPane.YES_OPTION) {
-        this.jLabel15.setIcon(new ImageIcon(getClass().
-            getResource("/com/themangoproject/ui/images/defaultMovieImage.png")));
-//        this.imageURL = null;
+        Image im = new ImageIcon(getClass().
+                getResource("/com/themangoproject/ui/images/defaultMangoLogo.jpg")).getImage();
+        
+        this.jLabel15.setIcon(
+                new ImageIcon(im.getScaledInstance(160, 160, Image.SCALE_DEFAULT)));
+
     }
 }//GEN-LAST:event_defaultImageButtonActionPerformed
 
@@ -1031,7 +1038,7 @@ private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JPanel addActorPanel;
     private javax.swing.JButton addPersonButton;
     private javax.swing.JPanel addPersonPanel;
-    private com.themangoproject.ui.AddSubstractPanel addSubstractActorsPanel;
+    private com.themangoproject.ui.AddSubtractPanel addSubstractActorsPanel;
     private javax.swing.JScrollPane addressScrollPane;
     private javax.swing.JButton amazonRetrieveButton;
     private javax.swing.JPanel artworkPane;

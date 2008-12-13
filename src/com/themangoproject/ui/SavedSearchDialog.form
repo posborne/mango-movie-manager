@@ -144,7 +144,7 @@
             <Property name="text" type="java.lang.String" value="Constraint"/>
           </Properties>
         </Component>
-        <Component class="com.themangoproject.ui.AddSubstractPanel" name="addSubtractSearchPanel">
+        <Component class="com.themangoproject.ui.AddSubtractPanel" name="addSubtractSearchPanel">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>

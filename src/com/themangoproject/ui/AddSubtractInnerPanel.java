@@ -4,11 +4,11 @@ package com.themangoproject.ui;
 import javax.swing.ComboBoxModel;
 
 /**
- * AddSubtractInnerPanel is a panel that to collect search criteria for 
- * Saved Searches.
+ * AddSubtractInnerPanel is a panel that is used to gather information using
+ * two combo boxes and a textfield.
  * 
  * @author  Kyle Ronning
- * @version 12-6-2008
+ * @version 12-12-2008
  */
 public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
@@ -97,14 +97,14 @@ public class AddSubtractInnerPanel extends javax.swing.JPanel {
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     // Add Button
     // Adds a panel like itself to the parent JPanel
-    ((AddSubstractPanel)
+    ((AddSubtractPanel)
             (this.getParent().getParent().getParent().getParent())).addAddSubPanel();
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     // Subtract Button
     // Removes this panel from the parent JPanel.
-    ((AddSubstractPanel)
+    ((AddSubtractPanel)
             (this.getParent().getParent().getParent().getParent())).removeAddSubPanel(this);
 }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -131,24 +131,36 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         this.jButton3.setEnabled(true);
     }
     
-   
     /**
-     * Returns the selected items in the two ComboBoxes and the text in the 
-     * TextField.  The values are returned as Strings in an array.  The first
-     * element is the String value of the first ComboBox, the second element is
-     * the String value of the second ComboBox, and the last value is the String
-     * value of the TextField.
+     * Gets the left combo box.
      * 
-     * @return The values from the ComboBoxes and TextField.
+     * @return The left combo box.
      */
-    public String[] getInnerPanelValues() {
-        String[] items = { (String)this.jComboBox1.getSelectedItem(), 
-            (String)this.jComboBox2.getSelectedItem(), this.jTextField1.getText()};
-        return items;
+    public Object getLeftComboObject() {
+        return this.jComboBox1.getSelectedItem();
     }
     
     /**
-     * Set the first ComboBox editable
+     * Gets the right combo box.
+     * 
+     * @return The right combo box.
+     */
+    public Object getRightComboObject() {
+        return this.jComboBox2;
+    }
+    
+    /**
+     * Gets the text in the text field.
+     * 
+     * @return The text in the text field.
+     */
+    public String getTextFieldObject() {
+        return this.jTextField1.getText();
+    }
+    
+    /**
+     * Set the first ComboBox editable.
+     * 
      * @param edit Sets the first ComboBox editable if true.
      */
     public void setComboBox1Editable(boolean edit) {
@@ -156,7 +168,8 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     /**
-     * Set the second ComboBox editable
+     * Set the second ComboBox editable.
+     * 
      * @param edit Sets the second ComboBox editable if true.
      */
     public void setComboBox2Editable(boolean edit) {
@@ -170,6 +183,14 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
      */
     public void setSelectedLeftComboBox(String name) {
         this.jComboBox1.setSelectedItem(name);
-        //this.jComboBox1.
+    }
+    
+    /**
+     * Selects the given item in the right combo box from a given string.
+     * 
+     * @param name The name of the item.
+     */
+    public void setSelectedRightComboBox(String name) {
+        this.jComboBox2.setSelectedItem(name);
     }
 }
