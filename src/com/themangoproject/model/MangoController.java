@@ -109,6 +109,15 @@ public class MangoController {
         }
         
         /**
+         * Removes an actor from a movie <code>movie</code>.
+         * 
+         * @param movie The movie to remove the actor from.
+         * @param actor The actor to remove from the movie.
+         */
+        public void removeActorFromMovie(Movie movie, Actor actor) {
+            movieDAO.removeActorFromMovie(movie, actor);
+        }
+        /**
          * Gets all the actors for a given movie <code>m</code>.
          * 
          * @param m The movie to get actors for.
