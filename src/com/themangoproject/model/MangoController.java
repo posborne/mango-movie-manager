@@ -93,6 +93,31 @@ public class MangoController {
 	public void addActor(String firstName, String lastName) {
 		actorDAO.addActor(firstName, lastName);
 	}
+        
+                
+        /**
+         * Adds an actor to a movie <code>movie</code> with the role and
+         * character that actor played.
+         * 
+         * @param movie The movie the actor should be added to.
+         * @param actor The actor to add to the movie.
+         * @param role The role the actor plays in the movie.
+         * @param character The character the actor plays in the movie.
+         */
+        public void addActorToMovie(Movie movie, Actor actor, String role, String character) {
+            movieDAO.addActorToMovie(movie, actor, role, character);
+        }
+        
+        /**
+         * Gets all the actors for a given movie <code>m</code>.
+         * 
+         * @param m The movie to get actors for.
+         * @return A list of actors for a given movie.
+         */
+        public List<Actor> getActorsForMovie(Movie m) {
+            return movieDAO.getActorsForMovie(m);
+        }
+        
         /**
          * This will set the image for this movie based on the inputstream
          * passed
