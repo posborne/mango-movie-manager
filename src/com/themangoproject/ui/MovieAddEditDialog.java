@@ -1,6 +1,7 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.PersonExistsException;
@@ -16,12 +17,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -79,7 +82,13 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         this.customDescriptionTA.setText(m.getCustomDescription());
         this.asinTF.setText(m.getASIN());
         
-        // TODO: need code to load in actors and people here
+        // Actor
+        List<Actor> actors = MangoController.getInstance().getActorsForMovie(m);
+        for (Actor actor : actors) {
+            this.addSubstractActorsPanel.createAndSetSelected(actor.toString());
+        }
+        
+        // TODO: need code to load in people here
         
         Image i = m.getImage();
         if(i != null)
@@ -827,6 +836,7 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     String type = (String) typeCB.getSelectedItem();
     
 
+    // New movie
     if(m == null){
         Movie mov = null;
         mov = MangoController.getInstance().addMovie(title, director, rating, runtime, 
@@ -836,7 +846,27 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             // Genre
             
             // Actors
-            
+            List<AddSubtractInnerPanel> panels = 
+                    this.addSubstractActorsPanel.getInnerPanelsValues();
+            for (AddSubtractInnerPanel panel : panels) {
+                // Temp code so the empty panel wont be added - this will be removed
+                // when the comboboxmodels are changelisteners.  There is code
+                // in AddSubtractPanel to take care of this.
+                // For now you can remove the empty panel or just ignore it.
+                if (((JComboBox) panel.getLeftComboObject()).getSelectedIndex() == -1) {
+                    
+                } else {
+                    JComboBox actorBox = (JComboBox) panel.getLeftComboObject();
+                    JComboBox roleBox = (JComboBox) panel.getRightComboObject();
+                    ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox.getModel();
+                    int selectedIndex = ((JComboBox) panel.getLeftComboObject()).getSelectedIndex();
+                    Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
+                    String role = (String) roleBox.getSelectedItem();
+                    String character = panel.getTextFieldObject();
+
+                    MangoController.getInstance().addActorToMovie(mov, actor, role, character);
+                }
+            }            
             // Owner and borrower
             
             // Image
@@ -870,7 +900,38 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         // Genre
             
         // Actors
-            
+        List<AddSubtractInnerPanel> panels = 
+                this.addSubstractActorsPanel.getInnerPanelsValues();
+        List<Actor> actorsInDB = MangoController.getInstance().getActorsForMovie(m);
+        List<Actor> actorsInCB = new ArrayList<Actor>();
+        for (AddSubtractInnerPanel panel : panels) {
+            // Temp code so the empty panel wont be added - this will be removed
+            // when the comboboxmodels are changelisteners.  There is code
+            // in AddSubtractPanel to take care of this.
+            // For now you can remove the empty panel or just ignore it.
+            if (((JComboBox) panel.getLeftComboObject()).getSelectedIndex() == -1) {
+
+            } else {
+                JComboBox actorBox = (JComboBox) panel.getLeftComboObject();
+                JComboBox roleBox = (JComboBox) panel.getRightComboObject();
+                ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox.getModel();
+                int selectedIndex = ((JComboBox) panel.getLeftComboObject()).getSelectedIndex();
+                Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
+                String role = (String) roleBox.getSelectedItem();
+                String character = panel.getTextFieldObject();
+                
+                // Add any actors that are not already in apart of the movie
+                if (!actorsInDB.contains(actor))
+                    MangoController.getInstance().addActorToMovie(m, actor, role, character);
+                actorsInCB.add(actor);
+            }
+        }  
+        // Remove any actors that were removed form panels
+        for (Actor actor : actorsInDB) {
+            if (!actorsInCB.contains(actor))
+                MangoController.getInstance().removeActorFromMovie(m, actor);
+        }
+                
         // Owner and borrower
             
         // Image
@@ -940,8 +1001,8 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
             this.typeCB.setSelectedItem("DVD");
             // actors
             List<String> actors = amazon.getActors();
-            for (int i = 0; i < actors.size(); i++) {
-                String[] actorName = actors.get(i).split(" ");
+            for (String actor : actors) {
+                String[] actorName = actor.split(" ");
                 if (actorName.length == 2)
                     MangoController.getInstance().addActor(actorName[0], 
                             actorName[1]);
@@ -949,8 +1010,8 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
                     MangoController.getInstance().addActor(actorName[0] + 
                             " " + actorName[1], actorName[2]);
                 else
-                    MangoController.getInstance().addActor(actors.get(i), "");
-                this.addSubstractActorsPanel.createAndSetSelected(actors.get(i));
+                    MangoController.getInstance().addActor(actor, "");
+                this.addSubstractActorsPanel.createAndSetSelected(actor);
             }
 
         } else {
