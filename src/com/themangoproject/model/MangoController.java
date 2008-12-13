@@ -299,4 +299,12 @@ public class MangoController {
 		listsDAO.removeList(listLabel);
 	}
 
+	/**
+	 * @param setLabel
+	 * @param newName
+	 */
+	public void renameSet(String oldLabel, String newLabel) {
+		setsDAO.renameSet(oldLabel, newLabel);
+	}
+
 }

@@ -13,4 +13,5 @@ public interface SetsDAO {
 	public void addSet(String label);
 	public void addSetsChangeListener(ChangeListener changeListener);
 	public void removeSetsChangeListener(ChangeListener changeListener);
+	public void renameSet(String oldLabel, String newLabel);
 }

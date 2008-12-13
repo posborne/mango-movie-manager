@@ -60,6 +60,10 @@ public class H2SetsDAO implements SetsDAO {
 	private PreparedStatement addSetPS;
 	private static final String addSetSQL = "INSERT INTO sets(label) VALUES(?)";
 
+	/** Rename a set */
+	private PreparedStatement renameSetPS;
+	private static final String renameSetSQL = "UPDATE sets SET label=? WHERE label=?";
+
 	/**
 	 * Private singleton constructor initializes different Prepared Statements
 	 * and other state for the singleton.
@@ -76,6 +80,7 @@ public class H2SetsDAO implements SetsDAO {
 			addMovieToSetPS = conn.prepareStatement(addMovieToSetSQL);
 			setIdForLabelPS = conn.prepareStatement(setIdForLabelSQL);
 			addSetPS = conn.prepareStatement(addSetSQL);
+			renameSetPS = conn.prepareStatement(renameSetSQL);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -245,6 +250,24 @@ public class H2SetsDAO implements SetsDAO {
 	private void fireSetsChangedEvent() {
 		for (ChangeListener l : setsChangeListeners) {
 			l.stateChanged(null);
+		}
+	}
+
+	/**
+	 * Rename a the set with oldLabel to have the label newLable
+	 * 
+	 * @param oldLabel
+	 *            the old set label
+	 * @param newLable
+	 *            Thew new set label.
+	 */
+	public void renameSet(String oldLabel, String newLabel) {
+		try {
+			renameSetPS.setString(1, newLabel);
+			renameSetPS.setString(2, oldLabel);
+			renameSetPS.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
 	}
 

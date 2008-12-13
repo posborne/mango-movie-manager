@@ -8,6 +8,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.Mango;
@@ -35,6 +38,7 @@ public class SetMutableTreeNode extends DefaultMutableTreeNode implements
 
 	@Override
 	public JPopupMenu getPopupMenu() {
+		// Delete Set Item
 		JMenuItem removeSetItem = new JMenuItem("Delete Set");
 		removeSetItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -47,8 +51,27 @@ public class SetMutableTreeNode extends DefaultMutableTreeNode implements
 			}
 		});
 		
+		// Rename Set Item
+		JMenuItem renameSetItem = new JMenuItem("Rename Set");
+		renameSetItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String newName = JOptionPane.showInputDialog(
+						(Component)e.getSource(), 
+						"Rename \"" + setLabel + "\" to?", 
+						"Rename Set", 
+						JOptionPane.PLAIN_MESSAGE);
+				if (newName != null) {
+					MangoController.getInstance().renameSet(setLabel, newName);
+					setLabel = newName;
+					TreePath path = new TreePath(SetMutableTreeNode.this.getPath());
+					UIController.getInstance().getNavigatorTree().getModel().valueForPathChanged(path, newName);
+				}
+			}
+		});
+		
 		JPopupMenu setPopup = new JPopupMenu();
 		setPopup.add(removeSetItem);
+		setPopup.add(renameSetItem);
 		return setPopup;
 	}
 
