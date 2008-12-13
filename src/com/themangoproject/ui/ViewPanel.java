@@ -7,25 +7,14 @@
 package com.themangoproject.ui;
 
 import java.awt.Color;
-import java.awt.print.PrinterException;
-import java.text.MessageFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
-import javax.swing.JTable.PrintMode;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import com.themangoproject.model.MangoController;
-import com.themangoproject.model.Movie;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
-import com.themangoproject.ui.model.EditableMovieTableModel;
+import com.themangoproject.ui.model.MangoTableModelIF;
 import javax.swing.RowFilter;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -37,15 +26,15 @@ import javax.swing.table.TableRowSorter;
  * @version 1.0
  */
 public class ViewPanel extends javax.swing.JPanel implements TableModelListener {
+	private static final long serialVersionUID = -6397941470627210285L;
 
-    /** Creates new form ViewPanel */
+	/** Creates new form ViewPanel */
     public ViewPanel() {
         initComponents();
         initColumnSizes();
         
         // setup row sorter and filter
-        TableRowSorter rowSorter = new TableRowSorter<TableModel>(viewTable.getModel());
-        viewTable.setRowSorter(rowSorter);
+        setTableModel(new AllMoviesEditableTableModel());
     }
 
     /**
@@ -226,20 +215,10 @@ private void searchTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
      */
     public void setTableModel(TableModel model) {
     	viewTable.clearSelection();
-    	if (!(viewTable.getModel() instanceof DefaultTableModel)) {
-			int rows = this.viewTable.getModel().getRowCount();
-			for (int i = 0; i < rows; i++) {
-				Movie m = ((EditableMovieTableModel)viewTable.getModel()).getMovieForRow(i);
-				m.removeAllChangeListeners();
-				// remove change listener on movies
-				MangoController.getInstance()
-					.removeMoviesChangeListener(
-							((EditableMovieTableModel)this.viewTable.getModel())
-								.getMoviesChangeListener());
-			}
-    	}
+    	((MangoTableModelIF)viewTable.getModel()).clenup();
+    	TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
+        viewTable.setRowSorter(rowSorter);
 		this.viewTable.setModel(model);
-        
     }
     
     /**

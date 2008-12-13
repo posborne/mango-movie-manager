@@ -35,4 +35,9 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 		return moviesChangeListener;
 	}
 
+	@Override
+	public void clenup() {
+		MangoController.getInstance().removeListsChangeListener(moviesChangeListener);
+	}
+
 }

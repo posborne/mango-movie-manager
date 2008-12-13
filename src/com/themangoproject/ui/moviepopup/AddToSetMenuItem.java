@@ -23,6 +23,7 @@ public class AddToSetMenuItem extends JMenu implements ChangeListener {
 	public AddToSetMenuItem() {
 		super("Add to Set");
 		addSets();
+		MangoController.getInstance().addSetsChangeListener(this);
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class AddToSetMenuItem extends JMenu implements ChangeListener {
 	 */
 	private void addSets() {
 		List<String> sets = MangoController.getInstance().getAllSets();
-		MangoController.getInstance().addSetsChangeListener(this);
+		
 		for (final String set : sets) {
 			JMenuItem item = new JMenuItem(set);
 			item.addActionListener(new ActionListener() {

@@ -36,8 +36,10 @@ import javax.swing.JOptionPane;
  *
  */
 public class MovieAddEditDialog extends javax.swing.JDialog {
-
-    /** A Movie for the dialog to work with. */
+	/** Generated serial UID */
+	private static final long serialVersionUID = 5583966775480012466L;
+	
+	/** A Movie for the dialog to work with. */
     private Movie m;
     
     /** 

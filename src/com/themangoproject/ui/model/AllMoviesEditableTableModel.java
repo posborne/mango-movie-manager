@@ -1,10 +1,8 @@
 package com.themangoproject.ui.model;
 
 import java.util.List;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 
@@ -34,5 +32,10 @@ public class AllMoviesEditableTableModel extends EditableMovieTableModel {
 			AllMoviesEditableTableModel.this.movies = MangoController.getInstance().getAllMovies();
 			AllMoviesEditableTableModel.this.fireTableStructureChanged();
 		}
+	}
+
+	@Override
+	public void clenup() {
+		MangoController.getInstance().removeMoviesChangeListener(moviesListener);
 	}
 }

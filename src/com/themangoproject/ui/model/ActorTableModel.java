@@ -14,7 +14,7 @@ import com.themangoproject.model.Person;
  * 
  * @author Zach Varberg
  */
-public class ActorTableModel extends AbstractTableModel {
+public class ActorTableModel extends AbstractTableModel implements MangoTableModelIF {
 
     /** Generated serial version UID */
     private static final long serialVersionUID = -392463901990643277L;
@@ -94,5 +94,10 @@ public class ActorTableModel extends AbstractTableModel {
             break; // Can't be edited
         }
     }
+
+	@Override
+	public void clenup() {
+		// TODO: cleanup
+	}
 
 }
