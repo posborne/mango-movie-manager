@@ -96,7 +96,7 @@ public class ActorTableModel extends AbstractTableModel implements MangoTableMod
     }
 
 	@Override
-	public void clenup() {
+	public void cleanup() {
 		// TODO: cleanup
 	}
 

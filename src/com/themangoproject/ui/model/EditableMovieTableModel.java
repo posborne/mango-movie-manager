@@ -1,10 +1,7 @@
 package com.themangoproject.ui.model;
 
 import java.util.List;
-
-import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
-
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 
@@ -129,7 +126,4 @@ public abstract class EditableMovieTableModel extends
 		}
 		MangoController.getInstance().updateMovie(m);
 	}
-
-	public abstract ChangeListener getMoviesChangeListener();
-
 }

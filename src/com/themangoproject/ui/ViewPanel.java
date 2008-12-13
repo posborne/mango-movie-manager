@@ -215,7 +215,7 @@ private void searchTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
      */
     public void setTableModel(TableModel model) {
     	viewTable.clearSelection();
-    	((MangoTableModelIF)viewTable.getModel()).clenup();
+    	((MangoTableModelIF)viewTable.getModel()).cleanup();
     	TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         viewTable.setRowSorter(rowSorter);
 		this.viewTable.setModel(model);

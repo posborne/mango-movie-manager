@@ -107,7 +107,7 @@ public class PersonTableModel extends AbstractTableModel implements
 	}
 
 	@Override
-	public void clenup() {
+	public void cleanup() {
 		// TODO: remove any listeners if added later
 	}
 }

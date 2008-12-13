@@ -6,5 +6,5 @@ public interface MangoTableModelIF {
 	 * listeners need to be removed or anything like that, this method will take
 	 * care of it.
 	 */
-	public void clenup();
+	public void cleanup();
 }
