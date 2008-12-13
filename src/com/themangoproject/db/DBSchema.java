@@ -16,9 +16,9 @@ public class DBSchema {
 		"DROP DOMAIN IF EXISTS MOVIE_RATING";
 
 	public static final String createMovieRatingDomain = 
-		"CREATE DOMAIN MOVIE_RATING AS CHAR(5) " + 
+		"CREATE DOMAIN MOVIE_RATING AS CHAR(8) " + 
 		"CHECK (VALUE IN ('G', 'PG', 'PG-13', 'NC-17', 'R', 'NR', 'RP', 'TVPG', " + 
-		"'TVY7', 'TVY7FV', 'TVG', 'TV14', 'TVMA') )";
+		"'TVY7', 'TVY7FV', 'TVG', 'TV14', 'TVMA', 'Unrated') )";
 
 	public static final String dropPhoneNumberDomain = 
 		"DROP DOMAIN IF EXISTS PHONE_NUMBER";
