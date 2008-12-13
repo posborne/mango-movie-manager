@@ -6,7 +6,6 @@ import com.themangoproject.db.h2.H2MovieDAO;
 import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
 import com.themangoproject.db.h2.H2SetsDAO;
-import com.themangoproject.ui.model.EditableMovieTableModel;
 
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -305,6 +304,14 @@ public class MangoController {
 	 */
 	public void renameSet(String oldLabel, String newLabel) {
 		setsDAO.renameSet(oldLabel, newLabel);
+	}
+
+	/**
+	 * @param listLabel
+	 * @param newName
+	 */
+	public void renameList(String oldLabel, String newLabel) {
+		listsDAO.renameList(oldLabel, newLabel);
 	}
 
 }

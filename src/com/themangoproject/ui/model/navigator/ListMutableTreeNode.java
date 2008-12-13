@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.Mango;
@@ -48,8 +49,27 @@ public class ListMutableTreeNode extends DefaultMutableTreeNode implements
 			}
 		});
 		
+		// Rename Set Item
+		JMenuItem renameListItem = new JMenuItem("Rename List");
+		renameListItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String newName = JOptionPane.showInputDialog(
+						(Component)e.getSource(), 
+						"Rename \"" + listLabel + "\" to?", 
+						"Rename List", 
+						JOptionPane.PLAIN_MESSAGE);
+				if (newName != null) {
+					MangoController.getInstance().renameList(listLabel, newName);
+					listLabel = newName;
+					TreePath path = new TreePath(ListMutableTreeNode.this.getPath());
+					UIController.getInstance().getNavigatorTree().getModel().valueForPathChanged(path, newName);
+				}
+			}
+		});
+		
 		JPopupMenu listPopup = new JPopupMenu();
 		listPopup.add(removeListItem);
+		listPopup.add(renameListItem);
 		return listPopup;
 	}
 

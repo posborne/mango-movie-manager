@@ -41,7 +41,6 @@ public class SetsMutableTreeNode extends DefaultMutableTreeNode implements
 		// I guess this doesn't need to do anything
 	}
 	
-
 	public class SetsChangeListener implements ChangeListener {
 		@Override
 		public void stateChanged(ChangeEvent e) {

@@ -14,4 +14,5 @@ public interface ListsDAO {
 	public void removeListsChangeListener(ChangeListener l);
 	public void addList(String label);
 	public void addMovieToList(String label, Movie m);
+	public void renameList(String oldLabel, String newLabel);
 }

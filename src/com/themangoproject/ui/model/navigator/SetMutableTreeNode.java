@@ -8,8 +8,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import com.themangoproject.model.MangoController;
