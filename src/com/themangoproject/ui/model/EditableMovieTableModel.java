@@ -83,7 +83,24 @@ public abstract class EditableMovieTableModel extends
 	}
 
 	public Class<? extends Object> getColumnClass(int columnIndex) {
-		return getValueAt(0, columnIndex).getClass();
+		switch (columnIndex) {
+		case 0:
+			return Integer.class; // number
+		case 1:
+			return String.class; // title
+		case 2:
+			return String.class; // director
+		case 3:
+			return String.class; // rating
+		case 4:
+			return Integer.class; // year
+		case 5:
+			return Integer.class; // mango rating
+		case 6:
+			return String.class; // Type
+		default:
+			return String.class;
+		}
 	}
 
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
