@@ -35,7 +35,12 @@ public class SearchCondition {
         StringBuilder sb = new StringBuilder();
         
         // append attribute
-        sb.append(attribute + " ");
+        if (attribute.toLowerCase().equals("mango rating")) {
+        	attribute = "mango_rating";
+        } else if (attribute.toLowerCase().equals("purchase date")) {
+        	attribute = "purchase_date";
+        }
+        sb.append(attribute.toLowerCase() + " ");
 
         // append condition
         if (constraint.toLowerCase().equals("is less than")) {
