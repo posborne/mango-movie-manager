@@ -388,4 +388,8 @@ public class MangoController {
         public void setBorrowerToMovie(Movie m, Person b) {
             m.setBorrower(b);
         }
+
+		public void removeMovieFromList(String label, Movie m) {
+			listsDAO.removeMovieFromList(label, m);
+		}
 }
