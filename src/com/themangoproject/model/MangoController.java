@@ -375,4 +375,12 @@ public class MangoController {
         public void removeGenreFromMovie(Movie m, String s) {
             m.removeGenre(s);
         }
+        
+        public void setOwnerToMovie(Movie m, Person o) {
+            m.setOwner(o);
+        }
+        
+        public void setBorrowerToMovie(Movie m, Person b) {
+            m.setBorrower(b);
+        }
 }
