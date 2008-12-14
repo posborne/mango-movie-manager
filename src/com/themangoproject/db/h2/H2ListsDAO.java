@@ -178,9 +178,11 @@ public class H2ListsDAO implements ListsDAO {
 	 */
 	@Override
 	public void removeMovieFromList(String label, Movie m) {
+		DBListMovie movie = (DBListMovie) m;
+		
 		try {
-			removeMovieFromListPS.setString(1, label);
-			removeMovieFromListPS.setInt(2, ((DBListMovie) m).getOrderId());
+			removeMovieFromListPS.setInt(1, movie.getOrderId());
+			removeMovieFromListPS.setString(2, label);
 			removeMovieFromListPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
