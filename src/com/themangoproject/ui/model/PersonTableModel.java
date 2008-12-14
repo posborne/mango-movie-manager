@@ -24,6 +24,8 @@ import com.themangoproject.model.Person;
 public class PersonTableModel extends AbstractTableModel implements
 		MangoTableModelIF {
 
+	private static final long serialVersionUID = 1574693016889051787L;
+
 	private final String columns[] = { "#", "Name", "Address", "Email",
 			"Phone Number" };
 
