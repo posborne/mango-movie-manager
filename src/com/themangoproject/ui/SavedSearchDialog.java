@@ -44,7 +44,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
             JComboBox rightCB = (JComboBox) panel.getRightComboObject();
             String attribute = (String) leftCB.getSelectedItem();
             String condtion = (String) rightCB.getSelectedItem();
-            String value = (String)panel.getTextFieldObject();
+            String value = (String)panel.getTextFieldText();
 
             try {
                 int intval = Integer.parseInt(value);
