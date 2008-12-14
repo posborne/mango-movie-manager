@@ -7,12 +7,17 @@
 package com.themangoproject.ui;
 
 import java.awt.Color;
+import java.awt.print.PrinterException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import com.themangoproject.ui.model.MangoTableModelIF;
+import java.text.MessageFormat;
+import javax.swing.JTable.PrintMode;
 import javax.swing.RowFilter;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -72,7 +77,6 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
 
         controlsPanel = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
-        searchButton = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
         tableScrollPane = new javax.swing.JScrollPane();
         viewTable = new javax.swing.JTable();
@@ -94,50 +98,38 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
             }
         });
 
-        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/search.png"))); // NOI18N
-        searchButton.setToolTipText("Search");
-        searchButton.setBorder(null);
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
-
         printButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/printer.png"))); // NOI18N
         printButton.setToolTipText("Print Table");
         printButton.setBorder(null);
+        printButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout controlsPanelLayout = new javax.swing.GroupLayout(controlsPanel);
         controlsPanel.setLayout(controlsPanelLayout);
         controlsPanelLayout.setHorizontalGroup(
             controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlsPanelLayout.createSequentialGroup()
+            .addGroup(controlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(printButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
-                .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
+                .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        controlsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {printButton, searchButton});
-
         controlsPanelLayout.setVerticalGroup(
             controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(printButton))
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addGroup(controlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(printButton)
+                    .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        controlsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {printButton, searchButton, searchTF});
+        controlsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {printButton, searchTF});
 
-        tableScrollPane.setBorder(null);
         tableScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
         viewTable.setModel(new AllMoviesEditableTableModel());
@@ -160,12 +152,6 @@ public class ViewPanel extends javax.swing.JPanel implements TableModelListener 
         );
     }// </editor-fold>//GEN-END:initComponents
 
-private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-    String filterText = searchTF.getText();
-    TableRowSorter trs = (TableRowSorter) viewTable.getRowSorter();
-    trs.setRowFilter(RowFilter.regexFilter(filterText));    
-}//GEN-LAST:event_searchButtonActionPerformed
-
 private void searchTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTFFocusGained
     // If text was previously added to the text field nothing happens.  If
     // The text is gray colored it will say "Search" and will be replaced
@@ -187,16 +173,26 @@ private void searchTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event
 
 private void searchTFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTFKeyReleased
     // Searches for the given string of text within the table
-    
+    String filterText = searchTF.getText();
+    TableRowSorter trs = (TableRowSorter) viewTable.getRowSorter();
+    trs.setRowFilter(RowFilter.regexFilter(filterText));
     // Set row sorter of TableRowSorter 
     
 }//GEN-LAST:event_searchTFKeyReleased
+
+private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
+        try {
+// TODO add your handling code here:
+            viewTable.print(PrintMode.FIT_WIDTH, new MessageFormat("Mango Movie Manager"), null);
+        } catch (PrinterException ex) {//GEN-LAST:event_printButtonActionPerformed
+            Logger.getLogger(ViewPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlsPanel;
     private javax.swing.JButton printButton;
-    private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchTF;
     private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JTable viewTable;

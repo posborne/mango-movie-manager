@@ -73,9 +73,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             this.yearTF.setText(new Integer(m.getYear()).toString());
         this.ratingCB.setSelectedItem(m.getRating());
         this.runtimeSpinner.setValue(m.getRuntime());
-        if(m.getPurchaseDate() != null)
-            this.purchaseDateTF.setText(DateFormat.
-                    getDateInstance(DateFormat.SHORT).format(m.getPurchaseDate()));
+        if(m.getPurchaseDate() != null) {
+            String arr[] = m.getPurchaseDate().toString().split("-");
+            this.purchaseDateTF.setText(arr[1] + "/" + arr[2] + "/" + arr[0]);
+        }
         this.mangoRatingCB.setSelectedItem("" + m.getMangoRating());
         this.typeCB.setSelectedItem(m.getType());
         this.conditionCB.setText(m.getCondition());
