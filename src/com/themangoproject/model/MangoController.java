@@ -402,5 +402,12 @@ public class MangoController {
 		actorDAO.forceDeleteActor(a);
 	}
 	
+	public void addPersonsChangeListener(ChangeListener l) {
+		personDAO.addPersonChangeListener(l);
+	}
 	
+	public void removePersonsChangeListener(ChangeListener l) {
+		personDAO.removePersonChangeListener(l);
+	}
+
 }
