@@ -149,13 +149,13 @@ public class MangoController {
          * 
          * @throws PersonExistsException if this person already exists in the DB
          */
-    public void addPerson(String name, String phone, String email, String address) throws PersonExistsException {
+    public boolean addPerson(String name, String phone, String email, String address) throws PersonExistsException {
         Person person = new DBPerson();
         person.setName(name);
         person.setPhoneNumber(phone);
         person.setEmail(email);
         person.setAddress(address);
-        personDAO.addPerson(person);
+        return personDAO.addPerson(person);
     }
     
     /**
@@ -163,8 +163,8 @@ public class MangoController {
      * 
      * @param p the person to be updated
      */
-    public void updatePerson(Person p){
-        this.personDAO.updatePerson(p);
+    public boolean updatePerson(Person p){
+        return this.personDAO.updatePerson(p);
     }
 
         /**

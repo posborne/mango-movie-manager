@@ -4,6 +4,7 @@ package com.themangoproject.ui;
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
+import com.themangoproject.model.Person;
 import com.themangoproject.model.PersonExistsException;
 import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
@@ -88,8 +89,14 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             this.addSubstractActorsPanel.createAndSetSelected(actor.toString());
         }
         
-        // TODO: need code to load in people here
-        
+        // Set borrower and owner
+        if (m.getOwner() != null)
+            this.ownerCB.setSelectedItem(m.getOwner().getName());
+        if (m.getBorrower() != null) {
+            this.borrowerCB.setSelectedItem(m.getBorrower().getName());
+            this.borrowedCheckBox.setSelected(true);
+        } else
+            this.borrowedCheckBox.setSelected(false);
         Image i = m.getImage();
         if(i != null)
             this.jLabel15.setIcon(new ImageIcon(i));
@@ -871,6 +878,21 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                 }
             }            
             // Owner and borrower
+            PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB.getModel();
+            PersonComboBoxModel borrowerModel = (PersonComboBoxModel) borrowerCB.getModel();
+            int selectedIndexO = ownerCB.getSelectedIndex();
+            int selectedIndexB = borrowerCB.getSelectedIndex();
+            Person owner, borrower;
+            if (selectedIndexO == -1)
+                owner = null;
+            else
+                owner = (Person) ownerModel.getPersonAt(selectedIndexO);
+            if (selectedIndexB == -1 || !this.borrowedCheckBox.isSelected())
+                borrower = null;
+            else
+                borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
+            MangoController.getInstance().setOwnerToMovie(mov, owner);
+            MangoController.getInstance().setBorrowerToMovie(mov, borrower);
             
             // Image
             Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
@@ -949,6 +971,22 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
                 
         // Owner and borrower
+        PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB.getModel();
+        PersonComboBoxModel borrowerModel = (PersonComboBoxModel) borrowerCB.getModel();
+        int selectedIndexO = ownerCB.getSelectedIndex();
+        int selectedIndexB = borrowerCB.getSelectedIndex();
+        Person owner, borrower;
+        if (selectedIndexO == -1)
+            owner = null;
+        else
+            owner = (Person) ownerModel.getPersonAt(selectedIndexO);
+        if (selectedIndexB == -1 || !this.borrowedCheckBox.isSelected())
+            borrower = null;
+        else
+            borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
+        MangoController.getInstance().setOwnerToMovie(m, owner);
+        MangoController.getInstance().setBorrowerToMovie(m, borrower);
+        
             
         // Image
         Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
@@ -1040,14 +1078,25 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
 }//GEN-LAST:event_amazonRetrieveButtonActionPerformed
 
 private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonButtonActionPerformed
+    boolean added = false;
     try {
         // Create a new person.
-        MangoController.getInstance().addPerson(this.nameTF.getText(), 
+        if (!this.nameTF.getText().equals(""))
+            added = MangoController.getInstance().addPerson(this.nameTF.getText(), 
                 this.phoneNumberTF.getText(), this.emailTF.getText(), 
                 this.AddressTA.getText());
+        if (added) {
+            JOptionPane.showMessageDialog(this, this.nameTF.getText() + 
+                    " was added as a person.", 
+                    "Person Added", JOptionPane.INFORMATION_MESSAGE);        
+        } else {
+            JOptionPane.showMessageDialog(this, this.nameTF.getText() + 
+                    " already exists.", 
+                    "Person Already Exists", JOptionPane.WARNING_MESSAGE);         
+        }
     } catch (PersonExistsException ex) {
         JOptionPane.showMessageDialog(this, this.nameTF + " already exists", 
-                "Person Already exists", JOptionPane.OK_OPTION);
+                "Person Already exists", JOptionPane.WARNING_MESSAGE);
     }       
 }//GEN-LAST:event_addPersonButtonActionPerformed
 

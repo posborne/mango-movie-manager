@@ -96,7 +96,7 @@ public class H2PersonDAO implements PersonDAO {
 	 * @param p
 	 *            The person that should be added to the database.
 	 */
-	public void addPerson(Person p) throws PersonExistsException {
+	public boolean addPerson(Person p) throws PersonExistsException {
 		// Check the type
 		if (!(p instanceof DBPerson)) {
 			throw new ClassCastException();
@@ -113,9 +113,9 @@ public class H2PersonDAO implements PersonDAO {
 			// execute the statement
 			addPersonPS.executeUpdate();
 		} catch (SQLException ex) {
-			// TODO: decide what needs to be done here
-			ex.printStackTrace(System.err);
+                    return false;
 		}
+                return true;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class H2PersonDAO implements PersonDAO {
 	 * @param person
 	 *            The person that should be updated.
 	 */
-	public void updatePerson(Person p) {
+	public boolean updatePerson(Person p) {
 		// Check the type
 		if (!(p instanceof DBPerson)) {
 			throw new ClassCastException();
@@ -141,9 +141,9 @@ public class H2PersonDAO implements PersonDAO {
 			updatePersonPS.setInt(5, person.getId()); // execute the statement
 			updatePersonPS.executeUpdate();
 		} catch (SQLException ex) {
-			// TODO: decide what needs to be done here
-			ex.printStackTrace(System.err);
+                    return false;
 		}
+                return true;
 	}
 
 	/**
