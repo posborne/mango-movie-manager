@@ -196,7 +196,7 @@ public class MangoController {
 	}
 
 	/**
-	 * This will return a list of all the people
+	 * This will returnl a list of all the people
 	 * 
 	 * @return a list of all the people
 	 */
@@ -246,7 +246,7 @@ public class MangoController {
 		listsDAO.addListsChangeListener(l);
 	}
 
-	/**
+	/**l
 	 * Remove the specified lists change listener.
 	 * 
 	 * @param l
@@ -288,7 +288,6 @@ public class MangoController {
 	public void removeMoviesChangeListener(ChangeListener l) {
 		movieDAO.removeMoviesChangeListener(l);
 	}
-	
 	public void clearAllMoviesChangeListener() {
 		movieDAO.removeAllMoviesChangeListeners();
 	}
