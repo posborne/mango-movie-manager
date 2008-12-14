@@ -33,10 +33,9 @@ public abstract class SearchEditableTableModel extends EditableMovieTableModel i
 			}
 		};
 		MangoController.getInstance().addMoviesChangeListener(moviesChangeListener);
-		retrieveMovies();
 	}
 	
-	private void retrieveMovies() {
+	void retrieveMovies() {
 		// remove change listeners from old movies
 		for (Movie m : movies) {
 			m.removeChangeListener(singleMovieChangeListener);

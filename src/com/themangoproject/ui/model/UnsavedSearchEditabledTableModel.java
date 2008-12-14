@@ -11,10 +11,10 @@ public class UnsavedSearchEditabledTableModel extends SearchEditableTableModel {
 	private String searchQuery;
 	public UnsavedSearchEditabledTableModel(String query) {
 		this.searchQuery = query;
+		retrieveMovies();
 	}
 	@Override
 	public List<Movie> executeSearch() throws SQLException {
 		return MangoController.getInstance().executeSearch(searchQuery);
 	}
-
 }

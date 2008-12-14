@@ -343,7 +343,8 @@ public class MangoController {
 		return searchDAO.executeSearch(query);
 	}
 	
-	public List<Movie> executeSavedSearch(String searchLabel) throws SQLException {
+	public List<Movie> executeSavedSearch(String searchLabel) 
+		throws SQLException {
 		return searchDAO.executeSavedSearch(searchLabel);
 	}
 	

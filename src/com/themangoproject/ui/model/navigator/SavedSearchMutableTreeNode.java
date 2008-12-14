@@ -25,7 +25,7 @@ public class SavedSearchMutableTreeNode extends DefaultMutableTreeNode
 	
 	@Override
 	public void doYourThing(Mango mangoPanel) {
-		UIController.getInstance().setViewTableModel(new SavedSearchEditableTableModel(searchLabel));
+		UIController.getInstance().setViewTableModel(new SavedSearchEditableTableModel(this.searchLabel));
 	}
 
 	@Override

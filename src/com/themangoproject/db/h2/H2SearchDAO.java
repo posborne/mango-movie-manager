@@ -28,7 +28,9 @@ public class H2SearchDAO implements SearchDAO {
 	
 	private PreparedStatement getSavedSearchQueryPS;
 	private static final String getSavedSearchQuerySQL = 
-		"SELECT * FROM saved_searches WHERE label=?";
+		"SELECT query " +
+		"	FROM saved_searches" +
+		"	WHERE label LIKE ?";
 	
 	private PreparedStatement removeSavedSearchPS;
 	private static final String removeSavedSearchSQL = 
@@ -74,17 +76,21 @@ public class H2SearchDAO implements SearchDAO {
 
 
     public String getQueryForLabel(String label) {
-        String query = null;
-        try {
-            Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT query FROM saved_searches " +
-                    "WHERE label='" + label + "'");
-            rs.first();
-            query = rs.getString(1);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return query;
+		try {
+			conn.setAutoCommit(true);
+			Statement stat = conn.createStatement();
+			String sql = "SELECT query " +
+					"	FROM saved_searches " +
+					"	WHERE label='" + label + "'";
+			System.out.println("SQL: " + sql);
+			ResultSet results = stat.executeQuery(sql);
+			while (results.next()) {
+				return results.getString("query");
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return "WTF";
     }
     
 	/* (non-Javadoc)
@@ -93,24 +99,24 @@ public class H2SearchDAO implements SearchDAO {
 	@Override
 	public List<Movie> executeSavedSearch(String searchLabel)
 			throws SQLException {
-        String query = getQueryForLabel(searchLabel);
-        return executeSearch(query);
-//		try {
-//			getSavedSearchQueryPS.setString(1, searchLabel);
-//			ResultSet rs = getSavedSearchQueryPS.executeQuery();
-//            rs.first();
-//			String query = rs.getString(1);
-//			Statement stat = conn.createStatement();
-//			rs = stat.executeQuery(query);
-//			while (rs.next()) {
-//				DBMovie m = new DBMovie();
-//				m.setId(rs.getInt("id"));
-//				movies.add(m);
-//			}
-//		} catch (SQLException ex) {
-//			ex.printStackTrace();
-//			throw ex;
-//		}
+		ArrayList<Movie> movies = new ArrayList<Movie>();
+		try {
+			getSavedSearchQueryPS.setString(1, searchLabel);
+			ResultSet rs = getSavedSearchQueryPS.executeQuery();
+            rs.first();
+			String query = rs.getString(1);
+			Statement stat = conn.createStatement();
+			rs = stat.executeQuery(query);
+			while (rs.next()) {
+				DBMovie m = new DBMovie();
+				m.setId(rs.getInt("id"));
+				movies.add(m);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return movies;
 	}
 
 	/* (non-Javadoc)
