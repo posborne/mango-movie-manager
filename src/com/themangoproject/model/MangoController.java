@@ -90,8 +90,8 @@ public class MangoController {
 	 * @param actor
 	 *            the actor to be added
 	 */
-	public void addActor(String firstName, String lastName) {
-		actorDAO.addActor(firstName, lastName);
+	public boolean addActor(String firstName, String lastName) {
+		return actorDAO.addActor(firstName, lastName);
 	}
         
                 
