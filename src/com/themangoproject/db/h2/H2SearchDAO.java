@@ -160,10 +160,10 @@ public class H2SearchDAO implements SearchDAO {
 		try {
 			removeSavedSearchPS.setString(1, searchLabel);
 			removeSavedSearchPS.executeUpdate();
-			fireSavedSearchesChange();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		fireSavedSearchesChange();
 	}
 
 	/* (non-Javadoc)
@@ -205,6 +205,7 @@ public class H2SearchDAO implements SearchDAO {
 	}
 
 	private void fireSavedSearchesChange() {
+		System.out.println("Firing saved searches ChangeEvent");
 		for (ChangeListener l : changeListeners) {
 			l.stateChanged(null);
 		}

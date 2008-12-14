@@ -7,9 +7,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.ui.Mango;
+import com.themangoproject.ui.UIController;
 
 public class SavedSearchesMutableTreeNode extends DefaultMutableTreeNode
 		implements MangoMutableTreeNode, ChangeListener {
@@ -47,7 +49,11 @@ public class SavedSearchesMutableTreeNode extends DefaultMutableTreeNode
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		
+		System.out.println("The state has changed");
+		setSearchesList();
+		DefaultTreeModel tm = (DefaultTreeModel) UIController.getInstance()
+			.getNavigatorTree().getModel();
+		tm.nodeStructureChanged(SavedSearchesMutableTreeNode.this);
 	}
 
 }
