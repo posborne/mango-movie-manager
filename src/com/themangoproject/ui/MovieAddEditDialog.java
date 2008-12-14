@@ -862,7 +862,7 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                     int selectedIndex = ((JComboBox) panel.getLeftComboObject()).getSelectedIndex();
                     Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
                     String role = (String) roleBox.getSelectedItem();
-                    String character = panel.getTextFieldObject();
+                    String character = panel.getTextFieldText();
 
                     MangoController.getInstance().addActorToMovie(mov, actor, role, character);
                 }
@@ -918,7 +918,7 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                 int selectedIndex = ((JComboBox) panel.getLeftComboObject()).getSelectedIndex();
                 Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
                 String role = (String) roleBox.getSelectedItem();
-                String character = panel.getTextFieldObject();
+                String character = panel.getTextFieldText();
                 
                 // Add any actors that are not already in apart of the movie
                 if (!actorsInDB.contains(actor))
