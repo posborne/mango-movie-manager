@@ -2,6 +2,8 @@ package com.themangoproject.model;
 
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 import com.themangoproject.db.h2.ActorExistsInOtherRelationsException;
 
 
@@ -16,5 +18,7 @@ public interface ActorDAO {
     public void populateActor (Actor actor);
     public List<Movie> getMoviesForActor(Actor actor);
     public void populateRole(Role role) throws RoleNotFoundException;
+	public void addActorsChangeListener(ChangeListener l);
+	public void removeActorsChangeListener(ChangeListener l);
 }
 

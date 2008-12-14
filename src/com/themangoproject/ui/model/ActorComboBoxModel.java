@@ -2,8 +2,10 @@ package com.themangoproject.ui.model;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JPopupMenu;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 
@@ -22,12 +24,25 @@ public class ActorComboBoxModel extends DefaultComboBoxModel {
 
 	/** List of all actors */
 	private List<Actor> actors;
+	
+	private ChangeListener actorsChangeListener;
 
 	/**
 	 * Construct an ActorComboBoxModel.
 	 */
 	public ActorComboBoxModel() {
+		retrieveActors();
+		actorsChangeListener = new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				retrieveActors();
+			}
+		};
+		MangoController.getInstance().addActorsChangeListener(actorsChangeListener);
+	}
+	
+	private void retrieveActors() {
 		actors = MangoController.getInstance().getAllActors();
+		this.fireContentsChanged(actors, 0, actors.size());
 	}
 
 	/**

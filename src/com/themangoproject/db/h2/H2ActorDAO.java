@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.event.ChangeListener;
+
 /**
  * The <code>H2ActorDAO</code> is an <code>ActorDAO</code> that provides methods
  * for communicating with the H2 database system, specifically with regards to
@@ -20,6 +22,9 @@ public class H2ActorDAO implements ActorDAO {
 
 	/** Singleton instance of the H2ActorDAO */
 	private static H2ActorDAO instance;
+	
+	/** List of change listeners */
+	private ArrayList<ChangeListener> changeListeners;
 
 	/** Database connection for the DAO */
 	private Connection conn;
@@ -73,7 +78,7 @@ public class H2ActorDAO implements ActorDAO {
 	 * data access object.
 	 */
 	private H2ActorDAO() {
-		// TODO: this is temporary
+		changeListeners = new ArrayList<ChangeListener>();
 		conn = H2Util.getInstance().getConnection();
 		try {
 			allActorsPS = conn.prepareStatement(allActorsSQL);
@@ -166,10 +171,11 @@ public class H2ActorDAO implements ActorDAO {
 			addActorPS.setString(1, firstName);
 			addActorPS.setString(2, lastName);
 			addActorPS.execute();
+			fireActorsChangedEvent();
 		} catch (SQLException ex) {
 			return false;
 		}
-                return true;
+        return true;
 	}
 
 	/**
@@ -246,7 +252,7 @@ public class H2ActorDAO implements ActorDAO {
 		try {
 			deleteActorPS.setInt(1, actor.getId());
 			deleteActorPS.executeUpdate();
-			deleteActorPS.close();
+			fireActorsChangedEvent();
 		} catch (SQLException ex) {
 			if (ex.getErrorCode() == 23003) {
 				// Referential Integrity Constraint
@@ -346,6 +352,22 @@ public class H2ActorDAO implements ActorDAO {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public void addActorsChangeListener(ChangeListener l) {
+		changeListeners.add(l);
+	}
+
+	@Override
+	public void removeActorsChangeListener(ChangeListener l) {
+		changeListeners.add(l);
+	}
+	
+	private void fireActorsChangedEvent() {
+		for (ChangeListener l : changeListeners) {
+			l.stateChanged(null);
 		}
 	}
 
