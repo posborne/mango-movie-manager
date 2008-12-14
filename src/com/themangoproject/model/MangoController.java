@@ -369,6 +369,10 @@ public class MangoController {
 	}
         
         public void addGenreToMovie(Movie m, String s) {
-            movieDAO.addGenreToMovie(m, s);
+            m.addGenre(s);
+        }
+        
+        public void removeGenreFromMovie(Movie m, String s) {
+            m.removeGenre(s);
         }
 }
