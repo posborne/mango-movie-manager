@@ -19,6 +19,7 @@ public class SavedSearchMutableTreeNode extends DefaultMutableTreeNode
 	private String searchLabel;
 	
 	public SavedSearchMutableTreeNode(String searchLabel) {
+        super(searchLabel);
 		this.searchLabel = searchLabel;
 	}
 	

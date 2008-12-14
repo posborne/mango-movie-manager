@@ -7,6 +7,7 @@ import com.themangoproject.model.Movie;
 import com.themangoproject.model.SearchCondition;
 import com.themangoproject.ui.model.AttributesComboBoxModel;
 import com.themangoproject.ui.model.ConstraintComboBoxModel;
+import com.themangoproject.ui.model.SavedSearchEditableTableModel;
 import com.themangoproject.ui.model.SearchEditableTableModel;
 import com.themangoproject.ui.model.UnsavedSearchEditabledTableModel;
 
@@ -195,8 +196,11 @@ public class SavedSearchDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-    // Save button
-
+    AdvancedSearch as = buildAdvancedSearch();
+    String searchLabel = searchNameTF.getText();
+    MangoController.getInstance().saveSearch(searchLabel, as.getSearchQuery());
+    //    UIController.getInstance().setViewTableModel(new SavedSearchEditableTableModel(searchLabel));
+    this.dispose();
 }//GEN-LAST:event_saveButtonActionPerformed
 
 private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -210,7 +214,7 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     this.dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
-private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeSearchButtonActionPerformed
+private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                    
     AdvancedSearch as = buildAdvancedSearch();
     UIController.getInstance().setViewTableModel(new UnsavedSearchEditabledTableModel(as.getSearchQuery()));
 }

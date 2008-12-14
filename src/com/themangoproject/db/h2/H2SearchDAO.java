@@ -28,7 +28,7 @@ public class H2SearchDAO implements SearchDAO {
 	
 	private PreparedStatement getSavedSearchQueryPS;
 	private static final String getSavedSearchQuerySQL = 
-		"SELECT query FROM saved_searches WHERE label = ?";
+		"SELECT * FROM saved_searches WHERE label=?";
 	
 	private PreparedStatement removeSavedSearchPS;
 	private static final String removeSavedSearchSQL = 
@@ -72,37 +72,45 @@ public class H2SearchDAO implements SearchDAO {
 		changeListeners.add(l);
 	}
 
+
+    public String getQueryForLabel(String label) {
+        String query = null;
+        try {
+            Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT query FROM saved_searches " +
+                    "WHERE label='" + label + "'");
+            rs.first();
+            query = rs.getString(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+    
 	/* (non-Javadoc)
 	 * @see com.themangoproject.model.SearchDAO#executeSavedSearch(java.lang.String)
 	 */
 	@Override
 	public List<Movie> executeSavedSearch(String searchLabel)
 			throws SQLException {
-		ArrayList<Movie> movies = new ArrayList<Movie>();
-		try {
-			// begin transaction
-			conn.setAutoCommit(false);
-			getSavedSearchQueryPS.setString(1, searchLabel);
-			ResultSet rs = getSavedSearchQueryPS.executeQuery();
-			if (!rs.first()) {
-				throw new SQLException();
-			}
-			String query = rs.getString("query");
-			Statement stat = conn.createStatement();
-			rs = stat.executeQuery(query);
-			while (rs.next()) {
-				DBMovie m = new DBMovie();
-				m.setId(rs.getInt("id"));
-				movies.add(m);
-			}
-			conn.commit();
-			conn.setAutoCommit(true);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			conn.setAutoCommit(true);
-			throw ex;
-		}
-		return movies;
+        String query = getQueryForLabel(searchLabel);
+        return executeSearch(query);
+//		try {
+//			getSavedSearchQueryPS.setString(1, searchLabel);
+//			ResultSet rs = getSavedSearchQueryPS.executeQuery();
+//            rs.first();
+//			String query = rs.getString(1);
+//			Statement stat = conn.createStatement();
+//			rs = stat.executeQuery(query);
+//			while (rs.next()) {
+//				DBMovie m = new DBMovie();
+//				m.setId(rs.getInt("id"));
+//				movies.add(m);
+//			}
+//		} catch (SQLException ex) {
+//			ex.printStackTrace();
+//			throw ex;
+//		}
 	}
 
 	/* (non-Javadoc)

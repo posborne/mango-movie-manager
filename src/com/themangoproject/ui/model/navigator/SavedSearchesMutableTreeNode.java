@@ -20,6 +20,7 @@ public class SavedSearchesMutableTreeNode extends DefaultMutableTreeNode
 	private List<String> savedSearches;
 	
 	public SavedSearchesMutableTreeNode() {
+        super("Saved Searches", true);
 		savedSearches = new ArrayList<String>();
 		MangoController.getInstance().addSaveSearchListener(this);
 		setSearchesList();
@@ -31,6 +32,7 @@ public class SavedSearchesMutableTreeNode extends DefaultMutableTreeNode
 		for (String searchLabel : savedSearches) {
 			this.add(new SavedSearchMutableTreeNode(searchLabel));
 		}
+        this.add(new CreateSavedSearchMutableTreeNode());
 	}
 
 	@Override
