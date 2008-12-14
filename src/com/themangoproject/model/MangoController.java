@@ -368,13 +368,18 @@ public class MangoController {
 		return searchDAO.getAllSavedSearches();
 	}
         
-        public void addGenreToMovie(Movie m, String s) {
-            m.addGenre(s);
-        }
+    public void addGenreToMovie(Movie m, String s) {
+        m.addGenre(s);
+    }
         
-        public void removeGenreFromMovie(Movie m, String s) {
-            m.removeGenre(s);
-        }
+    public void removeGenreFromMovie(Movie m, String s) {
+        m.removeGenre(s);
+    }
+    
+    public void removeMovieFromSet(String label, Movie m) {
+    	setsDAO.removeMovieFromSet(label, m);
+    }
+        
         
         public void setOwnerToMovie(Movie m, Person o) {
             m.setOwner(o);
