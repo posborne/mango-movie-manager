@@ -1,5 +1,6 @@
 package com.themangoproject.ui.model;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.ChangeEvent;

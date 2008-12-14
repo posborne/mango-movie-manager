@@ -1,9 +1,13 @@
 package com.themangoproject.ui.model;
 
+import java.awt.Image;
 import java.util.List;
+
+import javax.swing.JPopupMenu;
 import javax.swing.table.AbstractTableModel;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
+import com.themangoproject.ui.moviepopup.MoviePopupMenu;
 
 /**
  * 
@@ -33,6 +37,10 @@ public abstract class EditableMovieTableModel extends
 
 	public abstract List<Movie> getMovies();
 
+	public JPopupMenu getPopupMenu() {
+		return new MoviePopupMenu();
+	}
+	
 	public int getRowCount() {
 		return getMovies().size();
 	}
@@ -125,5 +133,12 @@ public abstract class EditableMovieTableModel extends
 			break; // Can't be edited
 		}
 		MangoController.getInstance().updateMovie(m);
+	}
+	
+	@Override
+	public Image getImageForRow(int modelRow) {
+		Movie m = getMovieForRow(modelRow);
+		Image i = m.getImage();
+		return i;
 	}
 }

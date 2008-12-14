@@ -5,8 +5,10 @@
 
 package com.themangoproject.ui.model;
 
+import java.awt.Image;
 import java.util.List;
 
+import javax.swing.JPopupMenu;
 import javax.swing.table.AbstractTableModel;
 
 import com.themangoproject.model.Actor;
@@ -109,5 +111,16 @@ public class PersonTableModel extends AbstractTableModel implements
 	@Override
 	public void cleanup() {
 		// TODO: remove any listeners if added later
+	}
+
+	@Override
+	public JPopupMenu getPopupMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Image getImageForRow(int modelRow) {
+		return null; // no images for persons
 	}
 }

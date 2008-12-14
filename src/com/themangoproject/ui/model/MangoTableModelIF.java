@@ -1,5 +1,9 @@
 package com.themangoproject.ui.model;
 
+import java.awt.Image;
+
+import javax.swing.JPopupMenu;
+
 public interface MangoTableModelIF {
 	/**
 	 * This method is called when a table model is being removed. If any
@@ -7,4 +11,19 @@ public interface MangoTableModelIF {
 	 * care of it.
 	 */
 	public void cleanup();
+	
+	/**
+	 * Get the popup menu associated with this model
+	 * @return the popup associated with this menu or null if none.
+	 */
+	public JPopupMenu getPopupMenu();
+	
+	/**
+	 * Get the image associated with this row in the model.  If there is no image
+	 * return null.
+	 * 
+	 * @param modelRow The model row we are interested in.
+	 * @return an Image
+	 */
+	public Image getImageForRow(int modelRow);
 }

@@ -12,26 +12,27 @@ class NavigatorRootNode extends DefaultMutableTreeNode {
 	public NavigatorRootNode() {
         super("Invisible Root Node", true);
         DefaultMutableTreeNode actions = new ActionsMutableTreeNode();
-        DefaultMutableTreeNode allMovies, myMovies, friendsMovies, borrowedMovies,
-                loanedMovies, wishList, allPeople, allActors;
+        DefaultMutableTreeNode allMovies, allPeople, allActors;
+//        myMovies, friendsMovies, borrowedMovies,
+//        loanedMovies, wishList, 
         
         allMovies = new AllMoviesMutableTreeNode();
-        myMovies = new MyMoviesMutableTreeNode();
-        friendsMovies = new FriendsMoviesMutableTreeNode();
-        borrowedMovies = new BorrowedMoviesMutableTreeNode();
-        loanedMovies = new LoanedMoviesMutableTreeNode();
+        // myMovies = new MyMoviesMutableTreeNode();
+        // friendsMovies = new FriendsMoviesMutableTreeNode();
+        // borrowedMovies = new BorrowedMoviesMutableTreeNode();
+        // loanedMovies = new LoanedMoviesMutableTreeNode();
         allPeople = new AllPeopleMutableTreeNode();
         allActors = new AllActorsMutableTreeNode();
-        wishList = new WishListMutableTreeNode();
+        //wishList = new WishListMutableTreeNode();
         
         actions.add(allMovies);
-        actions.add(myMovies);
-        actions.add(friendsMovies);
-        actions.add(borrowedMovies);
-        actions.add(loanedMovies);
+//        actions.add(myMovies);
+//        actions.add(friendsMovies);
+//        actions.add(borrowedMovies);
+//        actions.add(loanedMovies);
         actions.add(allPeople);
         actions.add(allActors);
-        actions.add(wishList);
+//        actions.add(wishList);
         
         SetsMutableTreeNode setsNode = new SetsMutableTreeNode();
         ListsMutableTreeNode listsNode = new ListsMutableTreeNode();

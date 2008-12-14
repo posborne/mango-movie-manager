@@ -2,6 +2,8 @@ package com.themangoproject.ui.model;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JPopupMenu;
+
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 
@@ -44,8 +46,7 @@ public class ActorComboBoxModel extends DefaultComboBoxModel {
 		return actors.get(index).toString();
 	}
         
-        public Object getActorAt(int index) {
-            return actors.get(index);
-        }
-
+    public Object getActorAt(int index) {
+        return actors.get(index);
+     }
 }

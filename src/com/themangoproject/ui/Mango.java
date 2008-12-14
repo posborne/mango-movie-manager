@@ -13,6 +13,7 @@ import com.themangoproject.model.Movie;
 import com.themangoproject.model.MovieDeleteConflict;
 import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import com.themangoproject.ui.model.MangoTableModelIF;
 import com.themangoproject.ui.moviepopup.MoviePopupMenu;
 
 import javax.swing.JMenuItem;
@@ -60,7 +61,10 @@ public class Mango extends javax.swing.JFrame {
 					JTable table = ((JTable)e.getComponent());
 					int selectedRow = table.rowAtPoint(new Point(e.getX(),e.getY()));
 					table.setRowSelectionInterval(selectedRow, selectedRow);
-					moviePopupMenu.show(e.getComponent(), e.getX(), e.getY());
+					JPopupMenu popup = ((MangoTableModelIF)table.getModel()).getPopupMenu();
+					if (popup != null) {
+						popup.show(e.getComponent(), e.getX(), e.getY());
+					}
 				}
 			}
         });

@@ -1,6 +1,9 @@
 package com.themangoproject.ui.model;
 
+import java.awt.Image;
 import java.util.List;
+
+import javax.swing.JPopupMenu;
 import javax.swing.table.AbstractTableModel;
 
 import com.themangoproject.model.Actor;
@@ -98,6 +101,18 @@ public class ActorTableModel extends AbstractTableModel implements MangoTableMod
 	@Override
 	public void cleanup() {
 		// TODO: cleanup
+	}
+
+	@Override
+	public JPopupMenu getPopupMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Image getImageForRow(int modelRow) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

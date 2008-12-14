@@ -7,6 +7,8 @@
 package com.themangoproject.ui;
 
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import com.themangoproject.ui.model.MangoTableModelIF;
+
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -88,8 +90,8 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
             	return;
             }
             int modelRow = table.getRowSorter().convertRowIndexToModel(viewRow);
-            EditableMovieTableModel tm = (EditableMovieTableModel) table.getModel();
-            Image i = tm.getMovieForRow(modelRow).getImage();
+            MangoTableModelIF tm = (MangoTableModelIF) table.getModel();
+            Image i = tm.getImageForRow(modelRow);
             setThumbnailImage(i);
         } catch (Exception e) {
             e.printStackTrace();
