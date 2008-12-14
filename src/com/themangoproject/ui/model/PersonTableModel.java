@@ -83,7 +83,20 @@ public class PersonTableModel extends AbstractTableModel implements
 	}
 
 	public Class<? extends Object> getColumnClass(int columnIndex) {
-		return getValueAt(0, columnIndex).getClass();
+		switch (columnIndex) {
+		case 0:
+			return Integer.class;
+		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
+			return String.class;
+		default:
+			return String.class;		
+		}
 	}
 
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
