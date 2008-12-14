@@ -844,7 +844,10 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         // Now we wanna add the image to the DB for the movie
         if (mov != null) { // Add other information
             // Genre
-            
+            String[] gens = this.genreTF.getText().split(", *");
+            for (String g : gens) {
+                MangoController.getInstance().addGenreToMovie(mov, g);
+            }
             // Actors
             List<AddSubtractInnerPanel> panels = 
                     this.addSubstractActorsPanel.getInnerPanelsValues();
@@ -898,7 +901,20 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         MangoController.getInstance().updateMovie(m);
         
         // Genre
-            
+        String[] gens = this.genreTF.getText().split(", *");
+        List<String> gensInTF = new ArrayList<String>();
+        for (int i = 0; i < gens.length; i++) {
+            gensInTF.add(gens[i]);
+        }
+        List<String> gensInDB = m.getGenres();
+        for (String g : gens) {
+            if (!gensInDB.contains(g))
+                MangoController.getInstance().addGenreToMovie(m, g);
+        }      
+        for (String g : gensInDB) {
+            if (!gensInTF.contains(g))
+                MangoController.getInstance().removeGenreFromMovie(m, g);
+        }
         // Actors
         List<AddSubtractInnerPanel> panels = 
                 this.addSubstractActorsPanel.getInnerPanelsValues();
