@@ -42,6 +42,9 @@ public class PersonComboBoxModel extends DefaultComboBoxModel {
 		retrievePersons();
 	}
 
+	/**
+	 * Regrab the persons from the database and fire a contents changed event.
+	 */
 	private void retrievePersons() {
 		this.persons = MangoController.getInstance().getAllPersons();
 		this.fireContentsChanged(persons, 0, persons.size());
@@ -63,7 +66,13 @@ public class PersonComboBoxModel extends DefaultComboBoxModel {
 		return persons.get(index).getName();
 	}
 
-	public Object getPersonAt(int index) {
+	/**
+	 * Get the person at the specified index.
+	 * 
+	 * @param index The index we are interested in
+	 * @return a reference to the person at the specified index.
+	 */
+	public Person getPersonAt(int index) {
 		return persons.get(index);
 	}
 
