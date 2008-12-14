@@ -1066,10 +1066,20 @@ private void borrowedCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//G
 
 private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActorButtonActionPerformed
     // Add new Actor
+    boolean added = false;
     if (!this.actorFirstNameTF.getText().equals("") && 
             !this.actorLastNameTF.getText().equals(""))
-        MangoController.getInstance().addActor(this.actorFirstNameTF.getText(),
+        added = MangoController.getInstance().addActor(this.actorFirstNameTF.getText(),
                 this.actorLastNameTF.getText());
+    if (added) {
+        JOptionPane.showMessageDialog(this, this.actorFirstNameTF.getText() + " " + 
+                this.actorLastNameTF.getText() + " was added as an actor.", 
+                "Actor Added", JOptionPane.INFORMATION_MESSAGE);        
+    } else {
+        JOptionPane.showMessageDialog(this, this.actorFirstNameTF.getText() + " " + 
+                this.actorLastNameTF.getText() + " already exists.", 
+                "Actor Already Exists", JOptionPane.WARNING_MESSAGE);         
+    }
 }//GEN-LAST:event_addActorButtonActionPerformed
 
     /**
