@@ -1,9 +1,10 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
-
 import java.sql.*;
 import java.util.*;
+
+import javax.swing.event.ChangeListener;
 
 /**
  * Data Access Object for people stored in the H2 database.
@@ -52,6 +53,8 @@ public class H2PersonDAO implements PersonDAO {
 
 	/** Prepared statement for obtaining the movies being borrowed by a person */
 	private PreparedStatement borrowedMoviesForPersonPS;
+
+	private ArrayList<ChangeListener> changeListeners;
 	private static final String borrowedMoviesForPersonSQL = "SELECT id FROM movie WHERE borrower_id=?";
 
 	/**
@@ -113,9 +116,34 @@ public class H2PersonDAO implements PersonDAO {
 			// execute the statement
 			addPersonPS.executeUpdate();
 		} catch (SQLException ex) {
-                    return false;
+			return false;
 		}
-                return true;
+		firePersonsChangedEvent();
+		return true;
+	}
+
+	/**
+	 * Delete the specified person from the database. If the person is the owner
+	 * or borrower of any movies throw an exception. In this case,
+	 * forceDeletePerson should be used.
+	 * 
+	 * @param p
+	 *            The person that should be deleted
+	 * @throws PersonHasMoviesException
+	 */
+	public void deletePerson(Person p) throws PersonHasMoviesException {
+		// TODO: write this
+	}
+
+	/**
+	 * Remove the person from any relations it is involved in and then remove it
+	 * from the database.
+	 * 
+	 * @param p
+	 *            The person that should be forcibly removed from the database.
+	 */
+	public void forceDeletePerson(Person p) {
+		// TODO: write this
 	}
 
 	/**
@@ -141,9 +169,9 @@ public class H2PersonDAO implements PersonDAO {
 			updatePersonPS.setInt(5, person.getId()); // execute the statement
 			updatePersonPS.executeUpdate();
 		} catch (SQLException ex) {
-                    return false;
+			return false;
 		}
-                return true;
+		return true;
 	}
 
 	/**
@@ -152,7 +180,7 @@ public class H2PersonDAO implements PersonDAO {
 	 * 
 	 * @param p
 	 *            The person whose field values should be updated.
-	 * @throws PersonNotFoundException 
+	 * @throws PersonNotFoundException
 	 */
 	public void populatePerson(Person p) throws PersonNotFoundException {
 		// Check to make sure we have a DBPerson
@@ -302,6 +330,20 @@ public class H2PersonDAO implements PersonDAO {
 			borrowMovieToPersonPS.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	public void addPersonChangeListener(ChangeListener l) {
+		changeListeners.add(l);
+	}
+
+	public void removePersonChangeListener(ChangeListener l) {
+		changeListeners.remove(l);
+	}
+
+	private void firePersonsChangedEvent() {
+		for (ChangeListener l : changeListeners) {
+			l.stateChanged(null);
 		}
 	}
 }

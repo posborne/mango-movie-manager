@@ -381,24 +381,26 @@ public class MangoController {
     	setsDAO.removeMovieFromSet(label, m);
     }
         
-        
-        public void setOwnerToMovie(Movie m, Person o) {
-            m.setOwner(o);
-        }
-        
-        public void setBorrowerToMovie(Movie m, Person b) {
-            m.setBorrower(b);
-        }
+    
+    public void setOwnerToMovie(Movie m, Person o) {
+        m.setOwner(o);
+    }
+    
+    public void setBorrowerToMovie(Movie m, Person b) {
+        m.setBorrower(b);
+    }
 
-		public void removeMovieFromList(String label, Movie m) {
-			listsDAO.removeMovieFromList(label, m);
-		}
+	public void removeMovieFromList(String label, Movie m) {
+		listsDAO.removeMovieFromList(label, m);
+	}
 
-		public void deleteActor(Actor a) throws ActorExistsInOtherRelationsException {
-			actorDAO.deleteActor(a);
-		}
+	public void deleteActor(Actor a) throws ActorExistsInOtherRelationsException {
+		actorDAO.deleteActor(a);
+	}
 
-		public void forceDeleteActor(Actor a) {
-			actorDAO.forceDeleteActor(a);
-		}
+	public void forceDeleteActor(Actor a) {
+		actorDAO.forceDeleteActor(a);
+	}
+	
+	
 }
