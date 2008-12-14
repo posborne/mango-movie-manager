@@ -367,4 +367,8 @@ public class MangoController {
 	public List<String> getAllSavedSearches() {
 		return searchDAO.getAllSavedSearches();
 	}
+        
+        public void addGenreToMovie(Movie m, String s) {
+            movieDAO.addGenreToMovie(m, s);
+        }
 }
