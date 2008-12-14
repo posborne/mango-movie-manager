@@ -156,5 +156,25 @@ public class DBActor implements Actor {
 		}
 
 	}
+        
+       /**
+        * Tests to see if two actors are equal.
+        * @param obj The actor to determine equality.
+        * @return true if the actors are equal.
+        */
+        @Override
+        public boolean equals(Object a) {
+            if (this.getId() == ((DBActor) a).getId())
+                return true;
+            else
+                return false;
+        }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + this.id;
+        return hash;
+    }
 
 }

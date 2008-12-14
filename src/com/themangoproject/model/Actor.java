@@ -49,4 +49,12 @@ public interface Actor {
      * @return A string representation of the Actor.
      */
     public String toString();
+    
+    /**
+     * Tests to see if two actors are equal.
+     * @param obj The actor to determine equality.
+     * @return true if the actors are equal.
+     */
+    @Override
+    public boolean equals(Object obj);
 }
