@@ -64,6 +64,7 @@ public class H2PersonDAO implements PersonDAO {
 	 */
 	private H2PersonDAO() {
 		conn = H2Util.getInstance().getConnection();
+		changeListeners = new ArrayList<ChangeListener>();
 		try {
 			addPersonPS = conn.prepareStatement(addPersonStatement);
 			updatePersonPS = conn.prepareStatement(updatePersonStatement);

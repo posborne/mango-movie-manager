@@ -6,20 +6,22 @@
 package com.themangoproject.ui.model;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPopupMenu;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 
-import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Person;
 
 /**
- *Table model encapsulating a view of the People contained in the Mango DB
+ * Table model encapsulating a view of the People contained in the Mango DB
  * backend.
  * 
- * @author Zachary Varberg
+ * @author Zachary Varberg, Paul Osborne
  */
 public class PersonTableModel extends AbstractTableModel implements
 		MangoTableModelIF {
@@ -32,8 +34,22 @@ public class PersonTableModel extends AbstractTableModel implements
 	/** List of persons in the storage backend */
 	private List<Person> persons;
 
+	private ChangeListener personsChangeListener;
+
 	public PersonTableModel() {
+		persons = new ArrayList<Person>();
+		personsChangeListener = new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				PersonTableModel.this.retrievePersons();
+			}
+		};
+		MangoController.getInstance().addPersonsChangeListener(personsChangeListener);
+		retrievePersons();
+	}
+
+	private void retrievePersons() {
 		persons = MangoController.getInstance().getAllPersons();
+		fireTableStructureChanged();
 	}
 
 	public String getColumnName(int columnIndex) {
@@ -106,8 +122,6 @@ public class PersonTableModel extends AbstractTableModel implements
 		switch (columnIndex) {
 		case 1:
 			p.setName((String) value);
-			// TODO: write updatePerson method in controller.
-			// MangoController.getInstance().updatePerson(p);
 			break;
 		case 2:
 			p.setAddress((String) value);
@@ -121,17 +135,17 @@ public class PersonTableModel extends AbstractTableModel implements
 		default:
 			break; // Can't be edited
 		}
+		MangoController.getInstance().updatePerson(p);
 	}
 
 	@Override
 	public void cleanup() {
-		// TODO: remove any listeners if added later
+		MangoController.getInstance().removePersonsChangeListener(personsChangeListener);
 	}
 
 	@Override
 	public JPopupMenu getPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
+		return null; // no popup menu for now
 	}
 
 	@Override
