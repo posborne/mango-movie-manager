@@ -1,5 +1,6 @@
 package com.themangoproject.model;
 
+import com.themangoproject.db.h2.ActorExistsInOtherRelationsException;
 import com.themangoproject.db.h2.DBPerson;
 import com.themangoproject.db.h2.H2ListsDAO;
 import com.themangoproject.db.h2.H2MovieDAO;
@@ -391,5 +392,13 @@ public class MangoController {
 
 		public void removeMovieFromList(String label, Movie m) {
 			listsDAO.removeMovieFromList(label, m);
+		}
+
+		public void deleteActor(Actor a) throws ActorExistsInOtherRelationsException {
+			actorDAO.deleteActor(a);
+		}
+
+		public void forceDeleteActor(Actor a) {
+			actorDAO.forceDeleteActor(a);
 		}
 }

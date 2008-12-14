@@ -1,21 +1,26 @@
 package com.themangoproject.ui.model;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
+import com.themangoproject.db.h2.ActorExistsInOtherRelationsException;
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
-import com.themangoproject.model.Movie;
-import com.themangoproject.model.Person;
+import com.themangoproject.ui.UIController;
 
 /**
  * Table model encapsulating a view of the Actors contained in the Mango DB
  * backend.
  * 
- * @author Zach Varberg
+ * @author Zach Varberg, Paul Osborne
  */
 public class ActorTableModel extends AbstractTableModel implements MangoTableModelIF {
 
@@ -79,7 +84,16 @@ public class ActorTableModel extends AbstractTableModel implements MangoTableMod
     }
     
     public Class<? extends Object> getColumnClass(int columnIndex) {
-        return getValueAt(0, columnIndex).getClass();
+        switch (columnIndex) {
+        case 0:
+        	return Integer.class;
+        case 1:
+        	return String.class;
+        case 2:
+        	return String.class;
+     	default:
+      		return String.class;
+        }
     }
     
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
@@ -105,14 +119,40 @@ public class ActorTableModel extends AbstractTableModel implements MangoTableMod
 
 	@Override
 	public JPopupMenu getPopupMenu() {
-		// TODO Auto-generated method stub
-		return null;
+		JMenuItem deleteActorItem = new JMenuItem("Delete Actor");
+		deleteActorItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTable table = UIController.getInstance().getViewTable();
+				int rowIndex = table.getSelectedRow();
+				int modelRow = table.getRowSorter().convertRowIndexToModel(rowIndex);
+				Actor a = actors.get(modelRow);
+				try {
+					MangoController.getInstance().deleteActor(a);
+				} catch (ActorExistsInOtherRelationsException ex) {
+					if (JOptionPane.YES_OPTION ==
+						JOptionPane.showConfirmDialog(UIController.getInstance().getMango(), 
+								"This actor exists in several relations.\nAre you sure you want to delete?", 
+								"Confirm Delete", 
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE)) {
+						MangoController.getInstance().forceDeleteActor(a);
+					}
+				}
+				// TODO: remove this if we get events up and running (this is bad)
+				ActorTableModel.this.actors = 
+					MangoController.getInstance().getAllActors();
+				ActorTableModel.this.fireTableStructureChanged();
+			}
+		});
+		JPopupMenu menu = new JPopupMenu();
+		menu.add(deleteActorItem);
+		return menu;
 	}
 
 	@Override
 	public Image getImageForRow(int modelRow) {
-		// TODO Auto-generated method stub
-		return null;
+		return null; // no images for actors
 	}
 
 }
