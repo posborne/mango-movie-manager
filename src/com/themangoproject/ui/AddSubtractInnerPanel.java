@@ -154,7 +154,7 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
      * 
      * @return The text in the text field.
      */
-    public String getTextFieldObject() {
+    public String getTextFieldText() {
         return this.jTextField1.getText();
     }
     
