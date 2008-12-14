@@ -82,10 +82,8 @@ public class H2Util {
 		try {
 			return connectToDb(); // this is no longer a singleton
 		} catch (SQLException ex) {
-			System.err
-					.println("There was an error creating a database connection");
+			return null;
 		}
-		return conn;
 	}
 
 	/**

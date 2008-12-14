@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
 
 import com.themangoproject.db.h2.H2Util;
 import com.themangoproject.db.h2.TestUtility;
@@ -38,13 +39,16 @@ public class Mango extends javax.swing.JFrame {
 
 	/** Creates new form Mango */
     public Mango() {
-        H2Util.getInstance().setDatabaseLocation("~/Desktop/db/mango.db");
-        //H2Util.getInstance().initializeSchemaOnDb();
-        //TestUtility.executeInserts();
+        H2Util.getInstance().setDatabaseLocation("./db/mango.db;IFEXISTS=TRUE");
+        Connection conn = H2Util.getInstance().getConnection();
+        if (conn == null) {
+        	// create the database and initialize schema
+        	H2Util.getInstance().setDatabaseLocation("./db/mango.db");
+            H2Util.getInstance().initializeSchemaOnDb();
+        }
         initComponents();
         createdInstance = this;
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel);
-        final MoviePopupMenu moviePopupMenu = new MoviePopupMenu();
         this.getTable().addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 				showPopup(e);
