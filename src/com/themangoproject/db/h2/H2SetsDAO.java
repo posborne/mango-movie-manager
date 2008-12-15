@@ -11,7 +11,6 @@ import javax.swing.event.ChangeListener;
 
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.SetsDAO;
-import com.themangoproject.model.SetsDAO.MovieExistsInSetException;
 
 /**
  * The H2SetsDAO is an implementation of the SetsDAO specific to the H2
