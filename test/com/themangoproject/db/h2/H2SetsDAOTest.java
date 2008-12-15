@@ -77,9 +77,13 @@ public class H2SetsDAOTest {
 		DBMovie dh2 = new DBMovie();
 		dh2.setId(2);
 		H2SetsDAO.getInstance().addSet("Great Action Flicks");
-		H2SetsDAO.getInstance().addMovieToSet("Great Action Flicks", glad);
-		H2SetsDAO.getInstance().addMovieToSet("Great Action Flicks", dh1);
-		H2SetsDAO.getInstance().addMovieToSet("Great Action Flicks", dh2);
+		try {
+			H2SetsDAO.getInstance().addMovieToSet("Great Action Flicks", glad);
+			H2SetsDAO.getInstance().addMovieToSet("Great Action Flicks", dh1);
+			H2SetsDAO.getInstance().addMovieToSet("Great Action Flicks", dh2);
+		} catch (Exception ex) {
+			
+		}
 		
 		List<Movie> movies = H2SetsDAO.getInstance().getMoviesInSet("Great Action Flicks");
 		ArrayList<String> titles = new ArrayList<String>();

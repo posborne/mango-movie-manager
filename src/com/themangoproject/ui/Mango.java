@@ -87,6 +87,7 @@ public class Mango extends javax.swing.JFrame {
 //            }
 //            
 //        });
+        viewMenu.setVisible(false);
     }
     
     private static Mango createdInstance;

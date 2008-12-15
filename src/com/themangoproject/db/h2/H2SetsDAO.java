@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.SetsDAO;
+import com.themangoproject.model.SetsDAO.MovieExistsInSetException;
 
 /**
  * The H2SetsDAO is an implementation of the SetsDAO specific to the H2
@@ -207,7 +208,7 @@ public class H2SetsDAO implements SetsDAO {
 	 *            The movie that should be added.
 	 */
 	@Override
-	public void addMovieToSet(String label, Movie m) {
+	public void addMovieToSet(String label, Movie m) throws MovieExistsInSetException {
 		try {
 			setIdForLabelPS.setString(1, label);
 			ResultSet rs = setIdForLabelPS.executeQuery();
@@ -218,7 +219,7 @@ public class H2SetsDAO implements SetsDAO {
 			addMovieToSetPS.setInt(2, ((DBMovie) m).getId());
 			addMovieToSetPS.executeUpdate();
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			throw new MovieExistsInSetException();
 		}
 	}
 

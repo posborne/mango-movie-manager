@@ -8,6 +8,7 @@ import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
 import com.themangoproject.db.h2.H2SearchDAO;
 import com.themangoproject.db.h2.H2SetsDAO;
+import com.themangoproject.model.SetsDAO.MovieExistsInSetException;
 
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -304,7 +305,7 @@ public class MangoController {
 		movieDAO.forceDeleteMovie(m);
 	}
 
-	public void addMovieToSet(String label, Movie m) {
+	public void addMovieToSet(String label, Movie m) throws MovieExistsInSetException {
 		setsDAO.addMovieToSet(label, m);
 	}
 
@@ -415,6 +416,10 @@ public class MangoController {
 	
 	public void removeActorsChangeListener(ChangeListener l) {
 		actorDAO.removeActorsChangeListener(l);
+	}
+
+	public void updateListOrder(String label, List<Movie> movies) {
+		listsDAO.reorderMoviesInList(label, movies);
 	}
 	
 	

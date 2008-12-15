@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
@@ -35,6 +36,29 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 	@Override
 	public List<Movie> getMovies() {
 		return movies;
+	}
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return true;
+	}
+	
+	public void setValueAt(Object value, int rowIndex, int columnIndex) {
+		if (columnIndex == 0) {
+			int index = (Integer) value - 1;
+			if (index > -1 && index < movies.size()) {
+				Movie m = movies.get(rowIndex);
+				movies.remove(rowIndex);
+				movies.add(index, m);
+				MangoController.getInstance().updateListOrder(label, movies);
+				retrieveMovies();
+			} else {
+				JOptionPane.showMessageDialog(UIController.getInstance().getMango(), 
+						"The index must be between 1 and " + movies.size());
+			}
+		} else {
+			super.setValueAt(value, rowIndex, columnIndex);
+		}
 	}
 
 	@Override

@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
+import com.themangoproject.model.SetsDAO.MovieExistsInSetException;
 import com.themangoproject.ui.UIController;
 import com.themangoproject.ui.model.EditableMovieTableModel;
 
@@ -50,7 +52,12 @@ public class AddToSetMenuItem extends JMenu implements ChangeListener {
 					int selectedRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
 					Movie m = ((EditableMovieTableModel) table.getModel())
 							.getMovieForRow(selectedRow);
-					MangoController.getInstance().addMovieToSet(set, m);
+					try {
+						MangoController.getInstance().addMovieToSet(set, m);
+					} catch (MovieExistsInSetException e1) {
+						JOptionPane.showMessageDialog(UIController.getInstance().getMango(), 
+								"The movie \"" + m.getTitle() + "\" already exists in that set.");
+					}
 				}
 			});
 			this.add(item);
