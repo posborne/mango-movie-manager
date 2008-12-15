@@ -279,46 +279,108 @@ public class MangoController {
 		return setsDAO.getMoviesInSet(label);
 	}
 
+        /**
+         * This will add a SetsChangeListener where necessary, to receive needed
+         * events.
+         * 
+         * @param changeListener the SetsChangeListener to be added
+         */
 	public void addSetsChangeListener(ChangeListener changeListener) {
 		setsDAO.addSetsChangeListener(changeListener);
 	}
 	
+        /**
+         * This will remove a SetsChangeListener where necessary
+         * 
+         * @param changeListener the SetsChangeListener to be removed
+         */
 	public void removeSetsChangeListener(ChangeListener changeListener) {
 		setsDAO.removeSetsChangeListener(changeListener);
 	}
 
+        /**
+         * This will remove a MoviesChangeListener where necessary.
+         * 
+         * @param l the MoviesChangeListener to be removed.
+         */
 	public void removeMoviesChangeListener(ChangeListener l) {
 		movieDAO.removeMoviesChangeListener(l);
 	}
+        
+        /**
+         * This will remove all MoviesChangeListener where necessary.
+         * 
+         */
 	public void clearAllMoviesChangeListener() {
 		movieDAO.removeAllMoviesChangeListeners();
 	}
 	
+        /**
+         * This will add a MoviesChangeListener where necessary, to receive 
+         * needed events.
+         * 
+         * @param l the MoviesChangeListener to be added
+         */
 	public void addMoviesChangeListener(ChangeListener l) {
 		movieDAO.addMoviesChangeListener(l);
 	}
 
+        /**
+         * This will delete a movie from the model, if it only exists as a movie
+         * and is a part of no other relations.
+         * 
+         * @param m the movie to be deleted
+         * @throws com.themangoproject.model.MovieDeleteConflict if this movie
+         * is involved in other relationships.
+         */
 	public void deleteMovie(Movie m) throws MovieDeleteConflict {
 		movieDAO.deleteMovie(m);
 	}
 	
+        /**
+         * This will delete a movie from the model, including any relations it 
+         * is a part of.
+         * @param m the movie to be deleted.
+         */
 	public void forceDeleteMovie(Movie m) {
 		movieDAO.forceDeleteMovie(m);
 	}
 
+        /**
+         * This will add a movie to a set.
+         * 
+         * @param label the name of the set to add the movie to.
+         * @param m the movie to be added to set label.
+         * @throws com.themangoproject.model.SetsDAO.MovieExistsInSetException
+         * if movie m already exists in set label (sets do not allow duplicate 
+         * movies).
+         */
 	public void addMovieToSet(String label, Movie m) throws MovieExistsInSetException {
 		setsDAO.addMovieToSet(label, m);
 	}
 
+        /**
+         * This will add a movie to a list.
+         * 
+         * @param label the name of the list to add the movie to.
+         * @param m the movie to be added to list label.
+         */
 	public void addMovieToList(String label, Movie m) {
 		listsDAO.addMovieToList(label, m);
 	}
 
+        /**
+         * This will delete a set from the model.
+         * 
+         * @param setLabel the name of the set to be deleted.
+         */
 	public void deleteSet(String setLabel) {
 		setsDAO.removeSet(setLabel);
 	}
 
 	/**
+         * This wil delete a list from the model
+         * 
 	 * @param listLabel The label of the list to remove.
 	 */
 	public void deleteList(String listLabel) {
@@ -326,107 +388,235 @@ public class MangoController {
 	}
 
 	/**
-	 * @param setLabel
-	 * @param newName
+         * This will rename a set.
+         * 
+	 * @param setLabel the old name of the set.
+	 * @param newName the new name of the set.
 	 */
 	public void renameSet(String oldLabel, String newLabel) {
 		setsDAO.renameSet(oldLabel, newLabel);
 	}
 
 	/**
-	 * @param listLabel
-	 * @param newName
+         * This will rename a list.
+         * 
+	 * @param listLabel the old name of the list
+	 * @param newName the new name of the list
 	 */
 	public void renameList(String oldLabel, String newLabel) {
 		listsDAO.renameList(oldLabel, newLabel);
 	}
 	
+        /**
+         * this will execute a search on the database.
+         * 
+         * @param query a String representing a query for the database.
+         * @return a list of Movies matching the query
+         * @throws java.sql.SQLException if there was if there was an error executing the SQL 
+         * in query
+         */
 	public List<Movie> executeSearch(String query) throws SQLException {
 		return searchDAO.executeSearch(query);
 	}
 	
+        /**
+         * This will execute a search that has previously been saved.
+         * @param searchLabel the name of the search to execute
+         * @return a list of Movies mathcing the query
+         * @throws java.sql.SQLException if there was an error executing the SQL 
+         * in query
+         */
 	public List<Movie> executeSavedSearch(String searchLabel) 
 		throws SQLException {
 		return searchDAO.executeSavedSearch(searchLabel);
 	}
 	
+        /**
+         * This will save a search.
+         * 
+         * @param searchLabel the name to save the search under.
+         * @param query the SQL query to execute for this search.
+         */
 	public void saveSearch(String searchLabel, String query) {
 		searchDAO.saveSearch(searchLabel, query);
 	}
 	
+        /**
+         * This will delete a saved search from the model.
+         * 
+         * @param searchLabel the name of the search to delete
+         */
 	public void removeSavedSearch(String searchLabel) {
 		searchDAO.removeSavedSearch(searchLabel);
 	}
 	
+        /**
+         * This will add a SaveSearchListener where necessary, to receive 
+         * needed events.
+         * 
+         * @param l the SavedSearchListener to be added
+         */
 	public void addSaveSearchListener(ChangeListener l) {
 		searchDAO.addSavedSearchChangeListener(l);
 	}
 	
+        /**
+         * This will remove a SavedSearchListener where necessary.
+         * 
+         * @param l the SavedSearchListener to be removed
+         */
 	public void removeSavedSearchListener(ChangeListener l) {
 		searchDAO.removeSavedSearchChangeListener(l);
 	}
 	
+        /**
+         * This will return a list of all the saved searches.
+         * @return a List of Strings tha are all the names of the saved searches
+         */
 	public List<String> getAllSavedSearches() {
 		return searchDAO.getAllSavedSearches();
 	}
         
-    public void addGenreToMovie(Movie m, String s) {
-        m.addGenre(s);
-    }
-        
-    public void removeGenreFromMovie(Movie m, String s) {
-        m.removeGenre(s);
-    }
-    
-    public void removeMovieFromSet(String label, Movie m) {
-    	setsDAO.removeMovieFromSet(label, m);
-    }
-        
-    
-    public void setOwnerToMovie(Movie m, Person o) {
-        m.setOwner(o);
-    }
-    
-    public void setBorrowerToMovie(Movie m, Person b) {
-        m.setBorrower(b);
-    }
+        /**
+         * This will add a genre to a movie.
+         * 
+         * @param m the movie to add the genre to.
+         * @param s a string that is the genre to be added.
+         */
+        public void addGenreToMovie(Movie m, String s) {
+            m.addGenre(s);
+        }
 
+        /**
+         * This will remove a genre from a movie.
+         * 
+         * @param m the movie to remove a genre from.
+         * @param s the string genre to be removed.
+         */
+        public void removeGenreFromMovie(Movie m, String s) {
+            m.removeGenre(s);
+        }
+
+        /**
+         * This will remove a movie from a set.
+         * @param label the name of the set to remove the movie from.
+         * @param m the movie to remove from set label.
+         */
+        public void removeMovieFromSet(String label, Movie m) {
+            setsDAO.removeMovieFromSet(label, m);
+        }
+
+        /**
+         * This will set the owner of a movie.
+         * @param m the movie to set the owner on.
+         * @param o the Person who owns movie m.
+         */
+        public void setOwnerToMovie(Movie m, Person o) {
+            m.setOwner(o);
+        }
+
+        /**
+         * This will set the borrower of a movie.
+         * @param m the movie to set the borrower on.
+         * @param b the Person who is borrowing movie m.
+         */
+        public void setBorrowerToMovie(Movie m, Person b) {
+            m.setBorrower(b);
+        }
+
+        /**
+         * This will remove a movie from a list.
+         * @param label the name of the list the movie is being removed from.
+         * @param m the movie to be removed from list label.
+         */
 	public void removeMovieFromList(String label, Movie m) {
 		listsDAO.removeMovieFromList(label, m);
 	}
 
+        /**
+         * This will delete an actor if the actor is not involved in any other
+         * relations.
+         * 
+         * @param a the actor to be deleted.
+         * @throws com.themangoproject.db.h2.ActorExistsInOtherRelationsException
+         * if the actor is involved in other relations.
+         */
 	public void deleteActor(Actor a) throws ActorExistsInOtherRelationsException {
 		actorDAO.deleteActor(a);
 	}
 
+        /**
+         * This will delete an actor, from any and all relations it is a part of.
+         * @param a the actor to be forcably deleted
+         */
 	public void forceDeleteActor(Actor a) {
 		actorDAO.forceDeleteActor(a);
 	}
 	
+        /**
+         * This will add a PersonsChangeListener where necessary, to receive 
+         * needed events.
+         * 
+         * @param l the PersonsChangeListener to be added
+         */
 	public void addPersonsChangeListener(ChangeListener l) {
 		personDAO.addPersonChangeListener(l);
 	}
 	
+        /**
+         * This will remove a PersonsChangeListener where necessary.
+         * 
+         * @param l the PerosnsChangeListener to be removed.
+         */
 	public void removePersonsChangeListener(ChangeListener l) {
 		personDAO.removePersonChangeListener(l);
 	}
 
+        /**
+         * This will add an ActorsChangeListener where necessary, to receive 
+         * needed events.
+         * 
+         * @param l the ActorsChangeListener to be added
+         */
 	public void addActorsChangeListener(ChangeListener l) {
 		actorDAO.addActorsChangeListener(l);
 	}
 	
+        /**
+         * This will remove an ActorsChangeListener where necessary.
+         * 
+         * @param l the ActorsChangeListener to be removed.
+         */
 	public void removeActorsChangeListener(ChangeListener l) {
 		actorDAO.removeActorsChangeListener(l);
 	}
 
+        /**
+         * This will update the order of movies in a list.
+         * 
+         * @param label the name of the list which is being reordered.
+         * @param movies a List of movies in the new order for list label.
+         */
 	public void updateListOrder(String label, List<Movie> movies) {
 		listsDAO.reorderMoviesInList(label, movies);
 	}
 
+        /**
+         * This will delete a person if the person is not involved in any 
+         * relations.
+         * 
+         * @param p the person to be deleted
+         * @throws com.themangoproject.model.PersonDAO.PersonHasMoviesException
+         * if the person exists in other relations.
+         */
 	public void deletePerson(Person p) throws PersonHasMoviesException {
 		personDAO.deletePerson(p);
 	}
-	
+        
+	/**
+         * This will delete a person, from any and all relations it is a part of.
+         * @param a the person to be forcably deleted
+         */
 	public void forceDeletePerson(Person p) {
 		personDAO.forceDeletePerson(p);
 	}
