@@ -82,6 +82,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     Person p = ((PersonComboBoxModel)jComboBox1.getModel()).getPersonAt(index);
     int id = ((DBPerson)p).getId();
     UIController.getInstance().setOwnerId(id);
+    this.dispose();
 }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
