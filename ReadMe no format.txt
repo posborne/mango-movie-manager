@@ -1,4 +1,4 @@
-INTRODUCTION:
+﻿INTRODUCTION:
     
 Mango Movie Manager is a simple software system meant to be used to manage a user�s movie library.  It allows adding, deleting, and organizing of movies in a number of different ways.  Mango allows for the storage of information such as the owners of movies (you and your friends) and who is borrowing and lending them to whom.  For information on advanced features see the USE section.
     
@@ -68,6 +68,20 @@ KNOWN BUGS:
 KNOWN BUG:  Attempting to edit a person or actor will throw exceptions.
        
 KNOWN BUG:  If you upload an image using the button on the bottom bar, the image pane on the left side of the screen will continue to display the old image.  To display the new image you must select another movie and then select the movie you just updated again.
+
+KNOWN BUG: If a movie is added or edited to match the search criterion of an advanced search, unsaved executed search, or one of the my movies, friends movies, borrowed movies, or  loaned movies actions (which are implemented as unsaved searches right now) the table will not automatically update.  Clicking on the search will cause the query to be executed again and the table will update.
+
+KNOWN BUG: There are a number of minor visual defects on the linux operating system.  Some of these are the result in known documented bugs in the swing mapping to the GTK display toolkit.  Some of these result in printing to stderr.
+
+KNOWN BUG: Bulk operations on multiple movies or tree items are not allowed.  Selection of multiple items is allowed but you cannot add movies to sets or lists in bulk.
+
+KNOWN BUG: Advanced searches are not as advanced as they could be.  Search queries can only be executed on columns in the movie database table, so queries on genres, actors, and a few other things are not possible.
+
+KNOWN BUG: Handling of dates and years in the application UI is flaky.  If a year is not set the table will display -1 (there is no custom cell renderer) and the entering of dates requires a certain format.  If this format is not followed, no date will be saved.
+
+KNOWN BUG: The filter search dialog is case sensitive.  The filter search does a matching search on all values using the entered text as a regular expression.  This allows for some powerful usage but is less friendly to a standard user.  If you start putting symbols in the filter search box exceptions will be thrown left and right.
+
+KNOWN BUG: It would be optimal for some parts of the application to be done on a separate thread (database and internet queries) but this was not implemented due to time constraints.  In our experience the embedded database (H2) has run quick enough that the application does not seem unresponsive at all.  However, for larger movie collections on older machines this might cease to be the case.
     
 ACKNOWLEDGMENTS:
 
