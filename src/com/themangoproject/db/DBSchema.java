@@ -31,7 +31,9 @@ public class DBSchema {
 			+ "id      INT NOT NULL AUTO_INCREMENT,"
 			+ "name    CHAR(50) NOT NULL," + "address   CHAR(256),"
 			+ "phone_num PHONE_NUMBER," + "email   CHAR(70),"
-			+ "PRIMARY KEY(id)," + ")";
+			+ "UNIQUE(name),"
+			+ "PRIMARY KEY(id)," 
+			+ ")";
 
 	public static final String createActorTable =
 		"CREATE TABLE actor " +
