@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 
@@ -45,6 +46,9 @@ public class SavedSearchDialog extends javax.swing.JDialog {
             String attribute = (String) leftCB.getSelectedItem();
             String condtion = (String) rightCB.getSelectedItem();
             String value = (String)panel.getTextFieldText();
+            if(attribute == null || condtion == null || value == null){
+                throw new IllegalArgumentException("You can't have empty fields!!");
+            }
 
             try {
                 int intval = Integer.parseInt(value);
@@ -196,11 +200,22 @@ public class SavedSearchDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-    AdvancedSearch as = buildAdvancedSearch();
-    String searchLabel = searchNameTF.getText();
-    MangoController.getInstance().saveSearch(searchLabel, as.getSearchQuery());
+    try{
+        AdvancedSearch as = buildAdvancedSearch();
+        String searchLabel = searchNameTF.getText();
+        if (!searchLabel.equals("")){
+            MangoController.getInstance().saveSearch(searchLabel, as.getSearchQuery());
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "You cannot save with no name!",
+                    "Invalid Input", JOptionPane.WARNING_MESSAGE);
+        }
+    } catch (IllegalArgumentException e){
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Invalid Input", JOptionPane.WARNING_MESSAGE);
+    }
+    
     //    UIController.getInstance().setViewTableModel(new SavedSearchEditableTableModel(searchLabel));
-    this.dispose();
+
 }//GEN-LAST:event_saveButtonActionPerformed
 
 private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -214,9 +229,16 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     this.dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
-private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                    
-    AdvancedSearch as = buildAdvancedSearch();
-    UIController.getInstance().setViewTableModel(new UnsavedSearchEditabledTableModel(as.getSearchQuery()));
+private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) { 
+    try {
+        AdvancedSearch as = buildAdvancedSearch();
+        if(as.getSearchQuery() != null)
+            UIController.getInstance().setViewTableModel(new UnsavedSearchEditabledTableModel(as.getSearchQuery()));
+    } catch (IllegalArgumentException e){
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Invalid Input", JOptionPane.WARNING_MESSAGE);
+    }
+    //System.out.println(as.getSearchQuery());
+
 }
 
     /**
