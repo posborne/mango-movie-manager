@@ -8,6 +8,7 @@ import com.themangoproject.db.h2.H2ActorDAO;
 import com.themangoproject.db.h2.H2PersonDAO;
 import com.themangoproject.db.h2.H2SearchDAO;
 import com.themangoproject.db.h2.H2SetsDAO;
+import com.themangoproject.model.PersonDAO.PersonHasMoviesException;
 import com.themangoproject.model.SetsDAO.MovieExistsInSetException;
 
 import java.io.InputStream;
@@ -421,7 +422,14 @@ public class MangoController {
 	public void updateListOrder(String label, List<Movie> movies) {
 		listsDAO.reorderMoviesInList(label, movies);
 	}
+
+	public void deletePerson(Person p) throws PersonHasMoviesException {
+		personDAO.deletePerson(p);
+	}
 	
+	public void forceDeletePerson(Person p) {
+		personDAO.forceDeletePerson(p);
+	}
 	
 
 }

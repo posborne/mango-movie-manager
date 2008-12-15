@@ -6,16 +6,23 @@
 package com.themangoproject.ui.model;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Person;
+import com.themangoproject.model.PersonDAO.PersonHasMoviesException;
+import com.themangoproject.ui.UIController;
 
 /**
  * Table model encapsulating a view of the People contained in the Mango DB
@@ -43,7 +50,8 @@ public class PersonTableModel extends AbstractTableModel implements
 				PersonTableModel.this.retrievePersons();
 			}
 		};
-		MangoController.getInstance().addPersonsChangeListener(personsChangeListener);
+		MangoController.getInstance().addPersonsChangeListener(
+				personsChangeListener);
 		retrievePersons();
 	}
 
@@ -113,7 +121,7 @@ public class PersonTableModel extends AbstractTableModel implements
 		case 4:
 			return String.class;
 		default:
-			return String.class;		
+			return String.class;
 		}
 	}
 
@@ -140,12 +148,38 @@ public class PersonTableModel extends AbstractTableModel implements
 
 	@Override
 	public void cleanup() {
-		MangoController.getInstance().removePersonsChangeListener(personsChangeListener);
+		MangoController.getInstance().removePersonsChangeListener(
+				personsChangeListener);
 	}
 
 	@Override
 	public JPopupMenu getPopupMenu() {
-		return null; // no popup menu for now
+		JMenuItem deleteItem = new JMenuItem("Delete Person");
+		JTable table = UIController.getInstance().getViewTable();
+		int rowIndex = table.getRowSorter().convertRowIndexToModel(
+				table.getSelectedRow());
+		final Person p = persons.get(rowIndex);
+		deleteItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					MangoController.getInstance().deletePerson(p);
+				} catch (PersonHasMoviesException ex) {
+					if (JOptionPane.YES_OPTION == JOptionPane
+							.showConfirmDialog(
+									UIController.getInstance()
+											.getMango(),
+									"This person is the owner or borrower of movies in the database.\nAre you sure you want to delete?",
+									"Confirm Delete",
+									JOptionPane.YES_NO_OPTION)) {
+						MangoController.getInstance()
+								.forceDeletePerson(p);
+					}
+				}
+			}
+		});
+		JPopupMenu popup = new JPopupMenu();
+		popup.add(deleteItem);
+		return popup;
 	}
 
 	@Override
