@@ -2,7 +2,6 @@ package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
 
-
 public class H2DAOFactory implements DAOFactory {
 
     public PersonDAO getPersonDAO() {
@@ -17,13 +16,12 @@ public class H2DAOFactory implements DAOFactory {
         return H2MovieDAO.getInstance();
     }
 
-	public ListsDAO getListsDAO() {
-		return H2ListsDAO.getInstance();
-	}
+    public ListsDAO getListsDAO() {
+        return H2ListsDAO.getInstance();
+    }
 
-	public SetsDAO getSetsDAO() {
-		return H2SetsDAO.getInstance();
-	}
+    public SetsDAO getSetsDAO() {
+        return H2SetsDAO.getInstance();
+    }
 
 }
-

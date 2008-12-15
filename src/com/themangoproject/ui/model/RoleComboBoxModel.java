@@ -8,10 +8,10 @@ import javax.swing.DefaultComboBoxModel;
  * @author Kyle Ronning
  */
 public class RoleComboBoxModel extends DefaultComboBoxModel {
-	private static final long serialVersionUID = 6997281484522311569L;
-	/** List of constraints */
-    private String[] roles = {"Lead Actor", "Lead Actress", 
-        "Supporting Actor", "Supporting Actress", "Cameo"};
+    private static final long serialVersionUID = 6997281484522311569L;
+    /** List of constraints */
+    private String[] roles = { "Lead Actor", "Lead Actress",
+            "Supporting Actor", "Supporting Actress", "Cameo" };
 
     /**
      * Instantiate an instance of a RoleComboBoxModel.
@@ -25,15 +25,16 @@ public class RoleComboBoxModel extends DefaultComboBoxModel {
      */
     @Override
     public int getSize() {
-            return this.roles.length;
+        return this.roles.length;
     }
 
     /**
-     * @return the <code>Role</code> at the specified index in the model.
+     * @return the <code>Role</code> at the specified index in the
+     *         model.
      */
     @Override
     public Object getElementAt(int index) {
-            return this.roles[index];
+        return this.roles[index];
     }
-    
+
 }

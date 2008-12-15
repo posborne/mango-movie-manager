@@ -11,33 +11,36 @@ import com.themangoproject.ui.model.navigator.MangoMutableTreeNode;
  * 
  * @author Paul Osborne
  */
-public class NavigatorTreeSelectionListener implements TreeSelectionListener {
+public class NavigatorTreeSelectionListener implements
+        TreeSelectionListener {
 
-	JTree tree;
+    JTree tree;
 
-        /**
-         * Constructor
-         * @param tree The tree
-         */
-	public NavigatorTreeSelectionListener(JTree tree) {
-		this.tree = tree;
-	}
+    /**
+     * Constructor
+     * 
+     * @param tree
+     *            The tree
+     */
+    public NavigatorTreeSelectionListener(JTree tree) {
+        this.tree = tree;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event
-	 * .TreeSelectionEvent)
-	 */
-	@Override
-	public void valueChanged(TreeSelectionEvent tse) {
-		MutableTreeNode node = (MutableTreeNode) tree
-				.getLastSelectedPathComponent();
-		if (node != null) {
-			((MangoMutableTreeNode) node).doYourThing((Mango) tree
-					.getTopLevelAncestor());
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.swing.event.TreeSelectionListener#valueChanged(javax.
+     * swing.event .TreeSelectionEvent)
+     */
+    @Override
+    public void valueChanged(TreeSelectionEvent tse) {
+        MutableTreeNode node = (MutableTreeNode) tree
+                .getLastSelectedPathComponent();
+        if (node != null) {
+            ((MangoMutableTreeNode) node).doYourThing((Mango) tree
+                    .getTopLevelAncestor());
+        }
+    }
 
 }

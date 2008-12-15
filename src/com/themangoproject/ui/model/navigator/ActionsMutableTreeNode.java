@@ -10,24 +10,24 @@ import com.themangoproject.ui.Mango;
  * 
  * @author Paul Osborne
  */
-public class ActionsMutableTreeNode extends DefaultMutableTreeNode implements
-		MangoMutableTreeNode {
-	/** Generated serial UID */
-	private static final long serialVersionUID = 5384745252254043000L;
+public class ActionsMutableTreeNode extends DefaultMutableTreeNode
+        implements MangoMutableTreeNode {
+    /** Generated serial UID */
+    private static final long serialVersionUID = 5384745252254043000L;
 
-	/** Construct the node */
-	public ActionsMutableTreeNode() {
-		super("Libray Actions");
-	}
-	
-	@Override
-	public void doYourThing(Mango mangoPanel) {
-		// Do Nothing
-	}
+    /** Construct the node */
+    public ActionsMutableTreeNode() {
+        super("Libray Actions");
+    }
 
-	@Override
-	public JPopupMenu getPopupMenu() {
-		return null; // Not a leaf, no need
-	}
+    @Override
+    public void doYourThing(Mango mangoPanel) {
+        // Do Nothing
+    }
+
+    @Override
+    public JPopupMenu getPopupMenu() {
+        return null; // Not a leaf, no need
+    }
 
 }

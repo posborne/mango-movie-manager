@@ -11,22 +11,23 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * 
  * @author Paul Osborne
  */
-public class CreateSavedSearchMutableTreeNode extends DefaultMutableTreeNode
-    implements MangoMutableTreeNode {
+public class CreateSavedSearchMutableTreeNode extends
+        DefaultMutableTreeNode implements MangoMutableTreeNode {
 
     /** Generated UID */
-	private static final long serialVersionUID = -8441600372441319836L;
+    private static final long serialVersionUID = -8441600372441319836L;
 
-	/** Create the node */
-	public CreateSavedSearchMutableTreeNode() {
+    /** Create the node */
+    public CreateSavedSearchMutableTreeNode() {
         super("Create Saved Search");
     }
 
-	/**
-	 * Throw up the dialog for creating a saved search.
-	 */
+    /**
+     * Throw up the dialog for creating a saved search.
+     */
     public void doYourThing(Mango mangoPanel) {
-        SavedSearchDialog ssd = new SavedSearchDialog(UIController.getInstance().getMango(), true);
+        SavedSearchDialog ssd = new SavedSearchDialog(UIController
+                .getInstance().getMango(), true);
         ssd.setVisible(true);
     }
 

@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  * Test the H2Util class methods.
+ * 
  * @author Paul Osborne
  */
 public class H2UtilTest extends TestCase {

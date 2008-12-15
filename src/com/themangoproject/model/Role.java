@@ -1,8 +1,9 @@
 package com.themangoproject.model;
 
 /**
- * Role is an interface that represents a role that an actor plays.  A role has
- * information about who the actor is and what character is being played.
+ * Role is an interface that represents a role that an actor plays. A
+ * role has information about who the actor is and what character is
+ * being played.
  * 
  * @author Zach Varberg, Paul Osborne, Kyle Ronning
  */
@@ -39,6 +40,7 @@ public interface Role {
 
     /**
      * Gets the movie that this role belongs to.
+     * 
      * @return The movie.
      * 
      */
@@ -46,14 +48,17 @@ public interface Role {
 
     /**
      * Sets the role.
-     * @param roleName The role to set for this role.
+     * 
+     * @param roleName
+     *            The role to set for this role.
      */
     public void setRole(String roleName);
 
     /**
      * Sets the character for the role.
      * 
-     * @param character The character for the role.
+     * @param character
+     *            The character for the role.
      */
     public void setCharacter(String character);
 

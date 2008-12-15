@@ -1,4 +1,3 @@
-
 package com.themangoproject.ui;
 
 import com.themangoproject.db.h2.DBMovie;
@@ -33,46 +32,52 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * MovieAddEditDialog is a dialog to add and edit movies.  Movie details can
- * be added along with owner and borrower infomation, and a thumbnail image.
- * Some of the entry of movie information can be simplified if you have an
- * Amazon ASIN number for the movie.  It will retrieve basic movie information
- * and a thumbnail image.
+ * MovieAddEditDialog is a dialog to add and edit movies. Movie
+ * details can be added along with owner and borrower infomation, and
+ * a thumbnail image. Some of the entry of movie information can be
+ * simplified if you have an Amazon ASIN number for the movie. It will
+ * retrieve basic movie information and a thumbnail image.
  * 
- * @author  Kyle Ronning, Zach Varberg
- *
+ * @author Kyle Ronning, Zach Varberg
+ * 
  */
 public class MovieAddEditDialog extends javax.swing.JDialog {
-	/** Generated serial UID */
-	private static final long serialVersionUID = 5583966775480012466L;
-	
-	/** A Movie for the dialog to work with. */
+    /** Generated serial UID */
+    private static final long serialVersionUID = 5583966775480012466L;
+
+    /** A Movie for the dialog to work with. */
     private Movie m;
-    
-    /** 
+
+    /**
      * Creates a new dialog MovieAddEditDialog to add or edit a movie.
      * 
-     * @param parent The parent frame.
-     * @param set the dialog modal if true.
+     * @param parent
+     *            The parent frame.
+     * @param set
+     *            the dialog modal if true.
      */
     public MovieAddEditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setCombBoxModels();
         m = null;
-        Image im = new ImageIcon(getClass().getResource(
-        "/com/themangoproject/ui/images/defaultMangoLogo.jpg")).
-        getImage();
-        this.jLabel15.setIcon(new ImageIcon(im.getScaledInstance(160, 160, Image.SCALE_DEFAULT)));
+        Image im = new ImageIcon(
+                getClass()
+                        .getResource(
+                                "/com/themangoproject/ui/images/defaultMangoLogo.jpg"))
+                .getImage();
+        this.jLabel15.setIcon(new ImageIcon(im.getScaledInstance(160,
+                160, Image.SCALE_DEFAULT)));
     }
-    
+
     /**
      * Populates a the dialog with movie information.
      * 
-     * @param m The <code>Movie</code> to provide the movie information to the
-     * dialog.
+     * @param m
+     *            The <code>Movie</code> to provide the movie
+     *            information to the dialog.
      */
-    public void populateData(Movie m){
+    public void populateData(Movie m) {
         this.titleTF.setText(m.getTitle());
         this.directorTF.setText(m.getDirector());
         if (m.getYear() == -1)
@@ -81,9 +86,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             this.yearTF.setText(new Integer(m.getYear()).toString());
         this.ratingCB.setSelectedItem(m.getRating());
         this.runtimeSpinner.setValue(m.getRuntime());
-        if(m.getPurchaseDate() != null) {
+        if (m.getPurchaseDate() != null) {
             String arr[] = m.getPurchaseDate().toString().split("-");
-            this.purchaseDateTF.setText(arr[1] + "/" + arr[2] + "/" + arr[0]);
+            this.purchaseDateTF.setText(arr[1] + "/" + arr[2] + "/"
+                    + arr[0]);
         }
         this.mangoRatingCB.setSelectedItem("" + m.getMangoRating());
         this.typeCB.setSelectedItem(m.getType());
@@ -91,74 +97,82 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         this.genreTF.setText(genreText(m));
         this.customDescriptionTA.setText(m.getCustomDescription());
         this.asinTF.setText(m.getASIN());
-        
+
         // Actor
-        List<Actor> actors = MangoController.getInstance().getActorsForMovie(m);
+        List<Actor> actors = MangoController.getInstance()
+                .getActorsForMovie(m);
         for (Actor actor : actors) {
             List<Role> roles = actor.getRoles();
             String roleString = "";
             String characterString = "";
             for (Role role : roles) {
-                if (((DBMovie)role.getMovie()).getId() == ((DBMovie)m).getId()) {
+                if (((DBMovie) role.getMovie()).getId() == ((DBMovie) m)
+                        .getId()) {
                     roleString = role.getRole();
                     characterString = role.getCharacter();
                 }
             }
-            this.addSubstractActorsPanel.createAndSetSelected(actor.toString(),
-                    roleString, characterString);
+            this.addSubstractActorsPanel.createAndSetSelected(actor
+                    .toString(), roleString, characterString);
         }
-        
+
         // Set borrower and owner
         if (m.getOwner() != null)
             this.ownerCB.setSelectedItem(m.getOwner().getName());
         if (m.getBorrower() != null) {
-            this.borrowerCB.setSelectedItem(m.getBorrower().getName());
+            this.borrowerCB
+                    .setSelectedItem(m.getBorrower().getName());
             this.borrowedCheckBox.setSelected(true);
         } else
             this.borrowedCheckBox.setSelected(false);
         Image i = m.getImage();
-        if(i != null)
+        if (i != null)
             this.jLabel15.setIcon(new ImageIcon(i));
 
         this.m = m;
     }
-    
+
     /**
-     * This method is needed to set up the add actor panel and other comboboxes.
+     * This method is needed to set up the add actor panel and other
+     * comboboxes.
      */
     private void setCombBoxModels() {
-        this.addSubstractActorsPanel.setComboBoxPrefs(new ActorComboBoxModel(), 
-                new RoleComboBoxModel(), false, true);
+        this.addSubstractActorsPanel.setComboBoxPrefs(
+                new ActorComboBoxModel(), new RoleComboBoxModel(),
+                false, true);
         this.ownerCB.setModel(new PersonComboBoxModel());
         this.borrowerCB.setModel(new PersonComboBoxModel());
-            
+
     }
 
     /**
      * Gets the genres for a movie and creates a comma separated list.
      * 
-     * @param m The movie to grab the genres from.
-     * @return The comma separated list of genres for a <code>Movie m</code>
+     * @param m
+     *            The movie to grab the genres from.
+     * @return The comma separated list of genres for a
+     *         <code>Movie m</code>
      */
-    private String genreText(Movie m){
+    private String genreText(Movie m) {
         String tmp = "";
         List<String> str = m.getGenres();
-        for(String s : str ){
+        for (String s : str) {
             tmp += s + ", ";
         }
-        if(tmp.length() > 0){
-            tmp = tmp.substring(0, tmp.length()-2);
+        if (tmp.length() > 0) {
+            tmp = tmp.substring(0, tmp.length() - 2);
         }
         return tmp;
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize
+     * the form. WARNING: Do NOT modify this code. The content of this
+     * method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed"
+    // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         tabbedPane = new javax.swing.JTabbedPane();
@@ -235,7 +249,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         setIconImage(null);
         setResizable(false);
 
-        topInfoComponentsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        topInfoComponentsPanel.setBorder(javax.swing.BorderFactory
+                .createEtchedBorder());
 
         jLabel1.setText("Title");
 
@@ -247,71 +262,189 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Run Time");
 
-        ratingCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "PG", "PG-13", "NC-17", "R", "NR", "Unrated", "RP", "TV-Y7", "TV-Y7FV", "TV-G", "TV-PG", "TV-14", "TV-MA" }));
+        ratingCB.setModel(new javax.swing.DefaultComboBoxModel(
+                new String[] { "G", "PG", "PG-13", "NC-17", "R",
+                        "NR", "Unrated", "RP", "TV-Y7", "TV-Y7FV",
+                        "TV-G", "TV-PG", "TV-14", "TV-MA" }));
 
         jLabel6.setText("minutes");
 
-        javax.swing.GroupLayout topInfoComponentsPanelLayout = new javax.swing.GroupLayout(topInfoComponentsPanel);
-        topInfoComponentsPanel.setLayout(topInfoComponentsPanelLayout);
-        topInfoComponentsPanelLayout.setHorizontalGroup(
-            topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                        .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(titleTF, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(222, 222, 222)))
-                        .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(directorTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topInfoComponentsPanelLayout.createSequentialGroup()
-                        .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(yearTF, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ratingCB, 0, 190, Short.MAX_VALUE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(runtimeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)))))
-                .addContainerGap())
-        );
-        topInfoComponentsPanelLayout.setVerticalGroup(
-            topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(topInfoComponentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(titleTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(directorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(runtimeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ratingCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        javax.swing.GroupLayout topInfoComponentsPanelLayout = new javax.swing.GroupLayout(
+                topInfoComponentsPanel);
+        topInfoComponentsPanel
+                .setLayout(topInfoComponentsPanelLayout);
+        topInfoComponentsPanelLayout
+                .setHorizontalGroup(topInfoComponentsPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                topInfoComponentsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                topInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                topInfoComponentsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                topInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                topInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                titleTF,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                236,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                        .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                                                        .addGroup(
+                                                                                                topInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                jLabel1)
+                                                                                                        .addGap(
+                                                                                                                222,
+                                                                                                                222,
+                                                                                                                222)))
+                                                                        .addGroup(
+                                                                                topInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                jLabel2)
+                                                                                        .addComponent(
+                                                                                                directorTF,
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                236,
+                                                                                                Short.MAX_VALUE)))
+                                                        .addGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                topInfoComponentsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                topInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                jLabel3)
+                                                                                        .addComponent(
+                                                                                                yearTF,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                182,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addGroup(
+                                                                                topInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                ratingCB,
+                                                                                                0,
+                                                                                                190,
+                                                                                                Short.MAX_VALUE)
+                                                                                        .addComponent(
+                                                                                                jLabel4))
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addGroup(
+                                                                                topInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                jLabel5)
+                                                                                        .addGroup(
+                                                                                                topInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                runtimeSpinner,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                53,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                        .addComponent(
+                                                                                                                jLabel6)))))
+                                        .addContainerGap()));
+        topInfoComponentsPanelLayout
+                .setVerticalGroup(topInfoComponentsPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                topInfoComponentsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                topInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel1)
+                                                        .addComponent(
+                                                                jLabel2))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                topInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                titleTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                directorTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                topInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel3)
+                                                        .addComponent(
+                                                                jLabel5)
+                                                        .addComponent(
+                                                                jLabel4))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                topInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel6)
+                                                        .addComponent(
+                                                                runtimeSpinner,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                ratingCB,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                yearTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addContainerGap(
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)));
 
-        middleInfoComponentsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        middleInfoComponentsPanel.setBorder(javax.swing.BorderFactory
+                .createEtchedBorder());
 
         jLabel8.setText("Purchase Date (MM/DD/YYYY)");
 
@@ -319,9 +452,12 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel10.setText("Mango Rating");
 
-        typeCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-ray", "Digtial", "DVD", "HD-DVD", "VCD", "VHS" }));
+        typeCB.setModel(new javax.swing.DefaultComboBoxModel(
+                new String[] { "Blu-ray", "Digtial", "DVD", "HD-DVD",
+                        "VCD", "VHS" }));
 
-        mangoRatingCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
+        mangoRatingCB.setModel(new javax.swing.DefaultComboBoxModel(
+                new String[] { "0", "1", "2", "3", "4", "5" }));
 
         jLabel11.setText("Condition");
 
@@ -330,195 +466,462 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         customDescriptionTA.setColumns(20);
         customDescriptionTA.setLineWrap(true);
         customDescriptionTA.setRows(5);
-        customDescriptionScrollPane.setViewportView(customDescriptionTA);
+        customDescriptionScrollPane
+                .setViewportView(customDescriptionTA);
 
         jLabel24.setText("Genre (separate with commas)");
 
-        javax.swing.GroupLayout middleInfoComponentsPanelLayout = new javax.swing.GroupLayout(middleInfoComponentsPanel);
-        middleInfoComponentsPanel.setLayout(middleInfoComponentsPanelLayout);
-        middleInfoComponentsPanelLayout.setHorizontalGroup(
-            middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middleInfoComponentsPanelLayout.createSequentialGroup()
-                        .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel10))
-                            .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(purchaseDateTF, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mangoRatingCB, 0, 156, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(typeCB, 0, 152, Short.MAX_VALUE)
-                            .addComponent(jLabel9)))
-                    .addComponent(jLabel12)
-                    .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middleInfoComponentsPanelLayout.createSequentialGroup()
-                        .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(conditionCB, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(197, 197, 197)))
-                        .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel24)
-                            .addComponent(genreTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        middleInfoComponentsPanelLayout.setVerticalGroup(
-            middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(middleInfoComponentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(purchaseDateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mangoRatingCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel24))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(middleInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(conditionCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(customDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        javax.swing.GroupLayout middleInfoComponentsPanelLayout = new javax.swing.GroupLayout(
+                middleInfoComponentsPanel);
+        middleInfoComponentsPanel
+                .setLayout(middleInfoComponentsPanelLayout);
+        middleInfoComponentsPanelLayout
+                .setHorizontalGroup(middleInfoComponentsPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                middleInfoComponentsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                middleInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                middleInfoComponentsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                middleInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                middleInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                jLabel8)
+                                                                                                        .addGap(
+                                                                                                                18,
+                                                                                                                18,
+                                                                                                                18)
+                                                                                                        .addComponent(
+                                                                                                                jLabel10))
+                                                                                        .addGroup(
+                                                                                                middleInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                purchaseDateTF,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                158,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                        .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                        .addComponent(
+                                                                                                                mangoRatingCB,
+                                                                                                                0,
+                                                                                                                156,
+                                                                                                                Short.MAX_VALUE)))
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addGroup(
+                                                                                middleInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                typeCB,
+                                                                                                0,
+                                                                                                152,
+                                                                                                Short.MAX_VALUE)
+                                                                                        .addComponent(
+                                                                                                jLabel9)))
+                                                        .addComponent(
+                                                                jLabel12)
+                                                        .addComponent(
+                                                                customDescriptionScrollPane,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                478,
+                                                                Short.MAX_VALUE)
+                                                        .addGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                middleInfoComponentsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                middleInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                middleInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                conditionCB,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                240,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                        .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                                                        .addGroup(
+                                                                                                middleInfoComponentsPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                jLabel11)
+                                                                                                        .addGap(
+                                                                                                                197,
+                                                                                                                197,
+                                                                                                                197)))
+                                                                        .addGroup(
+                                                                                middleInfoComponentsPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                jLabel24)
+                                                                                        .addComponent(
+                                                                                                genreTF,
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                232,
+                                                                                                Short.MAX_VALUE))))
+                                        .addContainerGap()));
+        middleInfoComponentsPanelLayout
+                .setVerticalGroup(middleInfoComponentsPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                middleInfoComponentsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                middleInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel8)
+                                                        .addComponent(
+                                                                jLabel9)
+                                                        .addComponent(
+                                                                jLabel10))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                middleInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                purchaseDateTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                mangoRatingCB,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                typeCB,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                middleInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel11)
+                                                        .addComponent(
+                                                                jLabel24))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                middleInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                conditionCB,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                genreTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(
+                                                customDescriptionScrollPane,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                127, Short.MAX_VALUE)
+                                        .addContainerGap()));
 
-        bottomInfoComponentsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bottomInfoComponentsPanel.setBorder(javax.swing.BorderFactory
+                .createEtchedBorder());
 
         jLabel7.setText("ASIN");
 
         amazonRetrieveButton.setText("Get Information Via Amazon");
-        amazonRetrieveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                amazonRetrieveButtonActionPerformed(evt);
-            }
-        });
+        amazonRetrieveButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        amazonRetrieveButtonActionPerformed(evt);
+                    }
+                });
 
-        javax.swing.GroupLayout bottomInfoComponentsPanelLayout = new javax.swing.GroupLayout(bottomInfoComponentsPanel);
-        bottomInfoComponentsPanel.setLayout(bottomInfoComponentsPanelLayout);
-        bottomInfoComponentsPanelLayout.setHorizontalGroup(
-            bottomInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(bottomInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
-                        .addComponent(asinTF, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amazonRetrieveButton)))
-                .addContainerGap())
-        );
-        bottomInfoComponentsPanelLayout.setVerticalGroup(
-            bottomInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(bottomInfoComponentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(amazonRetrieveButton)
-                    .addGroup(bottomInfoComponentsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(asinTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
+        javax.swing.GroupLayout bottomInfoComponentsPanelLayout = new javax.swing.GroupLayout(
+                bottomInfoComponentsPanel);
+        bottomInfoComponentsPanel
+                .setLayout(bottomInfoComponentsPanelLayout);
+        bottomInfoComponentsPanelLayout
+                .setHorizontalGroup(bottomInfoComponentsPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                bottomInfoComponentsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                bottomInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(
+                                                                jLabel7)
+                                                        .addGroup(
+                                                                bottomInfoComponentsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                asinTF,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                303,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                amazonRetrieveButton)))
+                                        .addContainerGap()));
+        bottomInfoComponentsPanelLayout
+                .setVerticalGroup(bottomInfoComponentsPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                bottomInfoComponentsPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                bottomInfoComponentsPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(
+                                                                amazonRetrieveButton)
+                                                        .addGroup(
+                                                                bottomInfoComponentsPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                jLabel7)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                asinTF,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(28,
+                                                Short.MAX_VALUE)));
 
-        bottomInfoComponentsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amazonRetrieveButton, asinTF});
+        bottomInfoComponentsPanelLayout.linkSize(
+                javax.swing.SwingConstants.VERTICAL,
+                new java.awt.Component[] { amazonRetrieveButton,
+                        asinTF });
 
-        javax.swing.GroupLayout movieInfoPaneLayout = new javax.swing.GroupLayout(movieInfoPane);
+        javax.swing.GroupLayout movieInfoPaneLayout = new javax.swing.GroupLayout(
+                movieInfoPane);
         movieInfoPane.setLayout(movieInfoPaneLayout);
-        movieInfoPaneLayout.setHorizontalGroup(
-            movieInfoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, movieInfoPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(movieInfoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(middleInfoComponentsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bottomInfoComponentsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(topInfoComponentsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        movieInfoPaneLayout.setVerticalGroup(
-            movieInfoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(movieInfoPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(topInfoComponentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(middleInfoComponentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bottomInfoComponentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        movieInfoPaneLayout
+                .setHorizontalGroup(movieInfoPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                movieInfoPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                movieInfoPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(
+                                                                middleInfoComponentsPanel,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(
+                                                                bottomInfoComponentsPanel,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(
+                                                                topInfoComponentsPanel,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE))
+                                        .addContainerGap()));
+        movieInfoPaneLayout
+                .setVerticalGroup(movieInfoPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                movieInfoPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(
+                                                topInfoComponentsPanel,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(
+                                                middleInfoComponentsPanel,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(
+                                                bottomInfoComponentsPanel,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap()));
 
         tabbedPane.addTab("Movie Info", movieInfoPane);
 
-        setOwnerBorrowerPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setOwnerBorrowerPane.setBorder(javax.swing.BorderFactory
+                .createEtchedBorder());
 
         jLabel17.setText("Owner");
 
-        ownerCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ownerCB
+                .setModel(new javax.swing.DefaultComboBoxModel(
+                        new String[] { "Item 1", "Item 2", "Item 3",
+                                "Item 4" }));
 
-        borrowerCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        borrowerCB
+                .setModel(new javax.swing.DefaultComboBoxModel(
+                        new String[] { "Item 1", "Item 2", "Item 3",
+                                "Item 4" }));
         borrowerCB.setEnabled(false);
 
         borrowedCheckBox.setText("Borrowed");
-        borrowedCheckBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                borrowedCheckBoxItemStateChanged(evt);
-            }
-        });
+        borrowedCheckBox
+                .addItemListener(new java.awt.event.ItemListener() {
+                    public void itemStateChanged(
+                            java.awt.event.ItemEvent evt) {
+                        borrowedCheckBoxItemStateChanged(evt);
+                    }
+                });
 
         jLabel18.setText("Borrower");
 
-        javax.swing.GroupLayout setOwnerBorrowerPaneLayout = new javax.swing.GroupLayout(setOwnerBorrowerPane);
+        javax.swing.GroupLayout setOwnerBorrowerPaneLayout = new javax.swing.GroupLayout(
+                setOwnerBorrowerPane);
         setOwnerBorrowerPane.setLayout(setOwnerBorrowerPaneLayout);
-        setOwnerBorrowerPaneLayout.setHorizontalGroup(
-            setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                        .addComponent(ownerCB, 0, 215, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(170, 170, 170)))
-                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                        .addComponent(borrowerCB, 0, 188, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(borrowedCheckBox))
-                    .addComponent(jLabel18))
-                .addContainerGap())
-        );
-        setOwnerBorrowerPaneLayout.setVerticalGroup(
-            setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(setOwnerBorrowerPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(setOwnerBorrowerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ownerCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(borrowedCheckBox)
-                    .addComponent(borrowerCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        setOwnerBorrowerPaneLayout
+                .setHorizontalGroup(setOwnerBorrowerPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                setOwnerBorrowerPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                setOwnerBorrowerPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                setOwnerBorrowerPaneLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                ownerCB,
+                                                                                0,
+                                                                                215,
+                                                                                Short.MAX_VALUE)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                        .addGroup(
+                                                                setOwnerBorrowerPaneLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                jLabel17)
+                                                                        .addGap(
+                                                                                170,
+                                                                                170,
+                                                                                170)))
+                                        .addGroup(
+                                                setOwnerBorrowerPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                setOwnerBorrowerPaneLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                borrowerCB,
+                                                                                0,
+                                                                                188,
+                                                                                Short.MAX_VALUE)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                borrowedCheckBox))
+                                                        .addComponent(
+                                                                jLabel18))
+                                        .addContainerGap()));
+        setOwnerBorrowerPaneLayout
+                .setVerticalGroup(setOwnerBorrowerPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                setOwnerBorrowerPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                setOwnerBorrowerPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel17)
+                                                        .addComponent(
+                                                                jLabel18))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                setOwnerBorrowerPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                ownerCB,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                borrowedCheckBox)
+                                                        .addComponent(
+                                                                borrowerCB,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addContainerGap(
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)));
 
-        addPersonPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Create New Person"));
+        addPersonPanel.setBorder(javax.swing.BorderFactory
+                .createTitledBorder("Create New Person"));
 
         jLabel19.setText("Name");
 
@@ -532,86 +935,201 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         addressScrollPane.setViewportView(AddressTA);
 
         addPersonButton.setText("Add Person");
-        addPersonButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPersonButtonActionPerformed(evt);
-            }
-        });
+        addPersonButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        addPersonButtonActionPerformed(evt);
+                    }
+                });
 
         jLabel25.setText("E-Mail");
 
-        javax.swing.GroupLayout addPersonPanelLayout = new javax.swing.GroupLayout(addPersonPanel);
+        javax.swing.GroupLayout addPersonPanelLayout = new javax.swing.GroupLayout(
+                addPersonPanel);
         addPersonPanel.setLayout(addPersonPanelLayout);
-        addPersonPanelLayout.setHorizontalGroup(
-            addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addPersonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emailTF, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-                    .addGroup(addPersonPanelLayout.createSequentialGroup()
-                        .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(addPersonPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addGap(211, 211, 211))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPersonPanelLayout.createSequentialGroup()
-                                .addComponent(nameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20)
-                            .addComponent(phoneNumberTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
-                    .addComponent(jLabel21)
-                    .addComponent(jLabel25)
-                    .addComponent(addPersonButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(addressScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        addPersonPanelLayout.setVerticalGroup(
-            addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addPersonPanelLayout.createSequentialGroup()
-                .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(addPersonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(phoneNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addressScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(addPersonButton)
-                .addContainerGap())
-        );
+        addPersonPanelLayout
+                .setHorizontalGroup(addPersonPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                addPersonPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                addPersonPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(
+                                                                emailTF,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                470,
+                                                                Short.MAX_VALUE)
+                                                        .addGroup(
+                                                                addPersonPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                addPersonPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                addPersonPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                jLabel19)
+                                                                                                        .addGap(
+                                                                                                                211,
+                                                                                                                211,
+                                                                                                                211))
+                                                                                        .addGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                addPersonPanelLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                nameTF,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                244,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                        .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                                                        .addGroup(
+                                                                                addPersonPanelLayout
+                                                                                        .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                jLabel20)
+                                                                                        .addComponent(
+                                                                                                phoneNumberTF,
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                220,
+                                                                                                Short.MAX_VALUE)))
+                                                        .addComponent(
+                                                                jLabel21)
+                                                        .addComponent(
+                                                                jLabel25)
+                                                        .addComponent(
+                                                                addPersonButton,
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(
+                                                                addressScrollPane,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                470,
+                                                                Short.MAX_VALUE))
+                                        .addContainerGap()));
+        addPersonPanelLayout
+                .setVerticalGroup(addPersonPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                addPersonPanelLayout
+                                        .createSequentialGroup()
+                                        .addGroup(
+                                                addPersonPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel19)
+                                                        .addComponent(
+                                                                jLabel20))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                addPersonPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                nameTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                phoneNumberTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel25)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addComponent(
+                                                emailTF,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel21)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(
+                                                addressScrollPane,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17)
+                                        .addComponent(addPersonButton)
+                                        .addContainerGap()));
 
-        javax.swing.GroupLayout associationsPaneLayout = new javax.swing.GroupLayout(associationsPane);
+        javax.swing.GroupLayout associationsPaneLayout = new javax.swing.GroupLayout(
+                associationsPane);
         associationsPane.setLayout(associationsPaneLayout);
-        associationsPaneLayout.setHorizontalGroup(
-            associationsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, associationsPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(associationsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(addPersonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(setOwnerBorrowerPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        associationsPaneLayout.setVerticalGroup(
-            associationsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(associationsPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(setOwnerBorrowerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addPersonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
-        );
+        associationsPaneLayout
+                .setHorizontalGroup(associationsPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                associationsPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                associationsPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(
+                                                                addPersonPanel,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(
+                                                                setOwnerBorrowerPane,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE))
+                                        .addContainerGap()));
+        associationsPaneLayout
+                .setVerticalGroup(associationsPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                associationsPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(
+                                                setOwnerBorrowerPane,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(
+                                                addPersonPanel,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(121,
+                                                Short.MAX_VALUE)));
 
         tabbedPane.addTab("Associations", associationsPane);
 
-        actingRolesPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        actingRolesPane.setBorder(javax.swing.BorderFactory
+                .createEtchedBorder());
 
         jLabel14.setText("Role");
 
@@ -619,572 +1137,866 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
         jLabel13.setText("Actor");
 
-        javax.swing.GroupLayout actingRolesPaneLayout = new javax.swing.GroupLayout(actingRolesPane);
+        javax.swing.GroupLayout actingRolesPaneLayout = new javax.swing.GroupLayout(
+                actingRolesPane);
         actingRolesPane.setLayout(actingRolesPaneLayout);
-        actingRolesPaneLayout.setHorizontalGroup(
-            actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(actingRolesPaneLayout.createSequentialGroup()
-                .addGroup(actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(actingRolesPaneLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel13)
-                        .addGap(92, 92, 92)
-                        .addComponent(jLabel14)
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel16))
-                    .addGroup(actingRolesPaneLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(addSubstractActorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        actingRolesPaneLayout.setVerticalGroup(
-            actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(actingRolesPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(actingRolesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addSubstractActorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
+        actingRolesPaneLayout
+                .setHorizontalGroup(actingRolesPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                actingRolesPaneLayout
+                                        .createSequentialGroup()
+                                        .addGroup(
+                                                actingRolesPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                actingRolesPaneLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGap(
+                                                                                20,
+                                                                                20,
+                                                                                20)
+                                                                        .addComponent(
+                                                                                jLabel13)
+                                                                        .addGap(
+                                                                                92,
+                                                                                92,
+                                                                                92)
+                                                                        .addComponent(
+                                                                                jLabel14)
+                                                                        .addGap(
+                                                                                98,
+                                                                                98,
+                                                                                98)
+                                                                        .addComponent(
+                                                                                jLabel16))
+                                                        .addGroup(
+                                                                actingRolesPaneLayout
+                                                                        .createSequentialGroup()
+                                                                        .addContainerGap()
+                                                                        .addComponent(
+                                                                                addSubstractActorsPanel,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(25,
+                                                Short.MAX_VALUE)));
+        actingRolesPaneLayout
+                .setVerticalGroup(actingRolesPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                actingRolesPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                actingRolesPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel14)
+                                                        .addComponent(
+                                                                jLabel16)
+                                                        .addComponent(
+                                                                jLabel13))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(
+                                                addSubstractActorsPanel,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(34,
+                                                Short.MAX_VALUE)));
 
-        addActorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Add Actor"));
+        addActorPanel.setBorder(javax.swing.BorderFactory
+                .createTitledBorder("Add Actor"));
 
         jLabel22.setText("First Name");
 
         jLabel23.setText("Last Name");
 
         addActorButton.setText("Add Actor");
-        addActorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActorButtonActionPerformed(evt);
-            }
-        });
+        addActorButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        addActorButtonActionPerformed(evt);
+                    }
+                });
 
-        javax.swing.GroupLayout addActorPanelLayout = new javax.swing.GroupLayout(addActorPanel);
+        javax.swing.GroupLayout addActorPanelLayout = new javax.swing.GroupLayout(
+                addActorPanel);
         addActorPanel.setLayout(addActorPanelLayout);
-        addActorPanelLayout.setHorizontalGroup(
-            addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addActorPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addActorPanelLayout.createSequentialGroup()
-                        .addComponent(actorFirstNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(addActorPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addGap(135, 135, 135)))
-                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addActorPanelLayout.createSequentialGroup()
-                        .addComponent(actorLastNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addActorButton))
-                    .addComponent(jLabel23))
-                .addContainerGap())
-        );
-        addActorPanelLayout.setVerticalGroup(
-            addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addActorPanelLayout.createSequentialGroup()
-                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(jLabel23))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(addActorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(actorFirstNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addActorButton)
-                    .addComponent(actorLastNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        addActorPanelLayout
+                .setHorizontalGroup(addActorPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                addActorPanelLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                addActorPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                addActorPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                actorFirstNameTF,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                196,
+                                                                                Short.MAX_VALUE)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                        .addGroup(
+                                                                addActorPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                jLabel22)
+                                                                        .addGap(
+                                                                                135,
+                                                                                135,
+                                                                                135)))
+                                        .addGroup(
+                                                addActorPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(
+                                                                addActorPanelLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                actorLastNameTF,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                179,
+                                                                                Short.MAX_VALUE)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                addActorButton))
+                                                        .addComponent(
+                                                                jLabel23))
+                                        .addContainerGap()));
+        addActorPanelLayout
+                .setVerticalGroup(addActorPanelLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                addActorPanelLayout
+                                        .createSequentialGroup()
+                                        .addGroup(
+                                                addActorPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                jLabel22)
+                                                        .addComponent(
+                                                                jLabel23))
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                addActorPanelLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                actorFirstNameTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(
+                                                                addActorButton)
+                                                        .addComponent(
+                                                                actorLastNameTF,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addContainerGap(
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)));
 
-        javax.swing.GroupLayout actorsPaneLayout = new javax.swing.GroupLayout(actorsPane);
+        javax.swing.GroupLayout actorsPaneLayout = new javax.swing.GroupLayout(
+                actorsPane);
         actorsPane.setLayout(actorsPaneLayout);
-        actorsPaneLayout.setHorizontalGroup(
-            actorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actorsPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(actorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(actingRolesPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addActorPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        actorsPaneLayout.setVerticalGroup(
-            actorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actorsPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(actingRolesPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addActorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        actorsPaneLayout
+                .setHorizontalGroup(actorsPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                actorsPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                actorsPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(
+                                                                actingRolesPane,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(
+                                                                addActorPanel,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE))
+                                        .addContainerGap()));
+        actorsPaneLayout
+                .setVerticalGroup(actorsPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                actorsPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(
+                                                actingRolesPane,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(
+                                                addActorPanel,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap()));
 
         tabbedPane.addTab("Actors", actorsPane);
 
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15
+                .setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         changeThumbnailButton.setText("Change Thumbnail");
-        changeThumbnailButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeThumbnailButtonActionPerformed(evt);
-            }
-        });
+        changeThumbnailButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        changeThumbnailButtonActionPerformed(evt);
+                    }
+                });
 
         defaultImageButton.setText("Default Image");
-        defaultImageButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                defaultImageButtonActionPerformed(evt);
-            }
-        });
+        defaultImageButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        defaultImageButtonActionPerformed(evt);
+                    }
+                });
 
-        javax.swing.GroupLayout artworkPaneLayout = new javax.swing.GroupLayout(artworkPane);
+        javax.swing.GroupLayout artworkPaneLayout = new javax.swing.GroupLayout(
+                artworkPane);
         artworkPane.setLayout(artworkPaneLayout);
-        artworkPaneLayout.setHorizontalGroup(
-            artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, artworkPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
-                    .addGroup(artworkPaneLayout.createSequentialGroup()
-                        .addComponent(defaultImageButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(changeThumbnailButton)))
-                .addContainerGap())
-        );
-        artworkPaneLayout.setVerticalGroup(
-            artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, artworkPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(artworkPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(changeThumbnailButton)
-                    .addComponent(defaultImageButton))
-                .addContainerGap())
-        );
+        artworkPaneLayout
+                .setHorizontalGroup(artworkPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                artworkPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                artworkPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(
+                                                                jLabel15,
+                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                502,
+                                                                Short.MAX_VALUE)
+                                                        .addGroup(
+                                                                artworkPaneLayout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                defaultImageButton)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                        .addComponent(
+                                                                                changeThumbnailButton)))
+                                        .addContainerGap()));
+        artworkPaneLayout
+                .setVerticalGroup(artworkPaneLayout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                artworkPaneLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(
+                                                jLabel15,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                450, Short.MAX_VALUE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                artworkPaneLayout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(
+                                                                changeThumbnailButton)
+                                                        .addComponent(
+                                                                defaultImageButton))
+                                        .addContainerGap()));
 
         tabbedPane.addTab("Artwork", artworkPane);
 
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
+        cancelButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        cancelButtonActionPerformed(evt);
+                    }
+                });
 
         saveButton.setText("Save");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
+        saveButton
+                .addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(
+                            java.awt.event.ActionEvent evt) {
+                        saveButtonActionPerformed(evt);
+                    }
+                });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
+                getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelButton)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cancelButton)
-                    .addComponent(saveButton))
-                .addContainerGap())
-        );
+        layout
+                .setHorizontalGroup(layout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                layout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                layout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(
+                                                                tabbedPane,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                527,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(
+                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                layout
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(
+                                                                                saveButton)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(
+                                                                                cancelButton)))
+                                        .addContainerGap()));
+        layout
+                .setVerticalGroup(layout
+                        .createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                layout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(
+                                                tabbedPane,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                526, Short.MAX_VALUE)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(
+                                                layout
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(
+                                                                cancelButton)
+                                                        .addComponent(
+                                                                saveButton))
+                                        .addContainerGap()));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cancelButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
+        // Cancel Button - Discard any unsaved changes.
+        this.dispose();
+    }// GEN-LAST:event_cancelButtonActionPerformed
 
-private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-    // Cancel Button - Discard any unsaved changes.
-    this.dispose();
-}//GEN-LAST:event_cancelButtonActionPerformed
+    private void saveButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
+        // Save button
 
-private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-    // Save button
-
-    String title = this.titleTF.getText();
-    String director = this.directorTF.getText();
-    String rating = (String)this.ratingCB.getSelectedItem();
-    int runtime = ((Integer)this.runtimeSpinner.getValue()).intValue();
-    if (runtime < 0) 
-        runtime = -1;
-    int year = -1;
-    int mangorating = -1;
-    try {
-        year = Integer.parseInt(this.yearTF.getText());
-        mangorating = Integer.parseInt((String) this.mangoRatingCB.getSelectedItem());
-    } catch (NumberFormatException e) {
-        year = -1;
-        mangorating = 0;
-    }
-    String asin = this.asinTF.getText();
-    String[] purchDateString = this.purchaseDateTF.getText().split("/");
-    java.sql.Date purchDate;
-    if (purchDateString.length == 3) {
-        int pYear = 0;
-        int month = 0;
-        int day = 0;
+        String title = this.titleTF.getText();
+        String director = this.directorTF.getText();
+        String rating = (String) this.ratingCB.getSelectedItem();
+        int runtime = ((Integer) this.runtimeSpinner.getValue())
+                .intValue();
+        if (runtime < 0)
+            runtime = -1;
+        int year = -1;
+        int mangorating = -1;
         try {
-            pYear = Integer.parseInt(purchDateString[2]);
-            month = Integer.parseInt(purchDateString[0]) - 1;
-            day = Integer.parseInt(purchDateString[1]);
+            year = Integer.parseInt(this.yearTF.getText());
+            mangorating = Integer
+                    .parseInt((String) this.mangoRatingCB
+                            .getSelectedItem());
         } catch (NumberFormatException e) {
+            year = -1;
+            mangorating = 0;
+        }
+        String asin = this.asinTF.getText();
+        String[] purchDateString = this.purchaseDateTF.getText()
+                .split("/");
+        java.sql.Date purchDate;
+        if (purchDateString.length == 3) {
+            int pYear = 0;
+            int month = 0;
+            int day = 0;
+            try {
+                pYear = Integer.parseInt(purchDateString[2]);
+                month = Integer.parseInt(purchDateString[0]) - 1;
+                day = Integer.parseInt(purchDateString[1]);
+            } catch (NumberFormatException e) {
+                purchDate = null;
+            }
+            if (month < 0 || month > 11)
+                purchDate = null;
+            else {
+                long date = new GregorianCalendar(pYear, month, day)
+                        .getTimeInMillis();
+                purchDate = new java.sql.Date(date);
+            }
+        } else {
             purchDate = null;
         }
-        if (month < 0 || month > 11)
-            purchDate = null;
-        else {
-            long date = new GregorianCalendar(pYear, month, day).getTimeInMillis();
-            purchDate =  new java.sql.Date(date);
-        }
-    } else {
-        purchDate = null;
-    }
-      
-    String custDesc = this.customDescriptionTA.getText();
-    String condition = conditionCB.getText();
-    String type = (String) typeCB.getSelectedItem();
-    
 
-    // New movie
-    if(m == null){
-        Movie mov = null;
-        mov = MangoController.getInstance().addMovie(title, director, rating, runtime, 
-                year, asin, purchDate, custDesc, condition, type, mangorating);
-        // Now we wanna add the image to the DB for the movie
-        if (mov != null) { // Add other information
+        String custDesc = this.customDescriptionTA.getText();
+        String condition = conditionCB.getText();
+        String type = (String) typeCB.getSelectedItem();
+
+        // New movie
+        if (m == null) {
+            Movie mov = null;
+            mov = MangoController.getInstance().addMovie(title,
+                    director, rating, runtime, year, asin, purchDate,
+                    custDesc, condition, type, mangorating);
+            // Now we wanna add the image to the DB for the movie
+            if (mov != null) { // Add other information
+                // Genre
+                String[] gens = this.genreTF.getText().split(", *");
+                for (String g : gens) {
+                    MangoController.getInstance().addGenreToMovie(
+                            mov, g);
+                }
+                // Actors
+                List<AddSubtractInnerPanel> panels = this.addSubstractActorsPanel
+                        .getInnerPanelsValues();
+                for (AddSubtractInnerPanel panel : panels) {
+                    // Temp code so the empty panel wont be added -
+                    // this will be removed
+                    // when the comboboxmodels are changelisteners.
+                    // There is code
+                    // in AddSubtractPanel to take care of this.
+                    // For now you can remove the empty panel or just
+                    // ignore it.
+                    if (((JComboBox) panel.getLeftComboObject())
+                            .getSelectedIndex() == -1) {
+
+                    } else {
+                        JComboBox actorBox = (JComboBox) panel
+                                .getLeftComboObject();
+                        JComboBox roleBox = (JComboBox) panel
+                                .getRightComboObject();
+                        ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox
+                                .getModel();
+                        int selectedIndex = ((JComboBox) panel
+                                .getLeftComboObject())
+                                .getSelectedIndex();
+                        Actor actor = (Actor) actorModel
+                                .getActorAt(selectedIndex);
+                        String role = (String) roleBox
+                                .getSelectedItem();
+                        String character = panel.getTextFieldText();
+
+                        MangoController.getInstance()
+                                .addActorToMovie(mov, actor, role,
+                                        character);
+                    }
+                }
+                // Owner and borrower
+                PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB
+                        .getModel();
+                PersonComboBoxModel borrowerModel = (PersonComboBoxModel) borrowerCB
+                        .getModel();
+                int selectedIndexO = ownerCB.getSelectedIndex();
+                int selectedIndexB = borrowerCB.getSelectedIndex();
+                Person owner, borrower;
+                if (selectedIndexO == -1)
+                    owner = null;
+                else
+                    owner = (Person) ownerModel
+                            .getPersonAt(selectedIndexO);
+                if (selectedIndexB == -1
+                        || !this.borrowedCheckBox.isSelected())
+                    borrower = null;
+                else
+                    borrower = (Person) borrowerModel
+                            .getPersonAt(selectedIndexB);
+                mov.setTitle(mov.getTitle());
+                mov.setOwner(owner);
+                mov.setBorrower(borrower);
+                MangoController.getInstance().updateMovie(mov);
+
+                // Image
+                Image i = ((ImageIcon) jLabel15.getIcon()).getImage();
+                BufferedImage bi = Pictures.toBufferedImage(i);
+                try {
+                    ImageIO.write(bi, "jpg", new File("temp.jpg"));
+                    MangoController.getInstance().setImageForMovie(
+                            mov, new FileInputStream("temp.jpg"));
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            JOptionPane.showMessageDialog(this,
+                    "The movie was successfully added.",
+                    "Save Successfull",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            m.setTitle(title);
+            m.setDirector(director);
+            m.setRating(rating);
+            m.setRuntime(runtime);
+            m.setYear(year);
+            m.setASIN(asin);
+            m.setPurchaseDate(purchDate);
+            m.setCustomDescription(custDesc);
+            m.setCondition(condition);
+            m.setType(type);
+            m.setMangoRating(mangorating);
+            MangoController.getInstance().updateMovie(m);
+
             // Genre
             String[] gens = this.genreTF.getText().split(", *");
+            List<String> gensInTF = new ArrayList<String>();
+            for (int i = 0; i < gens.length; i++) {
+                gensInTF.add(gens[i]);
+            }
+            List<String> gensInDB = m.getGenres();
             for (String g : gens) {
-                MangoController.getInstance().addGenreToMovie(mov, g);
+                if (!gensInDB.contains(g))
+                    MangoController.getInstance().addGenreToMovie(m,
+                            g);
+            }
+            for (String g : gensInDB) {
+                if (!gensInTF.contains(g))
+                    MangoController.getInstance()
+                            .removeGenreFromMovie(m, g);
             }
             // Actors
-            List<AddSubtractInnerPanel> panels = 
-                    this.addSubstractActorsPanel.getInnerPanelsValues();
+            List<AddSubtractInnerPanel> panels = this.addSubstractActorsPanel
+                    .getInnerPanelsValues();
+            List<Actor> actorsInDB = MangoController.getInstance()
+                    .getActorsForMovie(m);
+            List<Actor> actorsInCB = new ArrayList<Actor>();
             for (AddSubtractInnerPanel panel : panels) {
-                // Temp code so the empty panel wont be added - this will be removed
-                // when the comboboxmodels are changelisteners.  There is code
+                // Temp code so the empty panel wont be added - this
+                // will be removed
+                // when the comboboxmodels are changelisteners. There
+                // is code
                 // in AddSubtractPanel to take care of this.
-                // For now you can remove the empty panel or just ignore it.
-                if (((JComboBox) panel.getLeftComboObject()).getSelectedIndex() == -1) {
-                    
+                // For now you can remove the empty panel or just
+                // ignore it.
+                if (((JComboBox) panel.getLeftComboObject())
+                        .getSelectedIndex() == -1) {
+
                 } else {
-                    JComboBox actorBox = (JComboBox) panel.getLeftComboObject();
-                    JComboBox roleBox = (JComboBox) panel.getRightComboObject();
-                    ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox.getModel();
-                    int selectedIndex = ((JComboBox) panel.getLeftComboObject()).getSelectedIndex();
-                    Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
+                    JComboBox actorBox = (JComboBox) panel
+                            .getLeftComboObject();
+                    JComboBox roleBox = (JComboBox) panel
+                            .getRightComboObject();
+                    ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox
+                            .getModel();
+                    int selectedIndex = ((JComboBox) panel
+                            .getLeftComboObject()).getSelectedIndex();
+                    Actor actor = (Actor) actorModel
+                            .getActorAt(selectedIndex);
                     String role = (String) roleBox.getSelectedItem();
                     String character = panel.getTextFieldText();
 
-                    MangoController.getInstance().addActorToMovie(mov, actor, role, character);
+                    // Add any actors that are not already in apart of
+                    // the movie
+                    if (!actorsInDB.contains(actor))
+                        MangoController.getInstance()
+                                .addActorToMovie(m, actor, role,
+                                        character);
+                    actorsInCB.add(actor);
                 }
-            }            
+            }
+            // Remove any actors that were removed form panels
+            for (Actor actor : actorsInDB) {
+                if (!actorsInCB.contains(actor))
+                    MangoController.getInstance()
+                            .removeActorFromMovie(m, actor);
+            }
+
             // Owner and borrower
-            PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB.getModel();
-            PersonComboBoxModel borrowerModel = (PersonComboBoxModel) borrowerCB.getModel();
+            PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB
+                    .getModel();
+            PersonComboBoxModel borrowerModel = (PersonComboBoxModel) borrowerCB
+                    .getModel();
             int selectedIndexO = ownerCB.getSelectedIndex();
             int selectedIndexB = borrowerCB.getSelectedIndex();
             Person owner, borrower;
             if (selectedIndexO == -1)
                 owner = null;
             else
-                owner = (Person) ownerModel.getPersonAt(selectedIndexO);
-            if (selectedIndexB == -1 || !this.borrowedCheckBox.isSelected())
+                owner = (Person) ownerModel
+                        .getPersonAt(selectedIndexO);
+            if (selectedIndexB == -1
+                    || !this.borrowedCheckBox.isSelected())
                 borrower = null;
             else
-                borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
-            mov.setTitle(mov.getTitle());
-            mov.setOwner(owner);
-            mov.setBorrower(borrower);
-            MangoController.getInstance().updateMovie(mov);
-            
+                borrower = (Person) borrowerModel
+                        .getPersonAt(selectedIndexB);
+            MangoController.getInstance().setOwnerToMovie(m, owner);
+            MangoController.getInstance().setBorrowerToMovie(m,
+                    borrower);
+            System.out.println(((DBMovie) m).getOwnerId());
+            System.out.println(((DBMovie) m).getBorrowerId());
+            MangoController.getInstance().updateMovie(m);
+
             // Image
-            Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
+            Image i = ((ImageIcon) jLabel15.getIcon()).getImage();
             BufferedImage bi = Pictures.toBufferedImage(i);
             try {
                 ImageIO.write(bi, "jpg", new File("temp.jpg"));
-                MangoController.getInstance().setImageForMovie(mov, new FileInputStream("temp.jpg"));
+                MangoController.getInstance().setImageForMovie(m,
+                        new FileInputStream("temp.jpg"));
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            JOptionPane.showMessageDialog(this,
+                    "The movie was successfully updated.",
+                    "Update Successfull",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
-        JOptionPane.showMessageDialog(this, 
-                "The movie was successfully added.", 
-                "Save Successfull", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        m.setTitle(title);
-        m.setDirector(director);
-        m.setRating(rating);
-        m.setRuntime(runtime);
-        m.setYear(year);
-        m.setASIN(asin);
-        m.setPurchaseDate(purchDate);
-        m.setCustomDescription(custDesc);
-        m.setCondition(condition);
-        m.setType(type);
-        m.setMangoRating(mangorating);
-        MangoController.getInstance().updateMovie(m);
-        
-        // Genre
-        String[] gens = this.genreTF.getText().split(", *");
-        List<String> gensInTF = new ArrayList<String>();
-        for (int i = 0; i < gens.length; i++) {
-            gensInTF.add(gens[i]);
+        // Close after exit
+        this.dispose();
+
+    }// GEN-LAST:event_saveButtonActionPerformed
+
+    private void changeThumbnailButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_changeThumbnailButtonActionPerformed
+        // Upload image button code.
+        JFileChooser jfc = new JFileChooser();
+        jfc.addChoosableFileFilter(new ImageFilter());
+        jfc.setAcceptAllFileFilterUsed(false);
+        int i = jfc.showOpenDialog(this);
+
+        if (i == JFileChooser.APPROVE_OPTION) {
+            Image image = null;
+            try {
+                BufferedImage im = ImageIO
+                        .read(jfc.getSelectedFile());
+                image = im.getScaledInstance(160, 160,
+                        Image.SCALE_DEFAULT);
+                this.jLabel15.setIcon(new ImageIcon(image));
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(addPersonButton,
+                        "Error uploading picture");
+                Logger.getLogger(BottomBar.class.getName()).log(
+                        Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(addPersonButton,
+                        "Error uploading picture");
+                Logger.getLogger(BottomBar.class.getName()).log(
+                        Level.SEVERE, null, ex);
+            }
+
         }
-        List<String> gensInDB = m.getGenres();
-        for (String g : gens) {
-            if (!gensInDB.contains(g))
-                MangoController.getInstance().addGenreToMovie(m, g);
-        }      
-        for (String g : gensInDB) {
-            if (!gensInTF.contains(g))
-                MangoController.getInstance().removeGenreFromMovie(m, g);
-        }
-        // Actors
-        List<AddSubtractInnerPanel> panels = 
-                this.addSubstractActorsPanel.getInnerPanelsValues();
-        List<Actor> actorsInDB = MangoController.getInstance().getActorsForMovie(m);
-        List<Actor> actorsInCB = new ArrayList<Actor>();
-        for (AddSubtractInnerPanel panel : panels) {
-            // Temp code so the empty panel wont be added - this will be removed
-            // when the comboboxmodels are changelisteners.  There is code
-            // in AddSubtractPanel to take care of this.
-            // For now you can remove the empty panel or just ignore it.
-            if (((JComboBox) panel.getLeftComboObject()).getSelectedIndex() == -1) {
+    }// GEN-LAST:event_changeThumbnailButtonActionPerformed
+
+    private void amazonRetrieveButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_amazonRetrieveButtonActionPerformed
+        // Get information from amazon.
+        int proceed = JOptionPane
+                .showConfirmDialog(
+                        this,
+                        "Mango will attempt to gather information from Amazon.com.  The "
+                                + "provided information may not be\naccurate.  Any information already "
+                                + "filled out may be altered.  Do you want to proceed?",
+                        "Confirm", JOptionPane.YES_NO_OPTION);
+        if (proceed == JOptionPane.YES_OPTION) {
+            AmazonMovieDetails amazon = new AmazonMovieDetails();
+            boolean valid = amazon.getMovieXMLDocument(this.asinTF
+                    .getText());
+            if (valid) {
+                this.titleTF.setText(amazon.getTitle());
+                this.directorTF.setText(amazon.getDirector());
+                this.yearTF.setText(amazon.getReleaseDate());
+                this.ratingCB.setSelectedItem(amazon.getRating());
+                try {
+                    this.runtimeSpinner.setValue(Integer
+                            .parseInt(amazon.getRuntime()));
+                } catch (NumberFormatException e) {
+                    this.runtimeSpinner.setValue(0);
+                }
+                this.jLabel15.setIcon(amazon.getMovieImage());
+                // Set as DVD if from amazon. There is no way to know
+                // the format easily.
+                this.typeCB.setSelectedItem("DVD");
+                // actors
+                List<String> actors = amazon.getActors();
+                for (String actor : actors) {
+                    String[] actorName = actor.split(" ");
+                    if (actorName.length == 2)
+                        MangoController.getInstance().addActor(
+                                actorName[0], actorName[1]);
+                    else if (actorName.length == 3)
+                        MangoController.getInstance().addActor(
+                                actorName[0] + " " + actorName[1],
+                                actorName[2]);
+                    else
+                        MangoController.getInstance().addActor(actor,
+                                "");
+                    this.addSubstractActorsPanel
+                            .createAndSetSelected(actor, "", "");
+                }
 
             } else {
-                JComboBox actorBox = (JComboBox) panel.getLeftComboObject();
-                JComboBox roleBox = (JComboBox) panel.getRightComboObject();
-                ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox.getModel();
-                int selectedIndex = ((JComboBox) panel.getLeftComboObject()).getSelectedIndex();
-                Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
-                String role = (String) roleBox.getSelectedItem();
-                String character = panel.getTextFieldText();
-                
-                // Add any actors that are not already in apart of the movie
-                if (!actorsInDB.contains(actor))
-                    MangoController.getInstance().addActorToMovie(m, actor, role, character);
-                actorsInCB.add(actor);
+                JOptionPane
+                        .showMessageDialog(
+                                this,
+                                "Amazon was unable to gather requested information.\n"
+                                        + "Check your ASIN number and your Internet connection",
+                                "Could not gather information",
+                                JOptionPane.INFORMATION_MESSAGE);
             }
-        }  
-        // Remove any actors that were removed form panels
-        for (Actor actor : actorsInDB) {
-            if (!actorsInCB.contains(actor))
-                MangoController.getInstance().removeActorFromMovie(m, actor);
         }
-                
-        // Owner and borrower
-        PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB.getModel();
-        PersonComboBoxModel borrowerModel = (PersonComboBoxModel) borrowerCB.getModel();
-        int selectedIndexO = ownerCB.getSelectedIndex();
-        int selectedIndexB = borrowerCB.getSelectedIndex();
-        Person owner, borrower;
-        if (selectedIndexO == -1)
-            owner = null;
-        else
-            owner = (Person) ownerModel.getPersonAt(selectedIndexO);
-        if (selectedIndexB == -1 || !this.borrowedCheckBox.isSelected())
-            borrower = null;
-        else
-            borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
-        MangoController.getInstance().setOwnerToMovie(m, owner);
-        MangoController.getInstance().setBorrowerToMovie(m, borrower);
-                                System.out.println(((DBMovie)m).getOwnerId());
-            System.out.println(((DBMovie)m).getBorrowerId());
-        MangoController.getInstance().updateMovie(m);
-            
-        // Image
-        Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
-        BufferedImage bi = Pictures.toBufferedImage(i);
+    }// GEN-LAST:event_amazonRetrieveButtonActionPerformed
+
+    private void addPersonButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addPersonButtonActionPerformed
+        // Adds a new person to the database if it doesn't exist.
+        boolean added = false;
         try {
-            ImageIO.write(bi, "jpg", new File("temp.jpg"));
-            MangoController.getInstance().setImageForMovie(m, new FileInputStream("temp.jpg"));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        JOptionPane.showMessageDialog(this, 
-                "The movie was successfully updated.", "Update Successfull", 
-                JOptionPane.INFORMATION_MESSAGE); 
-    }
-    // Close after exit
-    this.dispose();
-    
-    
-}//GEN-LAST:event_saveButtonActionPerformed
-
-private void changeThumbnailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeThumbnailButtonActionPerformed
-    // Upload image button code.
-    JFileChooser jfc = new JFileChooser();
-    jfc.addChoosableFileFilter(new ImageFilter());
-    jfc.setAcceptAllFileFilterUsed(false);
-    int i = jfc.showOpenDialog(this);
-    
-    if(i == JFileChooser.APPROVE_OPTION){
-        Image image = null;    
-        try {
-            BufferedImage im = ImageIO.read(jfc.getSelectedFile());
-            image = im.getScaledInstance(160, 160, Image.SCALE_DEFAULT);
-            this.jLabel15.setIcon(new ImageIcon(image));
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(addPersonButton, "Error uploading picture");
-            Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(addPersonButton, "Error uploading picture");
-            Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-
-    }
-}//GEN-LAST:event_changeThumbnailButtonActionPerformed
-
-private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amazonRetrieveButtonActionPerformed
-    // Get information from amazon.
-    int proceed = JOptionPane.showConfirmDialog(this, 
-            "Mango will attempt to gather information from Amazon.com.  The " + 
-            "provided information may not be\naccurate.  Any information already " + 
-            "filled out may be altered.  Do you want to proceed?", 
-            "Confirm", JOptionPane.YES_NO_OPTION);
-    if (proceed == JOptionPane.YES_OPTION) {
-        AmazonMovieDetails amazon = new AmazonMovieDetails();
-        boolean valid = amazon.getMovieXMLDocument(this.asinTF.getText());
-        if (valid) {
-            this.titleTF.setText(amazon.getTitle());
-            this.directorTF.setText(amazon.getDirector());
-            this.yearTF.setText(amazon.getReleaseDate());
-            this.ratingCB.setSelectedItem(amazon.getRating());
-            try {
-                this.runtimeSpinner.setValue(Integer.parseInt(amazon.getRuntime()));
-            } catch (NumberFormatException e) {
-                this.runtimeSpinner.setValue(0);
+            // Create a new person.
+            if (!this.nameTF.getText().equals(""))
+                added = MangoController.getInstance().addPerson(
+                        this.nameTF.getText(),
+                        this.phoneNumberTF.getText(),
+                        this.emailTF.getText(),
+                        this.AddressTA.getText());
+            if (added) {
+                JOptionPane.showMessageDialog(this, this.nameTF
+                        .getText()
+                        + " was added as a person.", "Person Added",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, this.nameTF
+                        .getText()
+                        + " already exists.",
+                        "Person Already Exists",
+                        JOptionPane.WARNING_MESSAGE);
             }
-            this.jLabel15.setIcon(amazon.getMovieImage());
-            // Set as DVD if from amazon.  There is no way to know the format easily.
-            this.typeCB.setSelectedItem("DVD");
-            // actors
-            List<String> actors = amazon.getActors();
-            for (String actor : actors) {
-                String[] actorName = actor.split(" ");
-                if (actorName.length == 2)
-                    MangoController.getInstance().addActor(actorName[0], 
-                            actorName[1]);
-                else if (actorName.length == 3)
-                    MangoController.getInstance().addActor(actorName[0] + 
-                            " " + actorName[1], actorName[2]);
-                else
-                    MangoController.getInstance().addActor(actor, "");
-                this.addSubstractActorsPanel.createAndSetSelected(actor, "", "");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(this, 
-                "Amazon was unable to gather requested information.\n" + 
-                "Check your ASIN number and your Internet connection", 
-                "Could not gather information", JOptionPane.INFORMATION_MESSAGE);
+        } catch (PersonExistsException ex) {
+            JOptionPane.showMessageDialog(this, this.nameTF
+                    + " already exists", "Person Already exists",
+                    JOptionPane.WARNING_MESSAGE);
         }
-    }
-}//GEN-LAST:event_amazonRetrieveButtonActionPerformed
+    }// GEN-LAST:event_addPersonButtonActionPerformed
 
-private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonButtonActionPerformed
-    // Adds a new person to the database if it doesn't exist.
-    boolean added = false;
-    try {
-        // Create a new person.
-        if (!this.nameTF.getText().equals(""))
-            added = MangoController.getInstance().addPerson(this.nameTF.getText(), 
-                this.phoneNumberTF.getText(), this.emailTF.getText(), 
-                this.AddressTA.getText());
+    private void defaultImageButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_defaultImageButtonActionPerformed
+        // Reset Thumbnail to default image Default Image
+        int proceed = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to reset the thumbnail image to the default "
+                        + "image?", "Reset Thumbnail to Default",
+                JOptionPane.YES_NO_OPTION);
+        if (proceed == JOptionPane.YES_OPTION) {
+            Image im = new ImageIcon(
+                    getClass()
+                            .getResource(
+                                    "/com/themangoproject/ui/images/defaultMangoLogo.jpg"))
+                    .getImage();
+
+            this.jLabel15.setIcon(new ImageIcon(im.getScaledInstance(
+                    160, 160, Image.SCALE_DEFAULT)));
+
+        }
+    }// GEN-LAST:event_defaultImageButtonActionPerformed
+
+    private void borrowedCheckBoxItemStateChanged(
+            java.awt.event.ItemEvent evt) {// GEN-FIRST:event_borrowedCheckBoxItemStateChanged
+        // Borrowed check box - disables the borrower combobox if no
+        // checked.
+        Object source = evt.getItemSelectable();
+        int state = evt.getStateChange();
+        if (source == this.borrowedCheckBox) {
+            if (state == ItemEvent.SELECTED)
+                this.borrowerCB.setEnabled(true);
+            else
+                this.borrowerCB.setEnabled(false);
+        }
+    }// GEN-LAST:event_borrowedCheckBoxItemStateChanged
+
+    private void addActorButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addActorButtonActionPerformed
+        // Add new Actor to the database if it doesn't exist
+        boolean added = false;
+        if (!this.actorFirstNameTF.getText().equals("")
+                && !this.actorLastNameTF.getText().equals(""))
+            added = MangoController.getInstance().addActor(
+                    this.actorFirstNameTF.getText(),
+                    this.actorLastNameTF.getText());
         if (added) {
-            JOptionPane.showMessageDialog(this, this.nameTF.getText() + 
-                    " was added as a person.", 
-                    "Person Added", JOptionPane.INFORMATION_MESSAGE);        
+            JOptionPane.showMessageDialog(this, this.actorFirstNameTF
+                    .getText()
+                    + " "
+                    + this.actorLastNameTF.getText()
+                    + " was added as an actor.", "Actor Added",
+                    JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, this.nameTF.getText() + 
-                    " already exists.", 
-                    "Person Already Exists", JOptionPane.WARNING_MESSAGE);         
+            JOptionPane.showMessageDialog(this, this.actorFirstNameTF
+                    .getText()
+                    + " "
+                    + this.actorLastNameTF.getText()
+                    + " already exists.", "Actor Already Exists",
+                    JOptionPane.WARNING_MESSAGE);
         }
-    } catch (PersonExistsException ex) {
-        JOptionPane.showMessageDialog(this, this.nameTF + " already exists", 
-                "Person Already exists", JOptionPane.WARNING_MESSAGE);
-    }       
-}//GEN-LAST:event_addPersonButtonActionPerformed
-
-                                      
-
-private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultImageButtonActionPerformed
-    // Reset Thumbnail to default image Default Image
-    int proceed = JOptionPane.showConfirmDialog(this, 
-        "Are you sure you want to reset the thumbnail image to the default " +
-        "image?", "Reset Thumbnail to Default", JOptionPane.YES_NO_OPTION);
-    if (proceed == JOptionPane.YES_OPTION) {
-        Image im = new ImageIcon(getClass().
-                getResource("/com/themangoproject/ui/images/defaultMangoLogo.jpg")).getImage();
-        
-        this.jLabel15.setIcon(
-                new ImageIcon(im.getScaledInstance(160, 160, Image.SCALE_DEFAULT)));
-
-    }
-}//GEN-LAST:event_defaultImageButtonActionPerformed
-
-private void borrowedCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_borrowedCheckBoxItemStateChanged
-    // Borrowed check box - disables the borrower combobox if no checked.
-    Object source = evt.getItemSelectable();
-    int state = evt.getStateChange();
-    if (source == this.borrowedCheckBox) {
-        if (state == ItemEvent.SELECTED)
-            this.borrowerCB.setEnabled(true);
-        else
-            this.borrowerCB.setEnabled(false);
-    }
-}//GEN-LAST:event_borrowedCheckBoxItemStateChanged
-
-private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActorButtonActionPerformed
-    // Add new Actor to the database if it doesn't exist
-    boolean added = false;
-    if (!this.actorFirstNameTF.getText().equals("") && 
-            !this.actorLastNameTF.getText().equals(""))
-        added = MangoController.getInstance().addActor(this.actorFirstNameTF.getText(),
-                this.actorLastNameTF.getText());
-    if (added) {
-        JOptionPane.showMessageDialog(this, this.actorFirstNameTF.getText() + " " + 
-                this.actorLastNameTF.getText() + " was added as an actor.", 
-                "Actor Added", JOptionPane.INFORMATION_MESSAGE);        
-    } else {
-        JOptionPane.showMessageDialog(this, this.actorFirstNameTF.getText() + " " + 
-                this.actorLastNameTF.getText() + " already exists.", 
-                "Actor Already Exists", JOptionPane.WARNING_MESSAGE);         
-    }
-}//GEN-LAST:event_addActorButtonActionPerformed
+    }// GEN-LAST:event_addActorButtonActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args
+     *            the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MovieAddEditDialog dialog = new MovieAddEditDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
+                MovieAddEditDialog dialog = new MovieAddEditDialog(
+                        new javax.swing.JFrame(), true);
+                dialog
+                        .addWindowListener(new java.awt.event.WindowAdapter() {
+                            public void windowClosing(
+                                    java.awt.event.WindowEvent e) {
+                                System.exit(0);
+                            }
+                        });
                 dialog.setVisible(true);
             }
         });

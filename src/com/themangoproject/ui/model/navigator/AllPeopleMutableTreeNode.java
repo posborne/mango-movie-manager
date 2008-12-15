@@ -12,26 +12,27 @@ import com.themangoproject.ui.model.PersonTableModel;
  * 
  * @author Paul Osborne
  */
-public class AllPeopleMutableTreeNode extends DefaultMutableTreeNode implements
-		MangoMutableTreeNode {
-	/** Generated UID */
-	private static final long serialVersionUID = 3865751213606263409L;
+public class AllPeopleMutableTreeNode extends DefaultMutableTreeNode
+        implements MangoMutableTreeNode {
+    /** Generated UID */
+    private static final long serialVersionUID = 3865751213606263409L;
 
-	/** Construct the node */
-	public AllPeopleMutableTreeNode() {
-		super("All People");
-	}
-	
-	/** Set table to show model of all persons */
-	@Override
-	public void doYourThing(Mango mangoPanel) {
-		UIController.getInstance().setViewTableModel(new PersonTableModel());
-	}
+    /** Construct the node */
+    public AllPeopleMutableTreeNode() {
+        super("All People");
+    }
 
-	/** No popup menu */
-	@Override
-	public JPopupMenu getPopupMenu() {
-		return null;
-	}
+    /** Set table to show model of all persons */
+    @Override
+    public void doYourThing(Mango mangoPanel) {
+        UIController.getInstance().setViewTableModel(
+                new PersonTableModel());
+    }
+
+    /** No popup menu */
+    @Override
+    public JPopupMenu getPopupMenu() {
+        return null;
+    }
 
 }

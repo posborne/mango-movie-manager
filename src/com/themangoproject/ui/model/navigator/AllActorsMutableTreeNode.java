@@ -12,28 +12,29 @@ import com.themangoproject.ui.model.ActorTableModel;
  * 
  * @author Paul Osborne
  */
-public class AllActorsMutableTreeNode extends DefaultMutableTreeNode implements
-		MangoMutableTreeNode {
-	/** Generated UID */
-	private static final long serialVersionUID = 3785514275551609337L;
+public class AllActorsMutableTreeNode extends DefaultMutableTreeNode
+        implements MangoMutableTreeNode {
+    /** Generated UID */
+    private static final long serialVersionUID = 3785514275551609337L;
 
-	/** Construct the node */
-	public AllActorsMutableTreeNode() {
-		super("All Actors");
-	}
-	
-	/**
-	 * Set the table model to display all actors.
-	 */
-	@Override
-	public void doYourThing(Mango mangoPanel) {
-		UIController.getInstance().setViewTableModel(new ActorTableModel());
-	}
+    /** Construct the node */
+    public AllActorsMutableTreeNode() {
+        super("All Actors");
+    }
 
-	/** No popup menu */
-	@Override
-	public JPopupMenu getPopupMenu() {
-		return null;
-	}
+    /**
+     * Set the table model to display all actors.
+     */
+    @Override
+    public void doYourThing(Mango mangoPanel) {
+        UIController.getInstance().setViewTableModel(
+                new ActorTableModel());
+    }
+
+    /** No popup menu */
+    @Override
+    public JPopupMenu getPopupMenu() {
+        return null;
+    }
 
 }

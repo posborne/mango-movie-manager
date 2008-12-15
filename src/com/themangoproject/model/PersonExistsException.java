@@ -6,5 +6,5 @@ package com.themangoproject.model;
  * @author Paul Osborne
  */
 public class PersonExistsException extends Exception {
-	private static final long serialVersionUID = -4434390145839357939L;
+    private static final long serialVersionUID = -4434390145839357939L;
 }

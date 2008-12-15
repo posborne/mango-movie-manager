@@ -54,7 +54,7 @@ public class DBPerson implements Person {
     public void setName(String name) {
         this.name = name;
         if (this.state instanceof NotfilledPersonState) {
-        	this.state = new UpdatedPersonState();
+            this.state = new UpdatedPersonState();
         }
     }
 
@@ -67,7 +67,7 @@ public class DBPerson implements Person {
     public void setAddress(String address) {
         this.address = address;
         if (this.state instanceof NotfilledPersonState) {
-        	this.state = new UpdatedPersonState();
+            this.state = new UpdatedPersonState();
         }
     }
 
@@ -81,7 +81,7 @@ public class DBPerson implements Person {
         // TODO: input validation
         this.email = email;
         if (this.state instanceof NotfilledPersonState) {
-        	this.state = new UpdatedPersonState();
+            this.state = new UpdatedPersonState();
         }
     }
 
@@ -95,7 +95,7 @@ public class DBPerson implements Person {
         // TODO: input validation
         this.phoneNumber = phoneNumber;
         if (this.state instanceof NotfilledPersonState) {
-        	this.state = new UpdatedPersonState();
+            this.state = new UpdatedPersonState();
         }
     }
 
@@ -115,7 +115,7 @@ public class DBPerson implements Person {
      */
     public String getName() {
         return this.state.getName();
-        
+
     }
 
     /**
@@ -195,7 +195,7 @@ public class DBPerson implements Person {
         // TODO: What do we want this to do?
         return this.getName();
     }
-    
+
     private class UpdatedPersonState implements DBPersonState {
 
         @Override
@@ -222,19 +222,19 @@ public class DBPerson implements Person {
         public String getPhoneNumber() {
             return DBPerson.this.phoneNumber;
         }
-        
+
     }
-    
+
     private class NotfilledPersonState implements DBPersonState {
 
         @Override
         public String getAddress() {
             try {
-				DBPerson.this.personDAO.populatePerson(DBPerson.this);
-			} catch (PersonNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+                DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            } catch (PersonNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.address;
         }
@@ -242,32 +242,32 @@ public class DBPerson implements Person {
         @Override
         public String getEmail() {
             try {
-				DBPerson.this.personDAO.populatePerson(DBPerson.this);
-			} catch (PersonNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+                DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            } catch (PersonNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.email;
         }
 
         @Override
         public int getId() {
-        	// TODO: Zach, this behavior is causing stack overflows
-        	// because you must have the id to get anything, so this
-        	// ends up on itself.  I am changing it to this for now
-        	// -PMO
+            // TODO: Zach, this behavior is causing stack overflows
+            // because you must have the id to get anything, so this
+            // ends up on itself. I am changing it to this for now
+            // -PMO
             return DBPerson.this.id;
         }
 
         @Override
         public String getName() {
             try {
-				DBPerson.this.personDAO.populatePerson(DBPerson.this);
-			} catch (PersonNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+                DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            } catch (PersonNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.name;
         }
@@ -275,15 +275,15 @@ public class DBPerson implements Person {
         @Override
         public String getPhoneNumber() {
             try {
-				DBPerson.this.personDAO.populatePerson(DBPerson.this);
-			} catch (PersonNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+                DBPerson.this.personDAO.populatePerson(DBPerson.this);
+            } catch (PersonNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             DBPerson.this.state = new UpdatedPersonState();
             return DBPerson.this.phoneNumber;
         }
-        
+
     }
 
 }

@@ -5,7 +5,7 @@ package com.themangoproject.db.h2;
 
 /**
  * @author Zachary Varberg
- *
+ * 
  */
 public interface DBRoleState {
     /**
@@ -17,8 +17,8 @@ public interface DBRoleState {
     public String getCharacter();
 
     /**
-     * This will return the role of this role (e.g. leading actor, or supporting
-     * actress).
+     * This will return the role of this role (e.g. leading actor, or
+     * supporting actress).
      * 
      * @return the role of this role.
      */

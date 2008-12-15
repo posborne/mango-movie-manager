@@ -7,11 +7,12 @@ import javax.swing.tree.DefaultTreeModel;
  * 
  * @author Paul Osborne
  */
-public class BaseTreeModel extends DefaultTreeModel  {
-	/** Generated UID */
-	private static final long serialVersionUID = -4245509182622434994L;
-	/** Construct the base tree model */
-	public BaseTreeModel() {
+public class BaseTreeModel extends DefaultTreeModel {
+    /** Generated UID */
+    private static final long serialVersionUID = -4245509182622434994L;
+
+    /** Construct the base tree model */
+    public BaseTreeModel() {
         super(new NavigatorRootNode());
     }
 }

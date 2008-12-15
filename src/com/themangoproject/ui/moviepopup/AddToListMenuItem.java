@@ -18,81 +18,85 @@ import com.themangoproject.ui.model.EditableMovieTableModel;
  * 
  * @author Paul Osborne
  */
-public class AddToListMenuItem extends JMenu implements ChangeListener {
+public class AddToListMenuItem extends JMenu implements
+        ChangeListener {
 
-	/** Generated serial UID */
-	private static final long serialVersionUID = -2087640290190972545L;
+    /** Generated serial UID */
+    private static final long serialVersionUID = -2087640290190972545L;
 
-	/**
-	 * Constructor for AddToListMenuItem. Set the title and add the lists. Also
-	 * add change listener.
-	 */
-	public AddToListMenuItem() {
-		super("Add to List");
-		addLists();
-		MangoController.getInstance().addListsChangeListener(this);
-	}
-	
-	/**
-	 * ActionListener for handling the action of having a list with a specific
-	 * label clicked on... That is, add the movie to the list.
-	 */
-	public class AddToListActionListener implements ActionListener {
-		private String label;
+    /**
+     * Constructor for AddToListMenuItem. Set the title and add the
+     * lists. Also add change listener.
+     */
+    public AddToListMenuItem() {
+        super("Add to List");
+        addLists();
+        MangoController.getInstance().addListsChangeListener(this);
+    }
 
-		/**
-		 * Construct a list action listener for list with given label
-		 * 
-		 * @param listLabel
-		 */
-		public AddToListActionListener(String listLabel) {
-			this.label = listLabel;
-		}
+    /**
+     * ActionListener for handling the action of having a list with a
+     * specific label clicked on... That is, add the movie to the
+     * list.
+     */
+    public class AddToListActionListener implements ActionListener {
+        private String label;
 
-		/**
-		 * Get the currently selected movie and add it to the list.
-		 * 
-		 * @param e
-		 *            the triggering action event.
-		 */
-		public void actionPerformed(ActionEvent e) {
-			// Get the selected movie
-			JTable table = UIController.getInstance().getViewTable();
-			int selectedRow = table.getRowSorter().convertRowIndexToModel(
-					table.getSelectedRow());
-			Movie m = ((EditableMovieTableModel) table.getModel())
-					.getMovieForRow(selectedRow);
+        /**
+         * Construct a list action listener for list with given label
+         * 
+         * @param listLabel
+         */
+        public AddToListActionListener(String listLabel) {
+            this.label = listLabel;
+        }
 
-			// add the movie
-			MangoController.getInstance().addMovieToList(this.label, m);
-		}
-	}
+        /**
+         * Get the currently selected movie and add it to the list.
+         * 
+         * @param e
+         *            the triggering action event.
+         */
+        public void actionPerformed(ActionEvent e) {
+            // Get the selected movie
+            JTable table = UIController.getInstance().getViewTable();
+            int selectedRow = table.getRowSorter()
+                    .convertRowIndexToModel(table.getSelectedRow());
+            Movie m = ((EditableMovieTableModel) table.getModel())
+                    .getMovieForRow(selectedRow);
 
+            // add the movie
+            MangoController.getInstance().addMovieToList(this.label,
+                    m);
+        }
+    }
 
-	/**
-	 * All all lists to the menu as action items that add the selected movie to
-	 * the end of the list.
-	 */
-	private void addLists() {
-		List<String> lists = MangoController.getInstance().getAllLists();
-		for (String list : lists) {
-			JMenuItem item = new JMenuItem(list);
-			item.addActionListener(new AddToListActionListener(list));
-			this.add(item);
-		}
-	}
+    /**
+     * All all lists to the menu as action items that add the selected
+     * movie to the end of the list.
+     */
+    private void addLists() {
+        List<String> lists = MangoController.getInstance()
+                .getAllLists();
+        for (String list : lists) {
+            JMenuItem item = new JMenuItem(list);
+            item.addActionListener(new AddToListActionListener(list));
+            this.add(item);
+        }
+    }
 
-	/**
-	 * ChangeListener event listening to changes to the set of lists. When a
-	 * change is detected, remove and add again all from the database.
-	 * 
-	 * @param e
-	 *            The change event
-	 */
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		this.removeAll();
-		this.addLists();
-	}
+    /**
+     * ChangeListener event listening to changes to the set of lists.
+     * When a change is detected, remove and add again all from the
+     * database.
+     * 
+     * @param e
+     *            The change event
+     */
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        this.removeAll();
+        this.addLists();
+    }
 
 }

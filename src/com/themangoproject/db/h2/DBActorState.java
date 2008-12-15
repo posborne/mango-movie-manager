@@ -5,7 +5,7 @@ package com.themangoproject.db.h2;
 
 /**
  * @author Zachary Varberg
- *
+ * 
  */
 public interface DBActorState {
 
