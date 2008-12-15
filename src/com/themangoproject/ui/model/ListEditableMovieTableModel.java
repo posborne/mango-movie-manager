@@ -40,7 +40,8 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return (columnIndex == 0 || columnIndex == 1 ||
+                        columnIndex == 2);
 	}
 	
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
