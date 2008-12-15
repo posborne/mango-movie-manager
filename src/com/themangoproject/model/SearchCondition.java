@@ -1,36 +1,61 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package com.themangoproject.model;
 
 /**
+ * SearchCondition is a class that translates from information gathered in
+ * the SavedSearchDialog to SQL compatible phrases.
+ * 
  * @author Paul Osborne
  */
 public class SearchCondition {
     
+    /** these are private */
     private String attribute;
     private String constraint;
     private String stringValue;
     private int intValue;
     
+    /**
+     * Constructor for a search constraint with a string value.
+     * 
+     * @param attribute
+     * @param constraint
+     * @param value
+     */
     public SearchCondition(String attribute, String constraint, String value) {
         this.attribute = attribute;
         this.constraint = constraint;
         this.stringValue = value;
     }
     
+    /**
+     * Constructor for a search constraint with an int value.
+     * 
+     * @param attribute
+     * @param constraint
+     * @param value
+     */
     public SearchCondition(String attribute, String constraint, int value) {
         this.attribute = attribute;
         this.constraint = constraint;
         this.intValue = value;
     }
     
+    /**
+     * Returns true if the search involves an integer.
+     * 
+     * @return True if the search involves an integer.
+     */
     public boolean hasIntegerValue() {
         return stringValue == null;
     }
     
+    /**
+     * Creates the condition as SQL from the information provided in the 
+     * constructor.
+     * 
+     * @return A string of SQL.
+     */
     public String conditionAsSQL() {
         StringBuilder sb = new StringBuilder();
         

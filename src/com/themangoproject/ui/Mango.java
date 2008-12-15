@@ -32,7 +32,7 @@ import javax.swing.table.TableModel;
 /**
  * Mango is the main class for the Mango Movie Manager program.
  * 
- * @author  Kyle Ronning, Paul Osborne
+ * @author  Kyle Ronning, Paul Osborne, Zach Varberg
  * @version 1.0
  */
 public class Mango extends javax.swing.JFrame {
@@ -47,6 +47,7 @@ public class Mango extends javax.swing.JFrame {
         	// create the database and initialize schema
         	H2Util.getInstance().setDatabaseLocation("./db/mango.db");
             H2Util.getInstance().initializeSchemaOnDb();
+            UIController.getInstance().setOwnerId(-1);
         }
         initComponents();
         this.helpMenuItem.addActionListener(new ActionListener (){
@@ -89,25 +90,48 @@ public class Mango extends javax.swing.JFrame {
 //        });
         viewMenu.setVisible(false);
     }
-    
+    // Created instance
     private static Mango createdInstance;
+    
+    /**
+     * Gets the created instance of mango
+     * 
+     * @return mango
+     */
     public static Mango getCreatedInstance() {
     	return createdInstance;
     }
     
+    /**
+     * Sets the table model.
+     * @param tm The table model
+     */
     public void setTableModel(TableModel tm) {
     	((ViewPanel)viewPanel).setTableModel(tm);
 //        bottomBar.setLabelInfo(UIController.getInstance().getTableItemCount() + " items");
     }
     
+    /** 
+     * Gets the table.
+     * 
+     * @return The table
+     */
     public JTable getTable() {
     	return ((ViewPanel) viewPanel).getTable();
     }
 
+    /**
+     * Gets the number of items in the table.
+     * 
+     * @return The number of items in the table.
+     */
     public int getTableItemCount() {
         return ((ViewPanel) viewPanel).getTable().getRowCount();
     }
 
+    /**
+     * Displays a dialog when the help menu item is selected
+     */
     private void helpActionPerformed() {
         JOptionPane.showMessageDialog(this, "Please e mail any questions or " +
                 "comments to developers@themangoproject.com", "Help",
@@ -352,7 +376,7 @@ public void toggleInfoPanel() {
 }
 
     /**
-     * Launches the main program.  Sets the look and feel tot he system look
+     * Launches the main program.  Sets the look and feel to the system look
      * and feel.
      * 
     * @param args the command line arguments
@@ -421,8 +445,13 @@ public void toggleInfoPanel() {
     private boolean infoPaneOn = true;
     private int dividerLoc;
 
-	public JTree getNavigatorTree() {
-		return this.navigatorPanel.getNavigatorTree();
-	}
+    /**
+     * Gets the navigator tree
+     * 
+     * @return The navigator tree
+     */
+    public JTree getNavigatorTree() {
+            return this.navigatorPanel.getNavigatorTree();
+    }
     
 }

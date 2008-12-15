@@ -13,7 +13,7 @@ import com.themangoproject.model.MangoController;
  * database occurs, and the client code can retrieve an Actor object from the
  * combo box model from its index.
  * 
- * @author Paul Osborne
+ * @author Paul Osborne, Kyle Ronning
  */
 public class ActorComboBoxModel extends DefaultComboBoxModel {
 
@@ -59,6 +59,11 @@ public class ActorComboBoxModel extends DefaultComboBoxModel {
 		return actors.get(index).toString();
 	}
         
+        /**
+         * Gets the actor at index <code>index</code>
+         * @param index
+         * @return
+         */
     public Object getActorAt(int index) {
         return actors.get(index);
      }

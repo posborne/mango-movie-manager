@@ -15,7 +15,7 @@ import com.themangoproject.model.*;
  * TODO: a reference to this object is not removed from listeners if is removed
  * from everywhere else (memory leak)
  * 
- * @author Paul Osborne
+ * @author Paul Osborne, Kyle Ronning
  */
 public class PersonComboBoxModel extends DefaultComboBoxModel {
 

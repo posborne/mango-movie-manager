@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -18,7 +17,6 @@ import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
-
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Person;
 import com.themangoproject.model.PersonDAO.PersonHasMoviesException;
@@ -28,7 +26,7 @@ import com.themangoproject.ui.UIController;
  * Table model encapsulating a view of the People contained in the Mango DB
  * backend.
  * 
- * @author Zachary Varberg, Paul Osborne
+ * @author Kyle Ronning, Zachary Varberg, Paul Osborne
  */
 public class PersonTableModel extends AbstractTableModel implements
 		MangoTableModelIF {
@@ -43,6 +41,9 @@ public class PersonTableModel extends AbstractTableModel implements
 
 	private ChangeListener personsChangeListener;
 
+        /**
+         * Constructs the table model.
+         */
 	public PersonTableModel() {
 		persons = new ArrayList<Person>();
 		personsChangeListener = new ChangeListener() {
@@ -60,15 +61,30 @@ public class PersonTableModel extends AbstractTableModel implements
 		fireTableStructureChanged();
 	}
 
+        /**
+         * Gets the column name at index <code>columnIndex</code>
+         * 
+         * @param columnIndex The index of the column.
+         * @return The column name.
+         */
 	public String getColumnName(int columnIndex) {
 		return columns[columnIndex];
 	}
 
+        /**
+         * Gets the number of columns in the table.
+         * 
+         * @return The number of columns
+         */
 	@Override
 	public int getColumnCount() {
 		return columns.length;
 	}
 
+        /**
+         * Gets the number of rows
+         * @return
+         */
 	@Override
 	public int getRowCount() {
 		return this.persons.size();
@@ -104,10 +120,22 @@ public class PersonTableModel extends AbstractTableModel implements
 		}
 	}
 
+        /**
+         * Returns true if the cell is editable
+         * 
+         * @param rowIndex
+         * @param columnIndex
+         * @return
+         */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return !(columnIndex == 1);
 	}
 
+        /**
+         * Gets the class of a given column.
+         * @param columnIndex
+         * @return
+         */
 	public Class<? extends Object> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
 		case 0:
@@ -125,6 +153,13 @@ public class PersonTableModel extends AbstractTableModel implements
 		}
 	}
 
+        /**
+         * Sets the value of a cell to <code>value</code>
+         * 
+         * @param value
+         * @param rowIndex
+         * @param columnIndex
+         */
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 		Person p = persons.get(rowIndex);
 		switch (columnIndex) {
@@ -146,12 +181,19 @@ public class PersonTableModel extends AbstractTableModel implements
 		MangoController.getInstance().updatePerson(p);
 	}
 
+        /**
+         * Removes any listeners.
+         */
 	@Override
 	public void cleanup() {
 		MangoController.getInstance().removePersonsChangeListener(
 				personsChangeListener);
 	}
 
+        /**
+         * Gets the popup menu for this table model
+         * @return
+         */
 	@Override
 	public JPopupMenu getPopupMenu() {
 		JMenuItem deleteItem = new JMenuItem("Delete Person");
@@ -182,6 +224,12 @@ public class PersonTableModel extends AbstractTableModel implements
 		return popup;
 	}
 
+        /**
+         * No image for a person
+         * 
+         * @param modelRow
+         * @return null
+         */
 	@Override
 	public Image getImageForRow(int modelRow) {
 		return null; // no images for persons

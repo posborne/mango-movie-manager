@@ -3,18 +3,21 @@ package com.themangoproject.ui.model;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.ui.UIController;
 
+/**
+ * ListEditableMovieTableModel is a table model for lists.
+ * 
+ * @author Paul Osborne
+ */
 public class ListEditableMovieTableModel extends EditableMovieTableModel {
 
 	private static final long serialVersionUID = -2313799858998027018L;
@@ -22,6 +25,11 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 	private ChangeListener moviesChangeListener;
 	String label;
 	
+        /**
+         * Constructs a table model for a list with label <code>label</code>
+         * 
+         * @param label The label of the list.
+         */
 	public ListEditableMovieTableModel(final String label) {
 		this.label = label;
 		retrieveMovies();
@@ -33,17 +41,35 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 		MangoController.getInstance().addMoviesChangeListener(moviesChangeListener);
 	}
 	
+        /**
+         * Gets the Movies for the list.
+         * @return A list of movies.
+         */
 	@Override
 	public List<Movie> getMovies() {
 		return movies;
 	}
 	
+        /**
+         * Returns true for cells that are editable.
+         * 
+         * @param rowIndex
+         * @param columnIndex
+         * @return
+         */
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return (columnIndex == 0 || columnIndex == 1 ||
                         columnIndex == 2);
 	}
 	
+        /**
+         * Sets the value of a cell.
+         * 
+         * @param value
+         * @param rowIndex
+         * @param columnIndex
+         */
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 		if (columnIndex == 0) {
 			int index = (Integer) value - 1;
@@ -62,11 +88,19 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 		}
 	}
 
+        /**
+         * Removes any change listeners.
+         */
 	@Override
 	public void cleanup() {
 		MangoController.getInstance().removeListsChangeListener(moviesChangeListener);
 	}
 	
+        /**
+         * Gets the popup menu.
+         * 
+         * @return The popup menu.
+         */
 	public JPopupMenu getPopupMenu() {
 		JMenuItem removeFromSetItem = new JMenuItem("Remove From List");
 		removeFromSetItem.addActionListener(new ActionListener() {
@@ -83,6 +117,9 @@ public class ListEditableMovieTableModel extends EditableMovieTableModel {
 		return menu;
 	}
 
+        /**
+         * Gets all movies with a given label.
+         */
 	protected void retrieveMovies() {
 		movies = MangoController.getInstance().getListWithLabel(label);
 		fireTableStructureChanged();
