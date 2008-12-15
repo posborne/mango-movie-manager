@@ -202,11 +202,17 @@ private void showHideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_showHideButtonActionPerformed
 
 private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associateImageButtonActionPerformed
+    try {
+        JTable table = UIController.getInstance().getViewTable();
+        int modelIndex = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
+        Movie m = ((EditableMovieTableModel)table.getModel()).getMovieForRow(modelIndex);
+    
+    
     // Create a new upload thumbnail dialog
     JFileChooser jfc = new JFileChooser();
     jfc.addChoosableFileFilter(new ImageFilter());
     jfc.setAcceptAllFileFilterUsed(false);
-    int i = jfc.showOpenDialog(this);
+    int i = jfc.showOpenDialog(UIController.getInstance().getMango());
     File file = null;
     
     if(i == JFileChooser.APPROVE_OPTION){
@@ -236,20 +242,24 @@ private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt)
             Logger.getLogger(BottomBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        JTable table = UIController.getInstance().getViewTable();
-        int modelIndex = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
-        Movie m = ((EditableMovieTableModel)table.getModel()).getMovieForRow(modelIndex); 
+         
         
 //        JTable table = UIController.getInstance().getViewTable();
 //        int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
 //        Movie m = ((EditableMovieTableModel)UIController.getInstance().getViewTable().getModel()).getMovieFromRow(selRow);
         
         MangoController.getInstance().setImageForMovie(m,is);
+    
 //        table.getRowSorter().
         //TODO:  Not the best way to do this, but it works.
 //        UIController.getInstance().getViewTable().clearSelection();
 //        UIController.getInstance().getViewTable().setRowSelectionInterval(selRow, selRow);
 
+    }
+    } catch (IndexOutOfBoundsException e){
+        JOptionPane.showMessageDialog(UIController.getInstance().getMango(),
+                "Please select a movie first", "Invalid Selection",
+                JOptionPane.WARNING_MESSAGE);
     }
 
 }//GEN-LAST:event_associateImageButtonActionPerformed
