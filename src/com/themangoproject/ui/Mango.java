@@ -47,6 +47,11 @@ public class Mango extends javax.swing.JFrame {
             H2Util.getInstance().initializeSchemaOnDb();
         }
         initComponents();
+        this.helpMenuItem.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent e) {
+                Mango.this.helpActionPerformed();
+            }
+        });
         createdInstance = this;
         this.getTable().getSelectionModel().addListSelectionListener(itemInfoPanel);
         this.getTable().addMouseListener(new MouseListener() {
@@ -90,6 +95,12 @@ public class Mango extends javax.swing.JFrame {
 
     public int getTableItemCount() {
         return ((ViewPanel) viewPanel).getTable().getRowCount();
+    }
+
+    private void helpActionPerformed() {
+        JOptionPane.showMessageDialog(this, "Please e mail any questions or " +
+                "comments to developers@themangoproject.com", "Help",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     /** This method is called from within the constructor to

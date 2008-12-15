@@ -233,13 +233,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="com.themangoproject.ui.NavigatorPanel" name="navigatorPanel">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                  <JSplitPaneConstraints position="left"/>
-                </Constraint>
-              </Constraints>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JScrollPane" name="viewPanelScrollPane">
@@ -250,10 +243,6 @@
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="com.themangoproject.ui.ViewPanel" name="viewPanel">
-            </Component>
-          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
