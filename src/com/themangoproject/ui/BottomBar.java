@@ -158,6 +158,7 @@ private void addMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_addMovieButtonActionPerformed
 
 private void editMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMovieButtonActionPerformed
+    try{
     MovieAddEditDialog maed = 
             new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
     maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
@@ -170,6 +171,11 @@ private void editMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
     // selected in the table
     
     maed.setVisible(true);
+    } catch (IndexOutOfBoundsException e){
+        JOptionPane.showMessageDialog(UIController.getInstance().getMango(),
+                "Please select a movie first", "Invalid Selection",
+                JOptionPane.WARNING_MESSAGE);
+    }
 }//GEN-LAST:event_editMovieButtonActionPerformed
 
 private void addListSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addListSetButtonActionPerformed
