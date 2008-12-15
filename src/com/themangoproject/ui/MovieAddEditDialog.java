@@ -987,7 +987,7 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
         MangoController.getInstance().setOwnerToMovie(m, owner);
         MangoController.getInstance().setBorrowerToMovie(m, borrower);
-        
+        MangoController.getInstance().updateMovie(m);
             
         // Image
         Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
