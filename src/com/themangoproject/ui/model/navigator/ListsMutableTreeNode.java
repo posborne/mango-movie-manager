@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.themangoproject.ui.model.navigator;
 
 import com.themangoproject.model.MangoController;
@@ -17,20 +12,27 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
+ * Parent node of all the list nodes. This node listens for changes to the set
+ * of lists and updates as needed.
+ * 
  * @author Paul Osborne
  */
-public class ListsMutableTreeNode extends DefaultMutableTreeNode
-		implements MangoMutableTreeNode {
-
+public class ListsMutableTreeNode extends DefaultMutableTreeNode implements
+		MangoMutableTreeNode {
+	/** Generated UID */
 	private static final long serialVersionUID = -2392203223093098396L;
+	/** List of lists */
 	private List<String> lists;
 
+	/** Construct the node and popuplate */
 	public ListsMutableTreeNode() {
 		super("Lists", true);
 		fetchLists();
-		MangoController.getInstance().addListsChangeListener(new ListsChangeListener());
+		MangoController.getInstance().addListsChangeListener(
+				new ListsChangeListener());
 	}
 
+	/** Fetch the list of lists from the database and refresh */
 	private void fetchLists() {
 		this.removeAllChildren();
 		lists = MangoController.getInstance().getAllLists();
@@ -40,21 +42,28 @@ public class ListsMutableTreeNode extends DefaultMutableTreeNode
 		this.add(new AddListMutableTreeNode());
 	}
 
+	/** No primary action */
 	@Override
-	public void doYourThing(Mango mangoPanel) {	}
-	
+	public void doYourThing(Mango mangoPanel) {
+	}
+
+	/**
+	 * Change listener on changes to the set of lists from the underlying data
+	 * model.
+	 */
 	public class ListsChangeListener implements ChangeListener {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			ListsMutableTreeNode.this.fetchLists();
-			DefaultTreeModel tm = 
-				(DefaultTreeModel)UIController.getInstance().getNavigatorTree().getModel();
+			DefaultTreeModel tm = (DefaultTreeModel) UIController.getInstance()
+					.getNavigatorTree().getModel();
 			tm.nodeStructureChanged(ListsMutableTreeNode.this);
 		}
 	}
 
+	/** No popup menu. This is not a leaf */
 	@Override
 	public JPopupMenu getPopupMenu() {
-		return null; // Not a leaf
+		return null;
 	}
 }

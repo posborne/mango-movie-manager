@@ -17,7 +17,14 @@ import com.themangoproject.model.SetsDAO.MovieExistsInSetException;
 import com.themangoproject.ui.UIController;
 import com.themangoproject.ui.model.EditableMovieTableModel;
 
+/**
+ * Menu Item that contains the behaviour of adding a movie to a list when
+ * selected
+ * 
+ * @author Paul Osborne
+ */
 public class AddToSetMenuItem extends JMenu implements ChangeListener {
+	
 	/** Generated serial UID */
 	private static final long serialVersionUID = -6432079421561921122L;
 
@@ -46,6 +53,8 @@ public class AddToSetMenuItem extends JMenu implements ChangeListener {
 		
 		for (final String set : sets) {
 			JMenuItem item = new JMenuItem(set);
+			
+			// add the action listener to each that performs that adding action
 			item.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JTable table = UIController.getInstance().getViewTable();

@@ -8,14 +8,28 @@ import com.themangoproject.ui.SetOwnerDialog;
 import com.themangoproject.ui.UIController;
 import com.themangoproject.ui.model.UnsavedSearchEditabledTableModel;
 
+/**
+ * Node for setting the table to display all movies on loan from the owner.
+ * 
+ * TODO: this node contains code specific to a database application. If possible
+ * this code should be moved down. This simplifies things for this release.
+ * 
+ * @author Paul Osborne
+ */
 public class LoanedMoviesMutableTreeNode extends DefaultMutableTreeNode
 		implements MangoMutableTreeNode {
+	/** Generated UID */
 	private static final long serialVersionUID = -99871326010884580L;
 
+	/** Construct the node */
 	public LoanedMoviesMutableTreeNode() {
 		super("Loaned Movies");
 	}
 	
+	/**
+	 * Set the table to display a model with an underlying query of all movies
+	 * on loan from the owner.
+	 */
 	@Override
 	public void doYourThing(Mango mangoPanel) {
 		int ownerId = UIController.getInstance().getOwnerId();
@@ -33,9 +47,9 @@ public class LoanedMoviesMutableTreeNode extends DefaultMutableTreeNode
 
 	}
 
+	/** No popup menu */
 	@Override
 	public JPopupMenu getPopupMenu() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

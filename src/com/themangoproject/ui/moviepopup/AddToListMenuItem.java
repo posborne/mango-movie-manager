@@ -13,8 +13,26 @@ import com.themangoproject.model.Movie;
 import com.themangoproject.ui.UIController;
 import com.themangoproject.ui.model.EditableMovieTableModel;
 
+/**
+ * Menu item for adding items to a list.
+ * 
+ * @author Paul Osborne
+ */
 public class AddToListMenuItem extends JMenu implements ChangeListener {
 
+	/** Generated serial UID */
+	private static final long serialVersionUID = -2087640290190972545L;
+
+	/**
+	 * Constructor for AddToListMenuItem. Set the title and add the lists. Also
+	 * add change listener.
+	 */
+	public AddToListMenuItem() {
+		super("Add to List");
+		addLists();
+		MangoController.getInstance().addListsChangeListener(this);
+	}
+	
 	/**
 	 * ActionListener for handling the action of having a list with a specific
 	 * label clicked on... That is, add the movie to the list.
@@ -22,30 +40,34 @@ public class AddToListMenuItem extends JMenu implements ChangeListener {
 	public class AddToListActionListener implements ActionListener {
 		private String label;
 
+		/**
+		 * Construct a list action listener for list with given label
+		 * 
+		 * @param listLabel
+		 */
 		public AddToListActionListener(String listLabel) {
 			this.label = listLabel;
 		}
 
+		/**
+		 * Get the currently selected movie and add it to the list.
+		 * 
+		 * @param e
+		 *            the triggering action event.
+		 */
 		public void actionPerformed(ActionEvent e) {
 			// Get the selected movie
 			JTable table = UIController.getInstance().getViewTable();
-			int selectedRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
+			int selectedRow = table.getRowSorter().convertRowIndexToModel(
+					table.getSelectedRow());
 			Movie m = ((EditableMovieTableModel) table.getModel())
 					.getMovieForRow(selectedRow);
-			
+
 			// add the movie
 			MangoController.getInstance().addMovieToList(this.label, m);
 		}
 	}
 
-	/** Generated serial UID */
-	private static final long serialVersionUID = -2087640290190972545L;
-
-	public AddToListMenuItem() {
-		super("Add to List");
-		addLists();
-		MangoController.getInstance().addListsChangeListener(this);
-	}
 
 	/**
 	 * All all lists to the menu as action items that add the selected movie to

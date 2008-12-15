@@ -5,10 +5,17 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.themangoproject.ui.Mango;
 
+/**
+ * Tree node for containing the various library actions.
+ * 
+ * @author Paul Osborne
+ */
 public class ActionsMutableTreeNode extends DefaultMutableTreeNode implements
 		MangoMutableTreeNode {
+	/** Generated serial UID */
 	private static final long serialVersionUID = 5384745252254043000L;
 
+	/** Construct the node */
 	public ActionsMutableTreeNode() {
 		super("Libray Actions");
 	}
