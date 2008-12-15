@@ -1,7 +1,7 @@
 
 package com.themangoproject.ui;
 
-import com.themangoproject.model.AdvancedSearch;
+import com.themangoproject.model.H2AdvancedMovieSearch;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.SearchCondition;
@@ -39,9 +39,9 @@ public class SavedSearchDialog extends javax.swing.JDialog {
     }
 
     // Builds the advanced search
-    private AdvancedSearch buildAdvancedSearch() {
+    private H2AdvancedMovieSearch buildAdvancedSearch() {
         List<AddSubtractInnerPanel> panels = this.addSubtractSearchPanel.getInnerPanelsValues();
-        AdvancedSearch as = new AdvancedSearch();
+        H2AdvancedMovieSearch as = new H2AdvancedMovieSearch();
         for (AddSubtractInnerPanel panel : panels) {
             JComboBox leftCB = (JComboBox) panel.getLeftComboObject();
             JComboBox rightCB = (JComboBox) panel.getRightComboObject();
@@ -204,7 +204,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
 private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
    // Saves the advanced search
     try{
-        AdvancedSearch as = buildAdvancedSearch();
+        H2AdvancedMovieSearch as = buildAdvancedSearch();
         String searchLabel = searchNameTF.getText();
         if (!searchLabel.equals("")){
             MangoController.getInstance().saveSearch(searchLabel, as.getSearchQuery());
@@ -234,7 +234,7 @@ private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) { 
     try {
-        AdvancedSearch as = buildAdvancedSearch();
+        H2AdvancedMovieSearch as = buildAdvancedSearch();
         if(as.getSearchQuery() != null)
             UIController.getInstance().setViewTableModel(new UnsavedSearchEditabledTableModel(as.getSearchQuery()));
     } catch (IllegalArgumentException e){
