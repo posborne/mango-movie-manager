@@ -2,10 +2,8 @@ package com.themangoproject.ui;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import com.themangoproject.ui.model.navigator.BaseTreeModel;
 import com.themangoproject.ui.model.navigator.MangoMutableTreeNode;
-
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;

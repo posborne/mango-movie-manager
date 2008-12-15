@@ -8,11 +8,16 @@ import javax.swing.ComboBoxModel;
  * two combo boxes and a textfield.
  * 
  * @author  Kyle Ronning
- * @version 12-12-2008
+ * @version 12-14-2008
  */
 public class AddSubtractInnerPanel extends javax.swing.JPanel {
 
-    /** Creates new form AddSubtractDropDownPanel */
+    /** 
+     * Creates a new AddSubtractInnerPanel.
+     * 
+     * @param cbm1 ComboBoxModel for the left ComboBox
+     * @param cbm2 ComboBoxModel for the right ComboBox
+     */
     public AddSubtractInnerPanel(ComboBoxModel cbm1, ComboBoxModel cbm2) {
         initComponents();
         this.jComboBox1.setModel(cbm1);
@@ -192,5 +197,14 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
      */
     public void setSelectedRightComboBox(String name) {
         this.jComboBox2.setSelectedItem(name);
+    }
+    
+    /**
+     * Sets the text of the text field.
+     * 
+     * @param text The text to set in the text field.
+     */
+    public void setTextFieldText(String text) {
+        this.jTextField1.setText(text);
     }
 }

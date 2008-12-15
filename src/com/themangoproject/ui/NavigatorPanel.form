@@ -32,10 +32,6 @@
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="com.themangoproject.ui.NavigatorJTree" name="navigatorTree">
-        </Component>
-      </SubComponents>
     </Container>
   </SubComponents>
 </Form>

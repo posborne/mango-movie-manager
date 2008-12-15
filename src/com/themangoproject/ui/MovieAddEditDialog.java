@@ -1,11 +1,13 @@
 
 package com.themangoproject.ui;
 
+import com.themangoproject.db.h2.DBMovie;
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.model.Person;
 import com.themangoproject.model.PersonExistsException;
+import com.themangoproject.model.Role;
 import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
 import com.themangoproject.ui.model.RoleComboBoxModel;
@@ -36,7 +38,7 @@ import javax.swing.JOptionPane;
  * Amazon ASIN number for the movie.  It will retrieve basic movie information
  * and a thumbnail image.
  * 
- * @author  Kyle Ronning
+ * @author  Kyle Ronning, Zach Varberg
  *
  */
 public class MovieAddEditDialog extends javax.swing.JDialog {
@@ -48,6 +50,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
     
     /** 
      * Creates a new dialog MovieAddEditDialog to add or edit a movie.
+     * 
      * @param parent The parent frame.
      * @param set the dialog modal if true.
      */
@@ -87,7 +90,17 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         // Actor
         List<Actor> actors = MangoController.getInstance().getActorsForMovie(m);
         for (Actor actor : actors) {
-            this.addSubstractActorsPanel.createAndSetSelected(actor.toString());
+            List<Role> roles = actor.getRoles();
+            String roleString = "";
+            String characterString = "";
+            for (Role role : roles) {
+                if (((DBMovie)role.getMovie()).getId() == ((DBMovie)m).getId()) {
+                    roleString = role.getRole();
+                    characterString = role.getCharacter();
+                }
+            }
+            this.addSubstractActorsPanel.createAndSetSelected(actor.toString(),
+                    roleString, characterString);
         }
         
         // Set borrower and owner
@@ -1032,7 +1045,6 @@ private void changeThumbnailButtonActionPerformed(java.awt.event.ActionEvent evt
         
 
     }
-    // Add code to add thumbnail image to this movie
 }//GEN-LAST:event_changeThumbnailButtonActionPerformed
 
 private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amazonRetrieveButtonActionPerformed
@@ -1066,7 +1078,7 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
                             " " + actorName[1], actorName[2]);
                 else
                     MangoController.getInstance().addActor(actor, "");
-                this.addSubstractActorsPanel.createAndSetSelected(actor);
+                this.addSubstractActorsPanel.createAndSetSelected(actor, "", "");
             }
 
         } else {
@@ -1079,6 +1091,7 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
 }//GEN-LAST:event_amazonRetrieveButtonActionPerformed
 
 private void addPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonButtonActionPerformed
+    // Adds a new person to the database if it doesn't exist.
     boolean added = false;
     try {
         // Create a new person.
@@ -1119,7 +1132,7 @@ private void defaultImageButtonActionPerformed(java.awt.event.ActionEvent evt) {
 }//GEN-LAST:event_defaultImageButtonActionPerformed
 
 private void borrowedCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_borrowedCheckBoxItemStateChanged
-    // Borrowed check box
+    // Borrowed check box - disables the borrower combobox if no checked.
     Object source = evt.getItemSelectable();
     int state = evt.getStateChange();
     if (source == this.borrowedCheckBox) {
@@ -1131,7 +1144,7 @@ private void borrowedCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//G
 }//GEN-LAST:event_borrowedCheckBoxItemStateChanged
 
 private void addActorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActorButtonActionPerformed
-    // Add new Actor
+    // Add new Actor to the database if it doesn't exist
     boolean added = false;
     if (!this.actorFirstNameTF.getText().equals("") && 
             !this.actorLastNameTF.getText().equals(""))

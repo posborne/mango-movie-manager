@@ -3,10 +3,7 @@ package com.themangoproject.ui;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 import com.themangoproject.ui.model.EditableMovieTableModel;
-import com.themangoproject.ui.model.EditableMovieTableModel;
-import java.awt.GraphicsDevice;
 import java.awt.Image;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,27 +13,15 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.swing.JFileChooser;
-
-/*
- * BottomBar.java
- *
- * Created on November 8, 2008, 3:45 PM
- */
-import javax.swing.event.RowSorterEvent;
-import javax.swing.event.RowSorterListener;
-
 
 
 /**
  * The BottomBar is the panel along the bottom of the program that has action
  * buttons and a status label in the middle of the panel.
  * 
- * @author  Kyle Ronning, Paul Osborne 
- * @version 1.0
+ * @author  Kyle Ronning, Paul Osborne, Zach Varberg
  */
 public class BottomBar extends javax.swing.JPanel {
 
@@ -61,6 +46,7 @@ public class BottomBar extends javax.swing.JPanel {
         createSavedSearchButton = new javax.swing.JButton();
         showHideButton = new javax.swing.JButton();
         associateImageButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         statusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -112,11 +98,20 @@ public class BottomBar extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/user.png"))); // NOI18N
+        jButton1.setToolTipText("Set Owner");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(addMovieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(editMovieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,10 +119,12 @@ public class BottomBar extends javax.swing.JPanel {
                 .addComponent(addListSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(createSavedSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(4, 4, 4)
                 .addComponent(showHideButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(associateImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -137,16 +134,18 @@ public class BottomBar extends javax.swing.JPanel {
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(addMovieButton)
-            .addComponent(editMovieButton)
-            .addComponent(addListSetButton)
-            .addComponent(createSavedSearchButton)
-            .addComponent(showHideButton)
-            .addComponent(associateImageButton)
-            .addComponent(statusLabel)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(associateImageButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(editMovieButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(addMovieButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(addListSetButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(createSavedSearchButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(showHideButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.TRAILING))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addListSetButton, addMovieButton, associateImageButton, createSavedSearchButton, editMovieButton, showHideButton, statusLabel});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addListSetButton, addMovieButton, associateImageButton, createSavedSearchButton, editMovieButton, jButton1, showHideButton, statusLabel});
 
     }// </editor-fold>//GEN-END:initComponents
 
@@ -159,19 +158,21 @@ private void addMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_addMovieButtonActionPerformed
 
 private void editMovieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMovieButtonActionPerformed
+    // Creates a movie dialog and populates it with movie information for the
+    // movie selected in table.
     try{
-    MovieAddEditDialog maed = 
-            new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
-    maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
-    
-    JTable table = UIController.getInstance().getViewTable();
-    int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
-    Movie m = ((EditableMovieTableModel)table.getModel()).getMovieFromRow(selRow);
-    maed.populateData(m);
-    // Add code to gather information about a movie given the cell that is
-    // selected in the table
-    
-    maed.setVisible(true);
+        MovieAddEditDialog maed = 
+                new MovieAddEditDialog((Mango)this.getTopLevelAncestor(), true);
+        maed.setLocationRelativeTo((Mango)this.getTopLevelAncestor());
+
+        JTable table = UIController.getInstance().getViewTable();
+        int selRow = table.getRowSorter().convertRowIndexToModel(table.getSelectedRow());
+        Movie m = ((EditableMovieTableModel)table.getModel()).getMovieFromRow(selRow);
+        maed.populateData(m);
+        // Add code to gather information about a movie given the cell that is
+        // selected in the table
+
+        maed.setVisible(true);
     } catch (IndexOutOfBoundsException e){
         JOptionPane.showMessageDialog(UIController.getInstance().getMango(),
                 "Please select a movie first", "Invalid Selection",
@@ -202,7 +203,6 @@ private void showHideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
 
 private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associateImageButtonActionPerformed
     // Create a new upload thumbnail dialog
-    //TODO: add to correct movie
     JFileChooser jfc = new JFileChooser();
     jfc.addChoosableFileFilter(new ImageFilter());
     jfc.setAcceptAllFileFilterUsed(false);
@@ -251,24 +251,15 @@ private void associateImageButtonActionPerformed(java.awt.event.ActionEvent evt)
 //        UIController.getInstance().getViewTable().setRowSelectionInterval(selRow, selRow);
 
     }
-    /*
-     * This is test code to make sure the image is being uploaded correctly.
-     * 
-    JDialog dia = new JDialog();
-    JLabel lab = new JLabel();
-    lab.setIcon(new ImageIcon(image));
-    dia.add(lab);
-    dia.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-    dia.pack();
-    dia.setVisible(true);
-    */
-    
-//    if (i == JFileChooser.APPROVE_OPTION)
-//        System.out.println("OK");
-//    else
-//        System.out.println("Cancel");
-    // Add code to add thumbnail image to this movie
+
 }//GEN-LAST:event_associateImageButtonActionPerformed
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    // Set the owner
+    SetOwnerDialog sod = new SetOwnerDialog(UIController.getInstance().getMango(), true);
+    sod.setLocationRelativeTo(UIController.getInstance().getMango());
+    sod.setVisible(true);
+}//GEN-LAST:event_jButton1ActionPerformed
 
 
 
@@ -303,6 +294,7 @@ public void setLabelInfo(String label) {
     private javax.swing.JButton associateImageButton;
     private javax.swing.JButton createSavedSearchButton;
     private javax.swing.JButton editMovieButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton showHideButton;
     private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables

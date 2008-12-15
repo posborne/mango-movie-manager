@@ -3,7 +3,8 @@ package com.themangoproject.ui;
 import javax.swing.JTree;
 
 /**
- *
+ * The NavigatorPanel is the tree on the left to view your movie collection.
+ * 
  * @author  Paul Osborne
  */
 public class NavigatorPanel extends javax.swing.JPanel {
@@ -45,6 +46,11 @@ public class NavigatorPanel extends javax.swing.JPanel {
     private com.themangoproject.ui.NavigatorJTree navigatorTree;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Gets the navigator tree.
+     * 
+     * @return the navigator tree.
+     */
     public JTree getNavigatorTree() {
 		return this.navigatorTree;
 	}

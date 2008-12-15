@@ -1,16 +1,12 @@
-/*
- * SetListDialog.java
- *
- * Created on December 2, 2008, 4:26 PM
- */
 
 package com.themangoproject.ui;
 
 import com.themangoproject.model.MangoController;
 
 /**
- *
- * @author  kronning
+ * SetListDialog is a dialog to create a set or list.\
+ * 
+ * @author Kyle Ronning
  */
 public class SetListDialog extends javax.swing.JDialog {
 

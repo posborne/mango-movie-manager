@@ -7,12 +7,18 @@ import javax.swing.tree.MutableTreeNode;
 import com.themangoproject.ui.model.navigator.MangoMutableTreeNode;
 
 /**
+ * A TreeSelectionListener to listen for changes.
+ * 
  * @author Paul Osborne
  */
 public class NavigatorTreeSelectionListener implements TreeSelectionListener {
 
 	JTree tree;
 
+        /**
+         * Constructor
+         * @param tree The tree
+         */
 	public NavigatorTreeSelectionListener(JTree tree) {
 		this.tree = tree;
 	}

@@ -3,17 +3,16 @@ package com.themangoproject.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 /**
  * AddSubstractPanel is a panel to collect AddSubtractInnerPanels.
  * 
  * @author  Kyle Ronning
- * @version 12-6-2008
+ * @version 12-14-2008
  */
 public class AddSubtractPanel extends javax.swing.JPanel {
 
@@ -66,6 +65,8 @@ public class AddSubtractPanel extends javax.swing.JPanel {
     
     /**
      * Adds an AddSubtractInnerPanel to this panel.
+     * 
+     * @return An AddSubtractInnerPanel that was added to this panel.
      */
     public AddSubtractInnerPanel addAddSubPanel() {
         AddSubtractInnerPanel asip;
@@ -92,6 +93,7 @@ public class AddSubtractPanel extends javax.swing.JPanel {
     
     /**
      * Removes an AddSubtractInnerPanel from this panel.
+     * 
      * @param a The AddSubtractInnerPanel to remove from this panel.
      */
     public void removeAddSubPanel(AddSubtractInnerPanel a) {
@@ -101,12 +103,6 @@ public class AddSubtractPanel extends javax.swing.JPanel {
             ((AddSubtractInnerPanel)
                     this.jPanel1.getComponent(0)).disableMinusButton();        
         }        
-        this.jPanel1.revalidate();
-        this.jPanel1.repaint();
-    }
-    
-    public void removeFirstAddSubPanel() {
-        this.jPanel1.remove(0);
         this.jPanel1.revalidate();
         this.jPanel1.repaint();
     }
@@ -153,26 +149,36 @@ public class AddSubtractPanel extends javax.swing.JPanel {
     
     /**
      * Creates a new inner panel and trys to select an item with a given name.
+     * This method is used when adding panels from a list of panels.  It will
+     * populate the panel that is already added if it is empty.
      * 
      * @param name The name of the item.
      */
-    public void createAndSetSelected(String name) {
+    public void createAndSetSelected(String name, String role, String text) {
         // This code will be relevant when the comboboxmodels become listeners
         if (this.jPanel1.getComponentCount() == 2) {
             // This means there may only be one panel and it may be empty.
             List<AddSubtractInnerPanel> info = this.getInnerPanelsValues();
             JComboBox cb1 = (JComboBox) ((AddSubtractInnerPanel)info.get(0)).getLeftComboObject();
+            JComboBox cb2 = (JComboBox) ((AddSubtractInnerPanel)info.get(0)).getRightComboObject();
+            AddSubtractInnerPanel a = (AddSubtractInnerPanel)info.get(0);
             int cbIndex1 = cb1.getSelectedIndex();
-            if (cbIndex1 == -1)
+            if (cbIndex1 == -1) {
                 cb1.setSelectedItem(name);
-            else {
+                cb2.setSelectedItem(role);
+                a.setTextFieldText(text);
+            } else {
                 AddSubtractInnerPanel asip = addAddSubPanel();
                 asip.setSelectedLeftComboBox(name);
+                asip.setSelectedRightComboBox(role);
+                asip.setTextFieldText(text);
             }
                 
         } else  {
             AddSubtractInnerPanel asip = addAddSubPanel();
             asip.setSelectedLeftComboBox(name);
+            asip.setSelectedRightComboBox(role);
+            asip.setTextFieldText(text);
         }
     }
 }

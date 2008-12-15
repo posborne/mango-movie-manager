@@ -1,8 +1,3 @@
-/*
- * ViewPanel.java
- *
- * Created on November 8, 2008, 3:34 PM
- */
 
 package com.themangoproject.ui;
 
@@ -27,8 +22,7 @@ import javax.swing.table.TableRowSorter;
  * that allow the user to change the main panel view from thumbnail to list 
  * view, search text within the main panel and launch an advanced search option.  
  * 
- * @author  Kyle Ronning, Paul Osborne
- * @version 1.0
+ * @author  Kyle Ronning, Paul Osborne, Zach Varberg
  */
 public class ViewPanel extends javax.swing.JPanel implements TableModelListener {
 	private static final long serialVersionUID = -6397941470627210285L;

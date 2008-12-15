@@ -1,14 +1,7 @@
-/*
- * ItemInfoPanel.java
- *
- * Created on November 8, 2008, 3:33 PM
- */
 
 package com.themangoproject.ui;
 
-import com.themangoproject.ui.model.EditableMovieTableModel;
 import com.themangoproject.ui.model.MangoTableModelIF;
-
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -16,9 +9,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * ItemInfoPanel is a panel that displays an image.
+ * ItemInfoPanel is a panel that displays an image associated with the selected
+ * movie in the table.
  * 
- * @author  Kyle Ronning, Paul Osborne
+ * @author  Kyle Ronning, Zach Varberg, Paul Osborne
  * @version 1.0
  */
 public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionListener {
@@ -64,7 +58,6 @@ public class ItemInfoPanel extends javax.swing.JPanel implements ListSelectionLi
     /**
      * Set the image in the panel to correspond to the image for the selected
      * movie in the table.
-     * 
      */
     public void setThumbnailImage(Image image) {
         if (image != null) {

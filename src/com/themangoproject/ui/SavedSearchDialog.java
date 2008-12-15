@@ -21,7 +21,8 @@ import javax.swing.JTextField;
 
 
 /**
- *
+ * A saved search dialog to create custom searches on movies.
+ * 
  * @author  Kyle Ronning, Paul Osborne
  */
 public class SavedSearchDialog extends javax.swing.JDialog {
@@ -37,6 +38,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
                 new ConstraintComboBoxModel(), false, false);
     }
 
+    // Builds the advanced search
     private AdvancedSearch buildAdvancedSearch() {
         List<AddSubtractInnerPanel> panels = this.addSubtractSearchPanel.getInnerPanelsValues();
         AdvancedSearch as = new AdvancedSearch();
@@ -200,6 +202,7 @@ public class SavedSearchDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+   // Saves the advanced search
     try{
         AdvancedSearch as = buildAdvancedSearch();
         String searchLabel = searchNameTF.getText();
@@ -272,11 +275,4 @@ private void executeSearchButtonActionPerformed(java.awt.event.ActionEvent evt) 
     private javax.swing.JTextField searchNameTF;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * A meethod to get the information to construct a saved search
-     * Change the name of this method
-     */
-//    public void getSavedSearchInfo() {
-//        
-//    }
 }

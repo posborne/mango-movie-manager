@@ -1,14 +1,11 @@
-/*
- * AboutMango.java
- *
- * Created on December 2, 2008, 7:01 PM
- */
 
 package com.themangoproject.ui;
 
 /**
- *
- * @author  kronning
+ * AboutMango is a simple dialog that shows information about the Mango
+ * Movie Manager and its developers.
+ * 
+ * @author  Kyle Ronning, Zach Varberg
  */
 public class AboutMango extends javax.swing.JDialog {
 
@@ -77,6 +74,7 @@ public class AboutMango extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    // Close Button
     this.dispose();
 }//GEN-LAST:event_jButton1ActionPerformed
 
