@@ -38,6 +38,20 @@ public class H2PersonDAO implements PersonDAO {
 	/** Prepared statement for retrieving all persons */
 	private PreparedStatement allPersonsPS;
 	private static final String allPersonsStatement = "SELECT id, name, address, email, phone_num FROM person";
+        
+        /** Prepared statement for deleting a person */
+        private PreparedStatement deletePersonPS;
+        private static final String deletePersonSQL = "DELETE FROM person WHERE id=?";
+        
+        /** Prepared statement for deleting a person as owner of a movie */
+        private PreparedStatement deletePersonAsOwnerPS;
+        private static final String deletePersonAsOwnerSQL = 
+                "UPDATE movie SET owner_id=NULL WHERE owner_id=?";
+        
+        /** Prepared statement for deleting a person as borrower of a movie */
+        private PreparedStatement deletePersonAsBorrowerPS;
+        private static final String deletePersonAsBorrowerSQL = 
+                "UPDATE movie SET borrower_id=NULL WHERE borrower_id=?";
 
 	/** Prepared statement for returning a movie */
 	private PreparedStatement returnMovieForPersonPS;
@@ -78,6 +92,12 @@ public class H2PersonDAO implements PersonDAO {
 					.prepareStatement(returnMovieForPersonSQL);
 			borrowMovieToPersonPS = conn
 					.prepareStatement(borrowMovieToPersonSQL);
+                        deletePersonPS = conn
+                                .prepareStatement(deletePersonSQL);
+                        deletePersonAsOwnerPS = conn
+                                .prepareStatement(deletePersonAsOwnerSQL);
+                        deletePersonAsBorrowerPS = conn
+                                .prepareStatement(deletePersonAsBorrowerSQL);
 		} catch (SQLException ex) {
 			// TODO: decide what needs to be done here
 			ex.printStackTrace(System.err);
@@ -133,7 +153,17 @@ public class H2PersonDAO implements PersonDAO {
 	 * @throws PersonHasMoviesException
 	 */
 	public void deletePerson(Person p) throws PersonHasMoviesException {
-		// TODO: write this
+            if (!(p instanceof DBPerson)) {
+                throw new ClassCastException();
+            }
+            DBPerson person = (DBPerson) p;
+            try {
+                deletePersonPS.setInt(1, person.getId());
+                deletePersonPS.execute();
+            } catch (SQLException ex) {
+                throw new PersonHasMoviesException();
+            }
+            firePersonsChangedEvent();
 	}
 
 	/**
@@ -144,7 +174,31 @@ public class H2PersonDAO implements PersonDAO {
 	 *            The person that should be forcibly removed from the database.
 	 */
 	public void forceDeletePerson(Person p) {
-		// TODO: write this
+            if (!(p instanceof DBPerson)) {
+                throw new ClassCastException();
+            }
+            DBPerson person = (DBPerson) p;
+            try {
+                // We want to submit statements as transaction
+                conn.setAutoCommit(false);
+                
+                // prepare the statements
+                deletePersonAsOwnerPS.setInt(1, person.getId());
+                deletePersonAsBorrowerPS.setInt(1, person.getId());
+                deletePersonPS.setInt(1, person.getId());
+                
+                // execute the updates
+                deletePersonAsOwnerPS.executeUpdate();
+                deletePersonAsBorrowerPS.executeUpdate();
+                deletePersonPS.executeUpdate();
+                
+                // commit the transaction
+                conn.commit();
+                conn.setAutoCommit(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            firePersonsChangedEvent();            
 	}
 
 	/**

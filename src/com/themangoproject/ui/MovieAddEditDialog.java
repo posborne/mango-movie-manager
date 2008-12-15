@@ -2,6 +2,7 @@
 package com.themangoproject.ui;
 
 import com.themangoproject.db.h2.DBMovie;
+import com.themangoproject.db.h2.DBPerson;
 import com.themangoproject.model.Actor;
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
@@ -59,6 +60,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         initComponents();
         setCombBoxModels();
         m = null;
+        Image im = new ImageIcon(getClass().getResource(
+        "/com/themangoproject/ui/images/defaultMangoLogo.jpg")).
+        getImage();
+        this.jLabel15.setIcon(new ImageIcon(im.getScaledInstance(160, 160, Image.SCALE_DEFAULT)));
     }
     
     /**
@@ -717,7 +722,6 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         tabbedPane.addTab("Actors", actorsPane);
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/defaultMovieImage.png"))); // NOI18N
 
         changeThumbnailButton.setText("Change Thumbnail");
         changeThumbnailButton.addActionListener(new java.awt.event.ActionListener() {
@@ -905,8 +909,10 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                 borrower = null;
             else
                 borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
-            MangoController.getInstance().setOwnerToMovie(mov, owner);
-            MangoController.getInstance().setBorrowerToMovie(mov, borrower);
+            mov.setTitle(mov.getTitle());
+            mov.setOwner(owner);
+            mov.setBorrower(borrower);
+            MangoController.getInstance().updateMovie(mov);
             
             // Image
             Image i = ((ImageIcon)jLabel15.getIcon()).getImage();
@@ -1000,6 +1006,8 @@ private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             borrower = (Person) borrowerModel.getPersonAt(selectedIndexB);
         MangoController.getInstance().setOwnerToMovie(m, owner);
         MangoController.getInstance().setBorrowerToMovie(m, borrower);
+                                System.out.println(((DBMovie)m).getOwnerId());
+            System.out.println(((DBMovie)m).getBorrowerId());
         MangoController.getInstance().updateMovie(m);
             
         // Image
@@ -1062,7 +1070,11 @@ private void amazonRetrieveButtonActionPerformed(java.awt.event.ActionEvent evt)
             this.directorTF.setText(amazon.getDirector());
             this.yearTF.setText(amazon.getReleaseDate());
             this.ratingCB.setSelectedItem(amazon.getRating());
-            this.runtimeSpinner.setValue(Integer.parseInt(amazon.getRuntime()));
+            try {
+                this.runtimeSpinner.setValue(Integer.parseInt(amazon.getRuntime()));
+            } catch (NumberFormatException e) {
+                this.runtimeSpinner.setValue(0);
+            }
             this.jLabel15.setIcon(amazon.getMovieImage());
             // Set as DVD if from amazon.  There is no way to know the format easily.
             this.typeCB.setSelectedItem("DVD");
