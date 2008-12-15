@@ -84,7 +84,7 @@ public abstract class EditableMovieTableModel extends
 	}
 
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return !(columnIndex == 0);
+		return (columnIndex == 1 || columnIndex == 2);
 	}
 
 	public Class<? extends Object> getColumnClass(int columnIndex) {
