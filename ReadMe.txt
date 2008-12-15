@@ -126,8 +126,6 @@ USE:
         to the all actors table using the navigation panel on the left then right click
         on the actor you wish to delete in the table and choose delete.
 
-        KNOWN BUG:  There is currently no way to delete a person from the database.
-
         KNOWN BUG:  Attempting to edit edit a person or actor will throw exceptions.
 
 
@@ -145,8 +143,6 @@ USE:
         associations panel, there you will be able to edit information as necessary.
 
 KNOWN BUGS:
-
-    KNOWN BUG:  There is currently no way to delete a person from the database.
 
     KNOWN BUG:  Attempting to edit edit a person or actor will throw exceptions.
        

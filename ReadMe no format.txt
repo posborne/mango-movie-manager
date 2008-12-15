@@ -1,6 +1,6 @@
 INTRODUCTION:
     
-Mango Movie Manager is a simple software system meant to be used to manage a user’s movie library.  It allows adding, deleting, and organizing of movies in a number of different ways.  Mango allows for the storage of information such as the owners of movies (you and your friends) and who is borrowing and lending them to whom.  For information on advanced features see the USE section.
+Mango Movie Manager is a simple software system meant to be used to manage a userï¿½s movie library.  It allows adding, deleting, and organizing of movies in a number of different ways.  Mango allows for the storage of information such as the owners of movies (you and your friends) and who is borrowing and lending them to whom.  For information on advanced features see the USE section.
     
 INSTALLATION:
     
@@ -56,18 +56,14 @@ Adding and removing actors/people:
 
 Adding and removing of an actor or person is done in a similar way.  Both are added indirectly through the add/edit movie dialog.  In that dialog there are tabs concerning both actors and people and in those respective tabs you can add new actors and people (Amazon will also automatically create actors if you ask Amazon to fill in information for you).  To delete an actor you can navigate to the all actors table using the navigation panel on the left then right click on the actor you wish to delete in the table and choose delete.
 
-KNOWN BUG:  There is currently no way to delete a person from the database.
-
 KNOWN BUG:  Attempting to edit edit a person or actor will throw exceptions.
 
 
 Lending and Borrowing movies:
 
-Mango allows you to set an owner and borrower of each movie.  You can set who “you" are (i.e. the owner) using the button on the bottom bar that is second from the right.  All of the searches based on "my" and "friends" will be based off of whom the "owner" is.  You can use the predefined searches in library actions in the navigation panel to find all movies you own (My Movies), all movies owned by others (Friends Movies), all the movies you are borrowing (Borrowed movies), and movies you are loaning out (Loaned Movies).  To change who the owner or borrower of any movie is, simply open the edit movie dialog (discussed in adding, editing, and deleting a movie), and navigate to the associations panel, there you will be able to edit information as necessary.
+Mango allows you to set an owner and borrower of each movie.  You can set who ï¿½you" are (i.e. the owner) using the button on the bottom bar that is second from the right.  All of the searches based on "my" and "friends" will be based off of whom the "owner" is.  You can use the predefined searches in library actions in the navigation panel to find all movies you own (My Movies), all movies owned by others (Friends Movies), all the movies you are borrowing (Borrowed movies), and movies you are loaning out (Loaned Movies).  To change who the owner or borrower of any movie is, simply open the edit movie dialog (discussed in adding, editing, and deleting a movie), and navigate to the associations panel, there you will be able to edit information as necessary.
 
 KNOWN BUGS:
-
-KNOWN BUG:  There is currently no way to delete a person from the database.
 
 KNOWN BUG:  Attempting to edit a person or actor will throw exceptions.
        
