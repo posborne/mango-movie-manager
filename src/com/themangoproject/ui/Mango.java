@@ -24,6 +24,8 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -77,6 +79,14 @@ public class Mango extends javax.swing.JFrame {
 				}
 			}
         });
+//        UIController.getInstance().getViewTable().getRowSorter().
+//                addRowSorterListener(new RowSorterListener(){
+//            public void sorterChanged(RowSorterEvent e) {
+//                Mango.this.bottomBar.setLabelInfo(UIController.getInstance().
+//                        getViewTable().getRowSorter().getViewRowCount() + " items");
+//            }
+//            
+//        });
     }
     
     private static Mango createdInstance;
@@ -86,7 +96,7 @@ public class Mango extends javax.swing.JFrame {
     
     public void setTableModel(TableModel tm) {
     	((ViewPanel)viewPanel).setTableModel(tm);
-        bottomBar.setLabelInfo(UIController.getInstance().getTableItemCount() + " items");
+//        bottomBar.setLabelInfo(UIController.getInstance().getTableItemCount() + " items");
     }
     
     public JTable getTable() {

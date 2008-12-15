@@ -26,6 +26,8 @@ import javax.swing.JFileChooser;
  *
  * Created on November 8, 2008, 3:45 PM
  */
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
 
 
 
@@ -61,7 +63,6 @@ public class BottomBar extends javax.swing.JPanel {
         associateImageButton = new javax.swing.JButton();
 
         statusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        statusLabel.setText("# Movies / # Actors");
 
         addMovieButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/themangoproject/ui/images/movieadd.png"))); // NOI18N
         addMovieButton.setToolTipText("Add New Movie");

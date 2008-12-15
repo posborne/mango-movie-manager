@@ -214,7 +214,7 @@ private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     	((MangoTableModelIF)viewTable.getModel()).cleanup();
     	TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         viewTable.setRowSorter(rowSorter);
-		this.viewTable.setModel(model);
+	this.viewTable.setModel(model);
     }
     
     /**
