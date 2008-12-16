@@ -48,7 +48,7 @@ public class Mango extends javax.swing.JFrame {
             // create the database and initialize schema
             H2Util.getInstance().setDatabaseLocation("./db/mango.db");
             H2Util.getInstance().initializeSchemaOnDb();
-            UIController.getInstance().setOwnerId(-1);
+//            UIController.getInstance().setOwnerId(-1);
         }
         initComponents();
         this.helpMenuItem.addActionListener(new ActionListener() {
