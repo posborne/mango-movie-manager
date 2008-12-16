@@ -189,6 +189,12 @@ KNOWN BUGS:
     database (H2) has run quick enough that the application does not seem 
     unresponsive at all.  However, for larger movie collections on older 
     machines this might cease to be the case.
+    
+    KNOWN BUG: When adding actors to a movie you can add a role and character
+    name, this information is correctly saved to the database.  However, when
+    you choose to edit a movie, the information is not populated in the 
+    dialog.
+    
 ACKNOWLEDGMENTS:
 
     This software was developed by Paul Osborne, Kyle Ronning, and Zachary 
