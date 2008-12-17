@@ -28,6 +28,7 @@ public class CreateSavedSearchMutableTreeNode extends
     public void doYourThing(Mango mangoPanel) {
         SavedSearchDialog ssd = new SavedSearchDialog(UIController
                 .getInstance().getMango(), true);
+        ssd.setLocationRelativeTo(UIController.getInstance().getMango());
         ssd.setVisible(true);
     }
 
