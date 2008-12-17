@@ -2,6 +2,10 @@ package com.themangoproject.ui.model;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import com.themangoproject.model.MangoController;
 import com.themangoproject.model.Movie;
 
@@ -14,8 +18,10 @@ import com.themangoproject.model.Movie;
  */
 public class UnsavedSearchEditabledTableModel extends
         SearchEditableTableModel {
+	
     private static final long serialVersionUID = -2108996136639230644L;
     private String searchQuery;
+	private ChangeListener moviesChangeListener;
 
     /**
      * Constructs an unsaved saved search from a query
@@ -26,6 +32,13 @@ public class UnsavedSearchEditabledTableModel extends
      */
     public UnsavedSearchEditabledTableModel(String query) {
         this.searchQuery = query;
+        moviesChangeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                retrieveMovies();
+                fireTableStructureChanged();
+            }
+        };
+        MangoController.getInstance().addMoviesChangeListener(moviesChangeListener);
         retrieveMovies();
     }
 
