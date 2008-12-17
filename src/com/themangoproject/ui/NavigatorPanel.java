@@ -1,6 +1,8 @@
 package com.themangoproject.ui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
 /**
  * The NavigatorPanel is the tree on the left to view your movie
@@ -13,6 +15,16 @@ public class NavigatorPanel extends javax.swing.JPanel {
     /** Creates new form NavigatorPanel */
     public NavigatorPanel() {
         initComponents();
+        DefaultTreeCellRenderer tR = new DefaultTreeCellRenderer();
+        tR.setClosedIcon(new ImageIcon(getClass().getResource(
+                                "/com/themangoproject/ui/images/closed.png")));
+        tR.setOpenIcon(new ImageIcon(getClass().getResource(
+                                  "/com/themangoproject/ui/images/open.png")));
+        tR.setLeafIcon(new ImageIcon(getClass().getResource(
+                                  "/com/themangoproject/ui/images/leaf.png")));
+        this.navigatorTree.setShowsRootHandles(false);
+        this.navigatorTree.setToggleClickCount(1);
+        this.navigatorTree.setCellRenderer(tR);
     }
 
     /**
