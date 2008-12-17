@@ -103,13 +103,21 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .getActorsForMovie(m);
         for (Actor actor : actors) {
             List<Role> roles = actor.getRoles();
+//            System.out.println(actor.getFirstName() + " " + 
+//                    roles.get(0).getCharacter());
             String roleString = "";
             String characterString = "";
             for (Role role : roles) {
+//                System.out.println(role.getMovie().getTitle() + " : " + ((DBMovie)role.getMovie()).getId());
+//                System.out.println(m.getTitle() + " : " + ((DBMovie)m).getId());
+//                System.out.println();
                 if (((DBMovie) role.getMovie()).getId() == ((DBMovie) m)
                         .getId()) {
+//                    System.out.println(role.getActor().toString());
                     roleString = role.getRole();
+//                    System.out.println(roleString);
                     characterString = role.getCharacter();
+//                    System.out.println(roleString + "\n");
                 }
             }
             this.addSubstractActorsPanel.createAndSetSelected(actor
@@ -1611,10 +1619,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                     // in AddSubtractPanel to take care of this.
                     // For now you can remove the empty panel or just
                     // ignore it.
-                    if (((JComboBox) panel.getLeftComboObject())
-                            .getSelectedIndex() == -1) {
-
-                    } else {
+//                    if (((JComboBox) panel.getLeftComboObject())
+//                            .getSelectedIndex() == -1) {
+//
+//                    } else {
                         JComboBox actorBox = (JComboBox) panel
                                 .getLeftComboObject();
                         JComboBox roleBox = (JComboBox) panel
@@ -1630,10 +1638,13 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                                 .getSelectedItem();
                         String character = panel.getTextFieldText();
 
+//                        System.out.println("Saving actor: " + actor.getFirstName() +
+//                                " " + role + " " + character);
+                        
                         MangoController.getInstance()
                                 .addActorToMovie(mov, actor, role,
                                         character);
-                    }
+//                    }
                 }
                 // Owner and borrower
                 PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB
@@ -1775,8 +1786,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
             MangoController.getInstance().setOwnerToMovie(m, owner);
             MangoController.getInstance().setBorrowerToMovie(m,
                     borrower);
-            System.out.println(((DBMovie) m).getOwnerId());
-            System.out.println(((DBMovie) m).getBorrowerId());
+//            System.out.println(((DBMovie) m).getOwnerId());
+//            System.out.println(((DBMovie) m).getBorrowerId());
             MangoController.getInstance().updateMovie(m);
 
             // Image
