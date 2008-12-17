@@ -20,6 +20,8 @@ public class NavigatorPanel extends javax.swing.JPanel {
                                 "/com/themangoproject/ui/images/closed.png")));
         tR.setOpenIcon(new ImageIcon(getClass().getResource(
                                   "/com/themangoproject/ui/images/open.png")));
+//        tR.setLeafIcon(new ImageIcon(getClass().getResource(
+//                                  "/com/themangoproject/ui/images/film.png")));
         tR.setLeafIcon(new ImageIcon(getClass().getResource(
                                   "/com/themangoproject/ui/images/leaf.png")));
         this.navigatorTree.setShowsRootHandles(false);
