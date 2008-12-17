@@ -1,7 +1,10 @@
 package com.themangoproject.ui;
 
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 /**
@@ -24,6 +27,10 @@ public class NavigatorPanel extends javax.swing.JPanel {
 //                                  "/com/themangoproject/ui/images/film.png")));
         tR.setLeafIcon(new ImageIcon(getClass().getResource(
                                   "/com/themangoproject/ui/images/leaf.png")));
+//        tR.setBackground(Color.green);
+//        tR.setFont(Font.getFont("Comic Sans MS"));
+//        tR.setFont(new FontUIResource("Comic Sans MS", Font.PLAIN, 12));
+//        this.jScrollPane1
         this.navigatorTree.setShowsRootHandles(false);
         this.navigatorTree.setToggleClickCount(1);
         this.navigatorTree.setCellRenderer(tR);
