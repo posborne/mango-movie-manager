@@ -11,7 +11,7 @@ import com.themangoproject.model.Role;
 import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
 import com.themangoproject.ui.model.RoleComboBoxModel;
-import com.themangoproject.webservice.AmazonMovieDetails;
+import com.themangoproject.webservice.AmazonMovieASINQuery;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
@@ -1853,10 +1853,10 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                                 + "filled out may be altered.  Do you want to proceed?",
                         "Confirm", JOptionPane.YES_NO_OPTION);
         if (proceed == JOptionPane.YES_OPTION) {
-            AmazonMovieDetails amazon = new AmazonMovieDetails();
-            boolean valid = amazon.getMovieXMLDocument(this.asinTF
+            AmazonMovieASINQuery amazon = new AmazonMovieASINQuery(this.asinTF
                     .getText());
-            if (valid) {
+            amazon.executeSearch();
+            if (amazon.isValid()) {
                 this.titleTF.setText(amazon.getTitle());
                 this.directorTF.setText(amazon.getDirector());
                 this.yearTF.setText(amazon.getReleaseDate());
