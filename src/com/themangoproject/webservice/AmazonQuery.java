@@ -2,7 +2,9 @@ package com.themangoproject.webservice;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,13 +37,14 @@ public abstract class AmazonQuery {
                 return null;
             }
             InputStream in = httpConnection.getInputStream();
-
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = null;
             db = dbf.newDocumentBuilder();
             Document doc = db.parse(in);
             return doc;
         } catch (Exception ex) {
+            ex.printStackTrace();
+            System.err.println("What huh?");
             return null;
         }
     }

@@ -1,8 +1,5 @@
 package com.themangoproject.webservice;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,9 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -254,27 +248,6 @@ public class AmazonMovieASINQuery extends AmazonQuery {
      *            Command line arguments (not used)
      */
     public static void main(String[] args) {
-        // testASIN();
-        testTitleQuery();
-    }
-
-    /**
-     * Test a query on the database that retrieves the titles of movies matching
-     * a search criterion, along with each one's ASIN. Subsequently, the ASIN
-     * can be used to fetch the rest of the movie information.
-     */
-    private static void testTitleQuery() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter Title: ");
-        String title = scan.nextLine();
-        AmazonMovieUtility util = AmazonMovieUtility.getInstance();
-    }
-
-    /**
-     * A simple application to get information about a movie from Amazon with a
-     * provided ASIN number.
-     */
-    private static void testASIN() {
         // "B0019CSXAM" -- How I met your mother, no director
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter ASIN: ");
