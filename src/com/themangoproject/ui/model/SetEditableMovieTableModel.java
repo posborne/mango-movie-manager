@@ -64,6 +64,7 @@ public class SetEditableMovieTableModel extends
         for (Movie m : movies) {
             m.addChangeListener(singleMovieChangeListener);
         }
+        fireTableStructureChanged();
     }
 
     /**
