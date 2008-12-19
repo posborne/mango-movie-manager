@@ -42,4 +42,8 @@ public class AmazonQueryResultsListModel extends AbstractListModel {
     public Object getElementAt(int rowIndex) {
         return results.get(rowIndex).getTitle();
     }
+
+    AmazonMovieTitleResult getAmazonQueryResult(int index) {
+       return results.get(index);
+    }
 }

@@ -28,9 +28,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="tabbedPane" alignment="0" min="-2" pref="527" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="1" attributes="1">
+                      <Component id="queryAmazonButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="saveButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
@@ -48,7 +50,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="cancelButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="saveButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="queryAmazonButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -126,7 +131,7 @@
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="directorTF" alignment="1" pref="236" max="32767" attributes="0"/>
+                                      <Component id="directorTF" alignment="1" pref="226" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -136,7 +141,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ratingCB" pref="190" max="32767" attributes="0"/>
+                                      <Component id="ratingCB" pref="153" max="32767" attributes="0"/>
                                       <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -271,23 +276,23 @@
                                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="purchaseDateTF" pref="158" max="32767" attributes="0"/>
+                                          <Component id="purchaseDateTF" pref="156" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="mangoRatingCB" pref="156" max="32767" attributes="0"/>
+                                          <Component id="mangoRatingCB" pref="153" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="typeCB" pref="152" max="32767" attributes="0"/>
+                                      <Component id="typeCB" pref="147" max="32767" attributes="0"/>
                                       <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="customDescriptionScrollPane" alignment="0" pref="478" max="32767" attributes="0"/>
+                              <Component id="customDescriptionScrollPane" alignment="0" pref="474" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="conditionCB" pref="240" max="32767" attributes="0"/>
+                                          <Component id="conditionCB" pref="244" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
@@ -297,7 +302,7 @@
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="genreTF" alignment="1" pref="232" max="32767" attributes="0"/>
+                                      <Component id="genreTF" alignment="1" pref="218" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -333,7 +338,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="customDescriptionScrollPane" pref="128" max="32767" attributes="0"/>
+                          <Component id="customDescriptionScrollPane" pref="107" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -514,7 +519,7 @@
                       <Component id="setOwnerBorrowerPane" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="addPersonPanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="116" max="32767" attributes="0"/>
+                      <EmptySpace pref="122" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -536,7 +541,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="ownerCB" pref="215" max="32767" attributes="0"/>
+                                  <Component id="ownerCB" pref="201" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -546,7 +551,7 @@
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="borrowerCB" pref="188" max="32767" attributes="0"/>
+                                  <Component id="borrowerCB" pref="173" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="borrowedCheckBox" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -636,7 +641,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="emailTF" alignment="0" pref="466" max="32767" attributes="0"/>
+                              <Component id="emailTF" alignment="0" pref="463" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -644,19 +649,19 @@
                                           <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Component id="nameTF" pref="242" max="32767" attributes="0"/>
+                                          <Component id="nameTF" pref="238" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel20" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="phoneNumberTF" alignment="1" pref="218" max="32767" attributes="0"/>
+                                      <Component id="phoneNumberTF" alignment="1" pref="213" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="addPersonButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="addressScrollPane" alignment="0" pref="466" max="32767" attributes="0"/>
+                              <Component id="addressScrollPane" alignment="0" pref="463" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -806,7 +811,7 @@
                                   <Component id="addSubstractActorsPanel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -821,7 +826,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="addSubstractActorsPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
+                          <EmptySpace pref="21" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -862,7 +867,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="actorFirstNameTF" pref="195" max="32767" attributes="0"/>
+                                  <Component id="actorFirstNameTF" pref="196" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -942,7 +947,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel15" alignment="0" pref="502" max="32767" attributes="0"/>
+                          <Component id="jLabel15" alignment="0" pref="499" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="defaultImageButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -957,7 +962,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel15" pref="447" max="32767" attributes="0"/>
+                      <Component id="jLabel15" pref="442" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="changeThumbnailButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1008,6 +1013,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="queryAmazonButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Query Amazon"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queryAmazonButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -1,21 +1,28 @@
 package com.themangoproject.ui;
 
+import com.themangoproject.webservice.AmazonMovieTitleQuery.AmazonMovieTitleResult;
+import java.util.ArrayList;
 import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author  Paul Osborne
  */
-public class AmazonQueryFrame extends javax.swing.JFrame {
+public class AmazonQueryFrame extends javax.swing.JDialog {
 
     /** Generated serial UID */
 	private static final long serialVersionUID = 4084685608291384549L;
 	
 	private SwingWorker<String, Object> amazonQueryWorker;
+    private ArrayList<ChangeListener> asinChangeListeners;
 	
 	/** Creates new form AmazonQueryFrame */
-    public AmazonQueryFrame() {
+    public AmazonQueryFrame(javax.swing.JDialog parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        asinChangeListeners = new ArrayList<ChangeListener>();
         amazonQueryWorker = new SwingWorker<String, Object>() {
 			@Override
 			protected String doInBackground() throws Exception {
@@ -37,6 +44,20 @@ public class AmazonQueryFrame extends javax.swing.JFrame {
         ((AmazonQueryResultsListModel)this.queryResultsList.getModel()).setQuery(titleQuery);
     }
 
+    public void addASINChangeListener(ChangeListener cl) {
+        this.asinChangeListeners.add(cl);
+    }
+    
+    public void removeASINChangeListener(ChangeListener cl) {
+        this.asinChangeListeners.remove(cl);
+    }
+    
+    private void fireASINEvent(String asin) {
+        for (ChangeListener cl : asinChangeListeners) {
+            cl.stateChanged(new ChangeEvent(asin));
+        }
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -54,7 +75,8 @@ public class AmazonQueryFrame extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
         queryButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Query Amazon");
 
         jLabel1.setText("Title:");
 
@@ -75,6 +97,11 @@ public class AmazonQueryFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         queryButton.setText("Search");
         queryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -124,16 +151,24 @@ public class AmazonQueryFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void titleQueryTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleQueryTextFieldActionPerformed
-// TODO add your handling code here:
+
 }//GEN-LAST:event_titleQueryTextFieldActionPerformed
 
 private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
-// TODO add your handling code here:
+    int selIndex = queryResultsList.getSelectedIndex();
+    AmazonQueryResultsListModel model = (AmazonQueryResultsListModel) queryResultsList.getModel();
+    AmazonMovieTitleResult result = model.getAmazonQueryResult(selIndex);
+    fireASINEvent(result.getASIN());
+    this.dispose();
 }//GEN-LAST:event_acceptButtonActionPerformed
 
 private void queryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryButtonActionPerformed
     amazonQueryWorker.execute();
 }//GEN-LAST:event_queryButtonActionPerformed
+
+private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+    this.dispose();
+}//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -141,7 +176,7 @@ private void queryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AmazonQueryFrame().setVisible(true);
+                //new AmazonQueryFrame().setVisible(true);
             }
         });
     }
