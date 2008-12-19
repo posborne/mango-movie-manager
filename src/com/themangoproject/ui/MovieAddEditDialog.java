@@ -12,6 +12,8 @@ import com.themangoproject.ui.model.ActorComboBoxModel;
 import com.themangoproject.ui.model.PersonComboBoxModel;
 import com.themangoproject.ui.model.RoleComboBoxModel;
 import com.themangoproject.webservice.AmazonMovieASINQuery;
+import com.themangoproject.webservice.AmazonMovieASINQuery.AmazonASINResult;
+
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
@@ -30,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  * MovieAddEditDialog is a dialog to add and edit movies. Movie
@@ -47,6 +50,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
 
     /** A Movie for the dialog to work with. */
     private Movie m;
+    
+    private SwingWorker<String, Object> amazonWorker;
 
     /**
      * Creates a new dialog MovieAddEditDialog to add or edit a movie.
@@ -68,6 +73,69 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                 .getImage();
         this.jLabel15.setIcon(new ImageIcon(im.getScaledInstance(160,
                 160, Image.SCALE_DEFAULT)));
+        
+        
+        amazonWorker = new SwingWorker<String, Object>() {
+        	
+        	private String oldQueryButtonText;
+        	
+        	protected void done() {
+        		amazonRetrieveButton.setEnabled(true);
+        		amazonRetrieveButton.setText(oldQueryButtonText);
+        	}
+        	
+			@Override
+			protected String doInBackground() throws Exception {
+				this.oldQueryButtonText = amazonRetrieveButton.getText();
+				amazonRetrieveButton.setEnabled(false);
+				amazonRetrieveButton.setText("Retrieving Data...");
+	            AmazonMovieASINQuery amazon = new AmazonMovieASINQuery();
+	            AmazonASINResult asinResult = amazon.getMovieWithASIN(asinTF.getText());
+	            if (asinResult != null) {
+	                titleTF.setText(asinResult.getTitle());
+	                directorTF.setText(asinResult.getDirector());
+	                yearTF.setText(asinResult.getReleaseDate());
+	                ratingCB.setSelectedItem(asinResult.getRating());
+	                try {
+	                    runtimeSpinner.setValue(Integer
+	                            .parseInt(asinResult.getRuntime()));
+	                } catch (NumberFormatException e) {
+	                    runtimeSpinner.setValue(0);
+	                }
+	                jLabel15.setIcon(asinResult.getMovieImage());
+	                // Set as DVD if from amazon. There is no way to know
+	                // the format easily.
+	                typeCB.setSelectedItem("DVD");
+	                // actors
+	                List<String> actors = asinResult.getActors();
+	                for (String actor : actors) {
+	                    String[] actorName = actor.split(" ");
+	                    if (actorName.length == 2)
+	                        MangoController.getInstance().addActor(
+	                                actorName[0], actorName[1]);
+	                    else if (actorName.length == 3)
+	                        MangoController.getInstance().addActor(
+	                                actorName[0] + " " + actorName[1],
+	                                actorName[2]);
+	                    else
+	                        MangoController.getInstance().addActor(actor,
+	                                "");
+	                    addSubstractActorsPanel
+	                            .createAndSetSelected(actor, "", "");
+	                }
+
+	            } else {
+	                JOptionPane
+	                        .showMessageDialog(
+	                                MovieAddEditDialog.this,
+	                                "Amazon was unable to gather requested information.\n"
+	                                        + "Check your ASIN number and your Internet connection",
+	                                "Could not gather information",
+	                                JOptionPane.INFORMATION_MESSAGE);
+	            }
+	            return "Done";
+			}
+        };
     }
 
     /**
@@ -1853,51 +1921,7 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                                 + "filled out may be altered.  Do you want to proceed?",
                         "Confirm", JOptionPane.YES_NO_OPTION);
         if (proceed == JOptionPane.YES_OPTION) {
-            AmazonMovieASINQuery amazon = new AmazonMovieASINQuery(this.asinTF
-                    .getText());
-            amazon.executeSearch();
-            if (amazon.isValid()) {
-                this.titleTF.setText(amazon.getTitle());
-                this.directorTF.setText(amazon.getDirector());
-                this.yearTF.setText(amazon.getReleaseDate());
-                this.ratingCB.setSelectedItem(amazon.getRating());
-                try {
-                    this.runtimeSpinner.setValue(Integer
-                            .parseInt(amazon.getRuntime()));
-                } catch (NumberFormatException e) {
-                    this.runtimeSpinner.setValue(0);
-                }
-                this.jLabel15.setIcon(amazon.getMovieImage());
-                // Set as DVD if from amazon. There is no way to know
-                // the format easily.
-                this.typeCB.setSelectedItem("DVD");
-                // actors
-                List<String> actors = amazon.getActors();
-                for (String actor : actors) {
-                    String[] actorName = actor.split(" ");
-                    if (actorName.length == 2)
-                        MangoController.getInstance().addActor(
-                                actorName[0], actorName[1]);
-                    else if (actorName.length == 3)
-                        MangoController.getInstance().addActor(
-                                actorName[0] + " " + actorName[1],
-                                actorName[2]);
-                    else
-                        MangoController.getInstance().addActor(actor,
-                                "");
-                    this.addSubstractActorsPanel
-                            .createAndSetSelected(actor, "", "");
-                }
-
-            } else {
-                JOptionPane
-                        .showMessageDialog(
-                                this,
-                                "Amazon was unable to gather requested information.\n"
-                                        + "Check your ASIN number and your Internet connection",
-                                "Could not gather information",
-                                JOptionPane.INFORMATION_MESSAGE);
-            }
+        	amazonWorker.execute();
         }
     }// GEN-LAST:event_amazonRetrieveButtonActionPerformed
 

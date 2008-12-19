@@ -5,8 +5,6 @@ import com.themangoproject.webservice.AmazonMovieTitleQuery.AmazonMovieTitleResu
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * List model for results of query to amazon.  The list model itself is what
@@ -15,22 +13,25 @@ import javax.swing.event.ChangeListener;
  * @author Paul Osborne
  * @version December 18, 2008
  */
-public class AmazonQueryResultsListModel extends AbstractListModel
-    implements ChangeListener {
+public class AmazonQueryResultsListModel extends AbstractListModel {
     
-    private List<AmazonMovieTitleResult> results;
+    /** Generated UID */
+	private static final long serialVersionUID = -5610840147317210789L;
+	
+	private List<AmazonMovieTitleResult> results;
+	
     private AmazonMovieTitleQuery query;
     
     /**
      * Construct the list model.
      */
     public AmazonQueryResultsListModel() {
+    	query = new AmazonMovieTitleQuery();
         results = new ArrayList<AmazonMovieTitleResult>();
     }
     
-    public void setQuery(AmazonMovieTitleQuery q) {
-        this.query = q;
-        results = q.getMoviesList();
+    public void setQuery(String titleQuery) {
+        results = query.getMoviesList(titleQuery);
         fireContentsChanged(this, 0, getSize());
     }
 
@@ -41,10 +42,4 @@ public class AmazonQueryResultsListModel extends AbstractListModel
     public Object getElementAt(int rowIndex) {
         return results.get(rowIndex).getTitle();
     }
-
-    public void stateChanged(ChangeEvent e) {
-        results = query.getMoviesList();
-        fireContentsChanged(this, 0, getSize());
-    }
-    
 }

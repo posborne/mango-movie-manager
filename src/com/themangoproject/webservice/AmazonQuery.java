@@ -22,6 +22,7 @@ public abstract class AmazonQuery {
     /**
      * Query amazon using the URL returned by getURL(). Return the W3 Document
      * that results from the query.
+     * @param queryString 
      * 
      * @return a W3 document with the results of the search or null if there is
      *         an error.

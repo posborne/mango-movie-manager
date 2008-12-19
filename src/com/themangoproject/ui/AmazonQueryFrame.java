@@ -1,6 +1,6 @@
 package com.themangoproject.ui;
 
-import com.themangoproject.webservice.AmazonMovieTitleQuery;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -8,20 +8,33 @@ import com.themangoproject.webservice.AmazonMovieTitleQuery;
  */
 public class AmazonQueryFrame extends javax.swing.JFrame {
 
-    private AmazonMovieTitleQuery query;
-    
-    /** Creates new form AmazonQueryFrame */
+    /** Generated serial UID */
+	private static final long serialVersionUID = 4084685608291384549L;
+	
+	private SwingWorker<String, Object> amazonQueryWorker;
+	
+	/** Creates new form AmazonQueryFrame */
     public AmazonQueryFrame() {
         initComponents();
-        this.query = new AmazonMovieTitleQuery("Die Hard");
-        query.addResultsChangeListener(
-                (AmazonQueryResultsListModel) this.queryResultsList.getModel());
-       ((AmazonQueryResultsListModel) this.queryResultsList.getModel()).setQuery(query);
+        amazonQueryWorker = new SwingWorker<String, Object>() {
+			@Override
+			protected String doInBackground() throws Exception {
+				queryButton.setText("Working...");
+				queryButton.setEnabled(false);
+				AmazonQueryResultsListModel model = (AmazonQueryResultsListModel) queryResultsList.getModel();
+			    model.setQuery(titleQueryTextField.getText());
+			    return "Done";
+			}
+			@Override
+			protected void done() {
+				queryButton.setText("Query");
+				queryButton.setEnabled(true);
+			}
+        };
     }
     
     public void setSearchQuery(String titleQuery) {
-        query.setQueryTitle(titleQuery);
-        query.getMoviesList();
+        ((AmazonQueryResultsListModel)this.queryResultsList.getModel()).setQuery(titleQuery);
     }
 
     /** This method is called from within the constructor to
@@ -119,8 +132,7 @@ private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 }//GEN-LAST:event_acceptButtonActionPerformed
 
 private void queryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryButtonActionPerformed
-    query.setQueryTitle(titleQueryTextField.getText());
-    query.getMoviesList();
+    amazonQueryWorker.execute();
 }//GEN-LAST:event_queryButtonActionPerformed
 
     /**
