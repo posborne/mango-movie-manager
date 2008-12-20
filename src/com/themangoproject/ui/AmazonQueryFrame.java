@@ -15,7 +15,6 @@ public class AmazonQueryFrame extends javax.swing.JDialog {
     /** Generated serial UID */
 	private static final long serialVersionUID = 4084685608291384549L;
 	
-	private SwingWorker<String, Object> amazonQueryWorker;
     private ArrayList<ChangeListener> asinChangeListeners;
 	
 	/** Creates new form AmazonQueryFrame */
@@ -23,21 +22,6 @@ public class AmazonQueryFrame extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         asinChangeListeners = new ArrayList<ChangeListener>();
-        amazonQueryWorker = new SwingWorker<String, Object>() {
-			@Override
-			protected String doInBackground() throws Exception {
-				queryButton.setText("Working...");
-				queryButton.setEnabled(false);
-				AmazonQueryResultsListModel model = (AmazonQueryResultsListModel) queryResultsList.getModel();
-			    model.setQuery(titleQueryTextField.getText());
-			    return "Done";
-			}
-			@Override
-			protected void done() {
-				queryButton.setText("Query");
-				queryButton.setEnabled(true);
-			}
-        };
     }
     
     public void setSearchQuery(String titleQuery) {
@@ -163,7 +147,7 @@ private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 }//GEN-LAST:event_acceptButtonActionPerformed
 
 private void queryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryButtonActionPerformed
-    amazonQueryWorker.execute();
+    (new AmazonQueryWorker()).execute();
 }//GEN-LAST:event_queryButtonActionPerformed
 
 private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -179,6 +163,23 @@ private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 //new AmazonQueryFrame().setVisible(true);
             }
         });
+    }
+    
+    public class AmazonQueryWorker extends SwingWorker<String, Object> {
+        @Override
+        protected String doInBackground() throws Exception {
+            queryButton.setText("Working...");
+            queryButton.setEnabled(false);
+            AmazonQueryResultsListModel model = (AmazonQueryResultsListModel) queryResultsList.getModel();
+            model.setQuery(titleQueryTextField.getText());
+            return "Done";
+        }
+        
+        @Override
+        protected void done() {
+            queryButton.setText("Query");
+            queryButton.setEnabled(true);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
