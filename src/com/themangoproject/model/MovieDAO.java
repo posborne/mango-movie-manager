@@ -65,7 +65,7 @@ public interface MovieDAO {
      * 
      * @param m
      */
-    public void removeAllRoles(Movie m);
+    public void removeAllRolesForMovie(Movie m);
 
     // actions
     /**

@@ -119,7 +119,7 @@ public class MangoController {
 
     //TODO: I need this method.
     public void deleteRolesForMovie(Movie m) {
-        this.movieDAO.removeAllRoles(m);
+        this.movieDAO.removeAllRolesForMovie(m);
     }
 
     /**

@@ -221,6 +221,31 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
         this.m = m;
     }
 
+    private void saveActorRoles(Movie m) {
+        // Actors
+        List<AddSubtractInnerPanel> panels = this.addSubstractActorsPanel.
+                getInnerPanelsValues();
+       
+        for (AddSubtractInnerPanel panel : panels) {
+
+            JComboBox actorBox = (JComboBox) panel
+                            .getLeftComboObject();
+            JComboBox roleBox = (JComboBox) panel
+                            .getRightComboObject();
+            ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox
+                            .getModel();
+            int selectedIndex = ((JComboBox) panel
+                            .getLeftComboObject()).getSelectedIndex();
+            Actor actor = (Actor) actorModel
+                            .getActorAt(selectedIndex);
+            String role = (String) roleBox.getSelectedItem();
+            String character = panel.getTextFieldText();
+
+            MangoController.getInstance().addActorToMovie(m, actor, role, 
+                    character);
+        }
+    }
+
     /**
      * This method is needed to set up the add actor panel and other
      * comboboxes.
@@ -1000,44 +1025,10 @@ private void queryAmazonButtonActionPerformed(java.awt.event.ActionEvent evt) {/
                     MangoController.getInstance().addGenreToMovie(
                             mov, g);
                 }
+                
                 // Actors
-                List<AddSubtractInnerPanel> panels = this.addSubstractActorsPanel
-                        .getInnerPanelsValues();
-                for (AddSubtractInnerPanel panel : panels) {
-                    // Temp code so the empty panel wont be added -
-                    // this will be removed
-                    // when the comboboxmodels are changelisteners.
-                    // There is code
-                    // in AddSubtractPanel to take care of this.
-                    // For now you can remove the empty panel or just
-                    // ignore it.
-//                    if (((JComboBox) panel.getLeftComboObject())
-//                            .getSelectedIndex() == -1) {
-//
-//                    } else {
-                        JComboBox actorBox = (JComboBox) panel
-                                .getLeftComboObject();
-                        JComboBox roleBox = (JComboBox) panel
-                                .getRightComboObject();
-                        ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox
-                                .getModel();
-                        int selectedIndex = ((JComboBox) panel
-                                .getLeftComboObject())
-                                .getSelectedIndex();
-                        Actor actor = (Actor) actorModel
-                                .getActorAt(selectedIndex);
-                        String role = (String) roleBox
-                                .getSelectedItem();
-                        String character = panel.getTextFieldText();
-
-//                        System.out.println("Saving actor: " + actor.getFirstName() +
-//                                " " + role + " " + character);
-                        
-                        MangoController.getInstance()
-                                .addActorToMovie(mov, actor, role,
-                                        character);
-//                    }
-                }
+                this.saveActorRoles(mov);
+                
                 // Owner and borrower
                 PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB
                         .getModel();
@@ -1109,60 +1100,13 @@ private void queryAmazonButtonActionPerformed(java.awt.event.ActionEvent evt) {/
                     MangoController.getInstance()
                             .removeGenreFromMovie(m, g);
             }
-            // Actors
-            List<AddSubtractInnerPanel> panels = this.addSubstractActorsPanel
-                    .getInnerPanelsValues();
-//            List<Actor> actorsInDB = MangoController.getInstance()
-//                    .getActorsForMovie(m);
-//            List<Actor> actorsInCB = new ArrayList<Actor>();
-            // Because this is a movie that already exists, we want to just 
-            // remove all of the old roles and we will just add new ones from
-            // the information here.
+            
+            // Because this is a movie that already exists, we want to remove
+            // all of the old roles and we will just add new ones from the new
+            // information provided in the edited dialog.
             MangoController.getInstance().deleteRolesForMovie(m);
-            for (AddSubtractInnerPanel panel : panels) {
-                // Temp code so the empty panel wont be added - this
-                // will be removed
-                // when the comboboxmodels are changelisteners. There
-                // is code
-                // in AddSubtractPanel to take care of this.
-                // For now you can remove the empty panel or just
-                // ignore it.
-                if (((JComboBox) panel.getLeftComboObject())
-                        .getSelectedIndex() == -1) {
-
-                } else {
-                    JComboBox actorBox = (JComboBox) panel
-                            .getLeftComboObject();
-                    JComboBox roleBox = (JComboBox) panel
-                            .getRightComboObject();
-                    ActorComboBoxModel actorModel = (ActorComboBoxModel) actorBox
-                            .getModel();
-                    int selectedIndex = ((JComboBox) panel
-                            .getLeftComboObject()).getSelectedIndex();
-                    Actor actor = (Actor) actorModel
-                            .getActorAt(selectedIndex);
-                    String role = (String) roleBox.getSelectedItem();
-                    String character = panel.getTextFieldText();
-
-                    // Add any actors that are not already in apart of
-                    // the movie
-//                    if (!actorsInDB.contains(actor)){
-                        MangoController.getInstance()
-                                .addActorToMovie(m, actor, role,
-                                        character);
-//                    } else {
-//                        MangoController.getInstance();
-//                    }
-//                    actorsInCB.add(actor);
-                }
-            }
-            // Remove any actors that were removed form panels
-//            for (Actor actor : actorsInDB) {
-//                if (!actorsInCB.contains(actor))
-//                    MangoController.getInstance()
-//                            .removeActorFromMovie(m, actor);
-//            }
-
+            saveActorRoles(m);
+           
             // Owner and borrower
             PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB
                     .getModel();
