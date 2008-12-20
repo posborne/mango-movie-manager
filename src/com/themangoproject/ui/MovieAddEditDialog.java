@@ -949,8 +949,8 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void queryAmazonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryAmazonButtonActionPerformed
-    amazonQueryFrame.setVisible(true);
     amazonQueryFrame.setLocationRelativeTo(this);
+    amazonQueryFrame.setVisible(true);
 }//GEN-LAST:event_queryAmazonButtonActionPerformed
 
     private void cancelButtonActionPerformed(
