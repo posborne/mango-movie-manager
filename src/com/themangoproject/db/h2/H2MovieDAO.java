@@ -706,4 +706,20 @@ public class H2MovieDAO implements MovieDAO {
         }
     }
 
+    public void removeAllRoles(Movie m) {
+        if (!(m instanceof DBMovie)) {
+            throw new ClassCastException();
+        }
+        DBMovie movie = (DBMovie) m;
+        for( Actor actor : this.getActorsForMovie(m)){
+            try {
+                removeActorFromMoviePS.setInt(1, movie.getId());
+                removeActorFromMoviePS.setInt(2, ((DBActor)actor).getId());
+                removeActorFromMoviePS.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 }

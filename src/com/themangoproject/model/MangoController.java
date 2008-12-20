@@ -117,6 +117,11 @@ public class MangoController {
         movieDAO.addActorToMovie(movie, actor, role, character);
     }
 
+    //TODO: I need this method.
+    public void deleteRolesForMovie(Movie m) {
+        this.movieDAO.removeAllRoles(m);
+    }
+
     /**
      * Removes an actor from a movie <code>movie</code>.
      * 

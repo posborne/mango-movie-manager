@@ -1112,9 +1112,13 @@ private void queryAmazonButtonActionPerformed(java.awt.event.ActionEvent evt) {/
             // Actors
             List<AddSubtractInnerPanel> panels = this.addSubstractActorsPanel
                     .getInnerPanelsValues();
-            List<Actor> actorsInDB = MangoController.getInstance()
-                    .getActorsForMovie(m);
-            List<Actor> actorsInCB = new ArrayList<Actor>();
+//            List<Actor> actorsInDB = MangoController.getInstance()
+//                    .getActorsForMovie(m);
+//            List<Actor> actorsInCB = new ArrayList<Actor>();
+            // Because this is a movie that already exists, we want to just 
+            // remove all of the old roles and we will just add new ones from
+            // the information here.
+            MangoController.getInstance().deleteRolesForMovie(m);
             for (AddSubtractInnerPanel panel : panels) {
                 // Temp code so the empty panel wont be added - this
                 // will be removed
@@ -1142,19 +1146,22 @@ private void queryAmazonButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 
                     // Add any actors that are not already in apart of
                     // the movie
-                    if (!actorsInDB.contains(actor))
+//                    if (!actorsInDB.contains(actor)){
                         MangoController.getInstance()
                                 .addActorToMovie(m, actor, role,
                                         character);
-                    actorsInCB.add(actor);
+//                    } else {
+//                        MangoController.getInstance();
+//                    }
+//                    actorsInCB.add(actor);
                 }
             }
             // Remove any actors that were removed form panels
-            for (Actor actor : actorsInDB) {
-                if (!actorsInCB.contains(actor))
-                    MangoController.getInstance()
-                            .removeActorFromMovie(m, actor);
-            }
+//            for (Actor actor : actorsInDB) {
+//                if (!actorsInCB.contains(actor))
+//                    MangoController.getInstance()
+//                            .removeActorFromMovie(m, actor);
+//            }
 
             // Owner and borrower
             PersonComboBoxModel ownerModel = (PersonComboBoxModel) ownerCB

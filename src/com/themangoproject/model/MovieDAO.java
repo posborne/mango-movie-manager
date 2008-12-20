@@ -60,6 +60,13 @@ public interface MovieDAO {
      */
     public void getMovieInfo(Movie movie);
 
+    /**
+     * This will delete all the roles associated with this movie.
+     * 
+     * @param m
+     */
+    public void removeAllRoles(Movie m);
+
     // actions
     /**
      * This will updae all of the information in the storage structure
