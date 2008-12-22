@@ -82,8 +82,8 @@ public class Mango extends javax.swing.JFrame {
                     JTable table = ((JTable) e.getComponent());
                     int selectedRow = table.rowAtPoint(new Point(e
                             .getX(), e.getY()));
-                    table.setRowSelectionInterval(selectedRow,
-                            selectedRow);
+//                    table.setRowSelectionInterval(selectedRow,
+//                            selectedRow);
                     JPopupMenu popup = ((MangoTableModelIF) table
                             .getModel()).getPopupMenu();
                     if (popup != null) {

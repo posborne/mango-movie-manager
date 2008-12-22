@@ -116,12 +116,16 @@ public class ListEditableMovieTableModel extends
             public void actionPerformed(ActionEvent e) {
                 JTable table = UIController.getInstance()
                         .getViewTable();
-                Movie m = ListEditableMovieTableModel.this
-                        .getMovieForRow(table.getRowSorter()
-                                .convertRowIndexToModel(
-                                        table.getSelectedRow()));
-                MangoController.getInstance().removeMovieFromList(
-                        label, m);
+            int[] selectedRows = table.getSelectedRows();
+            int selectedRow2;
+            for(int i =0; i < selectedRows.length; i++){
+                selectedRow2 = table.getRowSorter().
+                    convertRowIndexToModel(selectedRows[i]);
+                Movie m = ((EditableMovieTableModel) table
+                    .getModel()).getMovieForRow(selectedRow2);
+                MangoController.getInstance().removeMovieFromList(label,
+                    m);
+            }
                 ListEditableMovieTableModel.this.retrieveMovies();
             }
         });

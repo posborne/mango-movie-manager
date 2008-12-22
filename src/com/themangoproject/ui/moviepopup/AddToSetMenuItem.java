@@ -61,23 +61,47 @@ public class AddToSetMenuItem extends JMenu implements ChangeListener {
                 public void actionPerformed(ActionEvent e) {
                     JTable table = UIController.getInstance()
                             .getViewTable();
-                    int selectedRow = table.getRowSorter()
-                            .convertRowIndexToModel(
-                                    table.getSelectedRow());
-                    Movie m = ((EditableMovieTableModel) table
-                            .getModel()).getMovieForRow(selectedRow);
-                    try {
-                        MangoController.getInstance().addMovieToSet(
-                                set, m);
-                    } catch (MovieExistsInSetException e1) {
-                        JOptionPane
-                                .showMessageDialog(
-                                        UIController.getInstance()
-                                                .getMango(),
-                                        "The movie \""
-                                                + m.getTitle()
-                                                + "\" already exists in that set.");
+
+                    int[] selectedRows = table.getSelectedRows();
+                    int selectedRow2;
+                    boolean allAdded = true;
+                    for(int i =0; i < selectedRows.length; i++){
+                        selectedRow2 = table.getRowSorter().
+                            convertRowIndexToModel(selectedRows[i]);
+                        Movie m = ((EditableMovieTableModel) table
+                            .getModel()).getMovieForRow(selectedRow2);
+                        try {
+                            MangoController.getInstance().addMovieToSet(
+                                    set, m);
+                        } catch (MovieExistsInSetException e1) {
+                            allAdded = false;
+                        }
                     }
+                    
+                    if(!allAdded){
+                        JOptionPane.showMessageDialog(
+                                UIController.getInstance().getMango(),
+                                "Some movies were not added.  Duplicates are " +
+                                "not allowed.");
+                    }
+                    
+//                    int selectedRow = table.getRowSorter()
+//                            .convertRowIndexToModel(
+//                                    table.getSelectedRow());
+//                    Movie m = ((EditableMovieTableModel) table
+//                            .getModel()).getMovieForRow(selectedRow);
+//                    try {
+//                        MangoController.getInstance().addMovieToSet(
+//                                set, m);
+//                    } catch (MovieExistsInSetException e1) {
+//                        JOptionPane
+//                                .showMessageDialog(
+//                                        UIController.getInstance()
+//                                                .getMango(),
+//                                        "The movie \""
+//                                                + m.getTitle()
+//                                                + "\" already exists in that set.");
+//                    }
                 }
             });
             this.add(item);

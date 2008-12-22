@@ -60,14 +60,26 @@ public class AddToListMenuItem extends JMenu implements
         public void actionPerformed(ActionEvent e) {
             // Get the selected movie
             JTable table = UIController.getInstance().getViewTable();
-            int selectedRow = table.getRowSorter()
-                    .convertRowIndexToModel(table.getSelectedRow());
-            Movie m = ((EditableMovieTableModel) table.getModel())
-                    .getMovieForRow(selectedRow);
-
-            // add the movie
-            MangoController.getInstance().addMovieToList(this.label,
+            
+            int[] selectedRows = table.getSelectedRows();
+            int selectedRow2;
+            for(int i =0; i < selectedRows.length; i++){
+                selectedRow2 = table.getRowSorter().
+                    convertRowIndexToModel(selectedRows[i]);
+                Movie m = ((EditableMovieTableModel) table
+                    .getModel()).getMovieForRow(selectedRow2);
+                MangoController.getInstance().addMovieToList(this.label,
                     m);
+            }
+            
+//            int selectedRow = table.getRowSorter()
+//                    .convertRowIndexToModel(table.getSelectedRow());
+//            Movie m = ((EditableMovieTableModel) table.getModel())
+//                    .getMovieForRow(selectedRow);
+//
+//            // add the movie
+//            MangoController.getInstance().addMovieToList(this.label,
+//                    m);
         }
     }
 

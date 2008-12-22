@@ -236,13 +236,14 @@ public class MovieAddEditDialog extends javax.swing.JDialog {
                             .getModel();
             int selectedIndex = ((JComboBox) panel
                             .getLeftComboObject()).getSelectedIndex();
-            Actor actor = (Actor) actorModel
-                            .getActorAt(selectedIndex);
-            String role = (String) roleBox.getSelectedItem();
-            String character = panel.getTextFieldText();
+            if (selectedIndex != -1) {
+                Actor actor = (Actor) actorModel.getActorAt(selectedIndex);
+                String role = (String) roleBox.getSelectedItem();
+                String character = panel.getTextFieldText();
 
-            MangoController.getInstance().addActorToMovie(m, actor, role, 
-                    character);
+                MangoController.getInstance().addActorToMovie(m, actor, role,
+                        character);
+            }
         }
     }
 

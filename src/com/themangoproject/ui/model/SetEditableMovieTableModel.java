@@ -101,12 +101,16 @@ public class SetEditableMovieTableModel extends
             public void actionPerformed(ActionEvent e) {
                 JTable table = UIController.getInstance()
                         .getViewTable();
-                Movie m = SetEditableMovieTableModel.this
-                        .getMovieForRow(table.getRowSorter()
-                                .convertRowIndexToModel(
-                                        table.getSelectedRow()));
-                MangoController.getInstance().removeMovieFromSet(
-                        label, m);
+            int[] selectedRows = table.getSelectedRows();
+            int selectedRow2;
+            for(int i =0; i < selectedRows.length; i++){
+                selectedRow2 = table.getRowSorter().
+                    convertRowIndexToModel(selectedRows[i]);
+                Movie m = ((EditableMovieTableModel) table
+                    .getModel()).getMovieForRow(selectedRow2);
+                MangoController.getInstance().removeMovieFromSet(label,
+                    m);
+            }
                 SetEditableMovieTableModel.this.retrieveMovies();
             }
         });
