@@ -62,9 +62,33 @@ public class SearchCondition {
 
         // append attribute
         if (attribute.toLowerCase().equals("mango rating")) {
-            attribute = "mango_rating";
+            attribute = "M.mango_rating";
         } else if (attribute.toLowerCase().equals("purchase date")) {
-            attribute = "purchase_date";
+            attribute = "M.purchase_date";
+        } else if (attribute.toLowerCase().equals("actor first name")) {
+        	attribute = "A.first_name";
+        } else if (attribute.toLowerCase().equals("actor last name")) {
+        	attribute = "A.last_name";
+        } else if (attribute.toLowerCase().equals("genre")) {
+        	attribute = "G.name";
+        } else if (attribute.toLowerCase().equals("character")) {
+        	attribute = "AR.character";
+        } else if (attribute.toLowerCase().equals("title")) {
+        	attribute = "M.title";
+        } else if (attribute.toLowerCase().equals("director")) {
+        	attribute = "M.director";
+        } else if (attribute.toLowerCase().equals("rating")) {
+        	attribute = "M.rating";
+        } else if (attribute.toLowerCase().equals("runtime")) {
+        	attribute = "M.runtime";
+        } else if (attribute.toLowerCase().equals("year")) {
+        	attribute = "M.year";
+        } else if (attribute.toLowerCase().equals("description")) {
+        	attribute = "M.custom_description";
+        } else if (attribute.toLowerCase().equals("condition")) {
+        	attribute = "M.condition";
+        } else if (attribute.toLowerCase().equals("type")) {
+        	attribute = "M.type";
         }
         sb.append(attribute.toLowerCase() + " ");
 

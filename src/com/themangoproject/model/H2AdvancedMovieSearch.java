@@ -39,7 +39,9 @@ public class H2AdvancedMovieSearch {
      */
     public String getSearchQuery() {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT id " + "FROM movie " + "WHERE ");
+        sb.append("SELECT DISTINCT M.id " +
+        		"FROM movie M, genre G, acting_roles AR, Actor A " +
+        		"WHERE M.id=G.movie_id AND AR.MOVIE_ID=M.id AND AR.actor_id=A.id AND ");
         for (int i = 0; i < searchConditions.size(); i++) {
             SearchCondition sc = searchConditions.get(i);
             sb.append(sc.conditionAsSQL());
