@@ -12,9 +12,10 @@ import javax.swing.DefaultComboBoxModel;
 public class AttributesComboBoxModel extends DefaultComboBoxModel {
     private static final long serialVersionUID = -5574393541155232995L;
     /** List of attributes */
-    private String[] attributes = { "Condition", "Director",
+    private String[] attributes = { "Actor First Name", "Actor Last Name",
+            "Condition", "Description", "Director",
             "Mango Rating", "Purchase Date", "Rating", "Runtime",
-            "Title", "Type", "Year" };
+            "Title", "Type", "Year", "Character", "Genre" };
 
     /**
      * @return the number of <code>Attributes</code> in the model.
