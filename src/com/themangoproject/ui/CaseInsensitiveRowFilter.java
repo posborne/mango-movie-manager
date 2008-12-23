@@ -3,13 +3,21 @@ package com.themangoproject.ui;
 import javax.swing.RowFilter;
 
 /**
- * @author Paul Osborne
+ * This row filters based on the string contents of the table it is tied to,
+ * matching all items that contain the search text.  
  * 
+ * @author Paul Osborne
+ * @version December 22, 2008
  */
 public class CaseInsensitiveRowFilter extends RowFilter<Object, Object> {
-
+	/** The search term for the filter */
 	private String searchTerm;
 
+	/**
+	 * Create a new case insensitive row filter with the specified search
+	 * text.
+	 * @param searchTerm The starting search term.
+	 */
 	public CaseInsensitiveRowFilter(String searchTerm) {
 		this.searchTerm = searchTerm;
 	}
