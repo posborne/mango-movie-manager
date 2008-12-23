@@ -3,8 +3,9 @@ package com.themangoproject.ui.model;
 import java.awt.Image;
 
 import javax.swing.JPopupMenu;
+import javax.swing.table.TableModel;
 
-public interface MangoTableModelIF {
+public interface MangoTableModelIF extends TableModel {
     /**
      * This method is called when a table model is being removed. If
      * any listeners need to be removed or anything like that, this

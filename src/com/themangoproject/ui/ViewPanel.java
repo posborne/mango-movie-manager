@@ -12,8 +12,6 @@ import com.themangoproject.ui.model.AllMoviesEditableTableModel;
 import com.themangoproject.ui.model.MangoTableModelIF;
 import java.text.MessageFormat;
 import javax.swing.JTable.PrintMode;
-import javax.swing.RowFilter;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -26,14 +24,20 @@ import javax.swing.table.TableRowSorter;
  */
 public class ViewPanel extends javax.swing.JPanel implements
         TableModelListener {
+	
+	/** Serial UID */
     private static final long serialVersionUID = -6397941470627210285L;
 
+    /** Custom movie row filter */
+    private CaseInsensitiveRowFilter rowFilter;
+    
     /** Creates new form ViewPanel */
     public ViewPanel() {
         initComponents();
         initColumnSizes();
 
         // setup row sorter and filter
+        rowFilter = new CaseInsensitiveRowFilter("");
         setTableModel(new AllMoviesEditableTableModel());
     }
 
@@ -41,24 +45,7 @@ public class ViewPanel extends javax.swing.JPanel implements
      * Initialize column sizes to be reasonable.
      */
     private void initColumnSizes() {
-        if (viewTable.getColumnModel().getColumnCount() > 0) {
-            TableColumnModel tcm = viewTable.getColumnModel();
-            // Number Column
-            tcm.getColumn(0).setPreferredWidth(30);
-            tcm.getColumn(0).setMaxWidth(50);
-            // Rating Column
-            tcm.getColumn(3).setPreferredWidth(45);
-            tcm.getColumn(3).setMaxWidth(70);
-            // Year column
-            tcm.getColumn(4).setPreferredWidth(50);
-            tcm.getColumn(4).setMaxWidth(70);
-            // Mango Rating
-            tcm.getColumn(5).setPreferredWidth(40);
-            tcm.getColumn(5).setMaxWidth(90);
-            // Type
-            tcm.getColumn(6).setPreferredWidth(80);
-            tcm.getColumn(6).setMaxWidth(100);
-        }
+
     }
 
     /**
@@ -223,7 +210,8 @@ public class ViewPanel extends javax.swing.JPanel implements
         String filterText = searchTF.getText();
         TableRowSorter trs = (TableRowSorter) viewTable
                 .getRowSorter();
-        trs.setRowFilter(RowFilter.regexFilter(filterText));
+        rowFilter.setSearchTerm(filterText);
+        trs.setRowFilter(rowFilter);
         // Set row sorter of TableRowSorter
 
     }// GEN-LAST:event_searchTFKeyReleased
