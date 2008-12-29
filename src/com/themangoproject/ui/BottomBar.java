@@ -292,7 +292,7 @@ public class BottomBar extends javax.swing.JPanel {
             // selected in the table
 
             maed.setVisible(true);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e){
             JOptionPane.showMessageDialog(UIController.getInstance()
                     .getMango(), "Please select a movie first",
                     "Invalid Selection", JOptionPane.WARNING_MESSAGE);
@@ -394,7 +394,7 @@ public class BottomBar extends javax.swing.JPanel {
                 // selRow);
 
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(UIController.getInstance()
                     .getMango(), "Please select a movie first",
                     "Invalid Selection", JOptionPane.WARNING_MESSAGE);
