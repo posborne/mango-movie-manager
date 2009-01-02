@@ -514,7 +514,7 @@ public class H2MovieDAO implements MovieDAO {
             addActorToMoviePS.setString(4, character);
             addActorToMoviePS.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
     }
 
