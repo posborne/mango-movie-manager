@@ -1,9 +1,12 @@
 package com.themangoproject.db.h2;
 
 import com.themangoproject.model.*;
+import com.themangoproject.ui.UIController;
 import java.sql.*;
 import java.util.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -163,11 +166,15 @@ public class H2PersonDAO implements PersonDAO {
             throw new ClassCastException();
         }
         DBPerson person = (DBPerson) p;
+        int id = person.getId();
         try {
             deletePersonPS.setInt(1, person.getId());
             deletePersonPS.execute();
         } catch (SQLException ex) {
             throw new PersonHasMoviesException();
+        }
+        if (id == UIController.getInstance().getOwnerId()) {
+            UIController.getInstance().setOwnerId(-1);
         }
         firePersonsChangedEvent();
     }
@@ -186,6 +193,7 @@ public class H2PersonDAO implements PersonDAO {
         }
         DBPerson person = (DBPerson) p;
         try {
+            int id = person.getId();
             // We want to submit statements as transaction
             conn.setAutoCommit(false);
 
@@ -202,6 +210,9 @@ public class H2PersonDAO implements PersonDAO {
             // commit the transaction
             conn.commit();
             conn.setAutoCommit(true);
+            if(id == UIController.getInstance().getOwnerId()){
+                UIController.getInstance().setOwnerId(-1);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -409,5 +420,16 @@ public class H2PersonDAO implements PersonDAO {
         for (ChangeListener l : changeListeners) {
             l.stateChanged(null);
         }
+    }
+
+    public Person getPersonFromId(int ownerId) {
+        DBPerson p = new DBPerson();
+        p.setId(ownerId);
+        try {
+            this.populatePerson(p);
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(H2PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;       
     }
 }

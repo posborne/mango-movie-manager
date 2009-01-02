@@ -122,6 +122,10 @@ public class MangoController {
         this.movieDAO.removeAllRolesForMovie(m);
     }
 
+    public Object getPersonFromId(int ownerId) {
+        return this.personDAO.getPersonFromId(ownerId);
+    }
+
     /**
      * Removes an actor from a movie <code>movie</code>.
      * 

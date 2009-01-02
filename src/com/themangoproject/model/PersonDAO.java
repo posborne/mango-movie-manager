@@ -35,6 +35,8 @@ public interface PersonDAO {
     public boolean addPerson(Person person)
             throws PersonExistsException;
 
+    public Person getPersonFromId(int ownerId);
+
     /**
      * This will save any changes made to the person passed to it.
      * 

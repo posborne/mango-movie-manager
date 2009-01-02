@@ -22,6 +22,10 @@ public class SetOwnerDialog extends javax.swing.JDialog {
     public SetOwnerDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        int ownerId = UIController.getInstance().getOwnerId();
+        if (ownerId != -1) {
+            this.jComboBox1.setSelectedItem(((Person) MangoController.getInstance().getPersonFromId(ownerId)).getName());
+        }
     }
 
     /**
@@ -182,32 +186,41 @@ private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     // Add a person
     String name = this.jTextField1.getText();
-    String phone = this.jTextField2.getText();
-    String email = this.jTextField3.getText();
-    String address = this.jTextArea1.getText();
+    if (name.equals("")) {
+        JOptionPane.showMessageDialog(this, "You can't have an empty name field!",
+                "Uh-Oh", JOptionPane.WARNING_MESSAGE);
+    } else {
+        String phone = this.jTextField2.getText();
+        String email = this.jTextField3.getText();
+        String address = this.jTextArea1.getText();
         try {
             if(MangoController.getInstance().addPerson(name, phone, email, address)){;//GEN-LAST:event_jButton2ActionPerformed
-            JOptionPane.showMessageDialog(this, "That person was successfully" +
-                    " added!", "Hoorah!", JOptionPane.PLAIN_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this,"That person already exists", 
-                    "Uh-Oh", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "That person was successfully" +
+                            " added!", "Hoorah!", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "That person already exists",
+                            "Uh-Oh", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (PersonExistsException ex) {
+                JOptionPane.showMessageDialog(this, "That person already exists",
+                        "Uh-Oh", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (PersonExistsException ex) {
-            JOptionPane.showMessageDialog(this,"That person already exists", 
-                    "Uh-Oh", JOptionPane.WARNING_MESSAGE);
         }
-}
+    }
 
     private void jButton1ActionPerformed(
             java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         // Send the owner id selected to the UIController
-        int index = jComboBox1.getSelectedIndex();
-        Person p = ((PersonComboBoxModel) jComboBox1.getModel())
-                .getPersonAt(index);
-        int id = ((DBPerson) p).getId();
-        UIController.getInstance().setOwnerId(id);
-        this.dispose();
+        try {
+            int index = jComboBox1.getSelectedIndex();
+            Person p = ((PersonComboBoxModel) jComboBox1.getModel()).getPersonAt(index);
+            int id = ((DBPerson) p).getId();
+            UIController.getInstance().setOwnerId(id);
+            this.dispose();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "Select a person first!",
+                    "Uh-Oh", JOptionPane.WARNING_MESSAGE);
+        }
     }// GEN-LAST:event_jButton1ActionPerformed
 
     /**
