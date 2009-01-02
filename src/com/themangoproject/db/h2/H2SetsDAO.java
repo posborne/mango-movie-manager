@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.event.ChangeListener;
 
 import com.themangoproject.model.Movie;
+import com.themangoproject.model.SetListAlreadyExistsException;
 import com.themangoproject.model.SetsDAO;
 
 /**
@@ -107,12 +108,12 @@ public class H2SetsDAO implements SetsDAO {
      * @param label
      *            The label for the new set.
      */
-    public void addSet(String label) {
+    public void addSet(String label) throws SetListAlreadyExistsException {
         try {
             addSetPS.setString(1, label);
             addSetPS.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+           throw new SetListAlreadyExistsException();
         }
         fireSetsChangedEvent();
     }

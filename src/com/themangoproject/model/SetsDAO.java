@@ -81,7 +81,7 @@ public interface SetsDAO {
      * @param label
      *            The name of the set.
      */
-    public void addSet(String label);
+    public void addSet(String label) throws SetListAlreadyExistsException;
 
     /**
      * Adds a <code>ChangeListener</code>.

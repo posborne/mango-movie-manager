@@ -87,7 +87,7 @@ public interface ListsDAO {
      * @param label
      *            the name of the list to add.
      */
-    public void addList(String label);
+    public void addList(String label) throws SetListAlreadyExistsException;
 
     /**
      * This will add a movie to a list

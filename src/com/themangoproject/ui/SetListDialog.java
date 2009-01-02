@@ -1,6 +1,8 @@
 package com.themangoproject.ui;
 
 import com.themangoproject.model.MangoController;
+import com.themangoproject.model.SetListAlreadyExistsException;
+import javax.swing.JOptionPane;
 
 /**
  * SetListDialog is a dialog to create a set or list.\
@@ -166,16 +168,27 @@ public class SetListDialog extends javax.swing.JDialog {
     private void createButtonActionPerformed(
             java.awt.event.ActionEvent evt) {// GEN-FIRST:event_createButtonActionPerformed
         // Create a new set or list
-        if (this.listRadioButton.isSelected()) { // List
-            System.out.println("List");
-            MangoController.getInstance().addList(
-                    this.listSetNameTF.getText());
-        } else if (this.setRadioButton.isSelected()) { // Set
-            System.out.println("Set");
-            MangoController.getInstance().addSet(
-                    this.listSetNameTF.getText());
+        String name = this.listSetNameTF.getText();
+        if (!name.equals("")) {
+            try {
+                if (this.listRadioButton.isSelected()) { // List
+                    System.out.println("List");
+                    MangoController.getInstance().addList(
+                            name);
+                } else if (this.setRadioButton.isSelected()) { // Set
+                    System.out.println("Set");
+                    MangoController.getInstance().addSet(
+                            name);
+                }
+                this.dispose();
+            } catch (SetListAlreadyExistsException e) {
+                JOptionPane.showMessageDialog(this, "A Set/List with that name" +
+                        "already exists", "Uh-Oh", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "You must give it a name!",
+                    "Uh-Oh", JOptionPane.WARNING_MESSAGE);
         }
-        this.dispose();
     }// GEN-LAST:event_createButtonActionPerformed
 
     /**

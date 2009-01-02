@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 
 import com.themangoproject.model.ListsDAO;
 import com.themangoproject.model.Movie;
+import com.themangoproject.model.SetListAlreadyExistsException;
 
 /**
  * @author Paul Osborne
@@ -233,12 +234,12 @@ public class H2ListsDAO implements ListsDAO {
      * @param label
      *            The label for the new list.
      */
-    public void addList(String label) {
+    public void addList(String label) throws SetListAlreadyExistsException {
         try {
             addListPS.setString(1, label);
             addListPS.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SetListAlreadyExistsException();
         }
         notifyListsChanged();
     }

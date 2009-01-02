@@ -70,7 +70,7 @@ public class MangoController {
      * @param name
      *            The name of the list.
      */
-    public void addList(String name) {
+    public void addList(String name) throws SetListAlreadyExistsException {
         listsDAO.addList(name);
     }
 
@@ -204,7 +204,7 @@ public class MangoController {
      * @param name
      *            The name of the list.
      */
-    public void addSet(String name) {
+    public void addSet(String name) throws SetListAlreadyExistsException {
         setsDAO.addSet(name);
     }
 
