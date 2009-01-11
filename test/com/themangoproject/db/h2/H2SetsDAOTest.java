@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import com.themangoproject.model.Movie;
+import com.themangoproject.model.SetListAlreadyExistsException;
 
 public class H2SetsDAOTest {
 
@@ -80,7 +81,12 @@ public class H2SetsDAOTest {
         dh1.setId(1);
         DBMovie dh2 = new DBMovie();
         dh2.setId(2);
-        H2SetsDAO.getInstance().addSet("Great Action Flicks");
+        try {
+			H2SetsDAO.getInstance().addSet("Great Action Flicks");
+		} catch (SetListAlreadyExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         try {
             H2SetsDAO.getInstance().addMovieToSet(
                     "Great Action Flicks", glad);
