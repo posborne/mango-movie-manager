@@ -227,15 +227,5 @@ public class PersonTableModel extends AbstractTableModel implements
         popup.add(deleteItem);
         return popup;
     }
-
-    /**
-     * No image for a person
-     * 
-     * @param modelRow
-     * @return null
-     */
-    @Override
-    public Image getImageForRow(int modelRow) {
-        return null; // no images for persons
-    }
+    
 }

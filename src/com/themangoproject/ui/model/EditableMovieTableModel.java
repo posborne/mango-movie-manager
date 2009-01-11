@@ -194,17 +194,5 @@ public abstract class EditableMovieTableModel extends
         }
         MangoController.getInstance().updateMovie(m);
     }
-
-    /**
-     * Gets the image for the row (Movie)
-     * 
-     * @param modelRow
-     * @return
-     */
-    @Override
-    public Image getImageForRow(int modelRow) {
-        Movie m = getMovieForRow(modelRow);
-        Image i = m.getImage();
-        return i;
-    }
+    
 }

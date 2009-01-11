@@ -15,12 +15,25 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="coverArtLabel" alignment="0" pref="196" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="movieTitleLinkLabel" alignment="0" pref="176" max="32767" attributes="0"/>
+                  <Component id="coverArtLabel" alignment="0" pref="176" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="coverArtLabel" alignment="1" pref="173" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="coverArtLabel" pref="169" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="movieTitleLinkLabel" min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -29,6 +42,15 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="alignmentX" type="float" value="0.5"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="movieTitleLinkLabel">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="33" red="0" type="rgb"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
     </Component>
   </SubComponents>

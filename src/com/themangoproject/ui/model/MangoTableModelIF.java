@@ -1,5 +1,6 @@
 package com.themangoproject.ui.model;
 
+import com.themangoproject.model.Movie;
 import java.awt.Image;
 
 import javax.swing.JPopupMenu;
@@ -20,13 +21,5 @@ public interface MangoTableModelIF extends TableModel {
      */
     public JPopupMenu getPopupMenu();
 
-    /**
-     * Get the image associated with this row in the model. If there
-     * is no image return null.
-     * 
-     * @param modelRow
-     *            The model row we are interested in.
-     * @return an Image
-     */
-    public Image getImageForRow(int modelRow);
+
 }

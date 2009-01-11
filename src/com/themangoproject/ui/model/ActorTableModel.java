@@ -152,10 +152,5 @@ public class ActorTableModel extends AbstractTableModel implements
         menu.add(deleteActorItem);
         return menu;
     }
-
-    @Override
-    public Image getImageForRow(int modelRow) {
-        return null; // no images for actors
-    }
-
+    
 }

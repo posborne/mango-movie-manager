@@ -1,7 +1,12 @@
 package com.themangoproject.ui;
 
-import com.themangoproject.ui.model.MangoTableModelIF;
+import com.themangoproject.model.Movie;
+import com.themangoproject.ui.model.EditableMovieTableModel;
+import java.awt.Desktop;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.net.URI;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -15,13 +20,20 @@ import javax.swing.event.ListSelectionListener;
  * @version 1.0
  */
 public class ItemInfoPanel extends javax.swing.JPanel implements
-        ListSelectionListener {
+        ListSelectionListener, MouseListener {
 
-    /** Creates new form ItemInfoPanel */
+    /** Generated serial UID */
+	private static final long serialVersionUID = 8707381355727968298L;
+    
+    private Movie currentMovie;
+
+	/** Creates new form ItemInfoPanel */
     public ItemInfoPanel() {
         initComponents();
         // Set default image
         this.setThumbnailImage(null);
+        currentMovie = null;
+        movieTitleLinkLabel.addMouseListener(this);
     }
 
     /**
@@ -31,34 +43,44 @@ public class ItemInfoPanel extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed"
-    // desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         coverArtLabel = new javax.swing.JLabel();
+        movieTitleLinkLabel = new javax.swing.JLabel();
 
-        coverArtLabel
-                .setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        coverArtLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         coverArtLabel.setAlignmentX(0.5F);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-                this);
+        movieTitleLinkLabel.setForeground(new java.awt.Color(0, 51, 255));
+        movieTitleLinkLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        movieTitleLinkLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(coverArtLabel,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, 196,
-                        Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(coverArtLabel,
-                        javax.swing.GroupLayout.Alignment.TRAILING,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, 173,
-                        Short.MAX_VALUE));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(movieTitleLinkLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                    .addComponent(coverArtLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(coverArtLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(movieTitleLinkLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel coverArtLabel;
-
+    private javax.swing.JLabel movieTitleLinkLabel;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -95,13 +117,39 @@ public class ItemInfoPanel extends javax.swing.JPanel implements
             }
             int modelRow = table.getRowSorter()
                     .convertRowIndexToModel(viewRow);
-            MangoTableModelIF tm = (MangoTableModelIF) table
+            EditableMovieTableModel tm = (EditableMovieTableModel) table
                     .getModel();
-            Image i = tm.getImageForRow(modelRow);
+            Image i = tm.getMovieForRow(modelRow).getImage();
             setThumbnailImage(i);
+            Movie m = tm.getMovieForRow(modelRow);
+            currentMovie = m;
+            movieTitleLinkLabel.setText(m.getTitle());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    
+    ////// Mouse Listener methods
+    public void mouseClicked(MouseEvent e) {
+        if (Desktop.isDesktopSupported() && 
+                currentMovie != null && 
+                currentMovie.getASIN() != null) {
+            System.out.println("Boogah, boogah");
+            Desktop desktop = Desktop.getDesktop();
+            String uriText = "http://www.amazon.com/exec/obidos/ASIN/" +
+                    currentMovie.getASIN() + "/mangomm-20/";
+            try {
+                URI uri = new URI(uriText);
+                desktop.browse(uri);
+            } catch (Exception ex) {
+               ex.printStackTrace();
+            }
+        }
+    }
+    public void mousePressed(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) { }
 
 }
