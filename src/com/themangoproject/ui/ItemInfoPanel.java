@@ -2,6 +2,8 @@ package com.themangoproject.ui;
 
 import com.themangoproject.model.Movie;
 import com.themangoproject.ui.model.EditableMovieTableModel;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -124,6 +126,12 @@ public class ItemInfoPanel extends javax.swing.JPanel implements
             Movie m = tm.getMovieForRow(modelRow);
             currentMovie = m;
             movieTitleLinkLabel.setText(m.getTitle());
+            if (currentMovie.getASIN() != null &&
+                    !currentMovie.getASIN().equals("")) {
+                movieTitleLinkLabel.setForeground(Color.BLUE);
+            } else {
+                movieTitleLinkLabel.setForeground(Color.BLACK);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,7 +142,8 @@ public class ItemInfoPanel extends javax.swing.JPanel implements
     public void mouseClicked(MouseEvent e) {
         if (Desktop.isDesktopSupported() && 
                 currentMovie != null && 
-                currentMovie.getASIN() != null) {
+                (currentMovie.getASIN() != null) && 
+                !currentMovie.getASIN().equals("")) {
             System.out.println("Boogah, boogah");
             Desktop desktop = Desktop.getDesktop();
             String uriText = "http://www.amazon.com/exec/obidos/ASIN/" +
@@ -149,7 +158,15 @@ public class ItemInfoPanel extends javax.swing.JPanel implements
     }
     public void mousePressed(MouseEvent e) { }
     public void mouseReleased(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+        if (currentMovie != null &&
+                currentMovie.getASIN() != null && 
+                !currentMovie.getASIN().equals("")) {
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
+    }
+    public void mouseExited(MouseEvent e) {
+        setCursor(Cursor.getDefaultCursor());
+    }
 
 }

@@ -1,8 +1,5 @@
 package com.themangoproject.ui.model;
 
-import com.themangoproject.model.Movie;
-import java.awt.Image;
-
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableModel;
 
